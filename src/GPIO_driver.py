@@ -63,6 +63,7 @@ def handleInput(input:str):
 
     if L[0] == 'PRESSED':
         if L[1] == 'A':
+            pass
             
 def disable():
     pca.channels[12].duty_cycle = 0
