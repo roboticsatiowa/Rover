@@ -18,6 +18,8 @@ pca.frequency = 1000
 
 THRESHHOLD = 0.2
 
+pca.channels[10].duty_cycle = 32767
+pca.channels[11].duty_cycle = 32767
 
 pca.channels[4].duty_cycle = 6560
 pca.channels[6].duty_cycle = 6560
@@ -59,5 +61,8 @@ def handleInput(input:str):
                 pca.channels[7].duty_cycle = 0
                 pca.channels[6].duty_cycle = 6560
 
+    if L[0] == 'PRESSED':
+        if L[1] == 'A':
+            
 def disable():
     pca.channels[12].duty_cycle = 0
