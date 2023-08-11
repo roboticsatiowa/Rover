@@ -17,7 +17,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conn:
     vid = cv2.VideoCapture(0)
     while vid.isOpened():
         img, frame = vid.read()
-        frame = imutils.resize(frame, width=320)
+        #frame = imutils.resize(frame, width=320)
         a = pickle.dumps(frame)
         message = struct.pack("Q", len(a)) + a
         conn.sendall(message)
