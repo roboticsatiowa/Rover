@@ -12,7 +12,7 @@ while True:
     except Exception as e:
         print("failed to start i2c_bus")
         print(e)
-        sleep(1)
+        sleep(7)
 
 pca.frequency = 1000
 
