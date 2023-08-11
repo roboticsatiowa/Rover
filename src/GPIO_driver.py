@@ -18,8 +18,8 @@ pca.frequency = 1000
 
 THRESHHOLD = 0.2
 
-pca.channels[10].duty_cycle = 32767 # elbow
-pca.channels[11].duty_cycle = 32767 # shoulder
+pca.channels[14].duty_cycle = 32767 # elbow
+pca.channels[15].duty_cycle = 32767 # shoulder
 
 pca.channels[4].duty_cycle = 6560
 pca.channels[6].duty_cycle = 6560
@@ -64,23 +64,23 @@ def handleInput(input:str):
 
     if L[0] == 'PRESSED':
         if L[1] == 'A':
-            pca.channels[11].duty_cycle = 65534
+            pca.channels[14].duty_cycle = 65534
         if L[1] == 'X':
-            pca.channels[11].duty_cycle = 0
+            pca.channels[14].duty_cycle = 0
         if L[1] == 'Y':
-            pca.channels[10].duty_cycle = 65534
+            pca.channels[15].duty_cycle = 65534
         if L[1] == 'B':
-            pca.channels[10].duty_cycle = 0
+            pca.channels[15].duty_cycle = 0
     
     if L[0] == 'RELEASED':
         if L[1] == 'A':
-            pca.channels[11].duty_cycle = 32767
+            pca.channels[14].duty_cycle = 32767
         if L[1] == 'X':
-            pca.channels[11].duty_cycle = 32767
+            pca.channels[14].duty_cycle = 32767
         if L[1] == 'Y':
-            pca.channels[10].duty_cycle = 32767
+            pca.channels[15].duty_cycle = 32767
         if L[1] == 'B':
-            pca.channels[10].duty_cycle = 32767
+            pca.channels[15].duty_cycle = 32767
             
 def disable():
     pca.channels[12].duty_cycle = 0
