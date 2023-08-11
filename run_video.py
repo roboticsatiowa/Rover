@@ -2,6 +2,7 @@ import pickle
 import socket
 import struct
 import sys
+from time import sleep
 
 import cv2
 
@@ -30,3 +31,5 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conn:
         a = pickle.dumps(frame)
         message = struct.pack("Q", len(a)) + a
         conn.sendall(message)
+        sleep(0.05)
+        
