@@ -6,7 +6,7 @@ from board import SCL, SDA
 
 while True:
     try:
-        i2c_bus = busio.I2C(1, SCL, SDA)
+        i2c_bus = busio.I2C(SCL, SDA)
         pca = PCA9685(i2c_bus)
         break
     except Exception as e:
