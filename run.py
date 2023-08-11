@@ -32,6 +32,7 @@ def main():
             try:
                 data = s.recv(1024) # 1024 refers to the buffersize of the incoming data
             except:
+                print("Exiting")
                 GPIO_driver.disable()
                 s.close()
                 exit()
