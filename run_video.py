@@ -8,8 +8,8 @@ import cv2
 import imutils
 import pyperclip
 
-HOST = "127.0.0.1"  # The server's hostname or IP address
-PORT = 42069  # The port used by the server
+HOST = "192.168.1.13"  # The server's hostname or IP address
+PORT = 55555  # The port used by the server
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conn:
     conn.connect((HOST, PORT))
