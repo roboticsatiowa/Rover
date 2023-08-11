@@ -2,38 +2,23 @@
 
 import os
 import socket
+import sys
 
-import src.GPIO_driver
-
-
-def readConfig() -> dict[str, str]:
-    '''returns a dict with all of the data in the config file'''
-    
-    # gets the file path of the python file
-    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    
-    # opens the config file by looking in the same directory as this file
-    with open(os.path.join(__location__, 'config')) as config:
-        
-        # splits file by line
-        L = config.read().split('\n')
-        
-        # remove white space, and format as a dictionary
-        return {i.split(':')[0].strip(): i.split(':')[1].strip() for i in L if ':' in i}
+from src import GPIO_driver
 
 
 def main():
-    params = readConfig()
     
     # sets variables to their values in the config file
-    TESTMODE = (params['testmode'] == 'True')
-    HOST = params['laptop_ip']
-    PORT = int(params['port'])
-    
-    # makes the server run on localhost if in testmode so it can be tested with a single machine
-    if TESTMODE:
-        print("\x1b[91m" + "WARNING: TESTMODE is curently active. This can be disabled in the config file" + "\x1b[0m")
-        HOST = '127.0.0.1'
+    try:
+        HOST = sys.argv[1]
+    except IndexError:
+        HOST = input("IPv4: ") # 192.168.1.13
+
+    try: 
+        PORT = int(sys.argv[2])
+    except IndexError:
+        PORT = int(input("PORT: "))
     
     # opens a socket which is used to communicate over the ethernet cable
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
