@@ -64,9 +64,9 @@ def handleInput(input:str):
 
     if L[0] == 'PRESSED':
         if L[1] == 'A':
-            pca.channels[10].duty_cycle = 65534
+            pca.channels[11].duty_cycle = 65534
         if L[1] == 'X':
-            pca.channels[10].duty_cycle = 0
+            pca.channels[11].duty_cycle = 0
         if L[1] == 'Y':
             pca.channels[10].duty_cycle = 65534
         if L[1] == 'B':
@@ -74,9 +74,9 @@ def handleInput(input:str):
     
     if L[0] == 'RELEASED':
         if L[1] == 'A':
-            pca.channels[10].duty_cycle = 32767
+            pca.channels[11].duty_cycle = 32767
         if L[1] == 'X':
-            pca.channels[10].duty_cycle = 32767
+            pca.channels[11].duty_cycle = 32767
         if L[1] == 'Y':
             pca.channels[10].duty_cycle = 32767
         if L[1] == 'B':
