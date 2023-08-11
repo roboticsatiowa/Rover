@@ -30,6 +30,7 @@ def map(value, istart, istop, ostart, ostop):
 
 def handleInput(input:str):
     L = input.split() #splits string input into [axis changed or not changed], [which button was changed], [the value it was changed to]
+    print(L)
     if L[0] == 'AXIS_CHANGED:':
         try:
             val = float(L[2])
