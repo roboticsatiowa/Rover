@@ -59,6 +59,49 @@ def handle_arm_input(L):
             return
         
         
+        if L[1] == 'LY':
+            if val > THRESHHOLD:
+                pca.channels[ARM_SHOULDER].duty_cycle = HIGH
+            elif val < -THRESHHOLD:
+                pca.channels[ARM_SHOULDER].duty_cycle = LOW
+            else:
+                pca.channels[ARM_SHOULDER].duty_cycle = HALF
+        
+        if L[1] == 'LX':
+            if val > THRESHHOLD:
+                pca.channels[WRIST_DIR].duty_cycle = HIGH
+                pca.channels[WRIST_PUL].duty_cycle = HIGH
+            elif val < -THRESHHOLD:
+                pca.channels[WRIST_DIR].duty_cycle = LOW
+                pca.channels[WRIST_PUL].duty_cycle = HIGH
+            else:
+                pca.channels[WRIST_PUL].duty_cycle = LOW
+                
+        if L[1] == 'RY':
+            if val > THRESHHOLD:
+                pca.channels[ARM_ELBOW].duty_cycle = HIGH
+            elif val < -THRESHHOLD:
+                pca.channels[ARM_ELBOW].duty_cycle = LOW
+            else:
+                pca.channels[ARM_ELBOW].duty_cycle = HALF
+        
+        if L[1] == 'RX':
+            if val > THRESHHOLD:
+                pca.channels[WRIST_ROTATE_DIR].duty_cycle = HIGH
+                pca.channels[WRIST_ROTATE_PUL].duty_cycle = HIGH
+            elif val < -THRESHHOLD:
+                pca.channels[WRIST_ROTATE_DIR].duty_cycle = LOW
+                pca.channels[WRIST_ROTATE_PUL].duty_cycle = HIGH
+            else:
+                pca.channels[WRIST_ROTATE_PUL].duty_cycle = LOW
+        # LX Wrist up/down
+        # LY shoulder
+        
+        # RX wrist rotate
+        # RY elbow up/down
+        
+        # LB/RB Lazy Suzan
+        
     if L[0] == 'PRESSED':
         if L[1] == 'A':
             pca.channels[ARM_SHOULDER].duty_cycle = HIGH
