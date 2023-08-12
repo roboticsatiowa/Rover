@@ -163,6 +163,7 @@ def handle_drive_input(L):
 
 
 def handleInput(input:str):
+    global is_driving
     L = input.split() #splits string input into [axis changed or not changed], [which button was changed], [the value it was changed to]
     print(L)
     
