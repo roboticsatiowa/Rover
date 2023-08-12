@@ -20,6 +20,7 @@ def main():
     except IndexError:
         PORT = int(input("PORT: "))
     
+    print(f"attempting to connect to {HOST} on port {PORT}...")
     # opens a socket which is used to communicate over the ethernet cable
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         
