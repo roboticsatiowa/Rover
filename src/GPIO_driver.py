@@ -4,6 +4,28 @@ import busio
 from adafruit_pca9685 import PCA9685
 from board import SCL, SDA
 
+THRESHHOLD = 0.2
+
+HIGH=65535
+HALF=32767
+LOW=0
+
+WRIST_ROTATE_PUL=0
+WRIST_ROTATE_DIR=1
+WRIST_PUL=2
+WRIST_DIR=3
+RIGHT_WHEEL_PUL=4
+RIGHT_WHEEL_DIR=5
+LEFT_WHEEL_PUL=6
+LEFT_WHEEL_DIR=7
+LAZY_SUZAN_PUL=8
+LAZY_SUZAN_DIR=9
+HAND_PUL=10
+HAND_DIR=11
+DRIVE_ENABLE=12
+ARM_SHOULDER=14
+ARM_ELBOW=15
+
 while True:
     try:
         i2c_bus = busio.I2C(SCL, SDA)
@@ -12,18 +34,16 @@ while True:
     except Exception as e:
         print("failed to start i2c_bus")
         print(e)
-        sleep(7)
+        sleep()
 
 pca.frequency = 1000
 
-THRESHHOLD = 0.2
-
-pca.channels[14].duty_cycle = 32767 # elbow
-pca.channels[15].duty_cycle = 32767 # shoulder
+pca.channels[14].duty_cycle = HALF # elbow
+pca.channels[15].duty_cycle = HALF # shoulder
 
 pca.channels[4].duty_cycle = 6560
 pca.channels[6].duty_cycle = 6560
-pca.channels[12].duty_cycle = 65534 #enable pin
+pca.channels[DRIVE_ENABLE].duty_cycle = HIGH #enable pin
 
 def map(value, istart, istop, ostart, ostop):
     return int(ostart + (ostop - ostart) * ((value - istart) / (istop - istart)))
@@ -39,24 +59,24 @@ def handleInput(input:str):
         if L[1] == 'LY':
             if val > THRESHHOLD:
                 Right_duty_cycle = map(val,0,1,6560,58980)
-                pca.channels[5].duty_cycle = 0
+                pca.channels[5].duty_cycle = LOW
                 pca.channels[4].duty_cycle = Right_duty_cycle
             elif val < -THRESHHOLD:
                 Right_duty_cycle = map(val,0,-1,6560,58980)
-                pca.channels[5].duty_cycle = 65534
+                pca.channels[5].duty_cycle = HIGH
                 pca.channels[4].duty_cycle = Right_duty_cycle
             else:
-                pca.channels[5].duty_cycle = 65534
+                pca.channels[5].duty_cycle = HIGH
                 pca.channels[4].duty_cycle = 6560
 
         elif L[1] == 'RY':
             if val > THRESHHOLD:
                 Left_duty_cycle = map(val,0,1,6560,58980)
-                pca.channels[7].duty_cycle = 65534
+                pca.channels[7].duty_cycle = HIGH
                 pca.channels[6].duty_cycle = Left_duty_cycle
             elif val < -THRESHHOLD:
                 Left_duty_cycle = map(val,0,-1,6560,58980)
-                pca.channels[7].duty_cycle = 0
+                pca.channels[7].duty_cycle = LOW
                 pca.channels[6].duty_cycle = Left_duty_cycle
             else:
                 pca.channels[7].duty_cycle = 0
