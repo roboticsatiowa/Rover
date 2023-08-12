@@ -32,18 +32,13 @@ def main():
             try:
                 data = s.recv(1024) # 1024 refers to the buffersize of the incoming data
             except:
-                print("Exiting")
-                GPIO_driver.disable()
-                s.close()
-                exit()
+                continue
             # if empty data packet is recieved then break while loop (end connection)
             if not data: 
+                print("Received empty packet. Closing connection")
                 break
             
             GPIO_driver.handleInput(data.decode('UTF-8'))
-            #print(f"Received message: '{data.decode('UTF-8')}'")     
-            
-            # decodes binary data into string using UTF-8 encoding
 
 if __name__ == '__main__':
     main()
