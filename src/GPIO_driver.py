@@ -38,19 +38,54 @@ while True:
 
 pca.frequency = 1000
 
-pca.channels[14].duty_cycle = HALF # elbow
-pca.channels[15].duty_cycle = HALF # shoulder
+pca.channels[ARM_SHOULDER].duty_cycle = HALF # elbow
+pca.channels[ARM_ELBOW].duty_cycle = HALF # shoulder
 
 pca.channels[4].duty_cycle = 6560
 pca.channels[6].duty_cycle = 6560
 pca.channels[DRIVE_ENABLE].duty_cycle = HIGH #enable pin
 
+is_driving = True
+
+# Helper Function
 def map(value, istart, istop, ostart, ostop):
     return int(ostart + (ostop - ostart) * ((value - istart) / (istop - istart)))
 
-def handleInput(input:str):
-    L = input.split() #splits string input into [axis changed or not changed], [which button was changed], [the value it was changed to]
-    print(L)
+def handle_arm_input(L):
+    if L[0] == 'AXIS_CHANGED:':
+        try:
+            val = float(L[2])
+        except:
+            return
+        
+        
+    if L[0] == 'PRESSED':
+        if L[1] == 'A':
+            pca.channels[ARM_SHOULDER].duty_cycle = HIGH
+        if L[1] == 'X':
+            pca.channels[ARM_SHOULDER].duty_cycle = LOW
+        if L[1] == 'Y':
+            pca.channels[ARM_ELBOW].duty_cycle = HIGH
+        if L[1] == 'B':
+            pca.channels[ARM_ELBOW].duty_cycle = LOW
+        if L[1] == 'LB':
+            pca.channels[LAZY_SUZAN_DIR] = HIGH
+            pca.channels[LAZY_SUZAN_PUL] = HALF
+        if L[1] == 'RB':
+            pca.channels[LAZY_SUZAN_DIR] = LOW
+            pca.channels[LAZY_SUZAN_PUL] = HIGH
+    
+    if L[0] == 'RELEASED':
+        if L[1] in ('A', 'X'):
+            pca.channels[ARM_SHOULDER].duty_cycle = HALF
+            
+        if L[1] in ('Y', 'B'):
+            pca.channels[ARM_ELBOW].duty_cycle = HALF
+            
+        if L[1] in ('LB', 'RB'):
+            pca.channels[LAZY_SUZAN_PUL] = LOW
+
+def handle_drive_input(L):
     if L[0] == 'AXIS_CHANGED:':
         try:
             val = float(L[2])
@@ -82,25 +117,20 @@ def handleInput(input:str):
                 pca.channels[7].duty_cycle = 0
                 pca.channels[6].duty_cycle = 6560
 
-    if L[0] == 'PRESSED':
-        if L[1] == 'A':
-            pca.channels[14].duty_cycle = 65534
-        if L[1] == 'X':
-            pca.channels[14].duty_cycle = 0
-        if L[1] == 'Y':
-            pca.channels[15].duty_cycle = 65534
-        if L[1] == 'B':
-            pca.channels[15].duty_cycle = 0
+
+def handleInput(input:str):
+    L = input.split() #splits string input into [axis changed or not changed], [which button was changed], [the value it was changed to]
+    print(L)
     
-    if L[0] == 'RELEASED':
-        if L[1] == 'A':
-            pca.channels[14].duty_cycle = 32767
-        if L[1] == 'X':
-            pca.channels[14].duty_cycle = 32767
-        if L[1] == 'Y':
-            pca.channels[15].duty_cycle = 33167
-        if L[1] == 'B':
-            pca.channels[15].duty_cycle = 32767
+    if L[0] == 'PRESSED' and L[1] == 'STA':
+        is_driving = not is_driving
+        print("\x1b[1;34m" + "Drive mode: " + ("DRIVE" if is_driving else "ARM") + "\x1b[0m")
+    
+    if is_driving:
+        handle_drive_input(L)
+    else:
+        handle_drive_input(L)
+        
             
 def disable():
-    pca.channels[12].duty_cycle = 0
+    pca.channels[DRIVE_ENABLE].duty_cycle = LOW
