@@ -78,7 +78,7 @@ def handleInput(input:str):
         if L[1] == 'X':
             pca.channels[14].duty_cycle = 32767
         if L[1] == 'Y':
-            pca.channels[15].duty_cycle = 35767
+            pca.channels[15].duty_cycle = 34167
         if L[1] == 'B':
             pca.channels[15].duty_cycle = 32767
             
