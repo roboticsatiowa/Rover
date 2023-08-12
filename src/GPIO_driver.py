@@ -74,13 +74,13 @@ def handleInput(input:str):
     
     if L[0] == 'RELEASED':
         if L[1] == 'A':
-            pca.channels[14].duty_cycle = 28000
+            pca.channels[14].duty_cycle = 32767
         if L[1] == 'X':
-            pca.channels[14].duty_cycle = 29000
+            pca.channels[14].duty_cycle = 32767
         if L[1] == 'Y':
-            pca.channels[15].duty_cycle = 28000
+            pca.channels[15].duty_cycle = 35767
         if L[1] == 'B':
-            pca.channels[15].duty_cycle = 27000
+            pca.channels[15].duty_cycle = 32767
             
 def disable():
     pca.channels[12].duty_cycle = 0
