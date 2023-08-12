@@ -58,6 +58,7 @@ def handle_arm_input(L):
             val = float(L[2])
         except:
             return
+            print("bad")
         
         
         if L[1] == 'LY':
@@ -175,7 +176,7 @@ def handleInput(input:str):
     if is_driving:
         handle_drive_input(L)
     else:
-        handle_drive_input(L)
+        handle_arm_input(L)
         
             
 def disable():
