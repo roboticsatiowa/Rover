@@ -4,6 +4,8 @@ import busio
 from adafruit_pca9685 import PCA9685
 from board import SCL, SDA
 
+is_driving = True
+
 THRESHHOLD = 0.2
 
 HIGH=65535
@@ -45,8 +47,6 @@ pca.channels[ARM_ELBOW].duty_cycle = HALF # shoulder
 pca.channels[4].duty_cycle = 6560
 pca.channels[6].duty_cycle = 6560
 pca.channels[DRIVE_ENABLE].duty_cycle = HIGH #enable pin
-
-is_driving = True
 
 # Helper Function
 def map(value, istart, istop, ostart, ostop):
