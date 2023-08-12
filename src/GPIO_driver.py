@@ -58,7 +58,6 @@ def handle_arm_input(L):
             val = float(L[2])
         except:
             return
-            print("bad")
         
         
         if L[1] == 'LY':
@@ -68,7 +67,6 @@ def handle_arm_input(L):
                 pca.channels[ARM_SHOULDER].duty_cycle = LOW
             else:
                 pca.channels[ARM_SHOULDER].duty_cycle = HALF
-        print("penis")
         
         if L[1] == 'LX':
             if val > THRESHHOLD:
@@ -115,11 +113,11 @@ def handle_arm_input(L):
         if L[1] == 'B':
             pca.channels[ARM_ELBOW].duty_cycle = LOW
         if L[1] == 'LB':
-            pca.channels[LAZY_SUZAN_DIR] = HIGH
-            pca.channels[LAZY_SUZAN_PUL] = HALF
+            pca.channels[LAZY_SUZAN_DIR].duty_cycle = HIGH
+            pca.channels[LAZY_SUZAN_PUL].duty_cycle = HALF
         if L[1] == 'RB':
-            pca.channels[LAZY_SUZAN_DIR] = LOW
-            pca.channels[LAZY_SUZAN_PUL] = HIGH
+            pca.channels[LAZY_SUZAN_DIR].duty_cycle = LOW
+            pca.channels[LAZY_SUZAN_PUL].duty_cycle = HIGH
     
     if L[0] == 'RELEASED':
         if L[1] in ('A', 'X'):
@@ -129,7 +127,7 @@ def handle_arm_input(L):
             pca.channels[ARM_ELBOW].duty_cycle = HALF
             
         if L[1] in ('LB', 'RB'):
-            pca.channels[LAZY_SUZAN_PUL] = LOW
+            pca.channels[LAZY_SUZAN_PUL].duty_cycle = LOW
 
 def handle_drive_input(L):
     if L[0] == 'AXIS_CHANGED:':
