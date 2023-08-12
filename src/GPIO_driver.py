@@ -30,6 +30,7 @@ while True:
     try:
         i2c_bus = busio.I2C(SCL, SDA)
         pca = PCA9685(i2c_bus)
+        print("I2C DEVICE CONNECTED SUCCESFULLY")
         break
     except Exception as e:
         print("failed to start i2c_bus")
