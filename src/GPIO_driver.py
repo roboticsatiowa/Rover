@@ -12,8 +12,8 @@ HIGH=65535
 HALF=32767
 LOW=0
 
-SOFT_HIGH = 58980
-SOFT_LOW = 6560
+SOFT_HIGH = int(0.8*HIGH)
+SOFT_LOW = int(0.8*LOW)
 
 WRIST_ROTATE_PUL=0
 WRIST_ROTATE_DIR=1
@@ -47,9 +47,10 @@ pca.frequency = 1000
 pca.channels[ARM_SHOULDER].duty_cycle = HALF # elbow
 pca.channels[ARM_ELBOW].duty_cycle = HALF # shoulder
 
-pca.channels[4].duty_cycle = 6560
-pca.channels[6].duty_cycle = 6560
-pca.channels[DRIVE_ENABLE].duty_cycle = HIGH #enable pin
+pca.channels[RIGHT_WHEEL_PUL].duty_cycle = SOFT_LOW
+pca.channels[LEFT_WHEEL_PUL].duty_cycle = SOFT_LOW
+
+pca.channels[DRIVE_ENABLE].duty_cycle = SOFT_HIGH #enable pin
 
 # Helper Function
 def map(value, istart, istop, ostart, ostop):
@@ -138,31 +139,31 @@ def handle_drive_input(L):
             val = float(L[2])
         except:
             return
-        if L[1] == 'LY':
+        if L[1] == 'RY':
             if val > THRESHHOLD:
                 Right_duty_cycle = map(val,0,1,SOFT_LOW,SOFT_HIGH)
-                pca.channels[5].duty_cycle = SOFT_LOW
-                pca.channels[4].duty_cycle = Right_duty_cycle
+                pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_LOW
+                pca.channels[RIGHT_WHEEL_PUL].duty_cycle = Right_duty_cycle
             elif val < -THRESHHOLD:
                 Right_duty_cycle = map(val,0,-1,SOFT_LOW,SOFT_HIGH)
-                pca.channels[5].duty_cycle = SOFT_HIGH
-                pca.channels[4].duty_cycle = Right_duty_cycle
+                pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_HIGH
+                pca.channels[RIGHT_WHEEL_PUL].duty_cycle = Right_duty_cycle
             else:
-                pca.channels[5].duty_cycle = SOFT_HIGH
-                pca.channels[4].duty_cycle = 6560
+                pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_HIGH
+                pca.channels[RIGHT_WHEEL_PUL].duty_cycle = SOFT_LOW
 
-        elif L[1] == 'RY':
+        elif L[1] == 'LY':
             if val > THRESHHOLD:
-                Left_duty_cycle = map(val,0,1,6560,58980)
-                pca.channels[7].duty_cycle = SOFT_HIGH
-                pca.channels[6].duty_cycle = Left_duty_cycle
+                Left_duty_cycle = map(val,0,1,SOFT_LOW,SOFT_HIGH)
+                pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_HIGH
+                pca.channels[LEFT_WHEEL_PUL].duty_cycle = Left_duty_cycle
             elif val < -THRESHHOLD:
-                Left_duty_cycle = map(val,0,-1,6560,58980)
-                pca.channels[7].duty_cycle = SOFT_LOW
-                pca.channels[6].duty_cycle = Left_duty_cycle
+                Left_duty_cycle = map(val,0,-1,SOFT_LOW,SOFT_HIGH)
+                pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_LOW
+                pca.channels[LEFT_WHEEL_PUL].duty_cycle = Left_duty_cycle
             else:
-                pca.channels[7].duty_cycle = SOFT_LOW
-                pca.channels[6].duty_cycle = SOFT_LOW
+                pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_LOW
+                pca.channels[LEFT_WHEEL_PUL].duty_cycle = SOFT_LOW
 
 
 def handleInput(input:str):
