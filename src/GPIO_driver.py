@@ -69,7 +69,7 @@ def handle_arm_input(L):
         
         
         if L[1] == 'LY':
-            sabertooth.motorA(int(val*100))
+            sabertooth.motorA(int(val*90))
         
         if L[1] == 'LX':
             if val > THRESHHOLD:
@@ -82,7 +82,7 @@ def handle_arm_input(L):
                 pca.channels[WRIST_PUL].duty_cycle = LOW
                 
         if L[1] == 'RY':
-            sabertooth.motorB(int(val*100))
+            sabertooth.motorB(int(val*90))
         
         if L[1] == 'RX':
             if val > THRESHHOLD:
