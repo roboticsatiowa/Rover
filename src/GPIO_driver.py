@@ -4,7 +4,7 @@ import busio
 from adafruit_pca9685 import PCA9685
 from board import SCL, SDA
 
-from sabertooth_serial import SabertoothSerial
+from .sabertooth_serial import SabertoothSerial
 
 is_driving = True
 
