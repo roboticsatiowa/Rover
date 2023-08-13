@@ -44,7 +44,7 @@ while True:
         print(e)
         sleep(5)
 
-sabertooth = SabertoothSerial(port='/dev/ttyUSB0',baudrate=9600)
+sabertooth = SabertoothSerial(port='/dev/tty',baudrate=9600)
 
 pca.frequency = 1000
 
