@@ -57,7 +57,7 @@ def handle_arm_input(L):
             sabertooth.motorA(int(val*90))
                 
         if L[1] == 'RY':
-            sabertooth.motorB(int(val*90))
+            sabertooth.motorB(-int(val*90))
 
 def handle_drive_input(L):
     if L[0] == 'AXIS_CHANGED:':
