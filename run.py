@@ -34,10 +34,6 @@ def main():
                 data = s.recv(1024) # 1024 refers to the buffersize of the incoming data
             except:
                 continue
-            # if empty data packet is recieved then break while loop (end connection)
-            if not data: 
-                print("Received empty packet. Closing connection")
-                break
             
             GPIO_driver.handleInput(data.decode('UTF-8'))
 
