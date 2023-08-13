@@ -20,7 +20,7 @@ class SabertoothSerial:
                                      stopbits=serial.STOPBITS_ONE,
                                      bytesize=serial.EIGHTBITS,
                                      timeout=1)
-        except serial.SerialException as e:
+        except Exception as e:
             print(f"Error opening serial port: {e}")
             raise
 
