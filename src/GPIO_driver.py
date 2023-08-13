@@ -24,7 +24,7 @@ DRIVE_ENABLE = 36
 
 sabertooth = SabertoothSerial(port='/dev/ttyS0',baudrate=9600)
 
-GPIO.setwarnings(False)			#disable warnings
+GPIO.setwarnings(True)			#disable warnings
 GPIO.setmode(GPIO.BOARD)
 
 GPIO.setup(LEFT_PUL,GPIO.OUT)
