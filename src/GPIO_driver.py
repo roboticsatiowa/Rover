@@ -39,7 +39,7 @@ left_pwm = GPIO.PWM(LEFT_PUL,1000)
 right_pwm = GPIO.PWM(RIGHT_PUL, 1000)
 
 left_pwm.start(SOFT_LOW)
-right_pwm.start(SOFT_HIGH)
+right_pwm.start(SOFT_LOW)
 
 GPIO.output(DRIVE_ENABLE, True)
 
@@ -68,6 +68,7 @@ def handle_drive_input(L):
         if L[1] == 'RY':
             if val > THRESHHOLD:
                 Right_duty_cycle = lerp(val,0,1,SOFT_LOW,SOFT_HIGH)
+                print(Right_duty_cycle)
                 GPIO.output(RIGHT_DIR, False)
                 right_pwm.ChangeDutyCycle(Right_duty_cycle)
             elif val < -THRESHHOLD:
