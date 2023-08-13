@@ -57,7 +57,7 @@ pca.channels[LEFT_WHEEL_PUL].duty_cycle = SOFT_LOW
 pca.channels[DRIVE_ENABLE].duty_cycle = SOFT_HIGH #enable pin
 
 # Helper Function
-def lerpS(value, istart, istop, ostart, ostop):
+def lerp(value, istart, istop, ostart, ostop):
     return int(ostart + (ostop - ostart) * ((value - istart) / (istop - istart)))
 
 def handle_arm_input(L):
@@ -74,10 +74,10 @@ def handle_arm_input(L):
         if L[1] == 'LX':
             if val > THRESHHOLD:
                 pca.channels[WRIST_DIR].duty_cycle = HIGH
-                pca.channels[WRIST_PUL].duty_cycle = HIGH
+                pca.channels[WRIST_PUL].duty_cycle = HALF
             elif val < -THRESHHOLD:
                 pca.channels[WRIST_DIR].duty_cycle = LOW
-                pca.channels[WRIST_PUL].duty_cycle = HIGH
+                pca.channels[WRIST_PUL].duty_cycle = HALF
             else:
                 pca.channels[WRIST_PUL].duty_cycle = LOW
                 
@@ -87,10 +87,10 @@ def handle_arm_input(L):
         if L[1] == 'RX':
             if val > THRESHHOLD:
                 pca.channels[WRIST_ROTATE_DIR].duty_cycle = HIGH
-                pca.channels[WRIST_ROTATE_PUL].duty_cycle = HIGH
+                pca.channels[WRIST_ROTATE_PUL].duty_cycle = HALF
             elif val < -THRESHHOLD:
                 pca.channels[WRIST_ROTATE_DIR].duty_cycle = LOW
-                pca.channels[WRIST_ROTATE_PUL].duty_cycle = HIGH
+                pca.channels[WRIST_ROTATE_PUL].duty_cycle = HALF
             else:
                 pca.channels[WRIST_ROTATE_PUL].duty_cycle = LOW
         # LX Wrist up/down
@@ -115,7 +115,7 @@ def handle_arm_input(L):
             pca.channels[LAZY_SUZAN_PUL].duty_cycle = HALF
         if L[1] == 'RB':
             pca.channels[LAZY_SUZAN_DIR].duty_cycle = LOW
-            pca.channels[LAZY_SUZAN_PUL].duty_cycle = HIGH
+            pca.channels[LAZY_SUZAN_PUL].duty_cycle = HALF
     
     if L[0] == 'RELEASED':
         if L[1] in ('A', 'X'):
