@@ -4,6 +4,8 @@ import busio
 from adafruit_pca9685 import PCA9685
 from board import SCL, SDA
 
+from sabertooth_serial import SabertoothSerial
+
 is_driving = True
 
 THRESHHOLD = 0.2
@@ -42,6 +44,8 @@ while True:
         print(e)
         sleep(5)
 
+sabertooth = SabertoothSerial(baudrate=9600)
+
 pca.frequency = 1000
 
 pca.channels[ARM_SHOULDER].duty_cycle = HALF # elbow
@@ -53,7 +57,7 @@ pca.channels[LEFT_WHEEL_PUL].duty_cycle = SOFT_LOW
 pca.channels[DRIVE_ENABLE].duty_cycle = SOFT_HIGH #enable pin
 
 # Helper Function
-def map(value, istart, istop, ostart, ostop):
+def lerpS(value, istart, istop, ostart, ostop):
     return int(ostart + (ostop - ostart) * ((value - istart) / (istop - istart)))
 
 def handle_arm_input(L):
@@ -65,12 +69,7 @@ def handle_arm_input(L):
         
         
         if L[1] == 'LY':
-            if val > THRESHHOLD:
-                pca.channels[ARM_SHOULDER].duty_cycle = HIGH
-            elif val < -THRESHHOLD:
-                pca.channels[ARM_SHOULDER].duty_cycle = LOW
-            else:
-                pca.channels[ARM_SHOULDER].duty_cycle = HALF
+            sabertooth.motorA(int(val*100))
         
         if L[1] == 'LX':
             if val > THRESHHOLD:
@@ -83,12 +82,7 @@ def handle_arm_input(L):
                 pca.channels[WRIST_PUL].duty_cycle = LOW
                 
         if L[1] == 'RY':
-            if val > THRESHHOLD:
-                pca.channels[ARM_ELBOW].duty_cycle = HIGH
-            elif val < -THRESHHOLD:
-                pca.channels[ARM_ELBOW].duty_cycle = LOW
-            else:
-                pca.channels[ARM_ELBOW].duty_cycle = HALF
+            sabertooth.motorB(int(val*100))
         
         if L[1] == 'RX':
             if val > THRESHHOLD:
@@ -141,11 +135,11 @@ def handle_drive_input(L):
             return
         if L[1] == 'RY':
             if val > THRESHHOLD:
-                Right_duty_cycle = map(val,0,1,SOFT_LOW,SOFT_HIGH)
+                Right_duty_cycle = lerp(val,0,1,SOFT_LOW,SOFT_HIGH)
                 pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_LOW
                 pca.channels[RIGHT_WHEEL_PUL].duty_cycle = Right_duty_cycle
             elif val < -THRESHHOLD:
-                Right_duty_cycle = map(val,0,-1,SOFT_LOW,SOFT_HIGH)
+                Right_duty_cycle = lerp(val,0,-1,SOFT_LOW,SOFT_HIGH)
                 pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_HIGH
                 pca.channels[RIGHT_WHEEL_PUL].duty_cycle = Right_duty_cycle
             else:
@@ -154,11 +148,11 @@ def handle_drive_input(L):
 
         elif L[1] == 'LY':
             if val > THRESHHOLD:
-                Left_duty_cycle = map(val,0,1,SOFT_LOW,SOFT_HIGH)
+                Left_duty_cycle = lerp(val,0,1,SOFT_LOW,SOFT_HIGH)
                 pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_HIGH
                 pca.channels[LEFT_WHEEL_PUL].duty_cycle = Left_duty_cycle
             elif val < -THRESHHOLD:
-                Left_duty_cycle = map(val,0,-1,SOFT_LOW,SOFT_HIGH)
+                Left_duty_cycle = lerp(val,0,-1,SOFT_LOW,SOFT_HIGH)
                 pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_LOW
                 pca.channels[LEFT_WHEEL_PUL].duty_cycle = Left_duty_cycle
             else:
