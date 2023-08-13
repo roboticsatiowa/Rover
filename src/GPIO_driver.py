@@ -88,6 +88,7 @@ def handle_arm_input(L):
             if val > THRESHHOLD:
                 pca.channels[WRIST_ROTATE_DIR].duty_cycle = HIGH
                 pca.channels[WRIST_ROTATE_PUL].duty_cycle = HALF
+                print("penis")
             elif val < -THRESHHOLD:
                 pca.channels[WRIST_ROTATE_DIR].duty_cycle = LOW
                 pca.channels[WRIST_ROTATE_PUL].duty_cycle = HALF
