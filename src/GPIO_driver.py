@@ -30,13 +30,18 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(LEFT_PUL,GPIO.OUT)
 GPIO.setup(RIGHT_PUL, GPIO.OUT)
 
+GPIO.setup(DRIVE_ENABLE, GPIO.OUT)
+
+GPIO.setup(LEFT_DIR, GPIO.OUT)
+GPIO.setup(RIGHT_DIR, GPIO.OUT)
+
 left_pwm = GPIO.PWM(LEFT_PUL,1000)	
 right_pwm = GPIO.PWM(RIGHT_PUL, 1000)
 
 left_pwm.start(SOFT_LOW)
 right_pwm.start(SOFT_HIGH)
 
-pca.channels[DRIVE_ENABLE].duty_cycle = SOFT_HIGH #enable pin
+GPIO.output(DRIVE_ENABLE, True)
 
 # Helper Function
 def lerp(value, istart, istop, ostart, ostop):
@@ -63,27 +68,27 @@ def handle_drive_input(L):
         if L[1] == 'RY':
             if val > THRESHHOLD:
                 Right_duty_cycle = lerp(val,0,1,SOFT_LOW,SOFT_HIGH)
-                pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_LOW
+                GPIO.output(RIGHT_DIR, False)
                 right_pwm.ChangeDutyCycle(Right_duty_cycle)
             elif val < -THRESHHOLD:
                 Right_duty_cycle = lerp(val,0,-1,SOFT_LOW,SOFT_HIGH)
-                pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_HIGH
+                GPIO.output(RIGHT_DIR, True)
                 right_pwm.ChangeDutyCycle(Right_duty_cycle)
             else:
-                pca.channels[RIGHT_WHEEL_DIR].duty_cycle = SOFT_HIGH
+                GPIO.output(RIGHT_DIR, True)
                 right_pwm.ChangeDutyCycle(SOFT_LOW)
 
         elif L[1] == 'LY':
             if val > THRESHHOLD:
                 Left_duty_cycle = lerp(val,0,1,SOFT_LOW,SOFT_HIGH)
-                pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_HIGH
+                GPIO.output(LEFT_DIR, True)
                 left_pwm.ChangeDutyCycle(Left_duty_cycle)
             elif val < -THRESHHOLD:
                 Left_duty_cycle = lerp(val,0,-1,SOFT_LOW,SOFT_HIGH)
-                pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_LOW
+                GPIO.output(LEFT_DIR, True)
                 left_pwm.ChangeDutyCycle(Left_duty_cycle)
             else:
-                pca.channels[LEFT_WHEEL_DIR].duty_cycle = SOFT_LOW
+                GPIO.output(LEFT_DIR, True)
                 left_pwm.ChangeDutyCycle(SOFT_LOW)
                 
 
@@ -104,4 +109,4 @@ def handleInput(input:str):
         
             
 def disable():
-    pca.channels[DRIVE_ENABLE].duty_cycle = LOW
+    GPIO.output(DRIVE_ENABLE, False)
