@@ -26,8 +26,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conn:
     print(f"Connected to {HOST} on port {PORT}...")
     vid = cv2.VideoCapture(cam_index, cv2.CAP_V4L)
     vid.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
-    vid.set(3, 320)
-    vid.set(4, 240)
+    vid.set(3, 540)
+    vid.set(4, 360)
     while vid.isOpened():
         img, frame = vid.read()
         #frame = imutils.resize(frame, width=320)
