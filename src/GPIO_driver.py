@@ -113,3 +113,4 @@ def handleInput(input:str):
             
 def disable():
     GPIO.output(DRIVE_ENABLE, False)
+    GPIO.cleanup()
