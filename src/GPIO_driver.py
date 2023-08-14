@@ -104,6 +104,10 @@ def handleInput(input:str):
     if L[0] == 'PRESSED' and L[1] == 'STA':
         is_driving = not is_driving
         print("\x1b[1;34m" + "Drive mode: " + ("DRIVE" if is_driving else "ARM") + "\x1b[0m")
+        
+    if L[0] == 'PRESSED' and L[1] == 'BCK':
+        disable()
+        exit()
     
     if is_driving:
         handle_drive_input(L)
