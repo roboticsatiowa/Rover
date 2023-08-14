@@ -12,7 +12,7 @@ HIGH=100
 HALF=50
 LOW=0
 
-SOFT_HIGH = 94
+SOFT_HIGH = 95
 SOFT_LOW = 5
 
 RIGHT_PUL = 33
@@ -68,7 +68,7 @@ def handle_drive_input(L):
         if L[1] == 'LY':
             if val > THRESHHOLD:
                 Right_duty_cycle = lerp(val,0,1,SOFT_LOW,SOFT_HIGH)
-                GPIO.output(RIGHT_DIR, False)
+                GPIO.output(RIGHT_DIR, TR)
                 right_pwm.ChangeDutyCycle(Right_duty_cycle)
             elif val < -THRESHHOLD:
                 Right_duty_cycle = lerp(val,0,-1,SOFT_LOW,SOFT_HIGH)
