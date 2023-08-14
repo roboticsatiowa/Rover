@@ -72,7 +72,7 @@ def handle_drive_input(L):
                 right_pwm.ChangeDutyCycle(Right_duty_cycle)
             elif val < -THRESHHOLD:
                 Right_duty_cycle = lerp(val,0,-1,SOFT_LOW,SOFT_HIGH)
-                GPIO.output(RIGHT_DIR, True)
+                GPIO.output(RIGHT_DIR, False)
                 right_pwm.ChangeDutyCycle(Right_duty_cycle)
             else:
                 GPIO.output(RIGHT_DIR, True)
