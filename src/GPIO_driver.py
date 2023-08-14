@@ -6,7 +6,7 @@ from .sabertooth_serial import SabertoothSerial
 
 is_driving = True
 
-THRESHHOLD = 0.2
+THRESHHOLD = 0.4
 
 HIGH=100
 HALF=50
