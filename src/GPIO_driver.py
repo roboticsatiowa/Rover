@@ -6,7 +6,7 @@ from .sabertooth_serial import SabertoothSerial
 
 is_driving = True
 
-THRESHHOLD = 0.4
+THRESHHOLD = 0.2
 
 HIGH=100
 HALF=50
@@ -67,26 +67,22 @@ def handle_drive_input(L):
             return
         if L[1] == 'LY':
             if val > THRESHHOLD:
-                Right_duty_cycle = lerp(val,0,1,LOW,HIGH)
                 GPIO.output(RIGHT_DIR, False)
-                right_pwm.ChangeDutyCycle(Right_duty_cycle)
+                right_pwm.ChangeDutyCycle(HALF)
             elif val < -THRESHHOLD:
-                Right_duty_cycle = lerp(val,0,-1,LOW,HIGH)
                 GPIO.output(RIGHT_DIR, True)
-                right_pwm.ChangeDutyCycle(Right_duty_cycle)
+                right_pwm.ChangeDutyCycle(HALF)
             else:
                 GPIO.output(RIGHT_DIR, True)
                 right_pwm.ChangeDutyCycle(LOW)
 
         elif L[1] == 'RY':
             if val > THRESHHOLD:
-                Left_duty_cycle = lerp(val,0,1,LOW,HIGH)
                 GPIO.output(LEFT_DIR, True)
-                left_pwm.ChangeDutyCycle(Left_duty_cycle)
+                left_pwm.ChangeDutyCycle(HALF)
             elif val < -THRESHHOLD:
-                Left_duty_cycle = lerp(val,0,-1,LOW,HIGH)
                 GPIO.output(LEFT_DIR, False)
-                left_pwm.ChangeDutyCycle(Left_duty_cycle)
+                left_pwm.ChangeDutyCycle(HALF)
             else:
                 GPIO.output(LEFT_DIR, True)
                 left_pwm.ChangeDutyCycle(LOW)
