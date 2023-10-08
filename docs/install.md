@@ -5,7 +5,7 @@
 
 - To get the ros2-humble-isaac image generated to interact with ros2-humble with isaac libraries, we built a custom image ([Dockerfile.ros2_humble](https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common/blob/main/docker/Dockerfile.ros2_humble)) with patches applied to it. The Dockerfile is located under the docker folder in the branches root directory. The image can be built using `docker build . -t "ros2-humble-isaac"` and may take multiple hours to compile on the jetson xavier.
 
-- A script directory was created in the project root directory to run the docker container shell and add the ros2-docker script to the bash path. The default path for the git directory with these scripts is set to `~/git/Rover/scripts/ros2-humble-isaac` but can be changed in the ``install.sh` and `ros2-docker` scripts to whatever directory
+- A script directory was created in the project root directory to run the docker container shell and add the ros2-docker script to the bash path. The default path for the git directory with these scripts is set to `~/git/Rover/scripts/ros2-humble-isaac` but can be changed in the `install.sh` and `ros2-docker` scripts to whatever directory
 
 - Run a docker shell for ros2-humble-isaac using the command `ros2-docker /bin/bash` or run a specific ros2 program using `ros2-docker ros2 [cmd]`
 - Run the demo talker/listener app using `ros2docker ros2 run demo\_nodes\_cpp listener & ros2-docker ros2 run demo_nodes_cpp talker`
