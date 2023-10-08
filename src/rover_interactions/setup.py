@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "joy_subscriber = rover_interactions.joy_subscriber:main"
         ],
     },
 )
