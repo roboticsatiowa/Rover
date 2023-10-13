@@ -6,7 +6,8 @@ from sensor_msgs.msg import Joy
 class JoySubscriberNode(Node):
     
     def __init__(self):
-        super().__init__("joy subscriber")
+        super().__init__("joy_subscriber")
+        self.get_logger().info("Test")
         self.joy_subscriber_ = self.create_subscription(
             Joy, "/joy", self.joy_callback, 10)
 
@@ -18,3 +19,6 @@ def main(args=None):
     node = JoySubscriberNode()
     rclpy.spin(node)
     rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
