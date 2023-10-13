@@ -282,10 +282,10 @@ RUN apt-get update \
   && apt-get clean
 
 # Install custom ROS packages
-RUN apt-get update && apt-get install -y \
-        ros-humble-librealsense2 \
-        ros-humble-imu-filter-madwick \
-        ros-humble-rtabmap-ros \
-        ros-humble-robot-localization \
-&& rm -rf /var/lib/apt/lists/* \
-&& apt-get clean
+#RUN apt-get update && apt-get install -y \
+#        ros-humble-librealsense2 \
+#        ros-humble-imu-filter-madwick \
+#        ros-humble-rtabmap-ros \
+#        ros-humble-robot-localization \
+#&& rm -rf /var/lib/apt/lists/* \
+#&& apt-get clean
