@@ -1,0 +1,18 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/cua156/Code/Rover/build/xbox_controller",
+        "/home/cua156/Code/Rover/install/xbox_controller/lib/python3.10/site-packages",
+        "/home/cua156/Code/Rover/build/rover_interactions",
+        "/home/cua156/Code/Rover/install/rover_interactions/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/cua156/Code/Rover/build/xbox_controller",
+        "/home/cua156/Code/Rover/install/xbox_controller/lib/python3.10/site-packages",
+        "/home/cua156/Code/Rover/build/rover_interactions",
+        "/home/cua156/Code/Rover/install/rover_interactions/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

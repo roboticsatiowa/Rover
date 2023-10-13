@@ -7,7 +7,7 @@ class JoySubscriberNode(Node):
     
     def __init__(self):
         super().__init__("joy_subscriber")
-        self.get_logger().info("Test")
+        #self.get_logger().info("Test")
         self.joy_subscriber_ = self.create_subscription(
             Joy, "/joy", self.joy_callback, 10)
 
