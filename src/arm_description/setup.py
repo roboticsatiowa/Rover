@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'xbox_controller'
+package_name = 'arm_description'
 
 setup(
     name=package_name,
