@@ -1,0 +1,123 @@
+<robot name="uiowa_arm" version="1.0">
+  <joint name="1_link_joint" type="revolute">
+    <limit lower="0.00000" upper="1.04720" effort="0.00000" velocity="0.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-1.54039 0.05634 4.21971"/>
+    <parent link="0_link"/>
+    <child link="1_link"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="2_link_joint" type="revolute">
+    <limit lower="-3.14000" upper="3.14000" effort="0.00000" velocity="0.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-14.67461 -0.05860 2.82365"/>
+    <parent link="1_link"/>
+    <child link="2_link"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="3_link_joint" type="revolute">
+    <limit lower="-3.14000" upper="3.14000" effort="0.00000" velocity="0.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-0.68917 0.09859 -10.98294"/>
+    <parent link="2_link"/>
+    <child link="3_link"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="4_link_joint" type="fixed">
+    <origin rpy="-0.00000 0.00000 0.00000" xyz="-0.49591 0.19867 -1.66949"/>
+    <parent link="3_link"/>
+    <child link="4_link"/>
+  </joint>
+  <link name="0_link">
+    <collision name="0_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.16139 0.00001 1.31410"/>
+      <geometry>
+        <box size="5.65402 5.47455 3.04922"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="47.91954" ixy="0.00000" ixz="0.00000" iyy="45.99856" iyz="0.00000" izz="45.96502"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.00000 2.73116"/>
+      <mass value="7.98100"/>
+    </inertial>
+    <visual name="0_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 2.73116"/>
+      <geometry>
+        <mesh filename="package://robot_name_model/meshes/dae/arm_main.001.dae" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="1_link">
+    <collision name="1_collision">
+      <origin rpy="0.00000 0.19981 0.00000" xyz="-7.30699 -0.05293 1.44050"/>
+      <geometry>
+        <box size="12.02998 4.99377 2.24118"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="47.52676" ixy="0.00000" ixz="0.00000" iyy="231.63026" iyz="0.00000" izz="234.20783"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-6.17970 0.00000 1.27505"/>
+      <mass value="7.98100"/>
+    </inertial>
+    <visual name="1_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-6.17970 0.00000 1.27505"/>
+      <geometry>
+        <mesh filename="package://robot_name_model/meshes/dae/arm_main.002.dae" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="2_link">
+    <collision name="2_collision">
+      <origin rpy="0.00000 0.07714 0.00000" xyz="-0.90701 -0.04188 -4.66751"/>
+      <geometry>
+        <box size="2.43509 4.59535 7.21933"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="193.81439" ixy="0.00000" ixz="0.00000" iyy="179.22450" iyz="0.00000" izz="33.49743"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.26894 -0.00000 -3.80964"/>
+      <mass value="7.98100"/>
+    </inertial>
+    <visual name="2_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.26895 -0.00000 -3.80964"/>
+      <geometry>
+        <mesh filename="package://robot_name_model/meshes/dae/arm_main.007.dae" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="3_link">
+    <collision name="3_collision">
+      <origin rpy="-0.00000 0.21062 -0.00000" xyz="0.00615 0.09404 -0.09153"/>
+      <geometry>
+        <box size="2.75493 3.83413 2.75493"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="33.14782" ixy="-0.00000" ixz="-0.00000" iyy="18.40965" iyz="-0.00000" izz="33.14781"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.07041 -0.00000 -0.21124"/>
+      <mass value="7.98100"/>
+    </inertial>
+    <visual name="3_visual">
+      <origin rpy="-0.00000 0.00000 0.00000" xyz="-0.07041 -0.00000 -0.21124"/>
+      <geometry>
+        <mesh filename="package://robot_name_model/meshes/dae/arm_main.dae" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="4_link">
+    <collision name="4_collision">
+      <origin rpy="-0.00000 0.28106 -0.00000" xyz="-0.25425 -0.00000 -0.91478"/>
+      <geometry>
+        <box size="0.65542 0.62640 2.11582"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="3.13903" ixy="0.00000" ixz="0.00000" iyy="3.75817" iyz="-0.00000" izz="1.09800"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.00000 -0.00000"/>
+      <mass value="7.98100"/>
+    </inertial>
+    <visual name="4_visual">
+      <origin rpy="-0.00000 0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="package://robot_name_model/meshes/dae/arm_main.008.dae" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>
