@@ -1,9 +1,0 @@
-source;share/arm/hook/pythonpath.ps1
-source;share/arm/hook/pythonpath.dsv
-source;share/arm/hook/pythonpath.sh
-source;share/arm/hook/ament_prefix_path.ps1
-source;share/arm/hook/ament_prefix_path.dsv
-source;share/arm/hook/ament_prefix_path.sh
-source;../../build/arm/share/arm/hook/pythonpath_develop.ps1
-source;../../build/arm/share/arm/hook/pythonpath_develop.dsv
-source;../../build/arm/share/arm/hook/pythonpath_develop.sh
