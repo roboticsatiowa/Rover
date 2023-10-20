@@ -2,4 +2,11 @@
 
 dir=~/git/Rover/scripts/ros2-humble-isaac
 
-docker run --net=host -v $dir/ros_entrypoint.sh:/ros_entrypoint.sh --entrypoint /ros_entrypoint.sh -it ros2-humble-isaac $@
+docker run --net=host \
+	-v $dir/ros_entrypoint.sh:/ros_entrypoint.sh \
+	--env DISPLAY=$DISPLAY \
+	-v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+	-v "$XAUTHORITY:/root/.Xauthority" \
+	--entrypoint /ros_entrypoint.sh \
+	--privileged \
+	-it issac_ros_humble_realsense-mods $@
