@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  realsense2_camera_node:
+#    restart: unless-stopped
+    container_name: realsense2_camera_node
+    image: isaac_ros_humble_realsense_mods
+    command: ros2 launch realsense2_camera rs_launch.py depth_module.profile:=1280x720x30 pointcloud.enable:=true
+    volumes:
+      - ./ros_entrypoint.sh:/ros_entrypoint.sh
+      - ./source.sh:/source.sh
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - "$XAUTHORITY:/root/.Xauthority"
+      - "./volumes/packages:/custom_pkgs"
+    environment:
+#      - UID=1000
+#      - GID=1000
+      - DISPLAY=$DISPLAY
+    entrypoint: /ros_entrypoint.sh
+    privileged: true
+    
+  rviz2:
+    container_name: rviz2
+    image: isaac_ros_humble_realsense_mods
+    command: ros2 run rviz2 rviz2
+    volumes:
+      - ./ros_entrypoint.sh:/ros_entrypoint.sh
+      - "./volumes/packages:/custom_pkgs"
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - "$XAUTHORITY:/root/.Xauthority"
+      - "./volumes/rviz2:/root/.rviz2"
+    environment:
+      - DISPLAY=$DISPLAY
+    entrypoint: /ros_entrypoint.sh
+    privileged: true
+    depends_on:
+      - realsense2_camera_node
