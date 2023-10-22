@@ -9,4 +9,4 @@ docker run --net=host \
 	-v "$XAUTHORITY:/root/.Xauthority" \
 	--entrypoint /ros_entrypoint.sh \
 	--privileged \
-	-it issac_ros_humble_realsense-mods $@
+	-it isaac_ros_humble_realsense_mods $@
