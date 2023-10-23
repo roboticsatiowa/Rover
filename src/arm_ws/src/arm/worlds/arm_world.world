@@ -1,105 +1,15 @@
 <?xml version="1.0" ?>
 <sdf version="1.7">
   <world name="my_world">
-    <!-- Include the ground plane or other models here, if needed -->
+    <!-- A light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
 
-    <!-- Include the robot model -->
-    <model name="robot_arm">
-      <pose>0 0 0 0 0 0</pose>
-      <static>false</static>
-      <link name="base_link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.1 0.1 0.1</size>
-            </box>
-          </geometry>
-        </visual>
-      </link>
-      <link name="link1">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>0.4</length>
-            </cylinder>
-          </geometry>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>0.4</length>
-            </cylinder>
-          </geometry>
-        </collision>
-      </link>
-      <link name="link2">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.1 0.1 0.1</size>
-            </box>
-          </geometry>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>0.1 0.1 0.1</size>
-            </box>
-          </geometry>
-        </collision>
-      </link>
-      <link name="end_effector">
-        <visual name="visual">
-          <geometry>
-            <sphere>
-              <radius>0.05</radius>
-            </sphere>
-          </geometry>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <sphere>
-              <radius>0.05</radius>
-            </sphere>
-          </geometry>
-        </collision>
-      </link>
-      <joint name="joint1" type="revolute">
-        <parent>base_link</parent>
-        <child>link1</child>
-        <axis>
-          <xyz>0 0 1</xyz>
-        </axis>
-        <limit>
-          <lower>-1.57</lower>
-          <upper>1.57</upper>
-        </limit>
-      </joint>
-      <joint name="joint2" type="revolute">
-        <parent>link1</parent>
-        <child>link2</child>
-        <axis>
-          <xyz>0 1 0</xyz>
-        </axis>
-        <limit>
-          <lower>-1.57</lower>
-          <upper>1.57</upper>
-        </limit>
-      </joint>
-      <joint name="joint3" type="revolute">
-        <parent>link2</parent>
-        <child>end_effector</child>
-        <axis>
-          <xyz>0 0 1</xyz>
-        </axis>
-        <limit>
-          <lower>-1.57</lower>
-          <upper>1.57</upper>
-        </limit>
-      </joint>
-    </model>
+    <!-- Ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
 
     <!-- Include the Gazebo GUI plugin for user interface -->
     <gui>
