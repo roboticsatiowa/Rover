@@ -1,0 +1,7 @@
+from isaac_ros_humble_realsense
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get install -y update-manager-core
+RUN do-release-upgrade -f DistUpgradeViewNonInteractive
+
+RUN apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*

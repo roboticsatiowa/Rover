@@ -1,2 +1,0 @@
-FROM isaac_ros_humble_realsense
-RUN apt-get update && apt-get install -y ros-humble-librealsense2-*
