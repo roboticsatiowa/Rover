@@ -5,3 +5,5 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
 RUN do-release-upgrade -f DistUpgradeViewNonInteractive
 
 RUN apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN echo "deb [arch=arm64 signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2-testing/ubuntu jammy main" >> /etc/apt/sources.list.d/ros2.list
