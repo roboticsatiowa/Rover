@@ -1,0 +1,5 @@
+# filename: camera_config.yaml
+usb_cam_node:
+  ros__parameters:
+    video_device: /dev/video0
+    camera_info_url: file://${ROS_HOME}/camera_info/camera.yaml
