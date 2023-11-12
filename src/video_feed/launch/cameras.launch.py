@@ -5,8 +5,8 @@ from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration, Command
 
 def generate_launch_description():
-    # Use the 'ROS_HOME' environment variable if it's set, otherwise default to '/home/robotics/.ros'
-    default_ros_home = os.environ.get('ROS_HOME', '/home/robotics/.ros')
+    # Get the directory of the current file (i.e., the directory where this launch file is located)
+    launch_file_dir = os.path.dirname(os.path.realpath(__file__))
     
     # Initialize LaunchDescription list
     ld = []
@@ -16,7 +16,7 @@ def generate_launch_description():
     video_device_1 = '/dev/video2'
     if os.path.exists(video_device_1):
         camera_info_url_1 = Command([
-            'echo "file://', default_ros_home, '/camera_info/', camera_name_1, '.yaml"'
+            'echo "file://', launch_file_dir, '/', camera_name_1, '.yaml"'
         ])
         ld.append(Node(
             package='usb_cam',
@@ -36,7 +36,7 @@ def generate_launch_description():
     video_device_2 = '/dev/video0'
     if os.path.exists(video_device_2):
         camera_info_url_2 = Command([
-            'echo "file://', default_ros_home, '/camera_info/', camera_name_2, '.yaml"'
+            'echo "file://', launch_file_dir, '/', camera_name_2, '.yaml"'
         ])
         ld.append(Node(
             package='usb_cam',
