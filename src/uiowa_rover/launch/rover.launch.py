@@ -10,8 +10,8 @@ from launch.actions import ExecuteProcess
 def generate_launch_description():
     # include launch file in video_feed/launch/video_feed.launch.py
 
-    rover_ip = "192.168.1.TODO"
-    rover_user = "robotics"
+    rover_ip = "192.168.1.70"
+    rover_user = "ethan"
     rover_launch_cmd = "echo 'TODO'"
     tmux_session_name = "ros"
 
@@ -38,12 +38,7 @@ def generate_launch_description():
     # SSh into rover and start tmux session if it doesn't exist - create it and run launch command then exit
     exec_start_rover = ExecuteProcess(
         cmd=[
-            f"\
-    ssh {rover_user}@{rover_ip} \
-    'if ! tmux has-session -t {tmux_session_name}; \
-        then tmux new-session -d -s {tmux_session_name} \"{rover_launch_cmd}\"; \
-    fi'; \
-    exit"
+            f"ssh {rover_user}@{rover_ip} 'if ! tmux has-session -t {tmux_session_name}; then tmux new-session -d -s {tmux_session_name} \"{rover_launch_cmd}\"; fi'; exit"
         ]
     )
     return LaunchDescription(
