@@ -1,5 +1,6 @@
 // Copyright (c) 2023, Robotics at Iowa
-// Copyright (c) 2023, Stogl Robotics Consulting UG (haftungsbeschränkt) (template)
+// Copyright (c) 2023, Stogl Robotics Consulting UG (haftungsbeschränkt)
+// (template)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,14 +17,13 @@
 #include <limits>
 #include <vector>
 
-#include "rover_hardware_interface/rover_system.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "rover_hardware_interface/rover_system.hpp"
 
 namespace rover_hardware_interface
 {
-hardware_interface::CallbackReturn RoverSystem::on_init(
-  const hardware_interface::HardwareInfo & info)
+hardware_interface::CallbackReturn RoverSystem::on_init(const hardware_interface::HardwareInfo& info)
 {
   if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS)
   {
@@ -37,10 +37,10 @@ hardware_interface::CallbackReturn RoverSystem::on_init(
   return CallbackReturn::SUCCESS;
 }
 
-hardware_interface::CallbackReturn RoverSystem::on_configure(
-  const rclcpp_lifecycle::State & /*previous_state*/)
+hardware_interface::CallbackReturn RoverSystem::on_configure(const rclcpp_lifecycle::State& /*previous_state*/)
 {
-  // TODO(anyone): prepare the robot to be ready for read calls and write calls of some interfaces
+  // TODO(anyone): prepare the robot to be ready for read calls and write calls
+  // of some interfaces
 
   return CallbackReturn::SUCCESS;
 }
@@ -51,8 +51,8 @@ std::vector<hardware_interface::StateInterface> RoverSystem::export_state_interf
   for (size_t i = 0; i < info_.joints.size(); ++i)
   {
     state_interfaces.emplace_back(hardware_interface::StateInterface(
-      // TODO(anyone): insert correct interfaces
-      info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_states_[i]));
+        // TODO(anyone): insert correct interfaces
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_states_[i]));
   }
 
   return state_interfaces;
@@ -64,39 +64,35 @@ std::vector<hardware_interface::CommandInterface> RoverSystem::export_command_in
   for (size_t i = 0; i < info_.joints.size(); ++i)
   {
     command_interfaces.emplace_back(hardware_interface::CommandInterface(
-      // TODO(anyone): insert correct interfaces
-      info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_commands_[i]));
+        // TODO(anyone): insert correct interfaces
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_commands_[i]));
   }
 
   return command_interfaces;
 }
 
-hardware_interface::CallbackReturn RoverSystem::on_activate(
-  const rclcpp_lifecycle::State & /*previous_state*/)
+hardware_interface::CallbackReturn RoverSystem::on_activate(const rclcpp_lifecycle::State& /*previous_state*/)
 {
   // TODO(anyone): prepare the robot to receive commands
 
   return CallbackReturn::SUCCESS;
 }
 
-hardware_interface::CallbackReturn RoverSystem::on_deactivate(
-  const rclcpp_lifecycle::State & /*previous_state*/)
+hardware_interface::CallbackReturn RoverSystem::on_deactivate(const rclcpp_lifecycle::State& /*previous_state*/)
 {
   // TODO(anyone): prepare the robot to stop receiving commands
 
   return CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type RoverSystem::read(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+hardware_interface::return_type RoverSystem::read(const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/)
 {
   // TODO(anyone): read robot states
 
   return hardware_interface::return_type::OK;
 }
 
-hardware_interface::return_type RoverSystem::write(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+hardware_interface::return_type RoverSystem::write(const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/)
 {
   // TODO(anyone): write robot's commands'
 
@@ -107,5 +103,4 @@ hardware_interface::return_type RoverSystem::write(
 
 #include "pluginlib/class_list_macros.hpp"
 
-PLUGINLIB_EXPORT_CLASS(
-  rover_hardware_interface::RoverSystem, hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(rover_hardware_interface::RoverSystem, hardware_interface::SystemInterface)
