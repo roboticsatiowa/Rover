@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="cam1" pkg="usb_cam" exec="usb_cam_node_exe" namespace="video1" respawn="true" respawn_delay="5">
+        <param name="video_device" value="/dev/video2" />
+        <param name="image_width" value="640" />
+        <param name="image_height" value="480" />
+        <param name="pixel_format" value="yuyv" />
+        <param name="camera_frame_id" value="usb_cam" />
+        <param name="io_method" value="mmap" />
+    </node>
+
+    <node name="cam2" pkg="usb_cam" exec="usb_cam_node_exe" namespace="video2"  respawn="true" respawn_delay="5">
+        <param name="video_device" value="/dev/video0" />
+        <param name="image_width" value="640" />
+        <param name="image_height" value="480" />
+        <param name="pixel_format" value="yuyv" />
+        <param name="camera_frame_id" value="usb_cam" />
+        <param name="io_method" value="mmap" />
+    </node>
+
+    <node name="cam3" pkg="usb_cam" exec="usb_cam_node_exe" namespace="video3"  respawn="true" respawn_delay="5">
+        <param name="video_device" value="/dev/video4" />
+        <param name="image_width" value="640" />
+        <param name="image_height" value="480" />
+        <param name="pixel_format" value="yuyv" />
+        <param name="camera_frame_id" value="usb_cam" />
+        <param name="io_method" value="mmap" />
+    </node>
+</launch>
