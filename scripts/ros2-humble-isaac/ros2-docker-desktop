@@ -1,5 +1,0 @@
-#!/bin/bash
-
-dir=~/git/Rover/scripts/ros2-humble-isaac
-
-docker run --net=host -v $dir/ros_entrypoint.sh:/ros_entrypoint.sh --entrypoint /ros_entrypoint.sh -it osrf/ros:humble-desktop $@
