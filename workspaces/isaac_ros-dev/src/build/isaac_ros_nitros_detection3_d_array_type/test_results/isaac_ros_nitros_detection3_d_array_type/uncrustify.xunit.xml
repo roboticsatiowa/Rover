@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_detection3_d_array_type.uncrustify"
+  tests="6"
+  failures="0"
+  errors="0"
+  time="0.172"
+>
+  <testcase
+    name="include/detection3_d_array_message/detection3_d_array_message.hpp"
+    classname="isaac_ros_nitros_detection3_d_array_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_detection3_d_array_type/nitros_detection3_d_array.hpp"
+    classname="isaac_ros_nitros_detection3_d_array_type.uncrustify"/>
+  <testcase
+    name="src/detection3_d_array_message.cpp"
+    classname="isaac_ros_nitros_detection3_d_array_type.uncrustify"/>
+  <testcase
+    name="src/nitros_detection3_d_array.cpp"
+    classname="isaac_ros_nitros_detection3_d_array_type.uncrustify"/>
+  <testcase
+    name="test/src/detection3_d_test_ext.cpp"
+    classname="isaac_ros_nitros_detection3_d_array_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_detection3_d_array_forward_node.cpp"
+    classname="isaac_ros_nitros_detection3_d_array_type.uncrustify"/>
+  <system-out>Checked files:
+* include/detection3_d_array_message/detection3_d_array_message.hpp
+* include/isaac_ros_nitros_detection3_d_array_type/nitros_detection3_d_array.hpp
+* src/detection3_d_array_message.cpp
+* src/nitros_detection3_d_array.cpp
+* test/src/detection3_d_test_ext.cpp
+* test/src/nitros_detection3_d_array_forward_node.cpp</system-out>
+</testsuite>

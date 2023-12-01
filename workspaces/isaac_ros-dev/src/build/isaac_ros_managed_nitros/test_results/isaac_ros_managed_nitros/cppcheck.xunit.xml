@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_managed_nitros.cppcheck"
+  tests="2"
+  errors="0"
+  failures="0"
+  time="0.105"
+  skipped="0"
+>
+  <testcase
+    name="include/isaac_ros_managed_nitros/managed_nitros_publisher.hpp"
+    classname="isaac_ros_managed_nitros.cppcheck"/>
+  <testcase
+    name="include/isaac_ros_managed_nitros/managed_nitros_subscriber.hpp"
+    classname="isaac_ros_managed_nitros.cppcheck"/>
+  <system-out>Checked files:
+* include/isaac_ros_managed_nitros/managed_nitros_publisher.hpp
+* include/isaac_ros_managed_nitros/managed_nitros_subscriber.hpp</system-out>
+</testsuite>

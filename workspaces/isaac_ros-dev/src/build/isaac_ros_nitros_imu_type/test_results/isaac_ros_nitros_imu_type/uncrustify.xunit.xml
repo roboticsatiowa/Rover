@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_imu_type.uncrustify"
+  tests="3"
+  failures="0"
+  errors="0"
+  time="0.101"
+>
+  <testcase
+    name="include/isaac_ros_nitros_imu_type/nitros_imu.hpp"
+    classname="isaac_ros_nitros_imu_type.uncrustify"/>
+  <testcase
+    name="src/nitros_imu.cpp"
+    classname="isaac_ros_nitros_imu_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_imu_forward_node.cpp"
+    classname="isaac_ros_nitros_imu_type.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_imu_type/nitros_imu.hpp
+* src/nitros_imu.cpp
+* test/src/nitros_imu_forward_node.cpp</system-out>
+</testsuite>

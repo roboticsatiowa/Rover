@@ -1,0 +1,9 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_compressed_image_type':
+ - /opt/ros/humble/bin/ament_lint_cmake --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_compressed_image_type/test_results/isaac_ros_nitros_compressed_image_type/lint_cmake.xunit.xml
+
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_compressed_image_type/test_results/isaac_ros_nitros_compressed_image_type/lint_cmake.xunit.xml'

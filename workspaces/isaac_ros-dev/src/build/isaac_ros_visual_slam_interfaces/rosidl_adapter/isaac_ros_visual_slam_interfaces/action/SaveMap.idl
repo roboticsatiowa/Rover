@@ -1,0 +1,28 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from isaac_ros_visual_slam_interfaces/action/SaveMap.action
+// generated code does not contain a copyright notice
+
+
+module isaac_ros_visual_slam_interfaces {
+  module action {
+    @verbatim (language="comment", text=
+      "Save map to the disk")
+    struct SaveMap_Goal {
+      @verbatim (language="comment", text=
+        "Localhost file path to save the map")
+      string map_url;
+    };
+    @verbatim (language="comment", text=
+      "Result")
+    struct SaveMap_Result {
+      boolean success;
+
+      string error;
+    };
+    @verbatim (language="comment", text=
+      "Feedback")
+    struct SaveMap_Feedback {
+      int32 progress;
+    };
+  };
+};

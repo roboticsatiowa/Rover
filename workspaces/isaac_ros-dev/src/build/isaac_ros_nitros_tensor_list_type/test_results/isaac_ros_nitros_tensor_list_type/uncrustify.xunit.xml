@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_tensor_list_type.uncrustify"
+  tests="13"
+  failures="0"
+  errors="0"
+  time="0.223"
+>
+  <testcase
+    name="include/isaac_ros_nitros_tensor_list_type/nitros_data_type.hpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_tensor_list_type/nitros_tensor.hpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_tensor_list_type/nitros_tensor_builder.hpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_tensor_list_type/nitros_tensor_list.hpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_tensor_list_type/nitros_tensor_list_builder.hpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_tensor_list_type/nitros_tensor_list_view.hpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_tensor_list_type/nitros_tensor_shape.hpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="src/nitros_data_type.cpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="src/nitros_tensor_builder.cpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="src/nitros_tensor_list.cpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="src/nitros_tensor_list_builder.cpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="src/nitros_tensor_list_view.cpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_tensor_list_forward_node.cpp"
+    classname="isaac_ros_nitros_tensor_list_type.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_tensor_list_type/nitros_data_type.hpp
+* include/isaac_ros_nitros_tensor_list_type/nitros_tensor.hpp
+* include/isaac_ros_nitros_tensor_list_type/nitros_tensor_builder.hpp
+* include/isaac_ros_nitros_tensor_list_type/nitros_tensor_list.hpp
+* include/isaac_ros_nitros_tensor_list_type/nitros_tensor_list_builder.hpp
+* include/isaac_ros_nitros_tensor_list_type/nitros_tensor_list_view.hpp
+* include/isaac_ros_nitros_tensor_list_type/nitros_tensor_shape.hpp
+* src/nitros_data_type.cpp
+* src/nitros_tensor_builder.cpp
+* src/nitros_tensor_list.cpp
+* src/nitros_tensor_list_builder.cpp
+* src/nitros_tensor_list_view.cpp
+* test/src/nitros_tensor_list_forward_node.cpp</system-out>
+</testsuite>

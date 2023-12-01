@@ -1,0 +1,62 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam':
+ - /opt/ros/humble/bin/ament_uncrustify --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/uncrustify.xunit.xml
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/cuvslam_ros_convertion.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/has_subscribers.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/landmarks_vis_helper.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/limited_vector.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/localizer_vis_helper.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/message_buffer.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/message_stream_sequencer.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/pose_cache.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/posegraph_vis_helper.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/qos.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/stopwatch.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/types.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/visual_slam_impl.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/impl/viz_helper.hpp'
+
+No code style divergence in file 'include/isaac_ros_visual_slam/visual_slam_node.hpp'
+
+No code style divergence in file 'src/impl/cuvslam_ros_convertion.cpp'
+
+No code style divergence in file 'src/impl/landmarks_vis_helper.cpp'
+
+No code style divergence in file 'src/impl/localizer_vis_helper.cpp'
+
+No code style divergence in file 'src/impl/pose_cache.cpp'
+
+No code style divergence in file 'src/impl/posegraph_vis_helper.cpp'
+
+No code style divergence in file 'src/impl/qos.cpp'
+
+No code style divergence in file 'src/impl/visual_slam_impl.cpp'
+
+No code style divergence in file 'src/impl/viz_helper.cpp'
+
+No code style divergence in file 'src/visual_slam_main.cpp'
+
+No code style divergence in file 'src/visual_slam_node.cpp'
+
+No code style divergence in file 'test/test_message_buffer.cpp'
+
+No code style divergence in file 'test/test_message_stream_sequencer.cpp'
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/uncrustify.xunit.xml'

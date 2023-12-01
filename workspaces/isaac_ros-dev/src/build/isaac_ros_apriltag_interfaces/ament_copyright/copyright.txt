@@ -1,0 +1,9 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_apriltag_interfaces':
+ - /opt/ros/humble/bin/ament_copyright --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_apriltag_interfaces/test_results/isaac_ros_apriltag_interfaces/copyright.xunit.xml
+
+No repository roots and files found
+No problems found, checked 0 files
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_apriltag_interfaces/test_results/isaac_ros_apriltag_interfaces/copyright.xunit.xml'

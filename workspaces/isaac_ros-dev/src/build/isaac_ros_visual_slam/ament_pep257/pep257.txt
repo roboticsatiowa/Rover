@@ -1,0 +1,16 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam':
+ - /opt/ros/humble/bin/ament_pep257 --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/pep257.xunit.xml
+
+checking ./launch/isaac_ros_visual_slam.launch.py
+checking ./launch/isaac_ros_visual_slam_dual_realsense_fusion.launch.py
+checking ./launch/isaac_ros_visual_slam_hawk.launch.py
+checking ./launch/isaac_ros_visual_slam_isaac_sim.launch.py
+checking ./launch/isaac_ros_visual_slam_realsense.launch.py
+checking ./launch/isaac_ros_visual_slam_zed.launch.py
+checking ./test/isaac_ros_visual_slam_pol.py
+checking ./test/isaac_ros_visual_slam_srv.py
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/pep257.xunit.xml'

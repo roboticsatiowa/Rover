@@ -1,0 +1,11 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image':
+ - /opt/ros/humble/bin/ament_pep257 --xunit-file /workspaces/isaac_ros-dev/build/custom_nitros_image/test_results/custom_nitros_image/pep257.xunit.xml
+
+checking ./test/custom_nitros_image_builder_pol.py
+checking ./test/custom_nitros_image_pol.py
+checking ./test/custom_nitros_image_viewer_pol.py
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/custom_nitros_image/test_results/custom_nitros_image/pep257.xunit.xml'

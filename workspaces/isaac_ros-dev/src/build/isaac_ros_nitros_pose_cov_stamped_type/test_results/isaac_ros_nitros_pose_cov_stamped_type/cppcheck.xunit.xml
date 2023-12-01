@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_pose_cov_stamped_type.cppcheck"
+  tests="3"
+  errors="0"
+  failures="0"
+  time="0.141"
+  skipped="0"
+>
+  <testcase
+    name="include/isaac_ros_nitros_pose_cov_stamped_type/nitros_pose_cov_stamped.hpp"
+    classname="isaac_ros_nitros_pose_cov_stamped_type.cppcheck"/>
+  <testcase
+    name="src/nitros_pose_cov_stamped.cpp"
+    classname="isaac_ros_nitros_pose_cov_stamped_type.cppcheck"/>
+  <testcase
+    name="test/src/nitros_pose_cov_stamped_forward_node.cpp"
+    classname="isaac_ros_nitros_pose_cov_stamped_type.cppcheck"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_pose_cov_stamped_type/nitros_pose_cov_stamped.hpp
+* src/nitros_pose_cov_stamped.cpp
+* test/src/nitros_pose_cov_stamped_forward_node.cpp</system-out>
+</testsuite>

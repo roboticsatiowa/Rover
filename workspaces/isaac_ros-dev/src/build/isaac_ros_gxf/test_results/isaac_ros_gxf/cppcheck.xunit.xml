@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_gxf.cppcheck"
+  tests="1"
+  errors="0"
+  failures="0"
+  time="0.095"
+  skipped="0"
+>
+  <testcase
+    name="src/isaac_ros_gxf.cpp"
+    classname="isaac_ros_gxf.cppcheck"/>
+  <system-out>Checked files:
+* src/isaac_ros_gxf.cpp</system-out>
+</testsuite>

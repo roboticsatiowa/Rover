@@ -1,0 +1,27 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from isaac_ros_visual_slam_interfaces/srv/GetAllPoses.srv
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/PoseStamped.idl"
+
+module isaac_ros_visual_slam_interfaces {
+  module srv {
+    @verbatim (language="comment", text=
+      "Get all the poses after global optimization, in event of a loop closure")
+    struct GetAllPoses_Request {
+      @verbatim (language="comment", text=
+        "Max number of poses to query")
+      int32 max_count;
+    };
+    @verbatim (language="comment", text=
+      "Result" "\n"
+      "indicate successful run of the service")
+    struct GetAllPoses_Response {
+      boolean success;
+
+      @verbatim (language="comment", text=
+        "List of optimized poses")
+      sequence<geometry_msgs::msg::PoseStamped> poses;
+    };
+  };
+};

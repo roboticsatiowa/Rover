@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="isaac_ros_visual_slam.isaac_ros_visual_slam_pol" tests="1" failures="0" errors="0" time="21.187"><testsuite name="isaac_ros_visual_slam.isaac_ros_visual_slam_pol.launch_tests" tests="1" failures="0" errors="0" skipped="0" time="21.187"><testcase classname="isaac_ros_visual_slam.IsaacROSVisualSlamTest" name="test_visual_slam_node" time="21.187" /></testsuite></testsuites>

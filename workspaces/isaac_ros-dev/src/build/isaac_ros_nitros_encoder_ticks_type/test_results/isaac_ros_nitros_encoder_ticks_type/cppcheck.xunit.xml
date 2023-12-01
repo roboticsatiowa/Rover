@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_encoder_ticks_type.cppcheck"
+  tests="3"
+  errors="0"
+  failures="0"
+  time="0.115"
+  skipped="0"
+>
+  <testcase
+    name="include/isaac_ros_nitros_encoder_ticks_type/nitros_encoder_ticks.hpp"
+    classname="isaac_ros_nitros_encoder_ticks_type.cppcheck"/>
+  <testcase
+    name="src/nitros_encoder_ticks.cpp"
+    classname="isaac_ros_nitros_encoder_ticks_type.cppcheck"/>
+  <testcase
+    name="test/src/nitros_encoder_ticks_forward_node.cpp"
+    classname="isaac_ros_nitros_encoder_ticks_type.cppcheck"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_encoder_ticks_type/nitros_encoder_ticks.hpp
+* src/nitros_encoder_ticks.cpp
+* test/src/nitros_encoder_ticks_forward_node.cpp</system-out>
+</testsuite>

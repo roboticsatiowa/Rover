@@ -1,0 +1,14 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_correlated_timestamp_type':
+ - /opt/ros/humble/bin/ament_uncrustify --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_correlated_timestamp_type/test_results/isaac_ros_nitros_correlated_timestamp_type/uncrustify.xunit.xml
+
+No code style divergence in file 'include/isaac_ros_nitros_correlated_timestamp_type/nitros_correlated_timestamp.hpp'
+
+No code style divergence in file 'src/nitros_correlated_timestamp.cpp'
+
+No code style divergence in file 'test/src/nitros_correlated_timestamp_forward_node.cpp'
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_correlated_timestamp_type/test_results/isaac_ros_nitros_correlated_timestamp_type/uncrustify.xunit.xml'

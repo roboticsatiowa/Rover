@@ -1,0 +1,21 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam':
+ - /opt/ros/humble/bin/ament_flake8 --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/flake8.xunit.xml
+
+
+8 files checked
+No problems found
+
+Checked files:
+
+* ./launch/isaac_ros_visual_slam_zed.launch.py
+* ./launch/isaac_ros_visual_slam_dual_realsense_fusion.launch.py
+* ./launch/isaac_ros_visual_slam_realsense.launch.py
+* ./launch/isaac_ros_visual_slam.launch.py
+* ./launch/isaac_ros_visual_slam_isaac_sim.launch.py
+* ./launch/isaac_ros_visual_slam_hawk.launch.py
+* ./test/isaac_ros_visual_slam_srv.py
+* ./test/isaac_ros_visual_slam_pol.py
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/flake8.xunit.xml'

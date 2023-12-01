@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros.pep257"
+  tests="3"
+  errors="0"
+  failures="0"
+  time="0.230"
+>
+  <testcase
+    name="./test/isaac_ros_nitros_multi_node_test_pol.py"
+    classname="isaac_ros_nitros.pep257"/>
+  <testcase
+    name="./test/isaac_ros_nitros_statistics_test_pol.py"
+    classname="isaac_ros_nitros.pep257"/>
+  <testcase
+    name="./test/isaac_ros_nitros_test_pol.py"
+    classname="isaac_ros_nitros.pep257"/>
+  <system-out>Checked files:
+* ./test/isaac_ros_nitros_multi_node_test_pol.py
+* ./test/isaac_ros_nitros_statistics_test_pol.py
+* ./test/isaac_ros_nitros_test_pol.py</system-out>
+</testsuite>

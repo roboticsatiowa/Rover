@@ -1,0 +1,68 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/cpplint.xunit.xml
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/cuvslam_ros_convertion.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/has_subscribers.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/landmarks_vis_helper.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/limited_vector.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/localizer_vis_helper.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/message_buffer.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/message_stream_sequencer.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/pose_cache.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/posegraph_vis_helper.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/qos.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/stopwatch.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/types.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/visual_slam_impl.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/viz_helper.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/visual_slam_node.hpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/cuvslam_ros_convertion.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/landmarks_vis_helper.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/localizer_vis_helper.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/pose_cache.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/posegraph_vis_helper.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/qos.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/visual_slam_impl.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/impl/viz_helper.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/visual_slam_main.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/src/visual_slam_node.cpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/test' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/test/test_message_buffer.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/test/test_message_stream_sequencer.cpp
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/cpplint.xunit.xml'

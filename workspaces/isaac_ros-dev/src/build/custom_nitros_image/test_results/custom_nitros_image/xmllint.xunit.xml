@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="custom_nitros_image.xmllint"
+  tests="1"
+  errors="0"
+  failures="0"
+  time="0.111"
+>
+  <testcase
+    name="package.xml"
+    classname="custom_nitros_image.xmllint"/>
+  <system-out>Checked files:
+* package.xml</system-out>
+</testsuite>

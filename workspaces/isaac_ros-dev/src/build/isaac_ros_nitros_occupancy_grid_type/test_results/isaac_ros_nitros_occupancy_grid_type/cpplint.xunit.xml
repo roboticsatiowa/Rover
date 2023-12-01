@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_occupancy_grid_type.cpplint"
+  tests="3"
+  failures="0"
+  errors="0"
+  time="0.608"
+>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_occupancy_grid_type/include/isaac_ros_nitros_occupancy_grid_type/nitros_occupancy_grid.hpp"
+    classname="isaac_ros_nitros_occupancy_grid_type.cpplint"/>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_occupancy_grid_type/src/nitros_occupancy_grid.cpp"
+    classname="isaac_ros_nitros_occupancy_grid_type.cpplint"/>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_occupancy_grid_type/test/src/nitros_occupancy_grid_forward_node.cpp"
+    classname="isaac_ros_nitros_occupancy_grid_type.cpplint"/>
+  <system-out>Checked files:
+* /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_occupancy_grid_type/include/isaac_ros_nitros_occupancy_grid_type/nitros_occupancy_grid.hpp
+* /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_occupancy_grid_type/src/nitros_occupancy_grid.cpp
+* /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_occupancy_grid_type/test/src/nitros_occupancy_grid_forward_node.cpp</system-out>
+</testsuite>

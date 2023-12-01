@@ -1,0 +1,36 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from isaac_ros_visual_slam_interfaces/action/LoadMapAndLocalize.action
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Pose.idl"
+#include "geometry_msgs/msg/Vector3.idl"
+
+module isaac_ros_visual_slam_interfaces {
+  module action {
+    @verbatim (language="comment", text=
+      "Load map from the file on the disk and try to localize on it.")
+    struct LoadMapAndLocalize_Goal {
+      @verbatim (language="comment", text=
+        "Localhost file path of the map")
+      string map_url;
+
+      @verbatim (language="comment", text=
+        "Initial guess(translation only) of where the robot is in the saved map.")
+      geometry_msgs::msg::Vector3 localize_near_point;
+    };
+    struct LoadMapAndLocalize_Result {
+      @verbatim (language="comment", text=
+        "Indicates if localization is successful")
+      boolean success;
+
+      @verbatim (language="comment", text=
+        "Pose of the localized robot in the map")
+      geometry_msgs::msg::Pose pose;
+    };
+    @verbatim (language="comment", text=
+      "Feedback")
+    struct LoadMapAndLocalize_Feedback {
+      int32 progress;
+    };
+  };
+};

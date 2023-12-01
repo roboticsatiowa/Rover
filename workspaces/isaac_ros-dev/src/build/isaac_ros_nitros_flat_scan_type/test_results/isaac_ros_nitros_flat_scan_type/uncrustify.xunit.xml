@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_flat_scan_type.uncrustify"
+  tests="3"
+  failures="0"
+  errors="0"
+  time="0.127"
+>
+  <testcase
+    name="include/isaac_ros_nitros_flat_scan_type/nitros_flat_scan.hpp"
+    classname="isaac_ros_nitros_flat_scan_type.uncrustify"/>
+  <testcase
+    name="src/nitros_flat_scan.cpp"
+    classname="isaac_ros_nitros_flat_scan_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_flat_scan_forward_node.cpp"
+    classname="isaac_ros_nitros_flat_scan_type.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_flat_scan_type/nitros_flat_scan.hpp
+* src/nitros_flat_scan.cpp
+* test/src/nitros_flat_scan_forward_node.cpp</system-out>
+</testsuite>

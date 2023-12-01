@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_common.cpplint"
+  tests="2"
+  failures="0"
+  errors="0"
+  time="0.209"
+>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include/isaac_ros_common/vpi_utilities.hpp"
+    classname="isaac_ros_common.cpplint"/>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/src/vpi_utilities.cpp"
+    classname="isaac_ros_common.cpplint"/>
+  <system-out>Checked files:
+* /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include/isaac_ros_common/vpi_utilities.hpp
+* /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/src/vpi_utilities.cpp</system-out>
+</testsuite>

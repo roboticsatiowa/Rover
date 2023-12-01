@@ -1,0 +1,1 @@
+/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_nitros_bridge_interfaces/msg/NitrosBridgeImage.msg

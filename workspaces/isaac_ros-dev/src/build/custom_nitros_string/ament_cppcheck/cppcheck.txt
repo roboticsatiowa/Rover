@@ -1,0 +1,8 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string':
+ - /opt/ros/humble/bin/ament_cppcheck --xunit-file /workspaces/isaac_ros-dev/build/custom_nitros_string/test_results/custom_nitros_string/cppcheck.xunit.xml --include_dirs /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/include
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/custom_nitros_string/test_results/custom_nitros_string/cppcheck.xunit.xml'

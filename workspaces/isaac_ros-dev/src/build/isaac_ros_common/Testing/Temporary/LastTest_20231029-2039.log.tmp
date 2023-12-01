@@ -1,0 +1,71 @@
+Start testing: Oct 29 15:39 CDT
+----------------------------------------------------------
+1/5 Testing: cppcheck
+1/5 Test: cppcheck
+Command: "/usr/bin/python3.8" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cppcheck.xunit.xml" "--package-name" "isaac_ros_common" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_common/ament_cppcheck/cppcheck.txt" "--command" "/opt/ros/humble/bin/ament_cppcheck" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cppcheck.xunit.xml" "--include_dirs" "/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include"
+Directory: /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common
+"cppcheck" start time: Oct 29 15:39 CDT
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common':
+ - /opt/ros/humble/bin/ament_cppcheck --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cppcheck.xunit.xml --include_dirs /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cppcheck.xunit.xml'
+<end of output>
+Test time =   2.18 sec
+----------------------------------------------------------
+Test Passed.
+"cppcheck" end time: Oct 29 15:39 CDT
+"cppcheck" time elapsed: 00:00:02
+----------------------------------------------------------
+
+2/5 Testing: cpplint
+2/5 Test: cpplint
+Command: "/usr/bin/python3.8" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cpplint.xunit.xml" "--package-name" "isaac_ros_common" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_common/ament_cpplint/cpplint.txt" "--command" "/opt/ros/humble/bin/ament_cpplint" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cpplint.xunit.xml"
+Directory: /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common
+"cpplint" start time: Oct 29 15:39 CDT
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cpplint.xunit.xml
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include/isaac_ros_common/vpi_utilities.hpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/src/vpi_utilities.cpp
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cpplint.xunit.xml'
+<end of output>
+Test time =   2.26 sec
+----------------------------------------------------------
+Test Passed.
+"cpplint" end time: Oct 29 15:39 CDT
+"cpplint" time elapsed: 00:00:02
+----------------------------------------------------------
+
+3/5 Testing: lint_cmake
+3/5 Test: lint_cmake
+Command: "/usr/bin/python3.8" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/lint_cmake.xunit.xml" "--package-name" "isaac_ros_common" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_common/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/humble/bin/ament_lint_cmake" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/lint_cmake.xunit.xml"
+Directory: /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common
+"lint_cmake" start time: Oct 29 15:39 CDT
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common':
+ - /opt/ros/humble/bin/ament_lint_cmake --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/lint_cmake.xunit.xml
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/lint_cmake.xunit.xml'
+<end of output>
+Test time =   2.03 sec
+----------------------------------------------------------
+Test Passed.
+"lint_cmake" end time: Oct 29 15:39 CDT
+"lint_cmake" time elapsed: 00:00:02
+----------------------------------------------------------
+

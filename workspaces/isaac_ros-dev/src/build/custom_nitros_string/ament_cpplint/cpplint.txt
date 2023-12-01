@@ -1,0 +1,20 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/custom_nitros_string/test_results/custom_nitros_string/cpplint.xunit.xml
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/include/custom_nitros_string/string_decoder_node.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/include/custom_nitros_string/string_encoder_node.hpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/src/string_decoder_node.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/src/string_encoder_node.cpp
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/custom_nitros_string/test_results/custom_nitros_string/cpplint.xunit.xml'

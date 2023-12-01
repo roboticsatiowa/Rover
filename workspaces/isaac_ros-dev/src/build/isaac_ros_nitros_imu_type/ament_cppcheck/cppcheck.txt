@@ -1,0 +1,8 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_imu_type':
+ - /opt/ros/humble/bin/ament_cppcheck --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_imu_type/test_results/isaac_ros_nitros_imu_type/cppcheck.xunit.xml --include_dirs /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_imu_type/include
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_imu_type/test_results/isaac_ros_nitros_imu_type/cppcheck.xunit.xml'

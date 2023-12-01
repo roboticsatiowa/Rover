@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_point_cloud_type.uncrustify"
+  tests="3"
+  failures="0"
+  errors="0"
+  time="0.107"
+>
+  <testcase
+    name="include/isaac_ros_nitros_point_cloud_type/nitros_point_cloud.hpp"
+    classname="isaac_ros_nitros_point_cloud_type.uncrustify"/>
+  <testcase
+    name="src/nitros_point_cloud.cpp"
+    classname="isaac_ros_nitros_point_cloud_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_point_cloud_forward_node.cpp"
+    classname="isaac_ros_nitros_point_cloud_type.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_point_cloud_type/nitros_point_cloud.hpp
+* src/nitros_point_cloud.cpp
+* test/src/nitros_point_cloud_forward_node.cpp</system-out>
+</testsuite>

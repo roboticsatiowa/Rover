@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="isaac_ros_nitros.isaac_ros_nitros_test_pol" tests="1" failures="0" errors="0" time="1.28"><testsuite name="isaac_ros_nitros.isaac_ros_nitros_test_pol.launch_tests" tests="1" failures="0" errors="0" skipped="0" time="1.28"><testcase classname="isaac_ros_nitros.IsaacROSNitrosNodeTest" name="test_forward_node" time="1.28" /></testsuite></testsuites>

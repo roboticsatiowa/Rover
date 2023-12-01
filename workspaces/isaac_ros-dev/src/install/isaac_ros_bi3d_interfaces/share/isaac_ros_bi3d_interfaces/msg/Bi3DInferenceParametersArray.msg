@@ -1,0 +1,1 @@
+/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_bi3d_interfaces/msg/Bi3DInferenceParametersArray.msg

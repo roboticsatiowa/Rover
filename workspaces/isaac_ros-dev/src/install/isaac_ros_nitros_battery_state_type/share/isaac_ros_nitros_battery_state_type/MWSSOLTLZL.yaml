@@ -1,0 +1,49 @@
+---
+name: MWSSOLTLZL_forward
+components:
+  - name: input
+    type: nvidia::gxf::DoubleBufferReceiver
+    parameters:
+      capacity: 1
+  - name: output
+    type: nvidia::gxf::DoubleBufferTransmitter
+  - type: nvidia::isaac_ros::MessageForward
+    parameters:
+      in: input
+      out: output
+  - type: nvidia::gxf::MessageAvailableSchedulingTerm
+    parameters:
+      receiver: input
+      min_size: 1
+---
+name: MWSSOLTLZL_sink
+components:
+  - name: input
+    type: nvidia::gxf::DoubleBufferReceiver
+    parameters:
+      capacity: 1
+  - type: nvidia::gxf::MessageAvailableSchedulingTerm
+    parameters:
+      receiver: input
+      min_size: 1
+  - name: sink
+    type: nvidia::isaac_ros::MessageRelay
+    parameters:
+      source: input
+---
+name: MWSSOLTLZL_YBZXDQYYNM
+components:
+  - type: nvidia::gxf::Connection
+    parameters:
+      source: MWSSOLTLZL_forward/output
+      target: MWSSOLTLZL_sink/input
+---
+name: MWSSOLTLZL_HBTGTNBEIO
+components:
+  - type: nvidia::gxf::GreedyScheduler
+    parameters:
+      clock: clock
+      stop_on_deadlock: false
+      check_recession_period_us: 100
+  - name: clock
+    type: nvidia::gxf::RealtimeClock

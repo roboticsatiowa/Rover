@@ -1,0 +1,8 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_gxf':
+ - /opt/ros/humble/bin/ament_cppcheck --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_gxf/test_results/isaac_ros_gxf/cppcheck.xunit.xml
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_gxf/test_results/isaac_ros_gxf/cppcheck.xunit.xml'

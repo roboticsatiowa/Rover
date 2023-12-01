@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20231103-0100-Experimental"
+	Name="roboticsatiowa-desktop"
+	Generator="ctest-3.22.1"
+	CompilerName="/usr/bin/c++"
+	CompilerVersion="9.4.0"
+	OSName="Linux"
+	Hostname="roboticsatiowa-desktop"
+	OSRelease="5.10.120-tegra"
+	OSVersion="#1 SMP PREEMPT Tue Aug 1 12:32:50 PDT 2023"
+	OSPlatform="aarch64"
+	Is64Bits="1"
+	VendorString=""
+	VendorID="Unknown Manufacturer"
+	FamilyID="8"
+	ModelID="0"
+	ProcessorCacheSize="0"
+	NumberOfLogicalCPU="6"
+	NumberOfPhysicalCPU="1"
+	TotalVirtualMemory="3422"
+	TotalPhysicalMemory="6845"
+	LogicalProcessorsPerPhysical="6"
+	ProcessorClockFrequency="0"
+	>
+	<Testing>
+		<StartDateTime>Nov 02 20:00 CDT</StartDateTime>
+		<StartTestTime>1698973219</StartTestTime>
+		<TestList>
+			<Test>./test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py</Test>
+			<Test>./cppcheck</Test>
+			<Test>./cpplint</Test>
+			<Test>./flake8</Test>
+			<Test>./lint_cmake</Test>
+			<Test>./pep257</Test>
+			<Test>./uncrustify</Test>
+			<Test>./xmllint</Test>
+		</TestList>
+		<Test Status="passed">
+			<Name>test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py</Name>
+			<Path>.</Path>
+			<FullName>./test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/launch_test/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.txt" "--command" "/usr/bin/python3" "-m" "launch_testing.launch_test" "/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/isaac_ros_nitros_april_tag_detection_array_type_test_pol.py" "--junit-xml=/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.xunit.xml" "--package-name=isaac_ros_nitros_april_tag_detection_array_type"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>12.6022</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/launch_test/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.txt" "--command" "/usr/bin/python3" "-m" "launch_testing.launch_test" "/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/isaac_ros_nitros_april_tag_detection_array_type_test_pol.py" "--junit-xml=/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.xunit.xml" "--package-name=isaac_ros_nitros_april_tag_detection_array_type"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type':
+ - /usr/bin/python3 -m launch_testing.launch_test /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/isaac_ros_nitros_april_tag_detection_array_type_test_pol.py --junit-xml=/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.xunit.xml --package-name=isaac_ros_nitros_april_tag_detection_array_type
+[INFO] [launch]: All log files can be found below /home/admin/.ros/log/2023-11-02-20-00-26-745510-roboticsatiowa-desktop-11052
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [component_container_mt-1]: process started with pid [11080]
+[component_container_mt-1] [INFO] [1698973227.442923455] [isaac_ros_nitros_container.test_container]: Load Library: /workspaces/isaac_ros-dev/install/isaac_ros_nitros_april_tag_detection_array_type/lib/libisaac_ros_nitros_april_tag_detection_array_forward_node.so
+[component_container_mt-1] [INFO] [1698973227.532641095] [isaac_ros_nitros_container.test_container]: Found class: rclcpp_components::NodeFactoryTemplate&lt;nvidia::isaac_ros::nitros::NitrosAprilTagDetectionArrayForwardNode&gt;
+[component_container_mt-1] [INFO] [1698973227.532829607] [isaac_ros_nitros_container.test_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate&lt;nvidia::isaac_ros::nitros::NitrosAprilTagDetectionArrayForwardNode&gt;
+[component_container_mt-1] [INFO] [1698973227.552933816] [NitrosContext]: [NitrosContext] Creating a new shared context
+[component_container_mt-1] [INFO] [1698973227.553754075] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Initializing NitrosNode
+[component_container_mt-1] [INFO] [1698973227.558476590] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/std/libgxf_std.so
+[component_container_mt-1] [INFO] [1698973227.582387374] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/libgxf_gxf_helpers.so
+[component_container_mt-1] [INFO] [1698973227.596098469] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/libgxf_sight.so
+[component_container_mt-1] [INFO] [1698973227.611097825] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/libgxf_atlas.so
+[component_container_mt-1] [INFO] [1698973227.626647968] [NitrosContext]: [NitrosContext] Loading application: '/workspaces/isaac_ros-dev/install/isaac_ros_nitros/share/isaac_ros_nitros/config/type_adapter_nitros_context_graph.yaml'
+[component_container_mt-1] [INFO] [1698973227.632805560] [NitrosContext]: [NitrosContext] Initializing application...
+[component_container_mt-1] [INFO] [1698973227.657900733] [NitrosContext]: [NitrosContext] Running application...
+[component_container_mt-1] [NON-XML-CHAR-0x1B][33m2023-11-02 20:00:27.658 WARN  gxf/std/program.cpp@514: No system specified. Nothing to do[NON-XML-CHAR-0x1B][0m
+[component_container_mt-1] [INFO] [1698973227.662453519] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Starting NitrosNode
+[component_container_mt-1] [INFO] [1698973227.662614416] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading built-in preset extension specs
+[component_container_mt-1] [INFO] [1698973227.675188610] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading built-in extension specs
+[component_container_mt-1] [INFO] [1698973227.675407299] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading preset extension specs
+[component_container_mt-1] [INFO] [1698973227.675476228] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading extension specs
+[component_container_mt-1] [INFO] [1698973227.675569508] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading generator rules
+[component_container_mt-1] [INFO] [1698973227.675651908] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading extensions
+[component_container_mt-1] [INFO] [1698973227.677707949] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Loading extension: gxf/lib/libgxf_message_compositor.so
+[component_container_mt-1] [INFO] [1698973227.690198079] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Loading extension: gxf/lib/cuda/libgxf_cuda.so
+[component_container_mt-1] [INFO] [1698973227.703875413] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Loading extension: gxf/lib/serialization/libgxf_serialization.so
+[component_container_mt-1] [INFO] [1698973227.720201335] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Loading extension: gxf/lib/fiducial_message/test/libisaac_ros_nitros_april_tag_detection_array_test_ext.so
+[component_container_mt-1] [INFO] [1698973227.736782489] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/libgxf_isaac_messages.so
+[component_container_mt-1] [INFO] [1698973227.746380480] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading graph to the optimizer
+[component_container_mt-1] [INFO] [1698973227.752730969] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Running optimization
+[component_container_mt-1] [INFO] [1698973227.762347072] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Obtaining graph IO group info from the optimizer
+[component_container_mt-1] [INFO] [1698973227.763872966] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Creating negotiated publishers/subscribers
+[component_container_mt-1] [INFO] [1698973227.764042663] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberGroup] Expanding "any" data formats to all registered data formats
+[component_container_mt-1] [INFO] [1698973227.764346600] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberGroup] Pinning the component "forward/input" (type="nvidia::gxf::DoubleBufferReceiver") to use its compatible format only: "nitros_april_tag_detection_array"
+[component_container_mt-1] [INFO] [1698973227.764778058] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberGroup] Pinning the component "sink/sink" (type="nvidia::isaac_ros::MessageRelay") to use its compatible format only: "nitros_april_tag_detection_array"
+[component_container_mt-1] [INFO] [1698973227.785145915] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Starting negotiation...
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/isaac_ros_test/NitrosAprilTagDetectionArrayForwardNode' in container '/isaac_ros_nitros_container/test_container'
+[component_container_mt-1] [INFO] [1698973228.786592044] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Starting post negotiation setup
+[component_container_mt-1] [INFO] [1698973228.786869485] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Getting data format negotiation results
+[component_container_mt-1] [INFO] [1698973228.786964109] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisher] Negotiation ended with no results
+[component_container_mt-1] [INFO] [1698973228.787054702] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisher] Use only the compatible publisher: topic_name="/isaac_ros_test/output", data_format="nitros_april_tag_detection_array"
+[component_container_mt-1] [INFO] [1698973228.787172718] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosSubscriber] Negotiation ended with no results
+[component_container_mt-1] [INFO] [1698973228.787240239] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosSubscriber] Use the compatible subscriber: topic_name="/isaac_ros_test/input", data_format="nitros_april_tag_detection_array"
+[component_container_mt-1] [INFO] [1698973228.787390255] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Exporting the final graph based on the negotiation results
+[component_container_mt-1] [INFO] [1698973228.811543664] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Wrote the final top level YAML graph to "/workspaces/isaac_ros-dev/install/isaac_ros_nitros_april_tag_detection_array_type/share/isaac_ros_nitros_april_tag_detection_array_type/KLKFQHSRRL.yaml"
+[component_container_mt-1] [INFO] [1698973228.811774705] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Calling user's pre-load-graph callback
+[component_container_mt-1] [INFO] [1698973228.811853521] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Loading application
+[component_container_mt-1] [INFO] [1698973228.811958962] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Loading application: '/workspaces/isaac_ros-dev/install/isaac_ros_nitros_april_tag_detection_array_type/share/isaac_ros_nitros_april_tag_detection_array_type/KLKFQHSRRL.yaml'
+[component_container_mt-1] [INFO] [1698973228.822103450] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Linking Nitros pub/sub to the loaded application
+[component_container_mt-1] [INFO] [1698973228.822508636] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Calling user's post-load-graph callback
+[component_container_mt-1] [INFO] [1698973228.822586556] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Initializing application...
+[component_container_mt-1] [INFO] [1698973228.838835805] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Running application...
+[component_container_mt-1] [INFO] [1698973228.839255615] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Starting a heartbeat timer (eid=17)
+Warning: A NumPy version &gt;=1.19.5 and &lt;1.27.0 is required for this version of SciPy (detected version 1.17.4)
+test_nitros_april_tag_detection_array_type_conversions (isaac_ros_nitros_april_tag_detection_array_type.IsaacROSNitrosAprilTagDetectionArrayTest)
+Expect the tag from NitrosAprilTagDetectionArray type to be compatible with source. ... [INFO] [1698973230.087215148] [isaac_ros_test.isaac_ros_base_test_node]: Starting test for case: /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/test_cases/nitros_april_tag_detection_array/profile
+/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/test_cases/nitros_april_tag_detection_array/profile
+[component_container_mt-1] [WARN] [1698973231.149513873] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberBase] Failed to get timestamp from a NITROS message (eid=39)
+[component_container_mt-1] [WARN] [1698973231.161893347] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberBase] Failed to get timestamp from a NITROS message (eid=48)
+[component_container_mt-1] [WARN] [1698973231.162696934] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberBase] Failed to get timestamp from a NITROS message (eid=39)
+[component_container_mt-1] [WARN] [1698973231.164966383] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberBase] Failed to get timestamp from a NITROS message (eid=48)
+The received april tag detection array has been verified successfully
+[component_container_mt-1] [WARN] [1698973231.172953839] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberBase] Failed to get timestamp from a NITROS message (eid=57)
+[component_container_mt-1] [WARN] [1698973231.174733270] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosPublisherSubscriberBase] Failed to get timestamp from a NITROS message (eid=57)
+[INFO] [component_container_mt-1]: sending signal 'SIGINT' to process[component_container_mt-1]
+[component_container_mt-1] [INFO] [1698973231.816456100] [rclcpp]: signal_handler(signum=2)
+[component_container_mt-1] [INFO] [1698973231.822369019] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Terminating the running application
+[component_container_mt-1] [INFO] [1698973231.822453820] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Interrupting GXF...
+[component_container_mt-1] [INFO] [1698973231.822540060] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Waiting on GXF...
+[component_container_mt-1] [INFO] [1698973231.822804445] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Deinitializing...
+[component_container_mt-1] [INFO] [1698973231.823500608] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosContext] Destroying context
+[component_container_mt-1] [INFO] [1698973231.826607212] [isaac_ros_test.NitrosAprilTagDetectionArrayForwardNode]: [NitrosNode] Application termination done
+[INFO] [component_container_mt-1]: process has finished cleanly [pid 11080]
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.505s
+
+OK
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+OK
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/test_isaac_ros_nitros_april_tag_detection_array_type_test_pol.py.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>launch_test</Label>
+			</Labels>
+		</Test>
+		<Test Status="passed">
+			<Name>cppcheck</Name>
+			<Path>.</Path>
+			<FullName>./cppcheck</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cppcheck.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_cppcheck/cppcheck.txt" "--command" "/opt/ros/humble/bin/ament_cppcheck" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cppcheck.xunit.xml" "--include_dirs" "/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/include"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>2.1809</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cppcheck.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_cppcheck/cppcheck.txt" "--command" "/opt/ros/humble/bin/ament_cppcheck" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cppcheck.xunit.xml" "--include_dirs" "/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/include"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type':
+ - /opt/ros/humble/bin/ament_cppcheck --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cppcheck.xunit.xml --include_dirs /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/include
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cppcheck.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>cppcheck</Label>
+				<Label>linter</Label>
+			</Labels>
+		</Test>
+		<Test Status="passed">
+			<Name>cpplint</Name>
+			<Path>.</Path>
+			<FullName>./cpplint</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cpplint.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_cpplint/cpplint.txt" "--command" "/opt/ros/humble/bin/ament_cpplint" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cpplint.xunit.xml"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>2.90673</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cpplint.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_cpplint/cpplint.txt" "--command" "/opt/ros/humble/bin/ament_cpplint" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cpplint.xunit.xml"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cpplint.xunit.xml
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/include/extensions/fiducials/gems/fiducial_info.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/include/extensions/fiducials/messages/fiducial_message.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/include/isaac_ros_nitros_april_tag_detection_array_type/nitros_april_tag_detection_array.hpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/src/fiducial_message.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/src/nitros_april_tag_detection_array.cpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/src/fiducial_message_test_ext.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type/test/src/nitros_april_tag_detection_array_forward_node.cpp
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/cpplint.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>cpplint</Label>
+				<Label>linter</Label>
+			</Labels>
+		</Test>
+		<Test Status="passed">
+			<Name>flake8</Name>
+			<Path>.</Path>
+			<FullName>./flake8</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/flake8.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_flake8/flake8.txt" "--command" "/opt/ros/humble/bin/ament_flake8" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/flake8.xunit.xml"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>3.26664</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/flake8.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_flake8/flake8.txt" "--command" "/opt/ros/humble/bin/ament_flake8" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/flake8.xunit.xml"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type':
+ - /opt/ros/humble/bin/ament_flake8 --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/flake8.xunit.xml
+
+1 files checked
+No problems found
+
+Checked files:
+
+* ./test/isaac_ros_nitros_april_tag_detection_array_type_test_pol.py
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/flake8.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>flake8</Label>
+				<Label>linter</Label>
+			</Labels>
+		</Test>
+		<Test Status="passed">
+			<Name>lint_cmake</Name>
+			<Path>.</Path>
+			<FullName>./lint_cmake</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/lint_cmake.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/humble/bin/ament_lint_cmake" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/lint_cmake.xunit.xml"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>1.97389</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/lint_cmake.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/humble/bin/ament_lint_cmake" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/lint_cmake.xunit.xml"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type':
+ - /opt/ros/humble/bin/ament_lint_cmake --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/lint_cmake.xunit.xml
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/lint_cmake.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>lint_cmake</Label>
+				<Label>linter</Label>
+			</Labels>
+		</Test>
+		<Test Status="passed">
+			<Name>pep257</Name>
+			<Path>.</Path>
+			<FullName>./pep257</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/pep257.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_pep257/pep257.txt" "--command" "/opt/ros/humble/bin/ament_pep257" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/pep257.xunit.xml"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>2.29477</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/pep257.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_pep257/pep257.txt" "--command" "/opt/ros/humble/bin/ament_pep257" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/pep257.xunit.xml"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type':
+ - /opt/ros/humble/bin/ament_pep257 --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/pep257.xunit.xml
+checking ./test/isaac_ros_nitros_april_tag_detection_array_type_test_pol.py
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/pep257.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>linter</Label>
+				<Label>pep257</Label>
+			</Labels>
+		</Test>
+		<Test Status="passed">
+			<Name>uncrustify</Name>
+			<Path>.</Path>
+			<FullName>./uncrustify</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/uncrustify.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_uncrustify/uncrustify.txt" "--command" "/opt/ros/humble/bin/ament_uncrustify" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/uncrustify.xunit.xml"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>2.14703</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/uncrustify.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_uncrustify/uncrustify.txt" "--command" "/opt/ros/humble/bin/ament_uncrustify" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/uncrustify.xunit.xml"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type':
+ - /opt/ros/humble/bin/ament_uncrustify --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/uncrustify.xunit.xml
+No code style divergence in file 'include/extensions/fiducials/gems/fiducial_info.hpp'
+
+No code style divergence in file 'include/extensions/fiducials/messages/fiducial_message.hpp'
+
+No code style divergence in file 'include/isaac_ros_nitros_april_tag_detection_array_type/nitros_april_tag_detection_array.hpp'
+
+No code style divergence in file 'src/fiducial_message.cpp'
+
+No code style divergence in file 'src/nitros_april_tag_detection_array.cpp'
+
+No code style divergence in file 'test/src/fiducial_message_test_ext.cpp'
+
+No code style divergence in file 'test/src/nitros_april_tag_detection_array_forward_node.cpp'
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/uncrustify.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>linter</Label>
+				<Label>uncrustify</Label>
+			</Labels>
+		</Test>
+		<Test Status="passed">
+			<Name>xmllint</Name>
+			<Path>.</Path>
+			<FullName>./xmllint</FullName>
+			<FullCommandLine>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/xmllint.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_xmllint/xmllint.txt" "--command" "/opt/ros/humble/bin/ament_xmllint" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/xmllint.xunit.xml"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>2.21427</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/usr/bin/python3.8 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/xmllint.xunit.xml" "--package-name" "isaac_ros_nitros_april_tag_detection_array_type" "--output-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/ament_xmllint/xmllint.txt" "--command" "/opt/ros/humble/bin/ament_xmllint" "--xunit-file" "/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/xmllint.xunit.xml"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_april_tag_detection_array_type':
+ - /opt/ros/humble/bin/ament_xmllint --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/xmllint.xunit.xml
+File 'package.xml' is valid
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_april_tag_detection_array_type/test_results/isaac_ros_nitros_april_tag_detection_array_type/xmllint.xunit.xml'
+</Value>
+				</Measurement>
+			</Results>
+			<Labels>
+				<Label>linter</Label>
+				<Label>xmllint</Label>
+			</Labels>
+		</Test>
+		<EndDateTime>Nov 02 20:00 CDT</EndDateTime>
+		<EndTestTime>1698973249</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

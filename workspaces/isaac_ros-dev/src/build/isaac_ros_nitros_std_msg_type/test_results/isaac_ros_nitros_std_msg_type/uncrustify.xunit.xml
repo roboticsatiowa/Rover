@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_std_msg_type.uncrustify"
+  tests="3"
+  failures="0"
+  errors="0"
+  time="0.089"
+>
+  <testcase
+    name="include/isaac_ros_nitros_std_msg_type/nitros_int64.hpp"
+    classname="isaac_ros_nitros_std_msg_type.uncrustify"/>
+  <testcase
+    name="src/nitros_int64.cpp"
+    classname="isaac_ros_nitros_std_msg_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_int64_forward_node.cpp"
+    classname="isaac_ros_nitros_std_msg_type.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_std_msg_type/nitros_int64.hpp
+* src/nitros_int64.cpp
+* test/src/nitros_int64_forward_node.cpp</system-out>
+</testsuite>

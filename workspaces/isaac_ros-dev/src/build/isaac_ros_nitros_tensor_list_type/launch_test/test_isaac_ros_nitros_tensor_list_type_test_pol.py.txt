@@ -1,0 +1,64 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_tensor_list_type':
+ - /usr/bin/python3 -m launch_testing.launch_test /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_tensor_list_type/test/isaac_ros_nitros_tensor_list_type_test_pol.py --junit-xml=/workspaces/isaac_ros-dev/build/isaac_ros_nitros_tensor_list_type/test_results/isaac_ros_nitros_tensor_list_type/test_isaac_ros_nitros_tensor_list_type_test_pol.py.xunit.xml --package-name=isaac_ros_nitros_tensor_list_type
+
+[INFO] [launch]: All log files can be found below /home/admin/.ros/log/2023-11-02-20-09-19-443574-roboticsatiowa-desktop-13611
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [component_container_mt-1]: process started with pid [13638]
+[component_container_mt-1] [INFO] [1698973761.232699888] [isaac_ros_nitros_container.image_container]: Load Library: /workspaces/isaac_ros-dev/install/isaac_ros_nitros_tensor_list_type/lib/libnitros_tensor_list_forward_node.so
+[component_container_mt-1] [INFO] [1698973761.297317459] [isaac_ros_nitros_container.image_container]: Found class: rclcpp_components::NodeFactoryTemplate<nvidia::isaac_ros::nitros::NitrosNode>
+[component_container_mt-1] [INFO] [1698973761.297556500] [isaac_ros_nitros_container.image_container]: Found class: rclcpp_components::NodeFactoryTemplate<nvidia::isaac_ros::nitros::NitrosTensorListForwardNode>
+[component_container_mt-1] [INFO] [1698973761.297621332] [isaac_ros_nitros_container.image_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<nvidia::isaac_ros::nitros::NitrosTensorListForwardNode>
+[component_container_mt-1] [INFO] [1698973761.339996414] [NitrosContext]: [NitrosContext] Creating a new shared context
+[component_container_mt-1] [INFO] [1698973761.341012322] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Initializing NitrosNode
+[component_container_mt-1] [INFO] [1698973761.345963350] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/std/libgxf_std.so
+[component_container_mt-1] [INFO] [1698973761.373462821] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/libgxf_gxf_helpers.so
+[component_container_mt-1] [INFO] [1698973761.386859738] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/libgxf_sight.so
+[component_container_mt-1] [INFO] [1698973761.402525689] [NitrosContext]: [NitrosContext] Loading extension: gxf/lib/libgxf_atlas.so
+[component_container_mt-1] [INFO] [1698973761.417248532] [NitrosContext]: [NitrosContext] Loading application: '/workspaces/isaac_ros-dev/install/isaac_ros_nitros/share/isaac_ros_nitros/config/type_adapter_nitros_context_graph.yaml'
+[component_container_mt-1] [INFO] [1698973761.423053867] [NitrosContext]: [NitrosContext] Initializing application...
+[component_container_mt-1] [INFO] [1698973761.447770671] [NitrosContext]: [NitrosContext] Running application...
+[component_container_mt-1] [33m2023-11-02 20:09:21.447 WARN  gxf/std/program.cpp@514: No system specified. Nothing to do[0m
+[component_container_mt-1] [INFO] [1698973761.453721318] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Starting NitrosNode
+[component_container_mt-1] [INFO] [1698973761.453870183] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading built-in preset extension specs
+[component_container_mt-1] [INFO] [1698973761.464795507] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading built-in extension specs
+[component_container_mt-1] [INFO] [1698973761.465021076] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading preset extension specs
+[component_container_mt-1] [INFO] [1698973761.465095956] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading extension specs
+[component_container_mt-1] [INFO] [1698973761.465148596] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading generator rules
+[component_container_mt-1] [INFO] [1698973761.465227701] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading extensions
+[component_container_mt-1] [INFO] [1698973761.467231741] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosContext] Loading extension: gxf/lib/libgxf_message_compositor.so
+[component_container_mt-1] [INFO] [1698973761.477962152] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosContext] Loading extension: gxf/lib/cuda/libgxf_cuda.so
+[component_container_mt-1] [INFO] [1698973761.491757215] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosContext] Loading extension: gxf/lib/serialization/libgxf_serialization.so
+[component_container_mt-1] [INFO] [1698973761.507599327] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading graph to the optimizer
+[component_container_mt-1] [INFO] [1698973761.513590167] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Running optimization
+[component_container_mt-1] [INFO] [1698973761.523687807] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Obtaining graph IO group info from the optimizer
+[component_container_mt-1] [INFO] [1698973761.525290021] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Creating negotiated publishers/subscribers
+[component_container_mt-1] [INFO] [1698973761.525524358] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosPublisherSubscriberGroup] Expanding "any" data formats to all registered data formats
+[component_container_mt-1] [INFO] [1698973761.525719687] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosPublisherSubscriberGroup] Pinning the component "forward/input" (type="nvidia::gxf::DoubleBufferReceiver") to use its compatible format only: "nitros_tensor_list_nchw"
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/isaac_ros_test/NitrosTensorListForwardNode' in container '/isaac_ros_nitros_container/image_container'
+[component_container_mt-1] [INFO] [1698973761.525820776] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosPublisherSubscriberGroup] Pinning the component "sink/sink" (type="nvidia::isaac_ros::MessageRelay") to use its compatible format only: "nitros_tensor_list_nchw"
+[component_container_mt-1] [INFO] [1698973761.546604571] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Starting negotiation...
+Warning: A NumPy version >=1.19.5 and <1.27.0 is required for this version of SciPy (detected version 1.17.4)
+test_forward_node (isaac_ros_nitros_tensor_list_type.IsaacROSNitrosTensorListTest) ... [component_container_mt-1] [INFO] [1698973762.548914255] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Starting post negotiation setup
+[component_container_mt-1] [INFO] [1698973762.549134384] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Getting data format negotiation results
+[component_container_mt-1] [INFO] [1698973762.549209072] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosPublisher] Negotiation ended with no results
+[component_container_mt-1] [INFO] [1698973762.549312817] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosPublisher] Use only the compatible publisher: topic_name="/isaac_ros_test/topic_forward_output", data_format="nitros_tensor_list_nchw"
+[component_container_mt-1] [INFO] [1698973762.549408561] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosSubscriber] Negotiation ended with no results
+[component_container_mt-1] [INFO] [1698973762.549464529] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosSubscriber] Use the compatible subscriber: topic_name="/isaac_ros_test/topic_forward_input", data_format="nitros_tensor_list_nchw"
+[component_container_mt-1] [INFO] [1698973762.549586706] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Exporting the final graph based on the negotiation results
+[component_container_mt-1] [INFO] [1698973762.580100780] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Wrote the final top level YAML graph to "/workspaces/isaac_ros-dev/install/isaac_ros_nitros_tensor_list_type/share/isaac_ros_nitros_tensor_list_type/RVSZHKIPYU.yaml"
+[component_container_mt-1] [INFO] [1698973762.580319693] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Calling user's pre-load-graph callback
+[component_container_mt-1] [INFO] [1698973762.580457165] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Loading application
+[component_container_mt-1] [INFO] [1698973762.580573166] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosContext] Loading application: '/workspaces/isaac_ros-dev/install/isaac_ros_nitros_tensor_list_type/share/isaac_ros_nitros_tensor_list_type/RVSZHKIPYU.yaml'
+[component_container_mt-1] [INFO] [1698973762.592820383] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Linking Nitros pub/sub to the loaded application
+[component_container_mt-1] [INFO] [1698973762.594011652] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Calling user's post-load-graph callback
+[component_container_mt-1] [INFO] [1698973762.594316101] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosContext] Initializing application...
+[component_container_mt-1] [INFO] [1698973762.615641051] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosContext] Running application...
+[component_container_mt-1] [INFO] [1698973762.616065628] [isaac_ros_test.NitrosTensorListForwardNode]: [NitrosNode] Starting a heartbeat timer (eid=17)
+[INFO] [1698973762.947951471] [isaac_ros_test.isaac_ros_base_test_node]: Starting Isaac ROS NitrosNode POL Test
+[INFO] [1698973763.098483915] [isaac_ros_test.isaac_ros_base_test_node]: Start publishing messages
+[INFO] [1698973765.110696018] [isaac_ros_test.isaac_ros_base_test_node]: Test Results:
+# of Messages Sent: 131
+# of Messages Received: 128
+# of Messages Dropped: 3
+Message Drop Rate: 2.2900763358778624%
+[INFO] [1698973765.529193152] [isaac_ros_test.isaac_ros_base_test_node]: Source and received tensor lists are matched.

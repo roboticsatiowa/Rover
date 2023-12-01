@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_managed_nitros.uncrustify"
+  tests="2"
+  failures="0"
+  errors="0"
+  time="0.082"
+>
+  <testcase
+    name="include/isaac_ros_managed_nitros/managed_nitros_publisher.hpp"
+    classname="isaac_ros_managed_nitros.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_managed_nitros/managed_nitros_subscriber.hpp"
+    classname="isaac_ros_managed_nitros.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_managed_nitros/managed_nitros_publisher.hpp
+* include/isaac_ros_managed_nitros/managed_nitros_subscriber.hpp</system-out>
+</testsuite>

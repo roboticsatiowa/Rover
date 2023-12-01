@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_image_type.xmllint"
+  tests="1"
+  errors="0"
+  failures="0"
+  time="0.171"
+>
+  <testcase
+    name="package.xml"
+    classname="isaac_ros_nitros_image_type.xmllint"/>
+  <system-out>Checked files:
+* package.xml</system-out>
+</testsuite>

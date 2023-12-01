@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/workspaces/isaac_ros-dev/build/custom_nitros_image/libgpu_image_builder_node.so" "/workspaces/isaac_ros-dev/build/custom_nitros_image/libgpu_image_viewer_node.so" "TARGETS" "gpu_image_builder_node" "gpu_image_viewer_node" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

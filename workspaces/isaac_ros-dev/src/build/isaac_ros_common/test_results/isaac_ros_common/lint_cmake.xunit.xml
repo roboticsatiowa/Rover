@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_common.lint_cmake"
+  tests="4"
+  errors="0"
+  failures="0"
+  time="0.017"
+>
+  <testcase
+    name="CMakeLists.txt"
+    classname="isaac_ros_common.lint_cmake"/>
+  <testcase
+    name="cmake/isaac_ros_common-extras-modules.cmake"
+    classname="isaac_ros_common.lint_cmake"/>
+  <testcase
+    name="cmake/isaac_ros_common-extras.cmake"
+    classname="isaac_ros_common.lint_cmake"/>
+  <testcase
+    name="cmake/modules/FindTENSORRT.cmake"
+    classname="isaac_ros_common.lint_cmake"/>
+  <system-out>Checked files:
+* CMakeLists.txt
+* cmake/isaac_ros_common-extras-modules.cmake
+* cmake/isaac_ros_common-extras.cmake
+* cmake/modules/FindTENSORRT.cmake</system-out>
+</testsuite>

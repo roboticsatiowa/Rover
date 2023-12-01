@@ -1,0 +1,6 @@
+{
+  "package_name": "isaac_ros_nitros_interfaces",
+  "non_idl_tuples": [
+    "/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_interfaces:msg/TopicStatistics.msg"
+  ]
+}

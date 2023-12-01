@@ -1,0 +1,16 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string':
+ - /opt/ros/humble/bin/ament_uncrustify --xunit-file /workspaces/isaac_ros-dev/build/custom_nitros_string/test_results/custom_nitros_string/uncrustify.xunit.xml
+
+No code style divergence in file 'include/custom_nitros_string/string_decoder_node.hpp'
+
+No code style divergence in file 'include/custom_nitros_string/string_encoder_node.hpp'
+
+No code style divergence in file 'src/string_decoder_node.cpp'
+
+No code style divergence in file 'src/string_encoder_node.cpp'
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/custom_nitros_string/test_results/custom_nitros_string/uncrustify.xunit.xml'

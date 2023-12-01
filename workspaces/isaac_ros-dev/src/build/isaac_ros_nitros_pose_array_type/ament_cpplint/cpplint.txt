@@ -1,0 +1,20 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_array_type':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_pose_array_type/test_results/isaac_ros_nitros_pose_array_type/cpplint.xunit.xml
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_array_type/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_array_type/include/isaac_ros_nitros_pose_array_type/nitros_pose_array.hpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_array_type/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_array_type/src/nitros_pose_array.cpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_array_type/test/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_array_type/test/src/nitros_pose_array_forward_node.cpp
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_pose_array_type/test_results/isaac_ros_nitros_pose_array_type/cpplint.xunit.xml'

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_imu_type.pep257"
+  tests="1"
+  errors="0"
+  failures="0"
+  time="0.147"
+>
+  <testcase
+    name="./test/isaac_ros_nitros_imu_type_test_pol.py"
+    classname="isaac_ros_nitros_imu_type.pep257"/>
+  <system-out>Checked files:
+* ./test/isaac_ros_nitros_imu_type_test_pol.py</system-out>
+</testsuite>

@@ -1,0 +1,11 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros':
+ - /opt/ros/humble/bin/ament_pep257 --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros/test_results/isaac_ros_nitros/pep257.xunit.xml
+
+checking ./test/isaac_ros_nitros_multi_node_test_pol.py
+checking ./test/isaac_ros_nitros_statistics_test_pol.py
+checking ./test/isaac_ros_nitros_test_pol.py
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros/test_results/isaac_ros_nitros/pep257.xunit.xml'

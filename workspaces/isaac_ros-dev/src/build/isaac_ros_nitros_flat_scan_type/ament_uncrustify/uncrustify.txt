@@ -1,0 +1,14 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_flat_scan_type':
+ - /opt/ros/humble/bin/ament_uncrustify --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_nitros_flat_scan_type/test_results/isaac_ros_nitros_flat_scan_type/uncrustify.xunit.xml
+
+No code style divergence in file 'include/isaac_ros_nitros_flat_scan_type/nitros_flat_scan.hpp'
+
+No code style divergence in file 'src/nitros_flat_scan.cpp'
+
+No code style divergence in file 'test/src/nitros_flat_scan_forward_node.cpp'
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_nitros_flat_scan_type/test_results/isaac_ros_nitros_flat_scan_type/uncrustify.xunit.xml'

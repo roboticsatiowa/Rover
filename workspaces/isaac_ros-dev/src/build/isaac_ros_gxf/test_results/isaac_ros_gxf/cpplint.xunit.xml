@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_gxf.cpplint"
+  tests="1"
+  failures="0"
+  errors="0"
+  time="0.045"
+>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_gxf/src/isaac_ros_gxf.cpp"
+    classname="isaac_ros_gxf.cpplint"/>
+  <system-out>Checked files:
+* /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_gxf/src/isaac_ros_gxf.cpp</system-out>
+</testsuite>

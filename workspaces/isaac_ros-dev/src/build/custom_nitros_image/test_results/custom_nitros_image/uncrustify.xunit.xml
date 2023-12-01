@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="custom_nitros_image.uncrustify"
+  tests="4"
+  failures="0"
+  errors="0"
+  time="0.094"
+>
+  <testcase
+    name="include/custom_nitros_image/gpu_image_builder_node.hpp"
+    classname="custom_nitros_image.uncrustify"/>
+  <testcase
+    name="include/custom_nitros_image/gpu_image_viewer_node.hpp"
+    classname="custom_nitros_image.uncrustify"/>
+  <testcase
+    name="src/gpu_image_builder_node.cpp"
+    classname="custom_nitros_image.uncrustify"/>
+  <testcase
+    name="src/gpu_image_viewer_node.cpp"
+    classname="custom_nitros_image.uncrustify"/>
+  <system-out>Checked files:
+* include/custom_nitros_image/gpu_image_builder_node.hpp
+* include/custom_nitros_image/gpu_image_viewer_node.hpp
+* src/gpu_image_builder_node.cpp
+* src/gpu_image_viewer_node.cpp</system-out>
+</testsuite>

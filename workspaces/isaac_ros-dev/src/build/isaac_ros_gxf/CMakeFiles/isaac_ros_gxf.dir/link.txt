@@ -1,0 +1,2 @@
+/usr/bin/ar qc libisaac_ros_gxf.a CMakeFiles/isaac_ros_gxf.dir/src/isaac_ros_gxf.cpp.o
+/usr/bin/ranlib libisaac_ros_gxf.a

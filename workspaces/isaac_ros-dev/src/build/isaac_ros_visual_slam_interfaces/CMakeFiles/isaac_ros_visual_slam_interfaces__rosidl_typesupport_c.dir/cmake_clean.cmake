@@ -1,0 +1,27 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/action/load_map_and_localize__type_support.cpp.o"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/action/load_map_and_localize__type_support.cpp.o.d"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/action/save_map__type_support.cpp.o"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/action/save_map__type_support.cpp.o.d"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/msg/visual_slam_status__type_support.cpp.o"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/msg/visual_slam_status__type_support.cpp.o.d"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/get_all_poses__type_support.cpp.o"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/get_all_poses__type_support.cpp.o.d"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/reset__type_support.cpp.o"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/reset__type_support.cpp.o.d"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/set_odometry_pose__type_support.cpp.o"
+  "CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/set_odometry_pose__type_support.cpp.o.d"
+  "libisaac_ros_visual_slam_interfaces__rosidl_typesupport_c.pdb"
+  "libisaac_ros_visual_slam_interfaces__rosidl_typesupport_c.so"
+  "rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/action/load_map_and_localize__type_support.cpp"
+  "rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/action/save_map__type_support.cpp"
+  "rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/msg/visual_slam_status__type_support.cpp"
+  "rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/get_all_poses__type_support.cpp"
+  "rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/reset__type_support.cpp"
+  "rosidl_typesupport_c/isaac_ros_visual_slam_interfaces/srv/set_odometry_pose__type_support.cpp"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/isaac_ros_visual_slam_interfaces__rosidl_typesupport_c.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

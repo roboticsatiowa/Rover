@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_flat_scan_type.cppcheck"
+  tests="3"
+  errors="0"
+  failures="0"
+  time="0.164"
+  skipped="0"
+>
+  <testcase
+    name="include/isaac_ros_nitros_flat_scan_type/nitros_flat_scan.hpp"
+    classname="isaac_ros_nitros_flat_scan_type.cppcheck"/>
+  <testcase
+    name="src/nitros_flat_scan.cpp"
+    classname="isaac_ros_nitros_flat_scan_type.cppcheck"/>
+  <testcase
+    name="test/src/nitros_flat_scan_forward_node.cpp"
+    classname="isaac_ros_nitros_flat_scan_type.cppcheck"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_flat_scan_type/nitros_flat_scan.hpp
+* src/nitros_flat_scan.cpp
+* test/src/nitros_flat_scan_forward_node.cpp</system-out>
+</testsuite>

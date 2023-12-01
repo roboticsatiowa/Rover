@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_image_type.uncrustify"
+  tests="8"
+  failures="0"
+  errors="0"
+  time="0.229"
+>
+  <testcase
+    name="include/isaac_ros_nitros_image_type/nitros_image.hpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_image_type/nitros_image_builder.hpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_image_type/nitros_image_details.hpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <testcase
+    name="include/isaac_ros_nitros_image_type/nitros_image_view.hpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <testcase
+    name="src/nitros_image.cpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <testcase
+    name="src/nitros_image_builder.cpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <testcase
+    name="src/nitros_image_view.cpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_image_forward_node.cpp"
+    classname="isaac_ros_nitros_image_type.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_image_type/nitros_image.hpp
+* include/isaac_ros_nitros_image_type/nitros_image_builder.hpp
+* include/isaac_ros_nitros_image_type/nitros_image_details.hpp
+* include/isaac_ros_nitros_image_type/nitros_image_view.hpp
+* src/nitros_image.cpp
+* src/nitros_image_builder.cpp
+* src/nitros_image_view.cpp
+* test/src/nitros_image_forward_node.cpp</system-out>
+</testsuite>

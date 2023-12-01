@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_correlated_timestamp_type.uncrustify"
+  tests="3"
+  failures="0"
+  errors="0"
+  time="0.091"
+>
+  <testcase
+    name="include/isaac_ros_nitros_correlated_timestamp_type/nitros_correlated_timestamp.hpp"
+    classname="isaac_ros_nitros_correlated_timestamp_type.uncrustify"/>
+  <testcase
+    name="src/nitros_correlated_timestamp.cpp"
+    classname="isaac_ros_nitros_correlated_timestamp_type.uncrustify"/>
+  <testcase
+    name="test/src/nitros_correlated_timestamp_forward_node.cpp"
+    classname="isaac_ros_nitros_correlated_timestamp_type.uncrustify"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_correlated_timestamp_type/nitros_correlated_timestamp.hpp
+* src/nitros_correlated_timestamp.cpp
+* test/src/nitros_correlated_timestamp_forward_node.cpp</system-out>
+</testsuite>

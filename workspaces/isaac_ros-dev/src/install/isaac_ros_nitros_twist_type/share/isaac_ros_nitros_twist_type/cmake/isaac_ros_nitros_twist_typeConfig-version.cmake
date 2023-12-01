@@ -1,0 +1,1 @@
+/workspaces/isaac_ros-dev/build/isaac_ros_nitros_twist_type/ament_cmake_core/isaac_ros_nitros_twist_typeConfig-version.cmake

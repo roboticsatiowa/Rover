@@ -1,0 +1,20 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/custom_nitros_image/test_results/custom_nitros_image/cpplint.xunit.xml
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image/include/custom_nitros_image/gpu_image_builder_node.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image/include/custom_nitros_image/gpu_image_viewer_node.hpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image/src/gpu_image_builder_node.cpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_image/src/gpu_image_viewer_node.cpp
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/custom_nitros_image/test_results/custom_nitros_image/cpplint.xunit.xml'

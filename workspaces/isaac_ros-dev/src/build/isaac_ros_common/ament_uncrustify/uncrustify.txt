@@ -1,0 +1,12 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common':
+ - /opt/ros/humble/bin/ament_uncrustify --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/uncrustify.xunit.xml
+
+No code style divergence in file 'include/isaac_ros_common/vpi_utilities.hpp'
+
+No code style divergence in file 'src/vpi_utilities.cpp'
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/uncrustify.xunit.xml'

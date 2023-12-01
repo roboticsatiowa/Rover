@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_pose_cov_stamped_type.cpplint"
+  tests="3"
+  failures="0"
+  errors="0"
+  time="0.456"
+>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_cov_stamped_type/include/isaac_ros_nitros_pose_cov_stamped_type/nitros_pose_cov_stamped.hpp"
+    classname="isaac_ros_nitros_pose_cov_stamped_type.cpplint"/>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_cov_stamped_type/src/nitros_pose_cov_stamped.cpp"
+    classname="isaac_ros_nitros_pose_cov_stamped_type.cpplint"/>
+  <testcase
+    name="/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_cov_stamped_type/test/src/nitros_pose_cov_stamped_forward_node.cpp"
+    classname="isaac_ros_nitros_pose_cov_stamped_type.cpplint"/>
+  <system-out>Checked files:
+* /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_cov_stamped_type/include/isaac_ros_nitros_pose_cov_stamped_type/nitros_pose_cov_stamped.hpp
+* /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_cov_stamped_type/src/nitros_pose_cov_stamped.cpp
+* /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_nitros_type/isaac_ros_nitros_pose_cov_stamped_type/test/src/nitros_pose_cov_stamped_forward_node.cpp</system-out>
+</testsuite>

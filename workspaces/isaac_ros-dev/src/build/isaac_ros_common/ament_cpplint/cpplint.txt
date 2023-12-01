@@ -1,0 +1,16 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cpplint.xunit.xml
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/include/isaac_ros_common/vpi_utilities.hpp
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/src' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_common/src/vpi_utilities.cpp
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_common/test_results/isaac_ros_common/cpplint.xunit.xml'

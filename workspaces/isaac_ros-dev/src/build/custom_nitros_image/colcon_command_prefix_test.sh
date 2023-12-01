@@ -1,0 +1,11 @@
+# generated from colcon_core/shell/template/command_prefix.sh.em
+. "/workspaces/isaac_ros-dev/install/isaac_ros_common/share/isaac_ros_common/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_test/share/isaac_ros_test/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_gxf/share/isaac_ros_gxf/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_nitros_interfaces/share/isaac_ros_nitros_interfaces/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_tensor_list_interfaces/share/isaac_ros_tensor_list_interfaces/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_nitros/share/isaac_ros_nitros/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_nitros_image_type/share/isaac_ros_nitros_image_type/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_nitros_tensor_list_type/share/isaac_ros_nitros_tensor_list_type/package.sh"
+. "/workspaces/isaac_ros-dev/install/isaac_ros_managed_nitros/share/isaac_ros_managed_nitros/package.sh"
+. "/workspaces/isaac_ros-dev/install/custom_nitros_image/share/custom_nitros_image/package.sh"

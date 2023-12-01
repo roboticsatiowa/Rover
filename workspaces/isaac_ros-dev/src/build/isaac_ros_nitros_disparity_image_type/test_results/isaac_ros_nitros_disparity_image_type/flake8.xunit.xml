@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_disparity_image_type.flake8"
+  tests="1"
+  errors="0"
+  failures="0"
+  time="0.939"
+>
+  <testcase
+    name="flake8"
+    classname="isaac_ros_nitros_disparity_image_type.flake8"/>
+  <system-out>Checked files:
+* ./test/isaac_ros_nitros_disparity_image_type_test_pol.py</system-out>
+</testsuite>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite
+  name="isaac_ros_nitros_std_msg_type.cppcheck"
+  tests="3"
+  errors="0"
+  failures="0"
+  time="0.137"
+  skipped="0"
+>
+  <testcase
+    name="include/isaac_ros_nitros_std_msg_type/nitros_int64.hpp"
+    classname="isaac_ros_nitros_std_msg_type.cppcheck"/>
+  <testcase
+    name="src/nitros_int64.cpp"
+    classname="isaac_ros_nitros_std_msg_type.cppcheck"/>
+  <testcase
+    name="test/src/nitros_int64_forward_node.cpp"
+    classname="isaac_ros_nitros_std_msg_type.cppcheck"/>
+  <system-out>Checked files:
+* include/isaac_ros_nitros_std_msg_type/nitros_int64.hpp
+* src/nitros_int64.cpp
+* test/src/nitros_int64_forward_node.cpp</system-out>
+</testsuite>

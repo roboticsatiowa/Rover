@@ -1,0 +1,14 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros':
+ - /opt/ros/humble/bin/ament_cpplint --xunit-file /workspaces/isaac_ros-dev/build/isaac_ros_managed_nitros/test_results/isaac_ros_managed_nitros/cpplint.xunit.xml
+
+Using '--root=/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros/include' argument
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros/include/isaac_ros_managed_nitros/managed_nitros_publisher.hpp
+
+Done processing /workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros/include/isaac_ros_managed_nitros/managed_nitros_subscriber.hpp
+
+No problems found
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_managed_nitros/test_results/isaac_ros_managed_nitros/cpplint.xunit.xml'

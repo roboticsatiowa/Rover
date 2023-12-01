@@ -1,0 +1,59 @@
+-- run_test.py: invoking following command in '/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam':
+ - /usr/bin/python3 -m launch_testing.launch_test /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/test/isaac_ros_visual_slam_srv.py --junit-xml=/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/test_isaac_ros_visual_slam_srv.py.xunit.xml --package-name=isaac_ros_visual_slam
+
+[INFO] [launch]: All log files can be found below /home/admin/.ros/log/2023-11-02-20-11-03-717532-roboticsatiowa-desktop-13909
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [component_container-1]: process started with pid [13936]
+[INFO] [ros2-2]: process started with pid [13938]
+[component_container-1] [INFO] [1698973864.541643832] [visual_slam_container]: Load Library: /workspaces/isaac_ros-dev/install/isaac_ros_visual_slam/lib/libvisual_slam_node.so
+[component_container-1] [INFO] [1698973865.050459472] [visual_slam_container]: Found class: rclcpp_components::NodeFactoryTemplate<nvidia::isaac_ros::visual_slam::VisualSlamNode>
+[component_container-1] [INFO] [1698973865.051347892] [visual_slam_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<nvidia::isaac_ros::visual_slam::VisualSlamNode>
+[component_container-1] [INFO] [1698973865.662300454] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: cuVSLAM version: 11.4
+Warning: A NumPy version >=1.19.5 and <1.27.0 is required for this version of SciPy (detected version 1.17.4)
+test_visual_slam_node (isaac_ros_visual_slam.IsaacROSVisualSlamTest) ... [INFO] [1698973867.238359991] [isaac_ros_test.isaac_ros_base_test_node]: Starting test for case: /workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/test/test_cases/rosbags/small_pol_test
+[ros2-2] stdin is not a terminal device. Keyboard handling disabled.[INFO] [1698973868.630341222] [rosbag2_storage]: Opened database '/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/test/test_cases/rosbags/small_pol_test/small_pol_test_0.db3' for READ_ONLY.
+[ros2-2] [INFO] [1698973868.630584519] [rosbag2_player]: Set rate to 1
+[ros2-2] [INFO] [1698973868.679879501] [rosbag2_player]: Adding keyboard callbacks.
+[ros2-2] [INFO] [1698973868.680054510] [rosbag2_player]: Press SPACE for Pause/Resume
+[ros2-2] [INFO] [1698973868.680132942] [rosbag2_player]: Press CURSOR_RIGHT for Play Next Message
+[ros2-2] [INFO] [1698973868.680200078] [rosbag2_player]: Press CURSOR_UP for Increase Rate 10%
+[ros2-2] [INFO] [1698973868.680261934] [rosbag2_player]: Press CURSOR_DOWN for Decrease Rate 10%
+[ros2-2] [INFO] [1698973868.682899513] [rosbag2_storage]: Opened database '/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/test/test_cases/rosbags/small_pol_test/small_pol_test_0.db3' for READ_ONLY.
+[component_container-1] [INFO] [1698973872.331891332] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Time taken by CUVSLAM_WarmUpGPU(): 6.669322
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/isaac_ros_test/visual_slam_test_srv/visual_slam_node' in container '/visual_slam_container'
+[component_container-1] [INFO] [1698973872.511481972] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: left_pose_right reading from CameraInfo
+[component_container-1] [INFO] [1698973872.514700513] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Baseline is : 0.119973
+[component_container-1] [INFO] [1698973872.517286668] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Use use_gpu: true
+[component_container-1] [INFO] [1698973872.519835862] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Enable IMU Fusion: false
+[component_container-1] [INFO] [1698973872.704549051] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Time taken by CUVSLAM_CreateTracker(): 0.182279
+[component_container-1] [WARN] [1698973874.228951101] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Delta between current and previous frame [336.204001] is above threshold [33.330000]
+[component_container-1] [INFO] [1698973878.155532769] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: cuvslam: Reset
+[component_container-1] [INFO] [1698973878.181323433] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: cuVSLAM tracker was destroyed
+[component_container-1] [INFO] [1698973878.182486285] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: left_pose_right reading from CameraInfo
+[component_container-1] [INFO] [1698973878.182641806] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Baseline is : 0.119973
+[component_container-1] [INFO] [1698973878.182719310] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Use use_gpu: true
+[component_container-1] [INFO] [1698973878.182772398] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Enable IMU Fusion: false
+[INFO] [1698973878.215422417] [isaac_ros_test.isaac_ros_base_test_node]: Reset service response (success:True)
+[component_container-1] [INFO] [1698973878.240970008] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: Time taken by CUVSLAM_CreateTracker(): 0.058145
+[INFO] [ros2-2]: sending signal 'SIGINT' to process[ros2-2]
+[INFO] [component_container-1]: sending signal 'SIGINT' to process[component_container-1]
+[ros2-2] [INFO] [1698973878.541098028] [rclcpp]: signal_handler(signum=2)
+[component_container-1] [INFO] [1698973878.545363645] [rclcpp]: signal_handler(signum=2)
+[component_container-1] [INFO] [1698973878.627201189] [isaac_ros_test.visual_slam_test_srv.visual_slam_node]: cuVSLAM tracker was destroyed
+[INFO] [ros2-2]: process has finished cleanly [pid 13938]
+[INFO] [component_container-1]: process has finished cleanly [pid 13936]
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 11.970s
+
+OK
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+OK
+
+
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam/test_results/isaac_ros_visual_slam/test_isaac_ros_visual_slam_srv.py.xunit.xml'
