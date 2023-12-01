@@ -11,9 +11,9 @@ from launch_ros.actions import Node
 def generate_launch_description():
     return LaunchDescription([
         Node(
-            package='aruco_detector',
+            package='aruco_detection',
             namespace='aruco_detector',
-            executable='aruco_detector_node',  # Replace with your actual node executable name
+            executable='aruco_detector_node',
             name='aruco_detector_node',
             output='screen',
             parameters=[

@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+from glob import glob
 
 package_name = 'aruco_detection'
 
@@ -10,6 +11,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ("share/" + package_name + '/launch/', glob("launch/*"))    
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -20,7 +22,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [ 
-            'aruco_detector_node = aruco_detector.aruco_detector_node:main'
+            'aruco_detector_node = aruco_detection.aruco_detector_node:main'
         ],
     },
 )
