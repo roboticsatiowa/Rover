@@ -1,9 +1,0 @@
-test_isaac_ros_nitros_detection2_d_array_type_test_pol.py 1 10.9023
-cppcheck 1 2.16478
-cpplint 1 2.57063
-flake8 1 3.0741
-lint_cmake 1 1.98725
-pep257 1 2.35533
-uncrustify 1 2.14944
-xmllint 1 2.18948
----

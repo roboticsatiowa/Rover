@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<testsuites name="isaac_ros_nitros_imu_type.isaac_ros_nitros_imu_type_test_pol" tests="1" failures="0" errors="0" time="1.285"><testsuite name="isaac_ros_nitros_imu_type.isaac_ros_nitros_imu_type_test_pol.launch_tests" tests="1" failures="0" errors="0" skipped="0" time="1.285"><testcase classname="isaac_ros_nitros_imu_type.IsaacROSNitrosImuTest" name="test_nitros_imu_type_conversions" time="1.285" /></testsuite></testsuites>

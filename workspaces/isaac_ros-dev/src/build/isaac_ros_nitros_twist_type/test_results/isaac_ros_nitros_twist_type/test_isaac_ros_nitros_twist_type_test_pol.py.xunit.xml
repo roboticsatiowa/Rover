@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<testsuites name="isaac_ros_nitros_twist_type.isaac_ros_nitros_twist_type_test_pol" tests="1" failures="0" errors="0" time="0.87"><testsuite name="isaac_ros_nitros_twist_type.isaac_ros_nitros_twist_type_test_pol.launch_tests" tests="1" failures="0" errors="0" skipped="0" time="0.87"><testcase classname="isaac_ros_nitros_twist_type.IsaacROSNitrosTwistTest" name="test_nitros_twist_type_conversions" time="0.87" /></testsuite></testsuites>

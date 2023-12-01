@@ -1,4 +1,0 @@
-copyright 1 2.36815
-lint_cmake 1 2.02875
-xmllint 1 2.22208
----

@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<testsuites name="custom_nitros_string.custom_nitros_string_encoder_pol" tests="1" failures="0" errors="0" time="1.899"><testsuite name="custom_nitros_string.custom_nitros_string_encoder_pol.launch_tests" tests="1" failures="0" errors="0" skipped="0" time="1.899"><testcase classname="custom_nitros_string.CustomNitrosStringEncoderPOLTest" name="test_string_encoding" time="1.899" /></testsuite></testsuites>

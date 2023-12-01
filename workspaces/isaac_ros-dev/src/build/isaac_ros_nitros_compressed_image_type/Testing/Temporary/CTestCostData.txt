@@ -1,9 +1,0 @@
-test_isaac_ros_nitros_compressed_image_type_test_pol.py 1 10.649
-cppcheck 1 2.15061
-cpplint 1 2.52386
-flake8 1 4.02804
-lint_cmake 1 2.02809
-pep257 1 2.25633
-uncrustify 1 2.1353
-xmllint 1 2.23184
----

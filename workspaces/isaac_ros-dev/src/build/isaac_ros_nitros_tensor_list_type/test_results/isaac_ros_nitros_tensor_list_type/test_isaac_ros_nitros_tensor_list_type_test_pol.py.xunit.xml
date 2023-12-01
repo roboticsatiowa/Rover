@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="isaac_ros_nitros_tensor_list_type" tests="1" failures="0" time="0.000" errors="1" skipped="0">
-  <testcase classname="isaac_ros_nitros_tensor_list_type" name="test_isaac_ros_nitros_tensor_list_type_test_pol.py.xunit.missing_result" time="0.000">
-    <error message="The test did not generate a result file."/>
-  </testcase>
-</testsuite>

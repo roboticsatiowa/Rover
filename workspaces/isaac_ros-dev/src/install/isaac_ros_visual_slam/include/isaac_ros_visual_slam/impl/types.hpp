@@ -1,1 +1,0 @@
-/workspaces/isaac_ros-dev/isaac_ros_visual_slam/isaac_ros_visual_slam/include/isaac_ros_visual_slam/impl/types.hpp

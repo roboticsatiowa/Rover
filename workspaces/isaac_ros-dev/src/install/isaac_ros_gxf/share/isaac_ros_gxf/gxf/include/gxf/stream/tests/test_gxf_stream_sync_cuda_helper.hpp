@@ -1,1 +1,0 @@
-/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_gxf/gxf/core/include/gxf/stream/tests/test_gxf_stream_sync_cuda_helper.hpp

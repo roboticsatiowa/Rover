@@ -1,1 +1,0 @@
-/workspaces/isaac_ros-dev/isaac_ros_nitros/isaac_ros_managed_nitros_examples/custom_nitros_string/include/custom_nitros_string/string_encoder_node.hpp

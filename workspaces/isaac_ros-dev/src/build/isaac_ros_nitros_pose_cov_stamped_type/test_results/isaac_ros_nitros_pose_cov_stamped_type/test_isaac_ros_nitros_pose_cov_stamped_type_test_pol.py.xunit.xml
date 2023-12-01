@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<testsuites name="isaac_ros_nitros_pose_cov_stamped_type.isaac_ros_nitros_pose_cov_stamped_type_test_pol" tests="1" failures="0" errors="0" time="0.684"><testsuite name="isaac_ros_nitros_pose_cov_stamped_type.isaac_ros_nitros_pose_cov_stamped_type_test_pol.launch_tests" tests="1" failures="0" errors="0" skipped="0" time="0.684"><testcase classname="isaac_ros_nitros_pose_cov_stamped_type.IsaacROSNitrosPoseCovStampedTest" name="test_nitros_pose_cov_stamped_type_conversions" time="0.684" /></testsuite></testsuites>

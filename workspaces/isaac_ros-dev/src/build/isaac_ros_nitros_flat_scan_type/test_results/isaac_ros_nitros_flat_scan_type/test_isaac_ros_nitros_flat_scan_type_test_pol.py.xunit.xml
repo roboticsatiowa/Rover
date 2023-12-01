@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<testsuites name="isaac_ros_nitros_flat_scan_type.isaac_ros_nitros_flat_scan_type_test_pol" tests="1" failures="0" errors="0" time="1.422"><testsuite name="isaac_ros_nitros_flat_scan_type.isaac_ros_nitros_flat_scan_type_test_pol.launch_tests" tests="1" failures="0" errors="0" skipped="0" time="1.422"><testcase classname="isaac_ros_nitros_flat_scan_type.IsaacROSNitrosFlatScanTest" name="test_nitros_flat_scan_type_conversions" time="1.422" /></testsuite></testsuites>

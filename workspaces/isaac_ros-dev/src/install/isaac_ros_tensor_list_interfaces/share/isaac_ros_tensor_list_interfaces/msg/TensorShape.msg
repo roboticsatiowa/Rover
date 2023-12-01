@@ -1,1 +1,0 @@
-/workspaces/isaac_ros-dev/isaac_ros_common/isaac_ros_tensor_list_interfaces/msg/TensorShape.msg

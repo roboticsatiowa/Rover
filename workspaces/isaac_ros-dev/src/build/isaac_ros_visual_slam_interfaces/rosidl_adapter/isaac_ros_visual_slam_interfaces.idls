@@ -1,6 +1,0 @@
-/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam_interfaces/rosidl_adapter/isaac_ros_visual_slam_interfaces:msg/VisualSlamStatus.idl
-/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam_interfaces/rosidl_adapter/isaac_ros_visual_slam_interfaces:srv/GetAllPoses.idl
-/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam_interfaces/rosidl_adapter/isaac_ros_visual_slam_interfaces:srv/Reset.idl
-/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam_interfaces/rosidl_adapter/isaac_ros_visual_slam_interfaces:srv/SetOdometryPose.idl
-/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam_interfaces/rosidl_adapter/isaac_ros_visual_slam_interfaces:action/LoadMapAndLocalize.idl
-/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam_interfaces/rosidl_adapter/isaac_ros_visual_slam_interfaces:action/SaveMap.idl

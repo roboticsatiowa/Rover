@@ -1,1 +1,0 @@
-/workspaces/isaac_ros-dev/build/isaac_ros_visual_slam_interfaces/rosidl_generator_c/isaac_ros_visual_slam_interfaces/srv/set_odometry_pose.h
