@@ -1,3 +1,12 @@
 [submodule "workspaces/isaac_ros-dev/realsense-ros"]
 	path = workspaces/isaac_ros-dev/realsense-ros
 	url = https://github.com/IntelRealSense/realsense-ros.git
+[submodule "workspaces/isaac_ros-dev/src/isaac_ros_common"]
+	path = workspaces/isaac_ros-dev/src/isaac_ros_common
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
+[submodule "workspaces/isaac_ros-dev/src/isaac_ros_nitros"]
+	path = workspaces/isaac_ros-dev/src/isaac_ros_nitros
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
+[submodule "workspaces/isaac_ros-dev/src/isaac_ros_visual_slam"]
+	path = workspaces/isaac_ros-dev/src/isaac_ros_visual_slam
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_visual_slam.git
