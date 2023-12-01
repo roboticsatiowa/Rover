@@ -1,0 +1,3 @@
+[submodule "workspaces/isaac_ros-dev/realsense-ros"]
+	path = workspaces/isaac_ros-dev/realsense-ros
+	url = https://github.com/IntelRealSense/realsense-ros.git
