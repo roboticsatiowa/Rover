@@ -27,6 +27,8 @@
 #include "rclcpp/macros.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 #include "rover_hardware_interface/visibility_control.h"
+#include "rover_hardware_interface/teensy_comms.hpp"
+
 
 namespace rover_hardware_interface {
 class RoverSystem : public hardware_interface::SystemInterface {
@@ -66,6 +68,8 @@ public:
 private:
   std::vector<double> hw_commands_;
   std::vector<double> hw_states_;
+
+  TeensyComms _comms;
 };
 
 } // namespace rover_hardware_interface
