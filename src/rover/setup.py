@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 from glob import glob
 
-package_name = "uiowa_rover"
+package_name = "rover"
 
 setup(
     name=package_name,
