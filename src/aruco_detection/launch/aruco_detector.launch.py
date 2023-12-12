@@ -1,11 +1,4 @@
-import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch_ros.actions import Node
-from launch.substitutions import LaunchConfiguration, Command
-
-def generate_launch_description():
-    from launch import LaunchDescription
 from launch_ros.actions import Node
 
 def generate_launch_description():
