@@ -25,8 +25,8 @@ class ArucoDetectionNode(Node):
             10)
 
         # Define the ArUco dictionary
-        self.aruco_dict = aruco.Dictionary_get(aruco.DICT_4x4_100)
-        # CHANGE FOR COMPETITION IF DIFFERENT DICTIONARY IS USED
+        self.aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_100)
+        # CHANGE FOR COMPETITION IF DIFFERENT DICTIONARY
         self.aruco_params = aruco.DetectorParameters_create()
 
     def image_callback_camera1(self, msg):
