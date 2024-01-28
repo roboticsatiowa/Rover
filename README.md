@@ -97,3 +97,7 @@ ros2 launch uiowa_rover rover.launch.py
 - [ ] RTK GPS
 - [ ] Autonomous Waypoint Navigation
 - [ ] Inverse Kinematics
+- [ ] Preset subroutines
+  - [ ] "Push-up mode"
+  - [ ] Race mode
+  - [ ] Button targeting
