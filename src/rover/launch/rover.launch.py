@@ -13,10 +13,17 @@ def generate_launch_description():
     launch_video_feeds = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
-                [FindPackageShare("video_feed"),"launch/cams.launch.xml"]
+                [FindPackageShare("video_feed"),"launch/cameras.launch.py"]
             )
         )
     )
+    # launch_aruco_detection = IncludeLaunchDescription(
+    #     AnyLaunchDescriptionSource(
+    #         PathJoinSubstitution(
+    #             [FindPackageShare("aruco_detection"),"aruco_detector.launch.py"]
+    #         )
+    #     )
+    # )    
 
     node_foxglove_bridge = Node(name="foxglove_bridge", package="foxglove_bridge", executable="foxglove_bridge", output="screen")
 
