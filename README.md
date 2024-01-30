@@ -69,6 +69,11 @@ colcon build
 source install/setup.bash
 ```
 
+Domain ID: In order for multiple machines to communicate via ROS they need to have the same ROS_DOMAIN_ID env variable. It is HIGHLY recommended to set this in your bashrc file.
+```bash
+export ROS_DOMAIN_ID=69
+```
+
 ### Running the code
 
 Always make sure the workspace is sourced before running the code.
