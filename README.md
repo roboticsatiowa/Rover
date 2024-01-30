@@ -43,12 +43,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+- [ ] ROS2 Humble installed and sourced (Instructions [here](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html))
+- [ ] x86 Ubuntu LTS 20.04
 
-```
-- Installed ROS2 Humble
-- Running Ubuntu 20.04
-```
+### Dependencies
+- [ ] ```sudo apt install python3-colcon-common-extensions```
+- [ ] ```sudo apt install tmux```
 
 ### Installing
 
@@ -80,6 +80,9 @@ There are several launch files for various subsystems. To run the entire system,
 ```bash
 ros2 launch uiowa_rover rover.launch.py
 ```
+
+The system can also be run remotely using ssh. This is done via the ```remote_launch.sh``` 
+This script should not need to be run directly.
 
 ## Roadmap
 
