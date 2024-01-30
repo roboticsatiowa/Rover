@@ -1,6 +1,7 @@
 from setuptools import find_packages, setup
+from glob import glob
 
-package_name = 'video_feed'
+package_name = 'aruco_detection'
 
 setup(
     name=package_name,
@@ -10,20 +11,18 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch/', ['launch/cameras.launch.py']),
-        ('share/' + package_name + '/launch/', ['launch/camera1.yaml']),
-        ('share/' + package_name + '/launch/', ['launch/camera2.yaml']),
-
+        ("share/" + package_name + '/launch/', glob("launch/*"))    
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='ethan',
-    maintainer_email='holterethan@gmail.com',
+    maintainer='robotics',
+    maintainer_email='killiancharlie2@gmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [
+        'console_scripts': [ 
+            'aruco_detector_node = aruco_detection.aruco_detector_node:main'
         ],
     },
 )
