@@ -49,6 +49,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Dependencies
 - [ ] ```sudo apt install python3-colcon-common-extensions```
 - [ ] ```sudo apt install tmux```
+- [ ] ```sudo apt install python3-rosdep2```
 
 ### Installing
 
