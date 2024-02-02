@@ -6,4 +6,4 @@ if tmux has-session -t ros2
 fi
 
 tmux new-session -d -s ros2
-tmux send-keys -t ros2 "source install/setup.sh && ros2 launch rover rover.launch.py" C-m
+tmux send-keys -t ros2 "source ~/Rover/install/setup.sh && ros2 launch rover rover.launch.py" C-m
