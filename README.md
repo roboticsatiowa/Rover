@@ -86,6 +86,8 @@ There are several launch files for various subsystems. To run the entire system,
 ros2 launch uiowa_rover rover.launch.py
 ```
 
+`docker run -it ros2-humble-isaac`
+
 The system can also be run remotely using ssh. This is done via the ```remote_launch.sh``` 
 This script should not need to be run directly.
 
