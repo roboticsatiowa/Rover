@@ -60,6 +60,8 @@ ros2 launch uiowa_rover rover.launch.py
 ```
 [ROS Isaac Installation](https://nvidia-isaac-ros.github.io/getting_started/isaac_ros_buildfarm_cdn.html)
 
+`docker run -it ros2-humble-isaac`
+
 The system can also be run remotely using ssh. This is done via the ```remote_launch.sh``` 
 This script should not need to be run directly.
 
