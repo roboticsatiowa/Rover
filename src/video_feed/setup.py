@@ -13,6 +13,8 @@ setup(
         ('share/' + package_name + '/launch/', ['launch/cameras.launch.py']),
         ('share/' + package_name + '/launch/', ['launch/camera1.yaml']),
         ('share/' + package_name + '/launch/', ['launch/camera2.yaml']),
+        ('share/' + package_name + '/launch/', ['launch/cams.launch.xml']),
+        
 
     ],
     install_requires=['setuptools'],
