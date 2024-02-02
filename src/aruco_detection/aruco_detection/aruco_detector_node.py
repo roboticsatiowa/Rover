@@ -55,10 +55,14 @@ class ArucoDetectionNode(Node):
         aruco.drawDetectedMarkers(img, corners, ids)
 
         # Here you can add more processing, like estimating pose, etc.
-        
-        # For now, let's just print the IDs
         if ids is not None:
+            fontFace = cv2.FONT_HERSHEY_SIMPLEX
+            fontScale = 1.5  # Increase font size as needed
+            thickness = 3  # Adjust thickness as needed
             for i in range(len(ids)):
+                c = corners[i][0]
+                center = tuple(c.mean(axis=0).astype(int))
+                cv2.putText(img, str(ids[i][0]), center, fontFace, fontScale, (0, 255, 0), thickness)
                 print(f"Detected ArUco marker ID: {ids[i][0]} on {camera_name}")
 
         # Return the processed image with markers drawn
