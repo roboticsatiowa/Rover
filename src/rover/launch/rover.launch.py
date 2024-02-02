@@ -20,7 +20,7 @@ def generate_launch_description():
     launch_aruco_detection = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
-                [FindPackageShare("aruco_detection"),"aruco_detector.launch.py"]
+                [FindPackageShare("aruco_detection"),"launch/aruco_detector.launch.py"]
             )
         )
     )    
@@ -32,5 +32,6 @@ def generate_launch_description():
     return LaunchDescription([
         node_foxglove_bridge,
         exec_foxglove_studio,
-        launch_video_feeds,
+        launch_aruco_detection,
+        launch_video_feeds
     ])
