@@ -17,13 +17,13 @@ def generate_launch_description():
             )
         )
     )
-    # launch_aruco_detection = IncludeLaunchDescription(
-    #     AnyLaunchDescriptionSource(
-    #         PathJoinSubstitution(
-    #             [FindPackageShare("aruco_detection"),"aruco_detector.launch.py"]
-    #         )
-    #     )
-    # )    
+    launch_aruco_detection = IncludeLaunchDescription(
+        AnyLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare("aruco_detection"),"aruco_detector.launch.py"]
+            )
+        )
+    )    
 
     node_foxglove_bridge = Node(name="foxglove_bridge", package="foxglove_bridge", executable="foxglove_bridge", output="screen")
 

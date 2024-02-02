@@ -10,6 +10,10 @@ class ArucoDetectionNode(Node):
         super().__init__('aruco_detector')
         self.bridge = CvBridge()  # Initialize the CvBridge
 
+        # Publishers for processed images
+        self.publisher_camera1 = self.create_publisher(Image, '/camera1/processed_image', 10)
+        self.publisher_camera2 = self.create_publisher(Image, '/camera2/processed_image', 10)
+
         # Subscription to Camera 1
         self.subscription_camera1 = self.create_subscription(
             Image,
@@ -26,16 +30,19 @@ class ArucoDetectionNode(Node):
 
         # Define the ArUco dictionary
         self.aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_100)
-        # CHANGE FOR COMPETITION IF DIFFERENT DICTIONARY
         self.aruco_params = aruco.DetectorParameters_create()
 
     def image_callback_camera1(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        self.aruco_detection(cv_image, "Camera 1")
+        processed_image = self.aruco_detection(cv_image, "Camera 1")
+        # Publish processed image
+        self.publisher_camera1.publish(self.bridge.cv2_to_imgmsg(processed_image, "bgr8"))
 
     def image_callback_camera2(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        self.aruco_detection(cv_image, "Camera 2")
+        processed_image = self.aruco_detection(cv_image, "Camera 2")
+        # Publish processed image
+        self.publisher_camera2.publish(self.bridge.cv2_to_imgmsg(processed_image, "bgr8"))
 
     def aruco_detection(self, img, camera_name):
         # Convert to grayscale
@@ -54,7 +61,8 @@ class ArucoDetectionNode(Node):
             for i in range(len(ids)):
                 print(f"Detected ArUco marker ID: {ids[i][0]} on {camera_name}")
 
-        # You might want to visualize the result; you can use cv2.imshow here or publish the processed image to a new ROS topic
+        # Return the processed image with markers drawn
+        return img
 
 def main(args=None):
     rclpy.init(args=args)
