@@ -8,8 +8,8 @@ from launch.actions import ExecuteProcess
 
 
 def generate_launch_description():
-    # include launch file in video_feed/launch/video_feed.launch.py
 
+    # Start video feeds
     launch_video_feeds = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
@@ -25,13 +25,9 @@ def generate_launch_description():
         )
     )    
 
-    node_foxglove_bridge = Node(name="foxglove_bridge", package="foxglove_bridge", executable="foxglove_bridge", output="screen")
-
-    exec_foxglove_studio = ExecuteProcess(cmd=["foxglove-studio"])
 
     return LaunchDescription([
-        node_foxglove_bridge,
-        exec_foxglove_studio,
         launch_aruco_detection,
         launch_video_feeds
     ])
+
