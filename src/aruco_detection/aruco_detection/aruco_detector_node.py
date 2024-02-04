@@ -52,7 +52,7 @@ class ArucoDetectionNode(Node):
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, self.aruco_dict, parameters=self.aruco_params)
 
         # Draw detected markers
-        aruco.drawDetectedMarkers(img, corners, ids)
+        aruco.drawDetectedMarkers(img, corners)
 
         # Here you can add more processing, like estimating pose, etc.
         if ids is not None:
