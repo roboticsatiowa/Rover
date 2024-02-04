@@ -13,12 +13,21 @@ def generate_launch_description():
     launch_video_feeds = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
-                [FindPackageShare("video_feed"), "launch/cams.launch.xml"]
+                [FindPackageShare("video_feed"),"launch/cameras.launch.py"]
             )
         )
     )
-    return LaunchDescription(
-        [
-            launch_video_feeds,
-        ]
-    )
+    launch_aruco_detection = IncludeLaunchDescription(
+        AnyLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare("aruco_detection"),"launch/aruco_detector.launch.py"]
+            )
+        )
+    )    
+
+
+    return LaunchDescription([
+        launch_aruco_detection,
+        launch_video_feeds
+    ])
+
