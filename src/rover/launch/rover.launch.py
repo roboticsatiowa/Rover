@@ -25,12 +25,19 @@ def generate_launch_description():
         )
     )
 
+    hardware_interace_node = Node(
+        name="hardware_interface",
+        package="simple_hardware_interface",
+        executable="interface_node",
+    )
+
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds] 
     rosbag = ExecuteProcess(cmd="ros2 bag record -a --compression-mode file --compression-format zstd -d 9000".split(" "), output="screen") 
 
     return LaunchDescription([
         launch_aruco_detection,
         launch_video_feeds,
+        hardware_interace_node,
         rosbag
     ])
 
