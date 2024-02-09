@@ -46,9 +46,9 @@ class InterfaceNode(Node):
         self.get_logger().info("Axes: " + str(axes) +'\n')
 
         if axes[1] != 0:
-            self.serial_out.write(b'h 0 ' + axes[1] * 255)
+            self.serial_out.write(b'h 0 ' + axes[1] * 255) + '\r'
         if axes[4] != 0:
-            self.serial_out.write(b'h 0 ' + axes[4] * 255)
+            self.serial_out.write(b'h 0 ' + axes[4] * 255 + '\r')
 
         
 
