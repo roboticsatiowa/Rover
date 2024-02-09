@@ -43,10 +43,9 @@ class InterfaceNode(Node):
         axes = msg.axes
         buttons = msg.buttons
 
-        self.get_logger().info("Axes: " + str(axes) +'\n')
-
         if axes[1] != 0:
             self.serial_out.write(b'h 0 ' + bytes(str(axes[1] * 255), 'utf-8') + b'\r')
+            self.get_logger().info('h 0 ' + bytes(str(axes[1] * 255), 'utf-8') + b'\r')
         if axes[4] != 0:
             self.serial_out.write(b'h 0 ' + bytes(str(axes[4] * 255), 'utf-8') + b'\r')
 
