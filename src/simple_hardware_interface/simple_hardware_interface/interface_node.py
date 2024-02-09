@@ -31,7 +31,7 @@ class InterfaceNode(Node):
 
         self.joystick_subscription = self.create_subscription(
             Joy,
-            'joy',
+            '/joy',
             self.joystick_callback,
             10)
     
