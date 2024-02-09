@@ -17,8 +17,17 @@ def generate_launch_description():
             )
         )
     )
+
+    hardware_interace_node = Node(
+        name="hardware_interface",
+        package="simple_hardware_interface",
+        executable="interface_node",
+    )
+
+
     return LaunchDescription(
         [
             launch_video_feeds,
+            hardware_interace_node
         ]
     )
