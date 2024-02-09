@@ -26,7 +26,7 @@ def generate_launch_description():
     )
 
     hardware_interace_node = Node(
-        name="hardware_interface",
+        name="simple_hardware_interface",
         package="simple_hardware_interface",
         executable="interface_node",
     )
