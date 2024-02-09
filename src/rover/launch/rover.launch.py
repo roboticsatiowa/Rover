@@ -28,7 +28,7 @@ def generate_launch_description():
     hardware_interace_node = Node(
         name="simple_hardware_interface",
         package="simple_hardware_interface",
-        executable="interface_node",
+        executable="simple_hardware_interface",
     )
 
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds] 
