@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "simple_hardware_interface = simple_hardware_interface.interface_node:main"
         ],
     },
 )
