@@ -48,8 +48,6 @@ class InterfaceNode(Node):
             self.serial_out.write(b'h 1 ' + bytes(str(axes[4] * 255), 'utf-8') + b'\r')
         except:
             pass
-
-        sleep(0.1)
         
 
 
