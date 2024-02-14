@@ -80,6 +80,8 @@ class InterfaceNode(Node):
 
         self.prev_msg = msg
 
+        self.serial_out.flush()
+
 
 
 
