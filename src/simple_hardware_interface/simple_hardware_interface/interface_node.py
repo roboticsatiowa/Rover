@@ -69,10 +69,14 @@ class InterfaceNode(Node):
         elif self.control_mode == 2:
             self.sensor_mode(msg)
         
-
+        # Mode toggle
         if self.prev_msg.buttons[7] == 0 and msg.buttons[7] == 1:
             self.control_mode = (self.control_mode + 1) % 3
             self.get_logger().info(f"Switching to control mode {self.control_mode}")
+
+        if self.prev_msg.buttons[6] == 0 and msg.buttons[6] == 1:
+            self.serial_out.write(b'z\r')
+            self.get_logger().info("Toggling headlights")
 
         self.prev_msg = msg
 
