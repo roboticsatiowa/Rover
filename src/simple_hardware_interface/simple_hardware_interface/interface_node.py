@@ -5,7 +5,11 @@ import serial
 from time import sleep
 
 class InterfaceNode(Node):
+    prev_msg = None
+    control_mode = 0
+
     def __init__(self):
+
         super(InterfaceNode, self).__init__('simple_hardware_interface')
 
         #NOTE port name may need to be changed
@@ -35,20 +39,38 @@ class InterfaceNode(Node):
             self.joystick_callback,
             10)
     
+    def drive_mode(self, msg):
+        pass
+    
+    def arm_mode(self, msg):
+        try:
+            self.serial_out.write(b'h 0 ' + bytes(str(msg.axes[1] * 255), 'utf-8') + b'\r')
+            self.serial_out.write(b'h 1 ' + bytes(str(msg.axes[4] * 255), 'utf-8') + b'\r')
+            self.serial_out.write(b'o 0 ' + bytes(str(msg.axes[0] * 255), 'utf-8') + b'\r')
+            self.serial_out.write(b'o 1 ' + bytes(str(msg.axes[3] * 255), 'utf-8') + b'\r')
+        except Exception as e:
+            self.get_logger().error(f"Error writing to serial port: {e}")
+
+    def sensor_mode(self, msg):
+        pass
         
 
         
     def joystick_callback(self, msg):
+
+        if self.control_mode == 0:
+            self.drive_mode(msg)
+        elif self.control_mode == 1:
+            self.arm_mode(msg)
+        elif self.control_mode == 2:
+            self.sensor_mode(msg)
         
-        axes = msg.axes
-        buttons = msg.buttons
-    
-        try:
-            self.serial_out.write(b'h 0 ' + bytes(str(axes[1] * 255), 'utf-8') + b'\r')
-            self.serial_out.write(b'h 1 ' + bytes(str(axes[4] * 255), 'utf-8') + b'\r')
-        except:
-            pass
-        
+
+        if self.prev_msg.buttons[7] == 0 and msg.buttons[7] == 1:
+            self.control_mode = (self.control_mode + 1) % 3
+            self.get_logger().info(f"Switching to control mode {self.control_mode}")
+
+        self.prev_msg = msg
 
 
 
