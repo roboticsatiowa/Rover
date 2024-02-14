@@ -82,6 +82,8 @@ class InterfaceNode(Node):
 
         self.serial_out.flush()
 
+        sleep(0.1)
+
 
 
 
