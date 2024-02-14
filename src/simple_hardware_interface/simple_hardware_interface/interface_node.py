@@ -58,6 +58,10 @@ class InterfaceNode(Node):
         
     def joystick_callback(self, msg):
 
+        if self.prev_msg == None:
+            self.prev_msg = msg
+            return
+
         if self.control_mode == 0:
             self.drive_mode(msg)
         elif self.control_mode == 1:
