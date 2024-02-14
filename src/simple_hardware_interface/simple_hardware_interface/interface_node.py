@@ -20,7 +20,7 @@ class InterfaceNode(Node):
         while attempts_remaining > 0:
             attempts_remaining -= 1
             try:
-                self.serial_out = serial.Serial(PORT_NAME, 9600, timeout=1)
+                self.serial_out = serial.Serial(PORT_NAME, 115200, timeout=1)
                 break
             except:
                 self.get_logger().warn(f"Failed to open serial port {PORT_NAME}. Retrying...")
