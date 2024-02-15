@@ -1,3 +1,4 @@
+from matplotlib import axis
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy
@@ -7,6 +8,15 @@ from time import sleep
 class InterfaceNode(Node):
     prev_msg = None
     control_mode = 0
+
+    def button_pressed(self, msg, button):
+        return self.prev_msg.buttons[button] == 0 and msg.buttons[button] == 1
+    
+    def button_released(self, msg, button):
+        return self.prev_msg.buttons[button] == 1 and msg.buttons[button] == 0
+    
+    def axis_changed(self, msg, axis):
+        return self.prev_msg.axes[axis] != msg.axes[axis]
 
     def __init__(self):
 
@@ -44,10 +54,14 @@ class InterfaceNode(Node):
     
     def arm_mode(self, msg):
         try:
-            self.serial_out.write(b'h 0 ' + bytes(str(msg.axes[1] * 255), 'utf-8') + b'\r')
-            self.serial_out.write(b'h 1 ' + bytes(str(msg.axes[4] * 255), 'utf-8') + b'\r')
-            self.serial_out.write(b'o 0 ' + bytes(str(msg.axes[0] * 255), 'utf-8') + b'\r')
-            self.serial_out.write(b'o 1 ' + bytes(str(msg.axes[3] * 255), 'utf-8') + b'\r')
+            if self.axis_changed(msg, 1):
+                self.serial_out.write(bytes(f'h 0 {msg.axes[1] * 255}\r', 'utf-8'))
+            if self.axis_changed(msg, 4):
+                self.serial_out.write(b'h 1 ' + bytes(str(msg.axes[4] * 255), 'utf-8') + b'\r')
+            if self.axis_changed(msg, 0):
+                self.serial_out.write(b'o 0 ' + bytes(str(msg.axes[0] * 255), 'utf-8') + b'\r')
+            if self.axis_changed(msg, 3):
+                self.serial_out.write(b'o 1 ' + bytes(str(msg.axes[3] * 255), 'utf-8') + b'\r')
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
 
@@ -58,7 +72,7 @@ class InterfaceNode(Node):
         
     def joystick_callback(self, msg):
 
-        if self.prev_msg == None:
+        if self.prev_msg is None:
             self.prev_msg = msg
             return
 
@@ -70,19 +84,18 @@ class InterfaceNode(Node):
             self.sensor_mode(msg)
         
         # Mode toggle
-        if self.prev_msg.buttons[7] == 0 and msg.buttons[7] == 1:
+        if self.button_pressed(msg, 7):
             self.control_mode = (self.control_mode + 1) % 3
             self.get_logger().info(f"Switching to control mode {self.control_mode}")
 
-        if self.prev_msg.buttons[6] == 0 and msg.buttons[6] == 1:
+        # Headlight toggle
+        if self.button_pressed(msg, 0):
             self.serial_out.write(b'z\r')
             self.get_logger().info("Toggling headlights")
 
+
         self.prev_msg = msg
-
         self.serial_out.flush()
-
-        sleep(0.1)
 
 
 
