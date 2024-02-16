@@ -86,6 +86,7 @@ There are several launch files for various subsystems. To run the entire system,
 ```bash
 ros2 launch uiowa_rover rover.launch.py
 ```
+[ROS Isaac Installation](https://nvidia-isaac-ros.github.io/getting_started/isaac_ros_buildfarm_cdn.html)
 
 The system can also be run remotely using ssh. This is done via the ```remote_launch.sh``` 
 This script should not need to be run directly.
