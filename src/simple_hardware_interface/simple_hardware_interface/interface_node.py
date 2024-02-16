@@ -50,11 +50,11 @@ class InterfaceNode(Node):
         try:
             if self.axis_changed(msg, 1):
                 self.serial_out.write(bytes(f'h 0 {msg.axes[1] * 255}\r', 'utf-8'))
-            if self.axis_changed(msg, 4):
+            if self.axis_changed(msg, 3):
                 self.serial_out.write(bytes(f'h 1 {msg.axes[3] * 255}\r', 'utf-8'))
             if self.axis_changed(msg, 0):
                 self.serial_out.write(bytes(f'o 0 {msg.axes[0] * 255}\r', 'utf-8'))
-            if self.axis_changed(msg, 3):
+            if self.axis_changed(msg, 2):
                 self.serial_out.write(bytes(f'o 2 {msg.axes[2] * 255}\r', 'utf-8'))
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
