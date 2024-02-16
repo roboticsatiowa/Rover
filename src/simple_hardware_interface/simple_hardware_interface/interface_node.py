@@ -51,11 +51,11 @@ class InterfaceNode(Node):
             if self.axis_changed(msg, 1):
                 self.serial_out.write(bytes(f'h 0 {msg.axes[1] * 255}\r', 'utf-8'))
             if self.axis_changed(msg, 4):
-                self.serial_out.write(bytes(f'h 1 {msg.axes[4] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'h 1 {msg.axes[3] * 255}\r', 'utf-8'))
             if self.axis_changed(msg, 0):
                 self.serial_out.write(bytes(f'o 0 {msg.axes[0] * 255}\r', 'utf-8'))
             if self.axis_changed(msg, 3):
-                self.serial_out.write(bytes(f'o 1 {msg.axes[3] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'o 2 {msg.axes[2] * 255}\r', 'utf-8'))
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
 
@@ -81,12 +81,12 @@ class InterfaceNode(Node):
             self.sensor_mode(msg)
         
         # Mode toggle
-        if self.button_pressed(msg, 7):
+        if self.button_pressed(msg, 9):
             self.control_mode = (self.control_mode + 1) % 2
             self.get_logger().info(f"Switching to control mode {self.control_mode}")
 
         # Headlight toggle
-        if self.button_pressed(msg, 0):
+        if self.button_pressed(msg, 8):
             self.serial_out.write(b'z\r')
             self.get_logger().info("Toggling headlights")
 
