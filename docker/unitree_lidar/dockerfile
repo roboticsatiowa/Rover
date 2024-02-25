@@ -1,9 +1,31 @@
 # syntax=docker/dockerfile:1
 
-FROM osrf/ros:foxy-desktop
-RUN useradd -ms /bin/bash robotics
-RUN usermod -aG sudo robotics
-RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+FROM osrf/ros:humble-desktop
+
+# use bash instead of sh. allows us to use 'source' command.
+SHELL ["/bin/bash", "-c"] 
+
+# setup robotics user
+RUN useradd -ms /bin/bash robotics; \
+    usermod -aG sudo robotics; \
+    sudo chown -R robotics:robotics /home/robotics/; \
+    echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers; \
+    echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
 USER robotics
-WORKDIR /home/robotics
-RUN sudo apt install libpcl-dev
+
+# copy unilidar package
+COPY ./unilidar_sdk /home/robotics/unilidar_sdk
+WORKDIR /home/robotics/unilidar_sdk/unitree_lidar_ros2
+
+# install dependencied and build
+RUN sudo apt install libpcl-dev python3-colcon-common-extensions ros-humble-ament-cmake-python -y; \
+    sudo chown -R robotics:robotics /home/robotics/unilidar_sdk; \
+    rosdep update; \
+    rosdep install --from-paths src --ignore-src -r -y; \
+    source /opt/ros/humble/setup.bash; \
+    colcon build; \
+    echo "source /home/robotics/unilidar_sdk/unitree_lidar_ros2/install/setup.bash" >> /home/robotics/.bashrc; \
+    echo "export ROS_DOMAIN_ID=69" >> /home/robotics/.bashrc
+
+# reset workdir
+WORKDIR /home/robotics/

@@ -76,6 +76,12 @@ Domain ID: In order for multiple machines to communicate via ROS they need to ha
 export ROS_DOMAIN_ID=69
 ```
 
+Build the docker images
+
+```bash
+source ./build_docker.sh
+```
+
 ### Running the code
 
 Always make sure the workspace is sourced before running the code.
