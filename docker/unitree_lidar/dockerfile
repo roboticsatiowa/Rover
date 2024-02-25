@@ -5,3 +5,5 @@ RUN useradd -ms /bin/bash robotics
 RUN usermod -aG sudo robotics
 RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER robotics
+WORKDIR /home/robotics
+RUN sudo apt install libpcl-dev
