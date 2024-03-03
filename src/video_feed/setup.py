@@ -11,10 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch/', ['launch/cameras.launch.py']),
-        ('share/' + package_name + '/launch/', ['launch/camera1.yaml']),
-        ('share/' + package_name + '/launch/', ['launch/camera2.yaml']),
-        ('share/' + package_name + '/launch/', ['launch/cams.launch.xml']),
-        
+        ('share/' + package_name + '/launch/', ['launch/fisheye_cam_calib.yaml']),
 
     ],
     install_requires=['setuptools'],
