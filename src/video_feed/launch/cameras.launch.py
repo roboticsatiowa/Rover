@@ -11,14 +11,13 @@ def generate_launch_description():
     
     # Initialize LaunchDescription list
     ld = []
-    pixel_format = 'raw_mjpeg'
+    pixel_format = 'h264'
     # Camera 1
     camera_name_1 = 'camera1'
     video_device_1 = '/dev/video0'
+    camera_info_url = Command(['echo "file://', launch_file_dir, '/', 'fisheye_cam_calib', '.yaml"'])
     if os.path.exists(video_device_1):
-        camera_info_url_1 = Command([
-            'echo "file://', launch_file_dir, '/', camera_name_1, '.yaml"'
-        ])
+     
         ld.append(Node(
             package='usb_cam',
             executable='usb_cam_node_exe',
@@ -26,9 +25,9 @@ def generate_launch_description():
             namespace=camera_name_1,
             parameters=[{
                 'video_device': video_device_1,
-                'camera_info_url': camera_info_url_1,
+                'camera_info_url': camera_info_url,
                 'camera_name': camera_name_1,
-                'pixel_format': pixel_format
+                'pixel_format': 'yuyv'
             }],
             remappings=[('image_raw', 'image_raw')]
         ))
@@ -38,9 +37,7 @@ def generate_launch_description():
     video_device_2 = '/dev/video2'
     
     if os.path.exists(video_device_2):
-        camera_info_url_2 = Command([
-            'echo "file://', launch_file_dir, '/', camera_name_2, '.yaml"'
-        ])
+    
         ld.append(Node(
             package='usb_cam',
             executable='usb_cam_node_exe',
@@ -48,7 +45,7 @@ def generate_launch_description():
             namespace=camera_name_2,
             parameters=[{
                 'video_device': video_device_2,
-                'camera_info_url': camera_info_url_2,
+                'camera_info_url': camera_info_url,
                 'camera_name': camera_name_2,
                 'pixel_format': pixel_format
             }],
