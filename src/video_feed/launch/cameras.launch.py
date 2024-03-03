@@ -11,7 +11,7 @@ def generate_launch_description():
     
     # Initialize LaunchDescription list
     ld = []
-    pixel_format = 'mjpeg2rgb'
+    pixel_format = 'raw_mjpeg'
     # Camera 1
     camera_name_1 = 'camera1'
     video_device_1 = '/dev/video0'
@@ -55,4 +55,8 @@ def generate_launch_description():
             remappings=[('image_raw', 'image_raw')]
         ))
 
+    ld.append(Node(
+        package = 'video_feed',
+        executable='image_decompressor',
+    ))
     return LaunchDescription(ld)
