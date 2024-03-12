@@ -1,8 +1,9 @@
 #/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 
 # Note: test this script in docker with the following command:
-# docker run -it --user root ubuntu:22.04 /bin/bash -c "useradd -m -s /bin/bash robotics && su robotics"
+# docker run -it ubuntu:22.04 -c "unminimize && apt-get install sudo lsb-release -y && adduser --disabled-password --gecos '' --shell /bin/bash user && adduser user sudo && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && su - user"
+
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
