@@ -5,6 +5,7 @@ set -eo pipefail
 # docker run -it ubuntu:22.04
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+cd "${SCRIPT_DIR}"
 
 # check if distro is ubuntu
 if [ "$(lsb_release -is)" != "Ubuntu" ]; then
@@ -99,5 +100,3 @@ echo "    - Refer to ./bin/remote_launch.sh for information on what happens when
 echo
 
 # End of file
-
-
