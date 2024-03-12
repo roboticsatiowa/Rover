@@ -99,4 +99,6 @@ echo "    - To run a node from the workspace, run: ros2 run <package_name> <node
 echo "    - Refer to ./bin/remote_launch.sh for information on what happens when rover is launched"
 echo
 
+bash
+
 # End of file
