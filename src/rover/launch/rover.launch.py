@@ -23,11 +23,14 @@ def generate_launch_description():
                 [FindPackageShare("aruco_detection"),"launch/aruco_detector.launch.py"]
             )
         )
-    )    
+    )
 
+    # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds] 
+    rosbag = ExecuteProcess(cmd="ros2 bag record -a --compression-mode file --compression-format zstd -d 9000".split(" "), output="screen") 
 
     return LaunchDescription([
         launch_aruco_detection,
-        launch_video_feeds
+        launch_video_feeds,
+        rosbag
     ])
 

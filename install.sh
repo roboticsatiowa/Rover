@@ -64,7 +64,7 @@ if [ -z "$ROS_DISTRO" ]; then
 fi
 
 # Misc dependencies
-sudo apt install python3-rosdep2 tmux python3-venv python3-colcon-common-extensions -y
+sudo apt install python3-rosdep2 tmux python3-venv python3-colcon-common-extensions ros-humble-rosbag2 -y
 
 # install dependencies
 rosdep update
