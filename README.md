@@ -62,6 +62,7 @@ cd Rover
 
 Check for missing dependencies and install them using rosdep.
 ```bash
+rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
@@ -80,7 +81,7 @@ Build the docker images
 
 ```bash
 source ./build_docker.sh
-```
+```s
 
 ### Running the code
 
