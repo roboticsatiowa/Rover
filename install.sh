@@ -15,12 +15,15 @@ fi
 # Check Ubuntu version is 22.04
 if [ "$(lsb_release -cs)" != "jammy" ]; then
     echo "WARNING: You are running: Ubuntu $(lsb_release -rs). This project is designed for Ubuntu 22.04"
-    read -r -p "Proceed at your own risk. Do you want to continue? [y/N]" CONTINUE
+    read -r -p "Proceed at your own risk. Do you want to continue? [y/N] " CONTINUE
     if [ "$CONTINUE" != "y" ]; then
         echo "Exiting..."
         exit 1
     fi
     exit 1
+
+else 
+    echo "Ubuntu 22.04 detected. Proceeding with installation..."
 fi
 
 # Install ROS2 Humble
@@ -32,12 +35,12 @@ if [ -n "$ROS_DISTRO" ] && [ "$ROS_DISTRO" != "humble" ]; then
 fi
 
 if [ -z "$ROS_DISTRO" ]; then
-    read -r -p "No ROS distro detected. Do you want to install ROS2 Humble? [Y/n]" INSTALL
+    read -r -p "No ROS distro detected. Do you want to install ROS2 Humble? [Y/n] " INSTALL
     if [ "${INSTALL:-'y'}" == "y" ]; then
         sudo apt update -y
         sudo apt upgrade -y
         sudo apt install locales -y
-        sudo locale-gen en_US en_US.UTF-8 -y
+        sudo locale-gen en_US en_US.UTF-8 
         sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 -y
         sudo apt install software-properties-common -y
         sudo add-apt-repository universe -y
