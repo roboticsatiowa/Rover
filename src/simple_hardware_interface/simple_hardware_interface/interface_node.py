@@ -5,6 +5,8 @@ from sensor_msgs.msg import Joy
 import serial
 from time import sleep
 
+from button_maps.xbox360 import *
+
 class InterfaceNode(Node):
     prev_msg = None
     control_mode = 0
@@ -43,50 +45,49 @@ class InterfaceNode(Node):
     
     # Move wheels
     def drive_mode(self, msg):
-        pass
-    
+        try:
+            if self.axis_changed(msg, L_JOY_Y):
+                self.serial_out.write(bytes(f'l 0 {msg.axes[L_JOY_Y] * 255}\r', 'utf-8'))
+            if self.axis_changed(msg, R_JOY_Y):
+                self.serial_out.write(bytes(f'l 1 {msg.axes[R_JOY_Y] * 255}\r', 'utf-8'))
+        except Exception as e:
+            self.get_logger().error(f"Error writing to serial port: {e}")
+            
     # Move arm and other actuators
     def arm_mode(self, msg):
         try:
-            if self.axis_changed(msg, 1):
-                self.serial_out.write(bytes(f'h 0 {msg.axes[1] * 255}\r', 'utf-8'))
-            if self.axis_changed(msg, 3):
-                self.serial_out.write(bytes(f'h 1 {msg.axes[3] * 255}\r', 'utf-8'))
-            if self.axis_changed(msg, 0):
-                self.serial_out.write(bytes(f'o 0 {msg.axes[0] * 255}\r', 'utf-8'))
-            if self.axis_changed(msg, 2):
-                self.serial_out.write(bytes(f'o 2 {msg.axes[2] * 255}\r', 'utf-8'))
+            if self.axis_changed(msg, L_JOY_Y):
+                self.serial_out.write(bytes(f'h 0 {msg.axes[L_JOY_Y] * 255}\r', 'utf-8'))
+            if self.axis_changed(msg, R_JOY_Y):
+                self.serial_out.write(bytes(f'h 1 {msg.axes[R_JOY_Y] * 255}\r', 'utf-8'))
+            if self.axis_changed(msg, L_JOY_X):
+                self.serial_out.write(bytes(f'o 0 {msg.axes[L_JOY_X] * 255}\r', 'utf-8'))
+            if self.axis_changed(msg, R_JOY_X):
+                self.serial_out.write(bytes(f'o 2 {msg.axes[R_JOY_X] * 255}\r', 'utf-8'))
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
-
-    # Move cameras and other sensors
-    def sensor_mode(self, msg):
-        pass
-        
 
         
     def joystick_callback(self, msg):
 
+        # First iteration protection
         if self.prev_msg is None:
             self.prev_msg = msg
             return
 
+        # 
         if self.control_mode == 0:
             self.drive_mode(msg)
         elif self.control_mode == 1:
             self.arm_mode(msg)
-
-        # currently unreachable. may be implemented later
-        elif self.control_mode == 2:
-            self.sensor_mode(msg)
         
         # Mode toggle
-        if self.button_pressed(msg, 9):
+        if self.button_pressed(msg, START_BUTTON):
             self.control_mode = (self.control_mode + 1) % 2
             self.get_logger().info(f"Switching to control mode {self.control_mode}")
 
         # Headlight toggle
-        if self.button_pressed(msg, 8):
+        if self.button_pressed(msg, SHARE_BUTTON):
             self.serial_out.write(b'z\r')
             self.get_logger().info("Toggling headlights")
 
