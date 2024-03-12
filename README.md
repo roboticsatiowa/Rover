@@ -42,46 +42,17 @@ Our rover uses 6 wheeled rocker bogie suspension system along with a 5 DOF custo
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 ### Prerequisites
-
-- [ ] ROS2 Humble installed and sourced (Instructions [here](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html))
-- [ ] x86 Ubuntu LTS 20.04
-
-### Dependencies
-```bash
-sudo apt install python3-colcon-common-extensions tmux python3-rosdep2
-```
-
+- [ ] Ubuntu LTS 22.04
 
 ### Installing
 
-Clone the repository into your workspace.
+Clone the repository and run the install script.
 ```bash
 git clone https://github.com/roboticsatiowa/Rover.git
-cd Rover
+chmod u+x ./Rover/install.sh
+./Rover/install.sh
 ```
-
-Check for missing dependencies and install them using rosdep.
-```bash
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-Build and source the workspace.
-```bash
-colcon build
-source install/setup.bash
-```
-
-Domain ID: In order for multiple machines to communicate via ROS they need to have the same ROS_DOMAIN_ID env variable. It is HIGHLY recommended to set this in your bashrc file.
-```bash
-export ROS_DOMAIN_ID=69
-```
-
 ### Running the code
-
-Always make sure the workspace is sourced before running the code.
-```bash
-source install/setup.bash 
-```
 
 There are several launch files for various subsystems. To run the entire system, use the following command.
 ```bash

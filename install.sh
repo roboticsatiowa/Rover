@@ -34,8 +34,12 @@ fi
 
 # check if ros distro is already installed but not humble
 if [ -n "$ROS_DISTRO" ] && [ "$ROS_DISTRO" != "humble" ]; then
-    echo "ERROR: Another ROS distro detected. Please uninstall before continuing"
-    exit 1
+    echo "ERROR: Another ROS distro (${ROS_DISTRO}) detected. Multiple ROS distros may cause conflicts."
+    read -r -p "Do you want to continue? [y/N] " CONTINUE
+    if [ "$CONTINUE" != "y" ]; then
+        echo "Exiting..."
+        exit 1
+    fi
 fi
 
 if [ -z "$ROS_DISTRO" ]; then
