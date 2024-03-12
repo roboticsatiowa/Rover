@@ -1,4 +1,5 @@
-#/bin/bash
+#/usr/bin/env bash
+set -euo pipefail
 
 cd ./docker
 for folder in $(ls -d *); do
@@ -7,3 +8,7 @@ for folder in $(ls -d *); do
     sudo docker build -t ${folder} .
     cd ..
 done
+
+
+# Run docker
+# docker run -it --device=/dev/ttyUSB0 unitree_lidar 
