@@ -9,6 +9,7 @@ SHELL ["/bin/bash", "-c"]
 RUN useradd -ms /bin/bash robotics; \
     usermod -aG sudo robotics; \
     sudo chown -R robotics:robotics /home/robotics/; \
+    sudo usermod -aG dialout robotics; \
     echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers; \
     echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
 USER robotics
@@ -19,6 +20,7 @@ WORKDIR /home/robotics/unilidar_sdk/unitree_lidar_ros2
 
 # install dependencied and build
 RUN sudo apt install libpcl-dev python3-colcon-common-extensions ros-humble-ament-cmake-python -y; \
+    sudo chmod 666 /dev/ttyUSB0; \
     sudo chown -R robotics:robotics /home/robotics/unilidar_sdk; \
     rosdep update; \
     rosdep install --from-paths src --ignore-src -r -y; \
