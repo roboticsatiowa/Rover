@@ -59,8 +59,8 @@ fi
 sudo apt install python3-rosdep2 tmux python3-venv python3-colcon-common-extensions -y
 
 # install dependencies
-# rosdep update
-# rosdep install --from-paths src --ignore-src -r -y
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
 
 # add ROS2 Humble sources to bashrc
 read -r -p "add ROS2 Humble sources to bashrc? (Recommended) [Y/n] " ADD_SOURCE
