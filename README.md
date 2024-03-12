@@ -74,9 +74,9 @@ This script should not need to be run directly.
 - [ ] GPS
 - [ ] Manual Control
 - [ ] Full PID control
+- [ ] RTK GPS
 
 ### Future Plans
-- [ ] RTK GPS
 - [ ] Autonomous Waypoint Navigation
 - [ ] Inverse Kinematics
 - [ ] Preset subroutines
