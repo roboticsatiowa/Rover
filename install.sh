@@ -1,6 +1,8 @@
 #/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # check if distro is ubuntu
 if [ "$(lsb_release -is)" != "Ubuntu" ]; then
     echo "ERROR: Must be running Ubuntu to install this project"
@@ -47,6 +49,12 @@ if [ -z $ROS_DISTRO ]; then
     fi
 fi
 
+# Misc dependencies
+sudo apt install python3-rosdep2 tmux python3-venv python3-colcon-common-extensions -y
+
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+
 # add ROS2 Humble sources to bashrc
 input "add ROS2 Humble sources to bashrc? (Recommended) [Y/n]" ADD_SOURCE
 if [ "$ADD_SOURCE":-"y" == "y" ]; then
@@ -59,11 +67,17 @@ if [ "$ADD_DOMAIN":-"y" == "y" ]; then
     grep -q "export ROS_DOMAIN_ID=69" ${HOME}/.bashrc || echo "export ROS_DOMAIN_ID=69" >>${HOME}/.bashrc
 fi
 
-# Misc dependencies
-sudo apt install python3-rosdep2 tmux python3-venv python3-colcon-common-extensions -y
+# build the workspace
+input "Build the workspace? [Y/n]" BUILD
+if [ "$BUILD":-"y" == "y" ]; then
+    colcon build
+fi
 
-rosdep update
-rosdep install --from-paths src --ignore-src -r -y
+# source workspace from bashrc
+input "source workspace from bashrc? (Not recommended for developers) [Y/n]" SOURCE_WORKSPACE
+if [ "$SOURCE_WORKSPACE":-"y" == "y" ]; then
+    grep -q "source ${SCRIPT_DIR}/install/setup.bash" ${HOME}/.bashrc || echo "source ${SCRIPT_DIR}/install/setup.bash" >>${HOME}/.bashrc
+fi
 
 # Additional information
 
@@ -74,6 +88,7 @@ echo "    - To build the workspace, run: colcon build"
 echo "    - to source the workspace, run: source install/setup.bash"
 echo "    - To launch a package from the workspace, run: ros2 launch <package_name> <launch_file>"
 echo "    - To run a node from the workspace, run: ros2 run <package_name> <node_name>"
+echo "    - Refer to ./bin/remote_launch.sh for information on what happens when rover is launched"
 
 
 # End of file
