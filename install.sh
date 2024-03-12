@@ -1,6 +1,9 @@
 #/usr/bin/env bash
 set -euo pipefail
 
+# Note: test this script in docker with the following command:
+# docker run -it --user root ubuntu:22.04 /bin/bash -c "useradd -m -s /bin/bash robotics && su robotics"
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # check if distro is ubuntu
@@ -90,8 +93,6 @@ echo "    - To launch a package from the workspace, run: ros2 launch <package_na
 echo "    - To run a node from the workspace, run: ros2 run <package_name> <node_name>"
 echo "    - Refer to ./bin/remote_launch.sh for information on what happens when rover is launched"
 
-
 # End of file
-
 
 
