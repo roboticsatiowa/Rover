@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# Note: test this script in docker with the following command:
-# docker run -it ubuntu:22.04
-
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd "${SCRIPT_DIR}"
+
+# check if running as root
+if [ "$EUID" -eq 0 ]; then
+    echo "ERROR: This script should not be run as root"
+    exit 1
+fi
 
 # check if distro is ubuntu
 if [ "$(lsb_release -is)" != "Ubuntu" ]; then
@@ -64,13 +67,13 @@ rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 
 # add ROS2 Humble sources to bashrc
-read -r -p "add ROS2 Humble sources to bashrc? (Recommended) [Y/n] " ADD_SOURCE
+read -r -p "Add ROS2 Humble sources to bashrc? (Recommended) [Y/n] " ADD_SOURCE
 if [ "${ADD_SOURCE:-"y"}" == "y" ]; then
     grep -q "source /opt/ros/humble/setup.bash" "${HOME}/.bashrc" || echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc"
 fi
 
 # add Domain ID to bashrc
-read -r -p "add Domain ID to bashrc? (Recommended) [Y/n] " ADD_DOMAIN
+read -r -p "Add Domain ID to bashrc? (Recommended) [Y/n] " ADD_DOMAIN
 if [ "${ADD_DOMAIN:-"y"}" == "y" ]; then
     grep -q "export ROS_DOMAIN_ID=69" "${HOME}/.bashrc" || echo "export ROS_DOMAIN_ID=69" >> "${HOME}/.bashrc"
 fi
@@ -82,7 +85,7 @@ if [ "${BUILD:-"y"}" == "y" ]; then
 fi
 
 # source workspace from bashrc
-read -r -p "source workspace from bashrc? (Only recommended on actual rover) [Y/n] " SOURCE_WORKSPACE
+read -r -p "Source workspace from bashrc? (Only recommended on actual rover) [Y/n] " SOURCE_WORKSPACE
 if [ "${SOURCE_WORKSPACE:-"y"}" == "y" ]; then
     grep -q "source ${SCRIPT_DIR}/install/setup.bash" "${HOME}/.bashrc" || echo "source ${SCRIPT_DIR}/install/setup.bash" >> "${HOME}/.bashrc"
 fi
@@ -97,8 +100,9 @@ echo "    - to source the workspace, run: source install/setup.bash"
 echo "    - To launch a package from the workspace, run: ros2 launch <package_name> <launch_file>"
 echo "    - To run a node from the workspace, run: ros2 run <package_name> <node_name>"
 echo "    - Refer to ./bin/remote_launch.sh for information on what happens when rover is launched"
-echo
 
-bash
+echo; echo
+
+bash # start a new bash shell to source the workspace
 
 # End of file
