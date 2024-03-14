@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-
 set -eo pipefail
 
 SCRIPT_DIR=$( cd "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
+    
 (cd "$SCRIPT_DIR"/../ && colcon build)
-source "$SCRIPT_DIR"/../install/setup.bash
+. "$SCRIPT_DIR"/../install/setup.sh
