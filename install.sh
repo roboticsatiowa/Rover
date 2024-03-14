@@ -66,7 +66,10 @@ fi
 # Misc dependencies
 sudo apt install python3-rosdep2 tmux python3-venv python3-colcon-common-extensions ros-humble-rosbag2 -y
 
-# install dependencies
+# downgrade setuptools to 58.2.0 because ROS2 uses a deprecated build system
+pip3 install setuptools==58.2.0
+
+# install package dependencies
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 
