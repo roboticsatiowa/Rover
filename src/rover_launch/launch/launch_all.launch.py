@@ -33,9 +33,6 @@ def generate_launch_description():
     )
 
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds] 
-    
-    #create directory with time stamp for bag fil
-
     rosbag = ExecuteProcess(cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")} -a --compression-mode file --compression-format zstd -d 9000'.split(" "), output="screen") 
 
     return LaunchDescription([
