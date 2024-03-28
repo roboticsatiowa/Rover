@@ -6,12 +6,13 @@ FROM osrf/ros:humble-desktop
 SHELL ["/bin/bash", "-c"] 
 
 # setup robotics user
-RUN useradd -ms /bin/bash robotics; \
-    usermod -aG sudo robotics; \
-    sudo chown -R robotics:robotics /home/robotics/; \
-    sudo usermod -aG dialout robotics; \
-    echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers; \
-    echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
+RUN useradd -ms /bin/bash robotics
+RUN usermod -aG sudo robotics
+RUN sudo chown -R robotics:robotics /home/robotics/
+RUN sudo usermod -aG dialout robotics
+RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
+
 USER robotics
 
 USER robotics
