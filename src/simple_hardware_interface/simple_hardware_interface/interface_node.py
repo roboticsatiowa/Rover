@@ -1,11 +1,10 @@
-from sympy import E
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy
 import serial
 from time import sleep
 
-from button_maps.xbox360 import *
+from button_maps.PS5 import *
 
 class InterfaceNode(Node):
     prev_msg = None

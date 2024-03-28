@@ -10,7 +10,7 @@ from time import strftime
 
 def generate_launch_description():
 
-    # Start video feeds
+    # Video feeds
     launch_video_feeds = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
@@ -18,6 +18,8 @@ def generate_launch_description():
             )
         )
     )
+    
+    # Aruco detection
     launch_aruco_detection = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
@@ -26,6 +28,7 @@ def generate_launch_description():
         )
     )
 
+    # Simple hardware interface
     hardware_interace_node = Node(
         name="simple_hardware_interface",
         package="simple_hardware_interface",
