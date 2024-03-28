@@ -12,7 +12,8 @@ RUN chown -R robotics:robotics /home/robotics/
 RUN usermod -aG dialout robotics
 RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
-RUN apt install git -y
+RUN apt update -y && apt upgrade -y
+RUN apt install sudo git -y
 
 USER robotics
 
