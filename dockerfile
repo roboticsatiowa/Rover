@@ -8,8 +8,8 @@ SHELL ["/bin/bash", "-c"]
 # setup robotics user
 RUN useradd -ms /bin/bash robotics
 RUN usermod -aG sudo robotics
-RUN sudo chown -R robotics:robotics /home/robotics/
-RUN sudo usermod -aG dialout robotics
+RUN chown -R robotics:robotics /home/robotics/
+RUN usermod -aG dialout robotics
 RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
 
