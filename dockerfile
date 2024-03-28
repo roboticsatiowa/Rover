@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+
+FROM ros:humble-ros-core-jammy
+
+# use bash instead of sh. allows us to use 'source' command.
+SHELL ["/bin/bash", "-c"] 
+
+# setup robotics user
+RUN useradd -ms  /bin/bash robotics
+RUN usermod -aG sudo robotics
+RUN sudo chown -R robotics:robotics /home/robotics/
+RUN sudo usermod -aG dialout robotics
+RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
+
+USER robotics
+
+USER robotics
+WORKDIR /home/robotics
