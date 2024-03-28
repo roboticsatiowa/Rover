@@ -12,6 +12,8 @@ RUN chown -R robotics:robotics /home/robotics/
 RUN usermod -aG dialout robotics
 RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN echo "source /opt/ros/humble/setup.bash" >> /home/robotics/.bashrc
+RUN echo "export ROS_DOMAIN_ID=69" >> "${HOME}/.bashrc"
+RUN "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 RUN apt update -y && apt upgrade -y
 RUN yes | apt-get install sudo
 RUN apt install git -y
@@ -19,6 +21,5 @@ RUN apt install git -y
 USER robotics
 
 USER robotics
-WORKDIR /home/robotics/Code
+WORKDIR /home/robotics/Rover
 COPY . .
-RUN . yes | install.sh
