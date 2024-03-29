@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# Hello!
+getopts "y" yestoall
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd "${SCRIPT_DIR}"
@@ -76,25 +76,42 @@ rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 
 # add ROS2 Humble sources to bashrc
-read -r -p "Add ROS2 Humble sources to bashrc? (Recommended) [Y/n] " ADD_SOURCE
+
+if [ $yestoall ]; then
+    ADD_SOURCE="y"
+else
+    read -r -p "Add ROS2 Humble sources to bashrc? (Recommended) [Y/n] " ADD_SOURCE
+fi
 if [ "${ADD_SOURCE:-"y"}" == "y" ]; then
     grep -q "source /opt/ros/humble/setup.bash" "${HOME}/.bashrc" || echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc"
 fi
 
 # add Domain ID to bashrc
-read -r -p "Add Domain ID to bashrc? (Recommended) [Y/n] " ADD_DOMAIN
+if [ $yestoall ]; then
+    ADD_DOMAIN="y"
+else
+    read -r -p "Add Domain ID to bashrc? (Recommended) [Y/n] " ADD_DOMAIN
+fi
 if [ "${ADD_DOMAIN:-"y"}" == "y" ]; then
     grep -q "export ROS_DOMAIN_ID=69" "${HOME}/.bashrc" || echo "export ROS_DOMAIN_ID=69" >> "${HOME}/.bashrc"
 fi
 
 # build the workspace
-read -r -p "Build the workspace? [Y/n] " BUILD
+if [ $yestoall ]; then
+    BUILD="y"
+else
+    read -r -p "Build the workspace? [Y/n] " BUILD
+fi
 if [ "${BUILD:-"y"}" == "y" ]; then
     colcon build
 fi
 
 # source workspace from bashrc
-read -r -p "Source workspace from bashrc? (Only recommended on actual rover) [Y/n] " SOURCE_WORKSPACE
+if [ $yestoall ]; then
+    SOURCE_WORKSPACE="y"
+else
+    read -r -p "Source workspace from bashrc? (Only recommended on actual rover) [Y/n] " SOURCE_WORKSPACE
+fi
 if [ "${SOURCE_WORKSPACE:-"y"}" == "y" ]; then
     grep -q "source ${SCRIPT_DIR}/install/setup.bash" "${HOME}/.bashrc" || echo "source ${SCRIPT_DIR}/install/setup.bash" >> "${HOME}/.bashrc"
 fi
