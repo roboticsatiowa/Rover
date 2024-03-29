@@ -24,4 +24,4 @@ RUN echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
 WORKDIR /home/robotics/Rover
 COPY . .
-RUN source install. -y
+RUN source install.sh -y
