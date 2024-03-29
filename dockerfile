@@ -10,12 +10,10 @@ RUN useradd -ms /bin/bash robotics -p "$(openssl passwd -1 rover123)"
 RUN usermod -aG sudo robotics
 RUN chown -R robotics:robotics /home/robotics/
 RUN usermod -aG dialout robotics
-RUN echo "robotics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo "robotics ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/robotics
 RUN apt update -y && apt upgrade -y
 RUN yes | apt-get install sudo
 RUN apt install git -y
-
-USER robotics
 
 USER robotics
 
@@ -25,3 +23,4 @@ RUN echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
 WORKDIR /home/robotics/Rover
 COPY . .
+RUN yes | source install.sh
