@@ -6,14 +6,15 @@ FROM ros:humble-ros-core-jammy
 SHELL ["/bin/bash", "-c"]
 
 # setup robotics user
+RUN yes | apt-get install sudo
+RUN apt install git -y
+
 RUN useradd -ms /bin/bash robotics -p "$(openssl passwd -1 rover123)"
 RUN usermod -aG sudo robotics
 RUN chown -R robotics:robotics /home/robotics/
 RUN usermod -aG dialout robotics
-RUN echo "robotics ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/robotics
 RUN apt update -y && apt upgrade -y
-RUN yes | apt-get install sudo
-RUN apt install git -y
+RUN echo "robotics ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/robotics
 
 USER robotics
 
