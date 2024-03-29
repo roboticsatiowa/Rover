@@ -45,7 +45,11 @@ if [ -n "$ROS_DISTRO" ] && [ "$ROS_DISTRO" != "humble" ]; then
 fi
 
 if [ -z "$ROS_DISTRO" ]; then
-    read -r -p "No ROS distro detected. Do you want to install ROS2 Humble? [Y/n] " INSTALL
+    if [ $yestoall ]; then
+        INSTALL="y"
+    else
+        read -r -p "No ROS distro detected. Do you want to install ROS2 Humble? [Y/n] " INSTALL
+    fi
     if [ "${INSTALL:-'y'}" == "y" ]; then
         sudo apt update -y
         sudo apt upgrade -y
