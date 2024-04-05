@@ -1,0 +1,11 @@
+WARNING: topic [/camera1/image_raw/compressed] does not appear to be published yet
+Subscribed to [/camera1/image_raw/compressed]
+2.59 MB/s from 30 messages
+	Message size mean: 0.08 MB min: 0.08 MB max: 0.09 MB
+2.31 MB/s from 54 messages
+	Message size mean: 0.08 MB min: 0.08 MB max: 0.09 MB
+2.42 MB/s from 85 messages
+	Message size mean: 0.08 MB min: 0.08 MB max: 0.09 MB
+2.43 MB/s from 100 messages
+	Message size mean: 0.08 MB min: 0.08 MB max: 0.09 MB
+

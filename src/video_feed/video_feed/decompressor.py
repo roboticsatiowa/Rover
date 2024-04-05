@@ -9,7 +9,7 @@ class ImageDecompressor(Node):
         super().__init__('image_decompressor')
         self.subscription = self.create_subscription(
             Image,
-            '/camera2/image_raw',  # Topic to subscribe to
+            '/narrow_stereo/image_raw',  # Topic to subscribe to
             self.listener_callback,
             10)
         self.subscription  # prevent unused variable warning

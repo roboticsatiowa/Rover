@@ -12,6 +12,8 @@ setup(
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch/', ['launch/cameras.launch.py']),
         ('share/' + package_name + '/launch/', ['launch/fisheye_cam_calib.yaml']),
+        ('share/' + package_name + '/launch/', ['launch/camera1.yaml']),
+        
 
     ],
     install_requires=['setuptools'],
@@ -21,9 +23,9 @@ setup(
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
-    entry_points={
-        'console_scripts': [
-            'image_decompressor = video_feed.decompressor:main',
-        ],
-    },
+    # entry_points={
+    #     'console_scripts': [
+    #         'image_decompressor = video_feed.decompressor:main',
+    #     ],
+    # },
 )
