@@ -15,10 +15,10 @@ def generate_launch_description():
     pixel_format = 'yuyv'
     color_format = 'yuv420p'
     # Camera 1
-    camera_name_1 = 'narrow_stereo'
+    camera_name_1 = 'camera1'
     video_device_1 = '/dev/video0'
     camera1_info_url = Command(['echo "file://', launch_file_dir, '/', 'camera1', '.yaml"'])
-    camera_info_url = Command(['echo "file://', launch_file_dir, '/', 'fisheye_cam_calib', '.yaml"'])
+    camera2_info_url = Command(['echo "file://', launch_file_dir, '/', 'fisheye_cam_calib', '.yaml"'])
     if os.path.exists(video_device_1):
      
         ld.append(Node(
@@ -28,11 +28,11 @@ def generate_launch_description():
             namespace=camera_name_1,
             parameters=[{
                 'video_device': video_device_1,
-                'camera_info_url': camera_info_url,
+                'camera_info_url': camera2_info_url,
                 'camera_name': camera_name_1,
                 'pixel_format': pixel_format,
-                'image_width' : 800,
-                'image_height' : 600
+                # 'image_width' : 800,
+                # 'image_height' : 600
 
                 # 'image_transport' : 'compressed',
                 # 'jpeg_quality' : 1
@@ -41,10 +41,21 @@ def generate_launch_description():
             remappings=[('image_raw', 'image_raw')]
         ))
 
+        ld.append(Node(
+            package='image_transport',
+            executable='republish',
+            name='republisher_camera_1',
+            namespace=camera_name_1,
+            arguments=['--ros-args', 'remap', f'in:=/{camera_name_1}/image_raw', '--remap', f'out:=/{camera_name_1}/image_repub/compressed'],
+            parameters=[{'jpeg_quality': 10}]
+        ))
+
+       
+
         
 
     # Camera 2
-    camera_name_2 = 'camera1' 
+    camera_name_2 = 'camera2' 
     video_device_2 = '/dev/video4'
     
     if os.path.exists(video_device_2):
@@ -62,8 +73,8 @@ def generate_launch_description():
                 # 'image_transports' : 'compressed',
                 # 'jpeg_quality' : 1
                 # 'color_format': color_format
-                'image_width' : 800,
-                'image_height' : 600
+                # 'image_width' : 800,
+                # 'image_height' : 600
             }],
             remappings=[('image_raw', 'image_raw')]
         ))
@@ -71,10 +82,10 @@ def generate_launch_description():
         ld.append(Node(
                 package='image_transport',
                 executable='republish',
-                name='republisher_camera_1',
+                name='republisher_camera_2',
                 namespace=camera_name_1,
-                arguments=['raw', f'in:=/{camera_name_2}/image_raw', 'compressed', f'out:=/{camera_name_2}/image/compressed'],
-                parameters=[{'jpeg_quality': 100}]
+                arguments=['--ros-args', 'remap', f'in:=/{camera_name_2}/image_raw', '--remap', f'out:=/{camera_name_2}/image_repub/compressed'],
+                parameters=[{'jpeg_quality': 10}]
             ))
 
     # ld.append(Node(
