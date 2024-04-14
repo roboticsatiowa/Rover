@@ -24,8 +24,8 @@ RUN echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc"
 RUN echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
 # setup rover repo
-ADD ../bin ./bin 
-ADD ../install.sh ./install.sh
-ADD ../src ./src
+ADD ./bin ./bin 
+ADD ./install.sh ./install.sh
+ADD ./src ./src
 RUN source install.sh -y
 WORKDIR /home/robotics

@@ -71,11 +71,12 @@ if [ -z "$ROS_DISTRO" ]; then
 fi
 
 # Misc dependencies
-sudo apt install tmux python3-venv python3-rosdep2 python3-colcon-common-extensions ros-humble-rosbag2 -y
+sudo apt install tmux python3-venv python3-rosdep2 python3-colcon-common-extensions ros-humble-rosbag2 python3-serial ros-humble-usb-cam -y
 
 # install package dependencies
-rosdep update
-rosdep install --from-paths src --ignore-src -r -y
+# rosdep update
+# ros
+# rosdep install --from-paths src --ignore-src -r -y
 
 # add ROS2 Humble sources to bashrc
 
