@@ -6,6 +6,8 @@ from time import sleep
 
 from button_maps.PS5 import *
 
+PORT_NAME = '/dev/ttyACM0'
+
 class InterfaceNode(Node):
     prev_msg = None
     control_mode = 0
@@ -23,7 +25,6 @@ class InterfaceNode(Node):
 
         super(InterfaceNode, self).__init__('simple_hardware_interface')
 
-        PORT_NAME = '/dev/ttyACM0'
         
         while True:
             try:
@@ -55,6 +56,7 @@ class InterfaceNode(Node):
     # Move arm and other actuators
     def arm_mode(self, msg):
         try:
+            # we must only send the command if the value has changed. Otherwise the serial connection will be become bogged down
             if self.axis_changed(msg, L_JOY_Y):
                 self.serial_out.write(bytes(f'h 0 {msg.axes[L_JOY_Y] * 255}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_Y):
@@ -73,20 +75,20 @@ class InterfaceNode(Node):
         if self.prev_msg is None:
             self.prev_msg = msg
             return
-
-        # 
+        
+        # Control mode
         if self.control_mode == 0:
             self.drive_mode(msg)
         elif self.control_mode == 1:
             self.arm_mode(msg)
         
         # Mode toggle
-        if self.button_pressed(msg, START_BUTTON):
+        if self.button_pressed(msg, OPTIONS_BUTTON):
             self.control_mode = (self.control_mode + 1) % 2
             self.get_logger().info(f"Switching to control mode {self.control_mode}")
 
         # Headlight toggle
-        if self.button_pressed(msg, SHARE_BUTTON):
+        if self.button_pressed(msg, CREATE_BUTTON):
             self.serial_out.write(b'z\r')
             self.get_logger().info("Toggling headlights")
 
@@ -105,5 +107,7 @@ def main(args=None):
     rclpy.spin(node)
     #TODO send shutdown message to teensy
     rclpy.shutdown()
+
+    
 if __name__ == '__main__':
     main()

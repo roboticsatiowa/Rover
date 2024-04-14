@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+# DRY programming lmfao. Not here.
 set -eo pipefail
 
-getopts "y" yestoall
+getopts "y" yestoall || true
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd "${SCRIPT_DIR}"
@@ -70,10 +71,7 @@ if [ -z "$ROS_DISTRO" ]; then
 fi
 
 # Misc dependencies
-sudo apt install python3-pip python3-rosdep2 tmux python3-venv python3-colcon-common-extensions ros-humble-rosbag2 -y
-
-# downgrade setuptools to 58.2.0 because ROS2 uses a deprecated build system
-pip3 install setuptools==58.2.0
+sudo apt install tmux python3-venv python3-rosdep2 python3-colcon-common-extensions ros-humble-rosbag2 -y
 
 # install package dependencies
 rosdep update
