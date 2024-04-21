@@ -6,7 +6,7 @@ FROM ros:humble-ros-core-jammy
 SHELL ["/bin/bash", "-c"]
 
 # setup robotics user
-RUN apt update -y && apt upgrade -y
+RUN apt-get update -y && apt-get upgrade -y
 RUN yes | apt-get install sudo
 RUN apt install git -y
 RUN echo "robotics ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/local

@@ -25,14 +25,15 @@ class InterfaceNode(Node):
 
         super(InterfaceNode, self).__init__('simple_hardware_interface')
 
-        
-        while True:
+        i = 10
+        while i:
             try:
                 self.serial_out = serial.Serial(PORT_NAME, 115200, timeout=1)
                 break
             except Exception as e:
                 self.get_logger().error(f"{e}\nFailed to open serial port {PORT_NAME}. Retrying...")
-                sleep(10)
+                sleep(1)
+                i--
 
 
         self.control_mode = 0
