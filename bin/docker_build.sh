@@ -9,4 +9,4 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-(cd "$SCRIPT_DIR/.." && docker build . -t rover)
+(cd "$SCRIPT_DIR/.." && docker build . -f=docker/dockerfile -t=rover)

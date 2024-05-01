@@ -48,7 +48,7 @@ class InterfaceNode(Node):
     def drive_mode(self, msg):
         try:
             if self.axis_changed(msg, L_JOY_Y):
-                self.serial_out.write(bytes(f'l 0 {msg.axes[L_JOY_Y] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'l 0 {msg.axes[L_JOY_Y] * -255}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_Y):
                 self.serial_out.write(bytes(f'l 1 {msg.axes[R_JOY_Y] * 255}\r', 'utf-8'))
         except Exception as e:
@@ -95,8 +95,11 @@ class InterfaceNode(Node):
 
 
         self.prev_msg = msg
-        self.serial_out.flush()
 
+        try:
+            self.serial_out.flush()
+        except Exception as e:
+            self.get_logger().error(f"Error flushing serial port: {e}")
 
 
 
