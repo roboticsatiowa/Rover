@@ -33,7 +33,7 @@ class InterfaceNode(Node):
             except Exception as e:
                 self.get_logger().error(f"{e}\nFailed to open serial port {PORT_NAME}. Retrying...")
                 sleep(1)
-                i--
+                i -= 1
 
 
         self.control_mode = 0
