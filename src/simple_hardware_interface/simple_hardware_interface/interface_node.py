@@ -24,13 +24,14 @@ class InterfaceNode(Node):
         super(InterfaceNode, self).__init__('simple_hardware_interface')
 
         i = 0
-        while True:
+        while i < 20:
             try:
                 self.serial_out = serial.Serial(f"/dev/ttyACM{i%5}", 115200, timeout=1)
                 break
             except Exception as e:
                 self.get_logger().error(f"{e}\nFailed to open serial port /dev/ttyACM{i%5}. Retrying...")
                 sleep(3)
+            i += 1
 
 
         self.control_mode = 0
