@@ -27,5 +27,6 @@ RUN echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 ADD ./bin ./bin 
 ADD ./install.sh ./install.sh
 ADD ./src ./src
+ADD ./docker/entrypoint.sh ./entrypoint.sh
+
 RUN source install.sh -y
-WORKDIR /home/robotics
