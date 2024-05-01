@@ -1,3 +1,4 @@
+from sympy import true
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy
@@ -5,8 +6,6 @@ import serial
 from time import sleep
 
 from button_maps.PS5 import *
-
-PORT_NAME = '/dev/ttyACM0'
 
 class InterfaceNode(Node):
     prev_msg = None
@@ -25,15 +24,14 @@ class InterfaceNode(Node):
 
         super(InterfaceNode, self).__init__('simple_hardware_interface')
 
-        i = 10
-        while i:
+        i = 0
+        while true:
             try:
-                self.serial_out = serial.Serial(PORT_NAME, 115200, timeout=1)
+                self.serial_out = serial.Serial(f"/dev/ttyACM{i%5}", 115200, timeout=1)
                 break
             except Exception as e:
                 self.get_logger().error(f"{e}\nFailed to open serial port {PORT_NAME}. Retrying...")
-                sleep(1)
-                i -= 1
+                sleep(5)
 
 
         self.control_mode = 0
@@ -100,6 +98,10 @@ class InterfaceNode(Node):
             self.serial_out.flush()
         except Exception as e:
             self.get_logger().error(f"Error flushing serial port: {e}")
+            if not self.serial_out.is_open:
+                self.get_logger().error("Serial port closed. Exiting node.")
+                rclpy.shutdown()
+            sleep(1)
 
 
 
