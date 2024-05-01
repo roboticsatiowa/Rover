@@ -29,8 +29,8 @@ class InterfaceNode(Node):
                 self.serial_out = serial.Serial(f"/dev/ttyACM{i%5}", 115200, timeout=1)
                 break
             except Exception as e:
-                self.get_logger().error(f"{e}\nFailed to open serial port {PORT_NAME}. Retrying...")
-                sleep(5)
+                self.get_logger().error(f"{e}\nFailed to open serial port /dev/ttyACM{i%5}. Retrying...")
+                sleep(3)
 
 
         self.control_mode = 0
