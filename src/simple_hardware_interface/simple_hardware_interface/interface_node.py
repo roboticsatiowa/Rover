@@ -24,7 +24,7 @@ class InterfaceNode(Node):
         super(InterfaceNode, self).__init__('simple_hardware_interface')
 
         i = 0
-        while true:
+        while True:
             try:
                 self.serial_out = serial.Serial(f"/dev/ttyACM{i%5}", 115200, timeout=1)
                 break
