@@ -14,6 +14,6 @@ services:
       # - "/dev/ttyUSB0:/dev/ttyUSB0" # Allow the container to access the USB port
     environment:
       - ROS_DOMAIN_ID=69
-    entrypoint: entrypoint.sh
+    entrypoint: /home/robotics/Rover/entrypoint
 
 # sudo docker compose -f docker/compose.yml run rover
