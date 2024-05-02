@@ -33,6 +33,8 @@ def generate_launch_description():
         name="simple_hardware_interface",
         package="simple_hardware_interface",
         executable="simple_hardware_interface",
+        respawn=True,
+        respawn_delay=5,
     )
 
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds] 
