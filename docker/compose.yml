@@ -7,10 +7,9 @@ services:
     privileged: true
     ports:
       - "24650-24651" # Using DOMAIN_ID=69 calculated here: https://docs.ros.org/en/galactic/Concepts/About-Domain-ID.html
-      - "24660-24661"
-    # devices:
-      # - "/dev/ttyACM0:/dev/ttyACM0:ro" # Allow the container to access the Serial USB
-      # - "/dev/ttyUSB0:/dev/ttyUSB0" # Allow the container to access the USB port
+      - "24660-24690"
+
+    
     environment:
       - ROS_DOMAIN_ID=69
     entrypoint: /home/robotics/Rover/entrypoint
