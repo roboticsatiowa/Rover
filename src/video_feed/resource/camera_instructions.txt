@@ -1,0 +1,29 @@
+To use the camera file launch file,
+ensure that the file path to the calibration file is correct.
+
+The fisheye_calib_calib.yaml is the calibration file for the new
+fisheye cameras. You can likely use the same one for each camera.
+
+The file path needs to be set i.e /dev/video0. To see the devices,
+open a terminal in Linux
+
+"v4l2-ctl --list-devices and you will see all devices connected."
+
+The 'even' devices should be the video devices. To see the formats
+you want to write this line in the terminal or replace the video0 
+with the appropriate device
+
+"v4l2-ctl --list-formats-ext -d /dev/video0"
+
+The format you will need to see is 'YUYV'. Otherwise, the program 
+will crash. 
+
+To change the resolution, go to the camera calibration file and 
+change the image height and width. The dimensions will have to match
+the 'Discrete Size' in the terminal
+
+Some cameras may have more than 2 devices, so you may need to skip 
+some devices to get to the next camera
+
+
+

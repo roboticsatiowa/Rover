@@ -14,7 +14,8 @@ def generate_launch_description():
     # Camera 1
     camera_name_1 = 'camera1'
     video_device_1 = '/dev/video0'
-    camera_info_url = Command(['echo "file://', launch_file_dir, '/', 'fisheye_cam_calib', '.yaml"'])
+    camera1_info_url = Command(['echo "file://', launch_file_dir, '/', 'camera1', '.yaml"'])
+    camera2_info_url = Command(['echo "file://', launch_file_dir, '/', 'fisheye_cam_calib', '.yaml"'])
     
     if os.path.exists(video_device_1):
         ld.append(Node(
@@ -24,13 +25,21 @@ def generate_launch_description():
             namespace=camera_name_1,
             parameters=[{
                 'video_device': video_device_1,
-                'camera_info_url': camera_info_url,
+                'camera_info_url': camera1_info_url,
                 'camera_name': camera_name_1,
                 'pixel_format': pixel_format,
             }],
             remappings=[('image_raw', 'image_raw')]
         ))
 
+        ld.append(Node(
+            package='image_transport',
+            executable='republish',
+            name='republisher_camera_1',
+            namespace=camera_name_1,
+            arguments=['raw', 'compressed', '--ros-args', '--remap', 'image_raw:=image_compressed'],
+            parameters=[{'jpeg_quality': 80}]
+        ))
 
     # Camera 2
     camera_name_2 = 'camera2'
@@ -44,11 +53,20 @@ def generate_launch_description():
             namespace=camera_name_2,
             parameters=[{
                 'video_device': video_device_2,
-                'camera_info_url': camera_info_url,  # Make sure this URL is intended for camera2
+                'camera_info_url': camera2_info_url,  # Make sure this URL is intended for camera2
                 'camera_name': camera_name_2,
                 'pixel_format': pixel_format,
             }],
             remappings=[('image_raw', 'image_raw')]
+        ))
+
+        ld.append(Node(
+            package='image_transport',
+            executable='republish',
+            name='republisher_camera_2',
+            namespace=camera_name_2,
+            arguments=['raw', 'compressed', '--ros-args', '--remap', 'image_raw:=image_compressed'],
+            parameters=[{'jpeg_quality': 10}]
         ))
 
 
