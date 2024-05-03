@@ -72,9 +72,9 @@ class InterfaceNode(Node):
             
             if not (msg.axes[L_TRIGGER] != 1 and msg.axes[R_TRIGGER] != 1):
                 if self.axis_changed(msg, R_TRIGGER):
-                    self.serial_out.write(bytes(f'o 0 {((msg.axes[R_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
+                    self.serial_out.write(bytes(f'o 0 {((msg.axes[R_TRIGGER]-1)/2) * -255}\r', 'utf-8'))
                 if self.axis_changed(msg, L_TRIGGER):
-                    self.serial_out.write(bytes(f'o 0 {((msg.axes[L_TRIGGER]-1)/2) * -255}\r', 'utf-8'))
+                    self.serial_out.write(bytes(f'o 0 {((msg.axes[L_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
 
             if not (msg.buttons[CIRCLE_BUTTON] != 0 and msg.buttons[SQUARE_BUTTON] != 0):
                 if self.button_pressed(msg, CIRCLE_BUTTON):
@@ -100,9 +100,9 @@ class InterfaceNode(Node):
 
             if not (msg.buttons[DPAD_UP] != 0 and msg.buttons[DPAD_DOWN] != 0):
                 if self.button_pressed(msg, DPAD_UP):
-                    self.serial_out.write(b'h 0 255\r')
-                if self.button_pressed(msg, DPAD_DOWN):
                     self.serial_out.write(b'h 0 -255\r')
+                if self.button_pressed(msg, DPAD_DOWN):
+                    self.serial_out.write(b'h 0 255\r')
             
             if self.button_released(msg, DPAD_UP):
                 self.serial_out.write(b'h 0 0\r')
