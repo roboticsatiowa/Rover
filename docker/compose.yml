@@ -1,7 +1,6 @@
 services:
   rover:
     image: "rover"
-    build: ..
     stdin_open: true  # Run in interactive mode. Not necessary for the rover, but useful for debugging
     tty: true         # ^^^
     network_mode: "host"
