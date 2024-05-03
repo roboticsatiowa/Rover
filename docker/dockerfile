@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7-labs
 
-FROM ros:humble-ros-core-jammy@sha256:eb78c6e7f45c08210500beb5f0b1f54936b26f94e622abcb14d4a87a
+FROM ros:humble-ros-core-jamm
 
 # use bash instead of sh. allows us to use 'source' command.
 SHELL ["/bin/bash", "-c"]
