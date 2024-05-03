@@ -59,13 +59,34 @@ class InterfaceNode(Node):
         try:
             # we must only send the command if the value has changed. Otherwise the serial connection will be become bogged down
             if self.axis_changed(msg, L_JOY_Y):
-                self.serial_out.write(bytes(f'h 0 {msg.axes[L_JOY_Y] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'h 0 {int(msg.axes[L_JOY_Y] * 255)}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_Y):
-                self.serial_out.write(bytes(f'h 1 {msg.axes[R_JOY_Y] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'h 1 {int(msg.axes[R_JOY_Y] * 255)}\r', 'utf-8'))
             if self.axis_changed(msg, L_JOY_X):
-                self.serial_out.write(bytes(f'o 0 {msg.axes[L_JOY_X] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'o 0 {int(msg.axes[L_JOY_X] * 255)}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_X):
-                self.serial_out.write(bytes(f'o 2 {msg.axes[R_JOY_X] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'o 2 {int(msg.axes[R_JOY_X] * 255)}\r', 'utf-8'))
+
+            if self.button_pressed(msg, L1):
+                self.serial_out.write(b'o 1 255\r')
+            if self.button_released(msg, L1):
+                self.serial_out.write(b'o 1 0\r')
+
+            if self.button_pressed(msg, R1):
+                self.serial_out.write(b'o 1 -255\r')
+            if self.button_released(msg, R1):
+                self.serial_out.write(b'o 1 0\r')
+            
+            if self.button_pressed(msg, SQUARE_BUTTON):
+                self.serial_out.write(b'o 3 255\r')
+            if self.button_released(msg, SQUARE_BUTTON):
+                self.serial_out.write(b'o 3 0\r')
+            
+            if self.button_pressed(msg, CIRCLE_BUTTON):
+                self.serial_out.write(b'o 3 -255\r')
+            if self.button_released(msg, CIRCLE_BUTTON):
+                self.serial_out.write(b'o 3 0\r')
+            
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
 
