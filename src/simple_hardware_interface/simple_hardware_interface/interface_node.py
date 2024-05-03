@@ -78,12 +78,12 @@ class InterfaceNode(Node):
                 self.serial_out.write(b'o 1 0\r')
             
             if self.button_pressed(msg, SQUARE_BUTTON):
-                self.serial_out.write(b'o 3 255\r')
+                self.serial_out.write(b'o 3 200\r')
             if self.button_released(msg, SQUARE_BUTTON):
                 self.serial_out.write(b'o 3 0\r')
             
             if self.button_pressed(msg, CIRCLE_BUTTON):
-                self.serial_out.write(b'o 3 -255\r')
+                self.serial_out.write(b'o 3 -200\r')
             if self.button_released(msg, CIRCLE_BUTTON):
                 self.serial_out.write(b'o 3 0\r')
             
