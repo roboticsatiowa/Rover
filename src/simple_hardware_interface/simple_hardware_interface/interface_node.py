@@ -68,22 +68,22 @@ class InterfaceNode(Node):
                 self.serial_out.write(bytes(f'o 2 {int(msg.axes[R_JOY_X] * 255)}\r', 'utf-8'))
 
             if self.button_pressed(msg, L_BUMPER):
-                self.serial_out.write(b'o 1 -200\r')
+                self.serial_out.write(b'o 1 -150\r')
             if self.button_released(msg, L_BUMPER):
                 self.serial_out.write(b'o 1 0\r')
 
             if self.button_pressed(msg, R_BUMPER):
-                self.serial_out.write(b'o 1 200\r')
+                self.serial_out.write(b'o 1 150\r')
             if self.button_released(msg, R_BUMPER):
                 self.serial_out.write(b'o 1 0\r')
             
             if self.button_pressed(msg, SQUARE_BUTTON):
-                self.serial_out.write(b'o 3 200\r')
+                self.serial_out.write(b'o 3 150\r')
             if self.button_released(msg, SQUARE_BUTTON):
                 self.serial_out.write(b'o 3 0\r')
             
             if self.button_pressed(msg, CIRCLE_BUTTON):
-                self.serial_out.write(b'o 3 -200\r')
+                self.serial_out.write(b'o 3 -150\r')
             if self.button_released(msg, CIRCLE_BUTTON):
                 self.serial_out.write(b'o 3 0\r')
             
