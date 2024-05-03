@@ -56,25 +56,25 @@ class InterfaceNode(Node):
             
     # Move arm and other actuators
 
-    # X o 0: writst inclination
-    # X o 1: base rotation
+    # X o 0: Base Motor
+    # X o 1: hand inclination
     # o 2: hand
     # o 3: hand rotation
-    # h 0: shoulder
-    # h 1: elbow
+    # h 0: elbow
+    # h 1: shoulder
     def arm_mode(self, msg):
         try:
             # we must only send the command if the value has changed. Otherwise the serial connection will be become bogged down
             if self.axis_changed(msg, R_JOY_Y):
-                self.serial_out.write(bytes(f'o 0 {msg.axes[R_JOY_Y] * -255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'o 1 {msg.axes[R_JOY_Y] * -255}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_X):
                 self.serial_out.write(bytes(f'o 3 {msg.axes[R_JOY_X] * 255}\r', 'utf-8'))
             
             if not (msg.axes[L_TRIGGER] != 1 and msg.axes[R_TRIGGER] != 1):
                 if self.axis_changed(msg, R_TRIGGER):
-                    self.serial_out.write(bytes(f'o 2 {((msg.axes[R_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
+                    self.serial_out.write(bytes(f'o 0 {((msg.axes[R_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
                 if self.axis_changed(msg, L_TRIGGER):
-                    self.serial_out.write(bytes(f'o 2 {((msg.axes[L_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
+                    self.serial_out.write(bytes(f'o 0 {((msg.axes[L_TRIGGER]-1)/2) * -255}\r', 'utf-8'))
 
             if not (msg.buttons[CIRCLE_BUTTON] != 0 and msg.buttons[SQUARE_BUTTON] != 0):
                 if self.button_pressed(msg, CIRCLE_BUTTON):
