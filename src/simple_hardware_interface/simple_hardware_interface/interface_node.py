@@ -55,37 +55,65 @@ class InterfaceNode(Node):
             self.get_logger().error(f"Error writing to serial port: {e}")
             
     # Move arm and other actuators
+
+    # X o 0: writst inclination
+    # X o 1: base rotation
+    # o 2: hand
+    # o 3: hand rotation
+    # h 0: shoulder
+    # h 1: elbow
     def arm_mode(self, msg):
         try:
             # we must only send the command if the value has changed. Otherwise the serial connection will be become bogged down
-            if self.axis_changed(msg, L_JOY_Y):
-                self.serial_out.write(bytes(f'h 0 {int(msg.axes[L_JOY_Y] * 255)}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_Y):
-                self.serial_out.write(bytes(f'h 1 {int(msg.axes[R_JOY_Y] * 255)}\r', 'utf-8'))
-            if self.axis_changed(msg, L_JOY_X):
-                self.serial_out.write(bytes(f'o 0 {int(msg.axes[L_JOY_X] * 255)}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'o 0 {msg.axes[R_JOY_Y] * -255}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_X):
-                self.serial_out.write(bytes(f'o 2 {int(msg.axes[R_JOY_X] * 255)}\r', 'utf-8'))
-
-            if self.button_pressed(msg, L_BUMPER):
-                self.serial_out.write(b'o 1 -150\r')
-            if self.button_released(msg, L_BUMPER):
-                self.serial_out.write(b'o 1 0\r')
-
-            if self.button_pressed(msg, R_BUMPER):
-                self.serial_out.write(b'o 1 150\r')
-            if self.button_released(msg, R_BUMPER):
-                self.serial_out.write(b'o 1 0\r')
+                self.serial_out.write(bytes(f'o 3 {msg.axes[R_JOY_X] * 255}\r', 'utf-8'))
             
-            if self.button_pressed(msg, SQUARE_BUTTON):
-                self.serial_out.write(b'o 3 150\r')
-            if self.button_released(msg, SQUARE_BUTTON):
-                self.serial_out.write(b'o 3 0\r')
-            
-            if self.button_pressed(msg, CIRCLE_BUTTON):
-                self.serial_out.write(b'o 3 -150\r')
+            if not (msg.axes[L_TRIGGER] != 1 and msg.axes[R_TRIGGER] != 1):
+                if self.axis_changed(msg, R_TRIGGER):
+                    self.serial_out.write(bytes(f'o 2 {((msg.axes[R_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
+                if self.axis_changed(msg, L_TRIGGER):
+                    self.serial_out.write(bytes(f'o 2 {((msg.axes[L_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
+
+            if not (msg.buttons[CIRCLE_BUTTON] != 0 and msg.buttons[SQUARE_BUTTON] != 0):
+                if self.button_pressed(msg, CIRCLE_BUTTON):
+                    self.serial_out.write(b'o 2 255\r')
+                if self.button_pressed(msg, SQUARE_BUTTON):
+                    self.serial_out.write(b'o 2 -255\r')
+
             if self.button_released(msg, CIRCLE_BUTTON):
-                self.serial_out.write(b'o 3 0\r')
+                self.serial_out.write(b'o 2 0\r')
+            if self.button_released(msg, SQUARE_BUTTON):
+                self.serial_out.write(b'o 2 0\r')
+
+            if not (msg.buttons[TRIANGLE_BUTTON] != 0 and msg.buttons[X_BUTTON] != 0):
+                if self.button_pressed(msg, TRIANGLE_BUTTON):
+                    self.serial_out.write(b'h 1 255\r')
+                if self.button_pressed(msg, X_BUTTON):
+                    self.serial_out.write(b'h 1 -255\r')
+            
+            if self.button_released(msg, TRIANGLE_BUTTON):
+                self.serial_out.write(b'h 1 0\r')
+            if self.button_released(msg, X_BUTTON):
+                self.serial_out.write(b'h 1 0\r')
+
+            if not (msg.buttons[DPAD_UP] != 0 and msg.buttons[DPAD_DOWN] != 0):
+                if self.button_pressed(msg, DPAD_UP):
+                    self.serial_out.write(b'h 0 255\r')
+                if self.button_pressed(msg, DPAD_DOWN):
+                    self.serial_out.write(b'h 0 -255\r')
+            
+            if self.button_released(msg, DPAD_UP):
+                self.serial_out.write(b'h 0 0\r')
+            if self.button_released(msg, DPAD_DOWN):
+                self.serial_out.write(b'h 0 0\r')
+
+
+
+
+
+            
             
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
