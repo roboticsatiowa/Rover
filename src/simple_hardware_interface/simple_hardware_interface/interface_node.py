@@ -68,7 +68,7 @@ class InterfaceNode(Node):
             if self.axis_changed(msg, R_JOY_Y):
                 self.serial_out.write(bytes(f'o 1 {msg.axes[R_JOY_Y] * -255}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_X):
-                self.serial_out.write(bytes(f'o 3 {msg.axes[R_JOY_X] * 255}\r', 'utf-8'))
+                self.serial_out.write(bytes(f'o 3 {msg.axes[R_JOY_X] * -255}\r', 'utf-8'))
             
             if not (msg.axes[L_TRIGGER] != 1 and msg.axes[R_TRIGGER] != 1):
                 if self.axis_changed(msg, R_TRIGGER):
@@ -107,14 +107,7 @@ class InterfaceNode(Node):
             if self.button_released(msg, DPAD_UP):
                 self.serial_out.write(b'h 0 0\r')
             if self.button_released(msg, DPAD_DOWN):
-                self.serial_out.write(b'h 0 0\r')
-
-
-
-
-
-            
-            
+                self.serial_out.write(b'h 0 0\r')            
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
 
