@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1.7-labs
 
+# using ros humble core 
 FROM ros:humble-ros-core-jammy
 
 # use bash instead of sh. allows us to use 'source' command.

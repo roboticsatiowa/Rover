@@ -2,9 +2,9 @@
 set -eo pipefail
 
 SCRIPT_DIR=$( cd "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-cd $SCRIPT_DIR/..
 
+cd "${SCRIPT_DIR}"/..
 
 # run container
 mkdir -p bag/
-docker compose -f docker/compose.yml run rover
+docker compose -f docker/compose.yml up rover -d
