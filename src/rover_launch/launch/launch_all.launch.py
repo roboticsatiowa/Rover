@@ -22,7 +22,7 @@ def generate_launch_description():
     launch_gps = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
-                [FindPackageShare("ublox_gps"),"ublox_gps/launch/ublox_gps_node_zedf9p-launch.py"]
+                [FindPackageShare("ublox_gps"),"launch/ublox_gps_node_zedf9p-launch.py"]
             )
         )
     )
