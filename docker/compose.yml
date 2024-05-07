@@ -1,6 +1,6 @@
 services:
   rover:
-    image: "ethanholter/uirover:latest"
+    image: "ethanholter/uirover"
     container_name: "rover-container"
     network_mode: "host"
     privileged: true
