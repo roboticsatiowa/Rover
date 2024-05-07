@@ -11,6 +11,18 @@ services:
       - ROS_DOMAIN_ID=69
     entrypoint: /home/robotics/Rover/entrypoint
     restart: "unless-stopped"
+  uirover-interactive:
+    image: "ethanholter/uirover"
+    container_name: "rover-container"
+    stdin_open: true # docker run -i
+    tty: true 
+    network_mode: "host"
+    privileged: true
+    ports:
+      - "24650-24651" # Using DOMAIN_ID=69 calculated here: https://docs.ros.org/en/galactic/Concepts/About-Domain-ID.html
+      - "24660-24690"
+    environment:
+      - ROS_DOMAIN_ID=69
 
 # https://superuser.com/questions/360336/differentiate-between-identical-usb-devices-on-linux
 
