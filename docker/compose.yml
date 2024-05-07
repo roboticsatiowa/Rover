@@ -12,4 +12,6 @@ services:
     entrypoint: /home/robotics/Rover/entrypoint
     restart: "unless-stopped"
 
+# https://superuser.com/questions/360336/differentiate-between-identical-usb-devices-on-linux
+
 # sudo docker compose -f docker/compose.yml run rover

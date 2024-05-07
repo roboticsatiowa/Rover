@@ -8,8 +8,18 @@ SHELL ["/bin/bash", "-c"]
 
 # setup robotics user
 RUN apt-get update -y && apt-get upgrade -y
-RUN yes | apt-get install sudo
-RUN apt install git python3-venv python3-rosdep2 python3-colcon-common-extensions ros-humble-rosbag2 python3-serial ros-humble-usb-cam -y
+RUN apt-get install -y  sudo
+RUN apt install -y git
+RUN apt install -y python3-venv
+RUN apt install -y python3-rosdep2
+RUN apt install -y python3-colcon-common-extensions
+RUN apt install -y python3-serial
+RUN apt install -y ros-humble-rosbag2
+RUN apt install -y ros-humble-usb-cam
+RUN apt install -y make
+RUN apt install -y build-essential
+RUN apt install -y ros-humble-ament-cmake
+
 RUN echo "robotics ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/local
 RUN groupadd robotics
 RUN useradd -rm -d /home/robotics -s /bin/bash -g robotics -G sudo robotics
@@ -25,12 +35,20 @@ RUN echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc"
 RUN echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
 # setup rover repo
-ADD ./bin ./bin 
-ADD ./install.sh ./install.sh
-ADD ./src ./src
+ADD --chown=robotics:robotics ./bin ./bin 
+ADD --chown=robotics:robotics ./install.sh ./install.sh
+ADD --chown=robotics:robotics ./src ./src
+
+
+RUN git clone https://github.com/gokulp01/ros2-ublox-zedf9p /home/robotics/Rover/src/ublox-zedf9p
 
 # setup entrypoint with executable permissions
 ADD ./docker/entrypoint.sh ./entrypoint
 RUN sudo chmod +x ./entrypoint
 
-RUN source install.sh -y
+# install package dependencies
+RUN rosdep update
+RUN rosdep install --from-paths src --ignore-src -r -y
+
+# build the workspace
+RUN source /opt/ros/humble/setup.bash && colcon build

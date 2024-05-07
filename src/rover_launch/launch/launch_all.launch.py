@@ -18,6 +18,14 @@ def generate_launch_description():
             )
         )
     )
+
+    launch_gps = IncludeLaunchDescription(
+        AnyLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare("ublox_gps"),"ublox_gps_node_zedf9p-launch.py"]
+            )
+        )
+    )
     
     # Aruco detection
     launch_aruco_detection = IncludeLaunchDescription(
@@ -32,7 +40,7 @@ def generate_launch_description():
     hardware_interace_node = Node(
         name="simple_hardware_interface",
         package="simple_hardware_interface",
-        executable="simple_hardware_interface",
+         executable="simple_hardware_interface",
         respawn=True,
         respawn_delay=5,
     )
@@ -44,6 +52,7 @@ def generate_launch_description():
         launch_aruco_detection,
         launch_video_feeds,
         hardware_interace_node,
-        rosbag
+        rosbag,
+        launch_gps
     ])
 

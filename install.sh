@@ -71,13 +71,11 @@ if [ -z "$ROS_DISTRO" ]; then
 fi
 
 # Misc dependencies
-sudo apt install python3-venv python3-rosdep2 python3-colcon-common-extensions ros-humble-rosbag2 python3-serial ros-humble-usb-cam -y
+sudo apt install python3-venv python3-rosdep2 python3-colcon-common-extensions ros-humble-rosbag2 ros-humble-ament-cmake -y
 
 # install package dependencies
-# FIXME Was having permissions issues so leaving this commented out and maunually installing dependencies for now
-# rosdep update
-# ros
-# rosdep install --from-paths src --ignore-src -r -y
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
 
 # add ROS2 Humble sources to bashrc
 
