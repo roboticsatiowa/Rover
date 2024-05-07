@@ -13,4 +13,4 @@ fi
 
 # run container
 mkdir -p bag/
-docker compose -f docker/compose.yml up ethanholter/uirover:latest -d
+docker compose -f docker/compose.yml up uirover -d
