@@ -9,4 +9,4 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-(cd "$SCRIPT_DIR/.." && docker build . -f=docker/dockerfile --tag=rover)
+(cd "$SCRIPT_DIR/.." && docker build . -f=docker/dockerfile --tag=ethanholter/uirover:latest)

@@ -13,4 +13,4 @@ fi
 
 # run container
 mkdir -p bag/
-docker compose -f docker/compose.yml run rover
+docker compose -f docker/compose.yml run ethanholter/uirover:latest
