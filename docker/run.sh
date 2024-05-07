@@ -13,4 +13,4 @@ fi
 
 # run container
 mkdir -p bag/
-docker compose -f docker/compose.yml run uirover
+docker compose -f docker/compose.yml run uirover-interactive
