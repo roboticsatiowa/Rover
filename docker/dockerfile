@@ -51,4 +51,4 @@ RUN rosdep update
 RUN rosdep install --from-paths src --ignore-src -r -y
 
 # build the workspace
-RUN source /opt/ros/humble/setup.bash && colcon build
+RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install --parallel-workers 4
