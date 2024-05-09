@@ -1,1 +1,1 @@
-SUBSYSTEMS=="tty",ATTRS{product}=="u-blox GNSS receiver",SYMLINK+="ttyGNSS"
+SUBSYSTEMS=="tty", ATTRS{product}=="u-blox GNSS receiver", SYMLINK+="ttyGNSS"
