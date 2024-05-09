@@ -25,11 +25,12 @@ class InterfaceNode(Node):
 
         for i in range(5):
             try:
-                self.serial_out = serial.Serial(f"/dev/ttyACM{i%5}", 115200, timeout=1)
-                self.get_logger().info(f"Successfully opened serial port /dev/ttyACM{i%5}")
+                self.serial_out = serial.Serial(f"/dev/serial/by-id/usb-Teensyduino_USB_Serial_14851170-if00", 115200, timeout=1)
+                self.get_logger().info(f"Successfully opened serial port /dev/serial/by-id/usb-Teensyduino_USB_Serial_14851170-if00")
                 break
             except Exception as e:
-                self.get_logger().error(f"{e}\nFailed to open serial port /dev/ttyACM{i%5}. Retrying...")
+                self.get_logger().error(f"{e}\nFailed to open serial port /dev/serial/by-id/usb-Teensyduino_USB_Serial_14851170-if00. Retrying...")
+                sleep(1)
         
         if self.serial_out is None:
             self.get_logger().error("Failed to open serial port. Exiting...")
