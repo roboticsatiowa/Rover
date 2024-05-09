@@ -23,8 +23,12 @@ def generate_launch_description():
         AnyLaunchDescriptionSource(
             PathJoinSubstitution(
                 [FindPackageShare("ublox_gps"),"launch/ublox_gps_node_zedf9p-launch.py"]
+                #/dev/serial/by-id/usb-u-blox_AG_-_www.u-blox.com_u-blox_GNSS_receiver-if00
             )
-        )
+        ),
+        launch_arguments={
+            'device': '/dev/serial/by-id/usb-u-blox_AG_-_www.u-blox.com_u-blox_GNSS_receiver-if00',
+        }
     )
     
     # Aruco detection
