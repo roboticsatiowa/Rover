@@ -40,7 +40,7 @@ ADD --chown=robotics:robotics ./install.sh ./install.sh
 ADD --chown=robotics:robotics ./src ./src
 
 
-RUN git clone https://github.com/gokulp01/ros2-ublox-zedf9p /home/robotics/Rover/src/ublox-zedf9p
+# RUN git clone https://github.com/gokulp01/ros2-ublox-zedf9p /home/robotics/Rover/src/ublox-zedf9p
 
 # setup entrypoint with executable permissions
 ADD ./docker/entrypoint.sh ./entrypoint
@@ -51,4 +51,4 @@ RUN rosdep update
 RUN rosdep install --from-paths src --ignore-src -r -y
 
 # build the workspace
-RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install --parallel-workers 4
+RUN source /opt/ros/humble/setup.bash && colcon build --packages-ignore-regex ublox* --symlink-install --parallel-workers 4
