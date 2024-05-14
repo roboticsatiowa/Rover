@@ -54,6 +54,6 @@ def generate_launch_description():
         launch_video_feeds,
         hardware_interace_node,
         rosbag,
-        launch_gps
+        # launch_gps
     ])
 
