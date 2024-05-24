@@ -5,11 +5,6 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-if ( lsb_release -is != "Debian" ); then
-  echo "This script is only for Debian"
-  exit 1
-fi
-
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
 
 # Add Docker's official GPG key:
