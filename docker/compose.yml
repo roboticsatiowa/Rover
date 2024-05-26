@@ -22,8 +22,8 @@ services:
       - "24650-24651" # Using DOMAIN_ID=69 calculated here: https://docs.ros.org/en/galactic/Concepts/About-Domain-ID.html
       - "24660-24690"
     environment:
-      - ROS_DISCOVERY_SERVER=127.0.0.1:11811
-      
+      - ROS_DOMAIN_ID=69
+
 # https://superuser.com/questions/360336/differentiate-between-identical-usb-devices-on-linux
 
 # sudo docker compose -f docker/compose.yml run rover

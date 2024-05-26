@@ -38,6 +38,7 @@ RUN echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 ADD --chown=robotics:robotics ./bin ./bin 
 ADD --chown=robotics:robotics ./install.sh ./install.sh
 ADD --chown=robotics:robotics ./src ./src
+ADD --chown=robotics:robotics ./super_client_configuration_file.xml ./super_client_configuration_file.xml
 
 
 # RUN git clone https://github.com/gokulp01/ros2-ublox-zedf9p /home/robotics/Rover/src/ublox-zedf9p
