@@ -9,6 +9,9 @@ services:
       - "24660-24690"
     environment:
       - ROS_DOMAIN_ID=69
+    devices:
+      - "/dev/ttyGPS:/dev/ttyGPS"
+      - "/dev/ttyTEENSY:/dev/ttyTEENSY"
     entrypoint: /home/robotics/Rover/entrypoint
     restart: "unless-stopped"
   uirover-interactive:
