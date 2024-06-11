@@ -6,6 +6,8 @@ from time import sleep
 
 from button_maps.PS5 import *
 
+device_path = "/dev/ttyTEENSY"
+
 class InterfaceNode(Node):
     prev_msg = None
     control_mode = 0
@@ -25,11 +27,11 @@ class InterfaceNode(Node):
 
         for i in range(5):
             try:
-                self.serial_out = serial.Serial(f"/dev/ttyACM0", 115200, timeout=1)
-                self.get_logger().info(f"Successfully opened serial port /dev/serial/by-id/usb-Teensyduino_USB_Serial_14851170-if00")
+                self.serial_out = serial.Serial(device_path, 115200, timeout=1)
+                self.get_logger().info(f"Successfully opened serial port {device_path}")
                 break
             except Exception as e:
-                self.get_logger().error(f"{e}\nFailed to open serial port /dev/serial/by-id/usb-Teensyduino_USB_Serial_14851170-if00. Retrying...")
+                self.get_logger().error(f"{e}\nFailed to open serial port {device_path}. Retrying...")
                 sleep(1)
         
         if self.serial_out is None:

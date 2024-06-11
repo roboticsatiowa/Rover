@@ -23,6 +23,9 @@ services:
       - "24660-24690"
     environment:
       - ROS_DOMAIN_ID=69
+    devices:
+      - "/dev/ttyGPS:/dev/ttyGPS"
+      - "/dev/ttyTEENSY:/dev/ttyTEENSY"
 
 # https://superuser.com/questions/360336/differentiate-between-identical-usb-devices-on-linux
 
