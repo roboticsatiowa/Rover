@@ -13,4 +13,6 @@ if [ -L /etc/udev/rules.d/99-uirover.rules ]; then
 fi
 
 SCRIPT_DIR=$( cd "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-ln -s "$SCRIPT_DIR"/../udev.rules /etc/udev/rules.d/99-uirover.rules
+ln -s "$SCRIPT_DIR"/../udev.rules /etc/udev/rules.d/99-uirover.rules || exit 1
+
+echo "Success"

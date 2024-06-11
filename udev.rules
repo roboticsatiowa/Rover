@@ -1,1 +1,2 @@
-SUBSYSTEM=="tty", ATTRS{idVendor}=="1546", SYMLINK+="ttyACM0"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1546", SYMLINK+="ttyGPS"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="16c0", SYMLINK+="ttyTEENSY"
