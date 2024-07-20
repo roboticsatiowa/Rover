@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
 if [ "$(id -u)" -ne 0 ]; then
   echo "Please run as root"
@@ -24,3 +25,7 @@ apt-get update
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 usermod -aG docker $USER
+
+echo "Docker installed successfully"
+echo "Please restart your computer to apply changes"
+echo

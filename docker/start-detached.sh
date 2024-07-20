@@ -14,3 +14,5 @@ fi
 # run container
 mkdir -p bag/
 docker compose -f docker/compose.yml up uirover -d
+
+

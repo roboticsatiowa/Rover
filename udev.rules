@@ -1,2 +1,3 @@
 SUBSYSTEM=="tty", ATTRS{idVendor}=="1546", SYMLINK+="ttyGPS"
 SUBSYSTEM=="tty", ATTRS{idVendor}=="16c0", SYMLINK+="ttyTEENSY"
+SUBSYSTEM=="video4linux", ATTRS{index}=="0", ATTR{name}=="Arducam USB Camera: Arducam USB", SYMLINK+="CAM%n"
