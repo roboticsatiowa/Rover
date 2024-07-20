@@ -1,54 +1,50 @@
 # syntax=docker/dockerfile:1.7-labs
 
 # using ros humble core 
-FROM ros:humble-ros-core-jammy
+# ARM64 (raspberry pi 4) compatible:
+FROM ros:humble-ros-core-jammy@sha256:ce60463faaaa1f41a2c28fe852d407f4e538c7cad815b73f030a5e841d73103d
+
+# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes -c yes
 
 # use bash instead of sh. allows us to use 'source' command.
 SHELL ["/bin/bash", "-c"]
 
-# setup robotics user
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y  sudo
-RUN apt install -y git
-RUN apt install -y python3-venv
-RUN apt install -y python3-rosdep2
-RUN apt install -y python3-colcon-common-extensions
-RUN apt install -y python3-serial
-RUN apt install -y ros-humble-rosbag2
-RUN apt install -y ros-humble-usb-cam
-RUN apt install -y make
-RUN apt install -y build-essential
-RUN apt install -y ros-humble-ament-cmake
+# install dependencies. delete cache after, and dont install recommended packages to keep image small.
 
-RUN echo "robotics ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/local
-RUN groupadd robotics
-RUN useradd -rm -d /home/robotics -s /bin/bash -g robotics -G sudo robotics
-RUN chown -R robotics:robotics /home/robotics
-RUN usermod -aG dialout robotics
+RUN apt-get update \
+    && apt-get install -q -y --no-install-recommends \
+    python3-venv \
+    python3-rosdep2 \
+    python3-colcon-common-extensions \
+    python3-serial \
+    ros-humble-rosbag2 \
+    ros-humble-usb-cam \
+    make \
+    build-essential \
+    ros-humble-ament-cmake \
+    && rm -rf /var/lib/apt/lists/*
 
-USER robotics
-WORKDIR /home/robotics/Rover
+# Create robotics user
+RUN groupadd robotics \
+    && useradd -rm -d /home/robotics -s /bin/bash -g robotics robotics \
+    && usermod -aG dialout robotics
 
 # setup user environment
-RUN touch "${HOME}/.bashrc"
-RUN echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc"
-RUN echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
+RUN touch "${HOME}/.bashrc" \
+    && chown -R robotics:robotics "${HOME}/.bashrc" \
+    && echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc" \
+    && echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
-# setup rover repo
-ADD --chown=robotics:robotics ./bin ./bin 
-ADD --chown=robotics:robotics ./install.sh ./install.sh
-ADD --chown=robotics:robotics ./src ./src
-
-
-# RUN git clone https://github.com/gokulp01/ros2-ublox-zedf9p /home/robotics/Rover/src/ublox-zedf9p
-
-# setup entrypoint with executable permissions
+# setup entrypoint and project files
+ADD ./bin ./bin 
+ADD ./install.sh ./install.sh
+ADD ./src ./src
 ADD ./docker/entrypoint.sh ./entrypoint
-RUN sudo chmod +x ./entrypoint
+RUN chmod +x ./entrypoint
 
-# install package dependencies
-RUN rosdep update
-RUN rosdep install --from-paths src --ignore-src -r -y
+RUN chown -R robotics:robotics /home/robotics
+USER robotics
+WORKDIR /home/robotics/Rover
 
 # build the workspace
 RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install --parallel-workers 4

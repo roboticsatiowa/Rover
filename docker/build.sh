@@ -9,4 +9,5 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-(cd "$SCRIPT_DIR/.." && docker build . -f=docker/dockerfile --tag=ethanholter/uirover:latest)
+# switch to top level dir, build image for arm64, push to dockerhub
+(cd "$SCRIPT_DIR/.." && docker buildx build --platform=linux/arm64 --file=docker/dockerfile --tag=ethanholter/uirover:latest --push .)
