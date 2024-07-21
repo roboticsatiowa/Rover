@@ -58,10 +58,9 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
     && apt-get install -q -y --no-install-recommends \
     python3-venv \
-    python3-rosdep2 \
     python3-serial \
-    ros-humble-rosbag2 \
-    ros-humble-usb-cam \
+    # ros-humble-rosbag2 \
+    # ros-humble-usb-cam \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /home/robotics/Rover /home/robotics/Rover
