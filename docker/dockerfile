@@ -23,6 +23,7 @@ RUN apt-get update \
     build-essential \
     ros-humble-ament-cmake \
     libasio-dev \
+    ros-humble-diagnostic-updater \
     && rm -rf /var/lib/apt/lists/*
 
 # Create robotics user and setup user environment
