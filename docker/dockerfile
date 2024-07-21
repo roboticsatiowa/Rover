@@ -69,9 +69,9 @@ COPY --from=build /home/robotics/Rover /home/robotics/Rover
 RUN groupadd robotics \
     && useradd -rm -d /home/robotics -s /bin/bash -g robotics robotics \
     && usermod -aG dialout robotics \
-    && chown -R robotics:robotics "${HOME}/.bashrc" \
     && echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc" \
     && echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
+RUN chown -R robotics:robotics /home/robotics
 USER robotics
 WORKDIR /home/robotics/Rover

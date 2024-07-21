@@ -7,4 +7,5 @@ cd "${SCRIPT_DIR}"/..
 
 # run container
 mkdir -p bag/
+docker pull ethanholter/uirover:latest
 docker compose -f docker/compose.yml run uirover-interactive
