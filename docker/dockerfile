@@ -22,29 +22,27 @@ RUN apt-get update \
     make \
     build-essential \
     ros-humble-ament-cmake \
+    libasio-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Create robotics user
+# Create robotics user and setup user environment
 RUN groupadd robotics \
     && useradd -rm -d /home/robotics -s /bin/bash -g robotics robotics \
-    && usermod -aG dialout robotics
-
-# setup user environment
-RUN touch "${HOME}/.bashrc" \
+    && usermod -aG dialout robotics \
+    && touch "${HOME}/.bashrc" \
     && chown -R robotics:robotics "${HOME}/.bashrc" \
     && echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc" \
     && echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
 # setup entrypoint and project files
-ADD ./bin ./bin 
-ADD ./install.sh ./install.sh
-ADD ./src ./src
-ADD ./docker/entrypoint.sh ./entrypoint
-RUN chmod +x ./entrypoint
+
+ADD ./src /home/robotics/Rover/src
+ADD ./docker/entrypoint.sh /home/robotics/Rover/entrypoint
+RUN chmod +x /home/robotics/Rover/entrypoint
 
 RUN chown -R robotics:robotics /home/robotics
 USER robotics
 WORKDIR /home/robotics/Rover
 
 # build the workspace
-RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install --parallel-workers 4
+RUN source /opt/ros/humble/setup.bash && colcon build --parallel-workers 4
