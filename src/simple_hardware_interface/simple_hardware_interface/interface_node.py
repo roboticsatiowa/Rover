@@ -25,14 +25,12 @@ class InterfaceNode(Node):
 
         super(InterfaceNode, self).__init__('simple_hardware_interface')
 
-        for i in range(5):
-            try:
-                self.serial_out = serial.Serial(device_path, 115200, timeout=1)
-                self.get_logger().info(f"Successfully opened serial port {device_path}")
-                break
-            except Exception as e:
-                self.get_logger().error(f"{e}\nFailed to open serial port {device_path}. Retrying...")
-                sleep(1)
+        try:
+            self.serial_out = serial.Serial(device_path, 115200, timeout=1)
+            self.get_logger().info(f"Successfully opened serial port {device_path}")
+        except Exception as e:
+            self.get_logger().error(f"{e}\nFailed to open serial port {device_path}. Retrying...")
+            raise e
         
         if self.serial_out is None:
             self.get_logger().error("Failed to open serial port. Exiting...")
