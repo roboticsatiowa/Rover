@@ -19,14 +19,13 @@ def generate_launch_description():
         )
     )
 
-    # launch_gps = IncludeLaunchDescription(
-    #     AnyLaunchDescriptionSource(
-    #         PathJoinSubstitution(
-    #             [FindPackageShare("ublox_gps"),"launch/ublox_gps_node_zedf9p-launch.py"]
-    #             #/dev/serial/by-id/usb-u-blox_AG_-_www.u-blox.com_u-blox_GNSS_receiver-if00
-    #         )
-    #     )
-    # )
+    launch_gps = IncludeLaunchDescription(
+        AnyLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare("ublox_gps"),"launch/ublox_gps_node_zedf9p-launch.py"]
+            )
+        )
+    )
     
     # Aruco detection
     launch_aruco_detection = IncludeLaunchDescription(
@@ -41,9 +40,9 @@ def generate_launch_description():
     hardware_interace_node = Node(
         name="simple_hardware_interface",
         package="simple_hardware_interface",
-         executable="simple_hardware_interface",
+        executable="simple_hardware_interface",
         respawn=True,
-        respawn_delay=5,
+        respawn_delay=10,
     )
 
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds] 
@@ -54,6 +53,6 @@ def generate_launch_description():
         launch_video_feeds,
         hardware_interace_node,
         rosbag,
-        # launch_gps
+        launch_gps
     ])
 
