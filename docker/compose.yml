@@ -12,6 +12,7 @@ services:
     volumes:
       - "/dev/ttyGPS:/dev/ttyGPS"
       - "/dev/ttyTEENSY:/dev/ttyTEENSY"
+      - "/dev/Arducam/:/dev/Arducam/"
     entrypoint: /home/robotics/Rover/entrypoint
     restart: "unless-stopped"
   uirover-interactive:
@@ -29,6 +30,7 @@ services:
     volumes:
       - "/dev/ttyGPS:/dev/ttyGPS"
       - "/dev/ttyTEENSY:/dev/ttyTEENSY"
+      - "/dev/Arducam/:/dev/Arducam/"
 
 # https://superuser.com/questions/360336/differentiate-between-identical-usb-devices-on-linux
 

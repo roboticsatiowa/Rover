@@ -14,9 +14,8 @@ def generate_launch_description():
 
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
-    arducam_devices = [int(i[3]) for i in os.listdir("/dev") if i.startswith("CAM")]
+    arducam_devices = [int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")]
     for i in arducam_devices:
-        print(f"Found Arducam device at /dev/CAM{i}")
         launch_description_list.append(
             Node(
                 package="arducam",
