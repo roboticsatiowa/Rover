@@ -10,4 +10,6 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # switch to top level dir, build image for arm64, push to dockerhub
-(cd "$SCRIPT_DIR/.." && docker buildx build --platform=linux/arm64 --file=docker/dockerfile --tag=ethanholter/uirover:latest --push .)
+(cd "$SCRIPT_DIR/.." && docker buildx build --platform=linux/arm64 --file=docker/dockerfile -t ethanholter/uirover:latest ethanholter/uirover:$(date +%s) --push .)
+
+echo "[$(date)] Build complete"

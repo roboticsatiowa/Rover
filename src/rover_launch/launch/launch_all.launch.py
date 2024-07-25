@@ -6,53 +6,61 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import ExecuteProcess
 from time import strftime
+import os
 
 
 def generate_launch_description():
+    launch_description_list = []
 
-    # Video feeds
-    launch_video_feeds = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [FindPackageShare("video_feed"),"launch/cameras.launch.py"]
+    # Arducam
+    # list devices in /dev that start with "CAM" as per the udev rule
+    arducam_devices = [int(i[3]) for i in os.listdir("/dev") if i.startswith("CAM")]
+    for i in arducam_devices:
+        print(f"Found Arducam device at /dev/CAM{i}")
+        launch_description_list.append(
+            Node(
+                package="arducam",
+                executable="arducam_video",
+                parameters=[{"cam_index": i}],
+                respawn=True,
+                respawn_delay=10,
             )
+        )
+
+    # # GPS
+    # launch_description_list.append(
+    #     IncludeLaunchDescription(
+    #         AnyLaunchDescriptionSource(
+    #             PathJoinSubstitution(
+    #                 [
+    #                     FindPackageShare("ublox_gps"),
+    #                     "launch/ublox_gps_node_zedf9p-launch.py",
+    #                 ]
+    #             )
+    #         )
+    #     )
+    # )
+
+    # Teensy Interface
+    launch_description_list.append(
+        Node(
+            name="simple_hardware_interface",
+            package="simple_hardware_interface",
+            executable="simple_hardware_interface",
+            respawn=True,
+            respawn_delay=10,
         )
     )
 
-    launch_gps = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [FindPackageShare("ublox_gps"),"launch/ublox_gps_node_zedf9p-launch.py"]
-            )
-        )
-    )
-    
-    # Aruco detection
-    launch_aruco_detection = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [FindPackageShare("aruco_detection"),"launch/aruco_detector.launch.py"]
-            )
+    # Rosbag
+    # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds]
+    launch_description_list.append(
+        ExecuteProcess(
+            cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")} -a --compression-mode file --compression-format zstd -d 9000'.split(
+                " "
+            ),
+            output="screen",
         )
     )
 
-    # Simple hardware interface
-    hardware_interace_node = Node(
-        name="simple_hardware_interface",
-        package="simple_hardware_interface",
-        executable="simple_hardware_interface",
-        respawn=True,
-        respawn_delay=10,
-    )
-
-    # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds] 
-    rosbag = ExecuteProcess(cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")} -a --compression-mode file --compression-format zstd -d 9000'.split(" "), output="screen") 
-
-    return LaunchDescription([
-        launch_aruco_detection,
-        launch_video_feeds,
-        hardware_interace_node,
-        rosbag,
-        launch_gps
-    ])
-
+    return LaunchDescription(launch_description_list)

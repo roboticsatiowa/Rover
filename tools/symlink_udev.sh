@@ -9,6 +9,8 @@
 # and /dev/ttyACM1, which can change order berween reboots. without it, any 
 # hard-coded paths to serial devices will break.
 
+set -eo pipefail
+
 # ensure permissions are correct
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
@@ -22,6 +24,6 @@ if [ -L /etc/udev/rules.d/99-uirover.rules ]; then
 fi
 
 SCRIPT_DIR=$( cd "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-ln -s "$SCRIPT_DIR"/../udev.rules /etc/udev/rules.d/99-uirover.rules || exit 1
+ln -s "$SCRIPT_DIR"/udev.rules /etc/udev/rules.d/99-uirover.rules || exit 1
 
 echo "Success"
