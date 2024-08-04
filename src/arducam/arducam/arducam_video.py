@@ -34,7 +34,7 @@ class ArducamVideoPublisher(Node):
         self.vid.set(cv2.CAP_PROP_FPS, self.framerate)
 
         # Aruco detection setup
-        self.aurco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_1000)
+        self.aurco_dict = cv2.aruco.Dictionary(cv2.aruco.DICT_6X6_1000)
         self.parameters = cv2.aruco.DetectorParameters_create()
 
         # misc
