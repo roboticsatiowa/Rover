@@ -69,6 +69,9 @@ RUN apt-get update \
     python3-venv \
     python3-serial \
     python3-pip \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-cache-dir opencv-python
