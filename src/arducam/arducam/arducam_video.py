@@ -21,7 +21,7 @@ class ArducamVideoPublisher(Node):
         self.publisher_ = self.create_publisher(
             CompressedImage, f"video_cam_{cam_index}", qos_profile=rclpy.qos.qos_profile_sensor_data
         )
-        timer_period = 0.01 # seconds
+        timer_period = 1/self.framerate # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.bridge = CvBridge()
 

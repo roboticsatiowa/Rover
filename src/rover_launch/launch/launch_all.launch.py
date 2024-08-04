@@ -41,15 +41,15 @@ def generate_launch_description():
     # )
 
     # # Teensy Interface
-    # launch_description_list.append(
-    #     Node(
-    #         name="simple_hardware_interface",
-    #         package="simple_hardware_interface",
-    #         executable="simple_hardware_interface",
-    #         respawn=True,
-    #         respawn_delay=10,
-    #     )
-    # )
+    launch_description_list.append(
+        Node(
+            name="simple_hardware_interface",
+            package="simple_hardware_interface",
+            executable="simple_hardware_interface",
+            respawn=True,
+            respawn_delay=10,
+        )
+    )
 
     # Rosbag
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds]

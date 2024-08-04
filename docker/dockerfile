@@ -75,6 +75,7 @@ RUN apt-get update \
 RUN pip3 install --no-cache-dir opencv-python sympy
 
 COPY --from=build /home/robotics/Rover /home/robotics/Rover
+COPY ./super_client_configuration_file.xml /home/robotics/super_client_configuration_file.xml
 
 # Create robotics user and setup user environment
 RUN groupadd robotics \
