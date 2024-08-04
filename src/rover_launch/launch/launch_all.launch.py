@@ -26,19 +26,26 @@ def generate_launch_description():
             )
         )
 
-    # # GPS
-    # launch_description_list.append(
-    #     IncludeLaunchDescription(
-    #         AnyLaunchDescriptionSource(
-    #             PathJoinSubstitution(
-    #                 [
-    #                     FindPackageShare("ublox_gps"),
-    #                     "launch/ublox_gps_node_zedf9p-launch.py",
-    #                 ]
-    #             )
-    #         )
-    #     )
-    # )
+    # GPS
+    launch_description_list.append(
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("ublox_gps"),
+                        "launch/ublox_gps_node_zedf9p-launch.py",
+                    ]
+                )
+            )
+        )
+    )
+
+    # start fastdds discovery server
+    launch_description_list.append(
+        ExecuteProcess(
+            cmd="fastdds discovery --server-id 0".split(" "), output="screen", shell=True
+        )
+    )
 
     # Teensy Interface
     launch_description_list.append(
