@@ -80,6 +80,7 @@ COPY --from=build /home/robotics/Rover /home/robotics/Rover
 RUN groupadd robotics \
     && useradd -rm -d /home/robotics -s /bin/bash -g robotics robotics \
     && usermod -aG dialout robotics \
+    && usermod -aG video robotics \
     && echo "source /opt/ros/humble/setup.bash" >> "${HOME}/.bashrc" \
     && echo "source ${HOME}/Rover/install/setup.bash" >> "${HOME}/.bashrc"
 
