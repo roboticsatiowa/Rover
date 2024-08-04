@@ -75,7 +75,7 @@ RUN apt-get update \
     ros-humble-cv-bridge \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --no-cache-dir opencv-python
+RUN pip3 install --no-cache-dir opencv-contrib-python==4.7.0.68 opencv-python==4.7.0.68
 
 COPY --from=build /home/robotics/Rover /home/robotics/Rover
 
