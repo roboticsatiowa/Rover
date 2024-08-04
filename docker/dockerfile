@@ -72,6 +72,7 @@ RUN apt-get update \
     ffmpeg \
     libsm6 \
     libxext6 \
+    ros-humble-cv-bridge \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-cache-dir opencv-python
