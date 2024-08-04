@@ -39,14 +39,7 @@ def generate_launch_description():
             )
         )
     )
-
-    # start fastdds discovery server
-    launch_description_list.append(
-        ExecuteProcess(
-            cmd="fastdds discovery --server-id 0".split(" "), output="screen", shell=True
-        )
-    )
-
+    
     # Teensy Interface
     launch_description_list.append(
         Node(
