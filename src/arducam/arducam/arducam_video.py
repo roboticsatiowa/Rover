@@ -1,3 +1,4 @@
+from sympy import det
 import rclpy
 from rclpy.node import Node
 import rclpy.qos
@@ -34,8 +35,9 @@ class ArducamVideoPublisher(Node):
         self.vid.set(cv2.CAP_PROP_FPS, self.framerate)
 
         # Aruco detection setup
-        self.aurco_dict = cv2.aruco.Dictionary(cv2.aruco.DICT_6X6_1000)
-        self.parameters = cv2.aruco.DetectorParameters_create()
+        dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_1000)
+        parameters = cv2.aruco.DetectorParameters()
+        self.detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
         # misc
         self.missed_frames = 0
@@ -49,9 +51,7 @@ class ArducamVideoPublisher(Node):
             self.missed_frames += 1
             return
 
-        corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(
-            frame, self.aurco_dict, parameters=self.parameters
-        )
+        corners, ids, rejectedImgPoints = self.detector.detectMarkers(frame)
         frame = cv2.aruco.drawDetectedMarkers(frame, corners, ids)
 
         self.publisher_.publish(self.bridge.cv2_to_compressed_imgmsg(frame))
