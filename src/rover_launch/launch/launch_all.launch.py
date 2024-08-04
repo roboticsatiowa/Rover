@@ -27,39 +27,39 @@ def generate_launch_description():
         )
 
     # GPS
-    launch_description_list.append(
-        IncludeLaunchDescription(
-            AnyLaunchDescriptionSource(
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("ublox_gps"),
-                        "launch/ublox_gps_node_zedf9p-launch.py",
-                    ]
-                )
-            )
-        )
-    )
-    
-    # Teensy Interface
-    launch_description_list.append(
-        Node(
-            name="simple_hardware_interface",
-            package="simple_hardware_interface",
-            executable="simple_hardware_interface",
-            respawn=True,
-            respawn_delay=10,
-        )
-    )
+    # launch_description_list.append(
+    #     IncludeLaunchDescription(
+    #         AnyLaunchDescriptionSource(
+    #             PathJoinSubstitution(
+    #                 [
+    #                     FindPackageShare("ublox_gps"),
+    #                     "launch/ublox_gps_node_zedf9p-launch.py",
+    #                 ]
+    #             )
+    #         )
+    #     )
+    # )
+
+    # # Teensy Interface
+    # launch_description_list.append(
+    #     Node(
+    #         name="simple_hardware_interface",
+    #         package="simple_hardware_interface",
+    #         executable="simple_hardware_interface",
+    #         respawn=True,
+    #         respawn_delay=10,
+    #     )
+    # )
 
     # Rosbag
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds]
-    launch_description_list.append(
-        ExecuteProcess(
-            cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")} -a --compression-mode file --compression-format zstd -d 9000'.split(
-                " "
-            ),
-            output="screen",
-        )
-    )
+    # launch_description_list.append(
+    #     ExecuteProcess(
+    #         cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")} -a --compression-mode file --compression-format zstd -d 9000'.split(
+    #             " "
+    #         ),
+    #         output="screen",
+    #     )
+    # )
 
     return LaunchDescription(launch_description_list)
