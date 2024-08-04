@@ -27,18 +27,18 @@ def generate_launch_description():
         )
 
     # GPS
-    # launch_description_list.append(
-    #     IncludeLaunchDescription(
-    #         AnyLaunchDescriptionSource(
-    #             PathJoinSubstitution(
-    #                 [
-    #                     FindPackageShare("ublox_gps"),
-    #                     "launch/ublox_gps_node_zedf9p-launch.py",
-    #                 ]
-    #             )
-    #         )
-    #     )
-    # )
+    launch_description_list.append(
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("ublox_gps"),
+                        "launch/ublox_gps_node_zedf9p-launch.py",
+                    ]
+                )
+            )
+        )
+    )
 
     # # Teensy Interface
     launch_description_list.append(
