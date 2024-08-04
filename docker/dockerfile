@@ -1,5 +1,9 @@
 # syntax=docker/dockerfile:1.7-labs
 
+# ---------------------
+# Build image
+# ---------------------
+
 # using ros humble core 
 # ARM64 (raspberry pi 4) compatible:
 FROM ros:humble-ros-core-jammy@sha256:ce60463faaaa1f41a2c28fe852d407f4e538c7cad815b73f030a5e841d73103d as build
@@ -50,6 +54,10 @@ WORKDIR /home/robotics/Rover
 RUN source /opt/ros/humble/setup.bash && colcon build --parallel-workers 4 \
     && rm -rf /home/robotics/Rover/src
 
+# ---------------------
+# Main image
+# ---------------------
+
 FROM ros:humble-ros-core-jammy@sha256:ce60463faaaa1f41a2c28fe852d407f4e538c7cad815b73f030a5e841d73103d as main
 
 # use bash instead of sh. allows us to use 'source' command.
@@ -60,7 +68,10 @@ RUN apt-get update \
     && apt-get install -q -y --no-install-recommends \
     python3-venv \
     python3-serial \
+    python3-pip \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --no-cache-dir opencv-python
 
 COPY --from=build /home/robotics/Rover /home/robotics/Rover
 
