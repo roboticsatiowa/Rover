@@ -1,8 +1,8 @@
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Joy
+from sensor_msgs.msg import Joy, BatteryState
 import serial
-from time import sleep
+import rclpy.qos
 
 from button_maps.PS5 import *
 
@@ -45,6 +45,13 @@ class InterfaceNode(Node):
             self.joystick_callback,
             10)
     
+        self.battery_publisher = self.create_publisher(
+            BatteryState,
+            '/battery_state',
+            10)
+        
+        self.create_timer(1, self.data_handler_1hz)
+        
     # Move wheels
     def drive_mode(self, msg):
         try:
@@ -146,6 +153,21 @@ class InterfaceNode(Node):
             self.serial_out.close()
             rclpy.shutdown()
 
+    def data_handler_1hz(self):
+        self.serial_out.write(b'g\r')
+        response = self.serial_out.read_all()
+        try:
+            response = float(response)
+        except Exception:
+            self.get_logger().error("Recieved illegal battery voltage")
+            return
+
+        battery_state_msg = BatteryState(
+            cell_voltage=response,
+            power_supply_technology=3
+        )
+
+        self.battery_publisher.publish(battery_state_msg)
 
 
 
