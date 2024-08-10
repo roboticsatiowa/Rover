@@ -11,6 +11,7 @@ device_path = "/dev/ttyTEENSY"
 
 class InterfaceNode(Node):
     prev_msg = None
+    prev_msg_time = None
     control_mode = 0
 
     def button_pressed(self, msg, button):
@@ -51,7 +52,8 @@ class InterfaceNode(Node):
             '/battery_state',
             10)
         
-        self.create_timer(1, self.data_handler_1hz)
+        self.create_timer(1, self.clock_1hz)
+        self.create_timer(0.1, self.heartbeat_check)
 
     # Move wheels
     def drive_mode(self, msg):
@@ -122,6 +124,7 @@ class InterfaceNode(Node):
 
         
     def joystick_callback(self, msg):
+        self.prev_msg_time = self.get_clock().now()
 
         # First iteration protection
         if self.prev_msg is None:
@@ -154,7 +157,7 @@ class InterfaceNode(Node):
             self.serial_out.close()
             rclpy.shutdown()
 
-    def data_handler_1hz(self):
+    def clock_1hz(self):
         self.serial_out.read_all()
         self.serial_out.write(b'g\r')
         sleep(0.1)
@@ -171,6 +174,15 @@ class InterfaceNode(Node):
         )
 
         self.battery_publisher.publish(battery_state_msg)
+    
+    def heartbeat_check(self):
+        if self.prev_msg_time is None:
+            return
+        
+        if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > 0.25:
+            self.get_logger().error("No joystick message recieved in over 0.25 seconds. Stopping robot.")
+            self.serial_out.write(b's\r')
+            self.prev_msg_time = None
 
 
 
