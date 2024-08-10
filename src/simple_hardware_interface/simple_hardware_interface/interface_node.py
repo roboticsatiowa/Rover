@@ -1,3 +1,4 @@
+from time import sleep
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy, BatteryState
@@ -155,6 +156,7 @@ class InterfaceNode(Node):
 
     def data_handler_1hz(self):
         self.serial_out.write(b'g\r')
+        sleep(0.1)
         response = self.serial_out.read_all()
         try:
             response = float(response)
