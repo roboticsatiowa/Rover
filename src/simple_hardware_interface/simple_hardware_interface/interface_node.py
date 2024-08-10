@@ -166,7 +166,7 @@ class InterfaceNode(Node):
             return
 
         battery_state_msg = BatteryState(
-            cell_voltage=response,
+            voltage=response,
             power_supply_technology=3
         )
 
