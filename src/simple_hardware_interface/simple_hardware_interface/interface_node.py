@@ -179,7 +179,7 @@ class InterfaceNode(Node):
         if self.prev_msg_time is None:
             return
         
-        if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > 0.25:
+        if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > 0.75:
             self.serial_out.write(b'd\r')
             self.prev_msg_time = None
 
