@@ -19,6 +19,7 @@ RUN apt-get update \
     libasio-dev \
     ros-humble-diagnostic-updater \
     ros-humble-tf2 \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Create robotics user and setup user environment
