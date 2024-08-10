@@ -18,8 +18,9 @@ class ArducamVideoPublisher(Node):
         cam_index = self.get_parameter("cam_index").get_parameter_value().integer_value
 
         # qos sensor data uses best effort delivery, which is best for video
+        mandatory_qos = rclpy.qos.QoSProfile(depth=10)
         self.publisher_ = self.create_publisher(
-            CompressedImage, f"video_cam_{cam_index}", qos_profile=rclpy.qos.qos_profile_sensor_data
+            CompressedImage, f"video_cam_{cam_index}", qos_profile=mandatory_qos
         )
         timer_period = 1/self.framerate # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
