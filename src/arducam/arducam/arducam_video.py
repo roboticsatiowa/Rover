@@ -21,7 +21,7 @@ class ArducamVideoPublisher(Node):
         self.publisher_ = self.create_publisher(
             CompressedImage, f"video_cam_{cam_index}", qos_profile=rclpy.qos.qos_profile_sensor_data
         )
-        timer_period = 1/self.framerate # seconds
+        timer_period = 30 # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.bridge = CvBridge()
 
@@ -30,8 +30,8 @@ class ArducamVideoPublisher(Node):
         # by our hardware and may not work with other cameras
         self.vid = cv2.VideoCapture(cam_index, cv2.CAP_V4L2)
         self.vid.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc("M", "J", "P", "G"))
-        self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
+        self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 320)
         self.vid.set(cv2.CAP_PROP_FPS, self.framerate)
 
         # Aruco detection setup
