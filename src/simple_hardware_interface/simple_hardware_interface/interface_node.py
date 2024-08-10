@@ -1,4 +1,5 @@
 from re import T
+from socket import timeout
 from time import sleep
 import rclpy
 from rclpy.node import Node
@@ -15,8 +16,6 @@ class InterfaceNode(Node):
     prev_msg_time = None
     control_mode = 0
 
-    TIMEOUT = 1
-
     def button_pressed(self, msg, button):
         return self.prev_msg.buttons[button] == 0 and msg.buttons[button] == 1
     
@@ -29,6 +28,10 @@ class InterfaceNode(Node):
     def __init__(self):
 
         super(InterfaceNode, self).__init__('simple_hardware_interface')
+
+        self.declare_parameter('timeout', 1)
+
+        self.timeout = self.get_parameter("timeout").get_parameter_value().integer_value
 
         try:
             self.serial_out = serial.Serial(device_path, 115200, timeout=1)
@@ -182,7 +185,7 @@ class InterfaceNode(Node):
         if self.prev_msg_time is None:
             return
         
-        if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > self.TIMEOUT:
+        if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > self.timeout:
             self.serial_out.write(b'd\r')
             self.prev_msg_time = None
 
