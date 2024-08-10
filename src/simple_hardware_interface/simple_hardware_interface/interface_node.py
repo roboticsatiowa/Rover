@@ -1,3 +1,4 @@
+from re import T
 from time import sleep
 import rclpy
 from rclpy.node import Node
@@ -13,6 +14,8 @@ class InterfaceNode(Node):
     prev_msg = None
     prev_msg_time = None
     control_mode = 0
+
+    TIMEOUT = 1
 
     def button_pressed(self, msg, button):
         return self.prev_msg.buttons[button] == 0 and msg.buttons[button] == 1
@@ -179,7 +182,7 @@ class InterfaceNode(Node):
         if self.prev_msg_time is None:
             return
         
-        if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > 0.75:
+        if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > self.TIMEOUT:
             self.serial_out.write(b'd\r')
             self.prev_msg_time = None
 
