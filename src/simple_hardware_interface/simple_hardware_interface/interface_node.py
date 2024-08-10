@@ -51,7 +51,7 @@ class InterfaceNode(Node):
             10)
         
         self.create_timer(1, self.data_handler_1hz)
-        
+
     # Move wheels
     def drive_mode(self, msg):
         try:
@@ -159,7 +159,7 @@ class InterfaceNode(Node):
         try:
             response = float(response)
         except Exception:
-            self.get_logger().error("Recieved illegal battery voltage")
+            self.get_logger().error("Recieved illegal battery voltage: %s" % str(response))
             return
 
         battery_state_msg = BatteryState(
