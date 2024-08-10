@@ -1,7 +1,7 @@
 from sympy import det
 import rclpy
 from rclpy.node import Node
-import rclpy.qos
+from rclpy.qos import qos_profile_sensor_data, QoSProfile
 from sensor_msgs.msg import CompressedImage  # noqa: F811
 import cv2
 from cv_bridge import CvBridge
@@ -19,8 +19,13 @@ class ArducamVideoPublisher(Node):
 
         # qos sensor data uses best effort delivery, which is best for video
         self.publisher_ = self.create_publisher(
-            CompressedImage, f"video_cam_{cam_index}", qos_profile=rclpy.qos.qos_profile_sensor_data
-        )
+            CompressedImage, f"video_cam_{cam_index}", 
+            QoSProfile(
+                reliability=rclpy.qos.QoSReliabilityPolicy.BEST_EFFORT,
+                durability=rclpy.qos.QoSDurabilityPolicy.VOLATILE,
+                depth=10,
+                
+            ))
         timer_period = 0.02 # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.bridge = CvBridge()
