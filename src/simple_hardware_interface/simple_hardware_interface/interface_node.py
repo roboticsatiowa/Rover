@@ -155,6 +155,7 @@ class InterfaceNode(Node):
             rclpy.shutdown()
 
     def data_handler_1hz(self):
+        self.serial_out.read_all()
         self.serial_out.write(b'g\r')
         sleep(0.1)
         response = self.serial_out.read_all()
