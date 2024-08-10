@@ -180,7 +180,6 @@ class InterfaceNode(Node):
             return
         
         if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > 0.25:
-            self.get_logger().error("No joystick message recieved in over 0.25 seconds. Stopping robot.")
             self.serial_out.write(b's\r')
             self.prev_msg_time = None
 
