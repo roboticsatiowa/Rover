@@ -8,7 +8,7 @@ from cv_bridge import CvBridge
 
 
 class ArducamVideoPublisher(Node):
-    framerate = 10  # frames per second
+    framerate = 15  # frames per second
 
     def __init__(self):
         super().__init__("arducam_video_capture")
@@ -23,10 +23,10 @@ class ArducamVideoPublisher(Node):
             QoSProfile(
                 reliability=rclpy.qos.QoSReliabilityPolicy.BEST_EFFORT,
                 durability=rclpy.qos.QoSDurabilityPolicy.VOLATILE,
-                depth=10,
+                depth=1,
                 
             ))
-        timer_period = 0.02 # seconds
+        timer_period = 0.01 # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.bridge = CvBridge()
 
@@ -40,7 +40,7 @@ class ArducamVideoPublisher(Node):
         self.vid.set(cv2.CAP_PROP_FPS, self.framerate)
 
         # Aruco detection setup
-        dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_1000)
+        dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
         parameters = cv2.aruco.DetectorParameters()
         self.detector = cv2.aruco.ArucoDetector(dictionary, parameters)
 
