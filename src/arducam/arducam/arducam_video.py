@@ -8,7 +8,7 @@ from cv_bridge import CvBridge
 
 
 class ArducamVideoPublisher(Node):
-    framerate = 15  # frames per second
+    framerate = 10  # frames per second
 
     def __init__(self):
         super().__init__("arducam_video_capture")
@@ -23,7 +23,7 @@ class ArducamVideoPublisher(Node):
             QoSProfile(
                 reliability=rclpy.qos.QoSReliabilityPolicy.BEST_EFFORT,
                 durability=rclpy.qos.QoSDurabilityPolicy.VOLATILE,
-                depth=1,
+                depth=3,
                 
             ))
         timer_period = 0.01 # seconds
