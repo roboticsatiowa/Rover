@@ -84,8 +84,8 @@ class InterfaceNode(Node):
             # we must only send the command if the value has changed. Otherwise the serial connection will be become bogged down
             if self.axis_changed(msg, R_JOY_Y):
                 self.serial_out.write(bytes(f'o 1 {msg.axes[R_JOY_Y] * -255}\r', 'utf-8'))
-            if self.axis_changed(msg, R_JOY_X):
-                self.serial_out.write(bytes(f'o 3 {msg.axes[R_JOY_X] * -255}\r', 'utf-8'))
+            if self.axis_changed(msg, L_JOY_X):
+                self.serial_out.write(bytes(f'o 3 {msg.axes[L_JOY_X] * -255}\r', 'utf-8'))
             
             if not (msg.axes[L_TRIGGER] != 1 and msg.axes[R_TRIGGER] != 1):
                 if self.axis_changed(msg, R_TRIGGER):
