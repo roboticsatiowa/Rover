@@ -6,7 +6,7 @@
 # This script symlinks the udev rules to the correct location
 # Udev rules allow various serial devices to have predictable names
 # without this, the serial devices will be assigned names like /dev/ttyACM0
-# and /dev/ttyACM1, which can change order berween reboots. without it, any 
+# and /dev/ttyACM1, which can change order between reboots. without it, any 
 # hard-coded paths to serial devices will break.
 
 set -eo pipefail
