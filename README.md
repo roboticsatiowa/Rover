@@ -70,11 +70,11 @@ This script should not need to be run directly.
 ### Completed
 - [x] Basic ROS2 Setup
 - [x] Camera Streaming
-- [x] Visual SLAM with Intel Realsense
+- [x] GPS
+- [x] Manual Control
 
 ### In progress
-- [ ] GPS
-- [ ] Manual Control
+- [ ] Visual SLAM with Intel Realsense
 - [ ] Full PID control
 - [ ] RTK GPS
 
