@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=600px src="images/logo.jpg" alt="Project logo"></a>
+ <img src="https://github.com/roboticsatiowa/Documents-and-Resources/raw/main/Media/Banner.png?raw=true" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Robotics at Iowa Mars Rover Challenge</h3>
