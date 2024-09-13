@@ -1,29 +1,70 @@
 services:
-  uirover:
-    image: "ethanholter/uirover"
-    container_name: "rover-container"
-    privileged: true
+  camera_pipeline:
+    image: "https://ghcr.io/roboticsatiowa/Rover/camera_pipeline:latest"
+    build: 
+      context: ..
+      dockerfile: ./cameras/Dockerfile
+    container_name: "camera_node"
     environment:
-      - ROS_DOMAIN_ID=69
+      - ROS_DOMAIN_ID=1
     volumes:
-      - "/dev/ttyGPS:/dev/ttyGPS"
-      - "/dev/ttyTEENSY:/dev/ttyTEENSY"
       - "/dev/Arducam/:/dev/Arducam/"
-    entrypoint: /home/robotics/Rover/entrypoint
     restart: "unless-stopped"
-  uirover-interactive:
-    image: "ethanholter/uirover"
-    container_name: "rover-container"
-    stdin_open: true # docker run -i
-    tty: true 
-    network_mode: "host"
-    privileged: true
+    entrypoint: /rover/entrypoint
+
+  zed_f9p:
+    image: "https://ghcr.io/roboticsatiowa/Rover/zed_f9p:latest"
+    build: 
+      context: ..
+      dockerfile: ./zed_f9p/Dockerfile
+    container_name: "gps_node"
     environment:
-      - ROS_DOMAIN_ID=69
+      - ROS_DOMAIN_ID=1
     volumes:
       - "/dev/ttyGPS:/dev/ttyGPS"
+    restart: "unless-stopped"
+    entrypoint: /rover/entrypoint
+
+  teensy:
+    image: "https://ghcr.io/roboticsatiowa/Rover/teensy:latest"
+    build: 
+      context: ..
+      dockerfile: ./teensy/Dockerfile
+    container_name: "teensy_node"
+    environment:
+      - ROS_DOMAIN_ID=1
+    volumes:
       - "/dev/ttyTEENSY:/dev/ttyTEENSY"
-      - "/dev/Arducam/:/dev/Arducam/"
+    restart: "unless-stopped"
+    entrypoint: /rover/entrypoint
+
+
+
+  # uirover:
+  #   image: "ethanholter/uirover"
+  #   container_name: "rover-container"
+  #   privileged: true
+  #   environment:
+  #     - ROS_DOMAIN_ID=69
+  #   volumes:
+  #     - "/dev/ttyGPS:/dev/ttyGPS"
+  #     - "/dev/ttyTEENSY:/dev/ttyTEENSY"
+  #     - "/dev/Arducam/:/dev/Arducam/"
+  #   entrypoint: /home/robotics/Rover/entrypoint
+  #   restart: "unless-stopped"
+  # uirover-interactive:
+  #   image: "ethanholter/uirover"
+  #   container_name: "rover-container"
+  #   stdin_open: true # docker run -i
+  #   tty: true 
+  #   network_mode: "host"
+  #   privileged: true
+  #   environment:
+  #     - ROS_DOMAIN_ID=69
+  #   volumes:
+  #     - "/dev/ttyGPS:/dev/ttyGPS"
+  #     - "/dev/ttyTEENSY:/dev/ttyTEENSY"
+  #     - "/dev/Arducam/:/dev/Arducam/"
 
 # https://superuser.com/questions/360336/differentiate-between-identical-usb-devices-on-linux
 
