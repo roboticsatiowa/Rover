@@ -2,11 +2,17 @@
 
 FROM ros:humble-ros-core-jammy AS build-base
 
+# we can be careless with unneeded packages here, as this is only used for building. none of this will be in the final image.
+# adding shared dependencies here will make the build process faster, because we will only need to install them once.
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libasio-dev \
+    make \
     ros-dev-tools \
+    ros-humble-ament-cmake \
+    ros-humble-diagnostic-updater \
+    ros-humble-tf2 \
     && rm -rf /var/lib/apt/lists/*
-
-
 
 # ========================================
 # this is the old dockerfile for reference
@@ -31,8 +37,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 #         build-essential \
 #         ros-humble-ament-cmake \
 #         libasio-dev \
-#         ros-humble-diagnostic-updater \
-#         ros-humble-tf2 \
 #         git \
 #         && rm -rf /var/lib/apt/lists/*
     

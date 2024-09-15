@@ -12,12 +12,6 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-# check if built already
-if ! docker images | grep -q "build-base"; then
-    echo "ERROR: Rover has not been built yet"
-    exit 1
-fi
-
 docker compose -f docker/compose.yml up
 
 echo "Rover is running"

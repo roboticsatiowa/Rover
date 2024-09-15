@@ -34,4 +34,4 @@ SHELL [ "/bin/bash", "-c" ]
 # Copy built files
 COPY --from=build /rover/install /rover/install
 COPY --from=build /rover/build /rover/build
-COPY ./docker/camera_pipeline/entrypoint.sh /rover/entrypoint
+COPY ./docker/unitree_lidar/entrypoint.sh /rover/entrypoint
