@@ -2,7 +2,7 @@
 
 FROM ros:humble-ros-core-jammy AS build-base
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommendeds \
     ros-dev-tools \
     && rm -rf /var/lib/apt/lists/*
 
@@ -11,8 +11,6 @@ RUN apt-get update && apt-get install -y \
 # ========================================
 # this is the old dockerfile for reference
 # ========================================
-
-
 
 # # syntax=docker/dockerfile:1
 
