@@ -21,7 +21,7 @@ RUN groupadd -g $GID $USERNAME \
 USER $USERNAME
 
 # Create workspace so that user own this directory
-RUN mkdir -p /home/$USERNAME/ros2_ws/src
+RUN mkdir -p /home/$USERNAME/Rover
 WORKDIR /home/$USERNAME/ros2_ws
 
 # Copy configuration files
