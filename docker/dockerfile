@@ -1,10 +1,10 @@
-# syntax=docker/dockerfile:1.7-labs
+# syntax=docker/dockerfile:1
 
 # ---------------------
 # Build image
 # ---------------------
 
-FROM ros:humble-ros-core-jammy@sha256:ce60463faaaa1f41a2c28fe852d407f4e538c7cad815b73f030a5e841d73103d as build_ublox
+FROM ros:humble-ros-core-jammy as build_ublox
 # use bash instead of sh. allows us to use 'source' command.
 SHELL ["/bin/bash", "-c"]
 

@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+# check if debian based
+if [ ! -f /etc/os-release ]; then
+  echo "This script only supports Debian based systems"
+  exit 1
+fi
+
 if [ "$(id -u)" -ne 0 ]; then
   echo "Please run as root"
   exit 1
