@@ -39,6 +39,19 @@ services:
       - "/dev/ttyTEENSY:/dev/ttyTEENSY"
     restart: "unless-stopped"
     entrypoint: /rover/entrypoint
+  
+  unitree_lidar:
+    image: "ghcr.io/roboticsatiowa/unitree_lidar:latest"
+    build: 
+      context: ..
+      dockerfile: ./docker/unitree_lidar/Dockerfile
+    container_name: "unitree_lidar"
+    environment:
+      - ROS_DOMAIN_ID=1
+    volumes:
+      - "/dev/ttyLIDAR:/dev/ttyLIDAR"
+    restart: "unless-stopped"
+    entrypoint: /rover/entrypoint
 
 
 
