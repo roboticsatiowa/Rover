@@ -2,7 +2,7 @@
 
 FROM build-base:latest AS build
 
-COPY ./src/arducam /rover/src/arducam
+COPY ./src/simple_hardware_interface /rover/src/simple_hardware_interface
 WORKDIR /rover
 RUN colcon build
 

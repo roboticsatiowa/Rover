@@ -13,7 +13,7 @@ if ! command -v docker &> /dev/null; then
 fi
 
 docker build . -f docker/build.Dockerfile -t build-base:latest 
-docker compose -f docker/compose.yml build --no-cache
+docker compose -f docker/compose.yml build
 
 echo "Rover built successfully"
 echo 
