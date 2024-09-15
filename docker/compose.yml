@@ -1,10 +1,12 @@
+name: uirover
+
 services:
   camera_pipeline:
-    image: "https://ghcr.io/roboticsatiowa/Rover/camera_pipeline:latest"
+    image: "ghcr.io/roboticsatiowa/camera_pipeline:latest"
     build: 
       context: ..
-      dockerfile: ./cameras/Dockerfile
-    container_name: "camera_node"
+      dockerfile: ./docker/camera_pipeline/Dockerfile
+    container_name: "camera_pipeline"
     environment:
       - ROS_DOMAIN_ID=1
     volumes:
@@ -13,11 +15,11 @@ services:
     entrypoint: /rover/entrypoint
 
   zed_f9p:
-    image: "https://ghcr.io/roboticsatiowa/Rover/zed_f9p:latest"
+    image: "ghcr.io/roboticsatiowa/zed_f9p:latest"
     build: 
       context: ..
-      dockerfile: ./zed_f9p/Dockerfile
-    container_name: "gps_node"
+      dockerfile: ./docker/zed_f9p/Dockerfile
+    container_name: "zed_f9p_gps"
     environment:
       - ROS_DOMAIN_ID=1
     volumes:
@@ -26,11 +28,11 @@ services:
     entrypoint: /rover/entrypoint
 
   teensy:
-    image: "https://ghcr.io/roboticsatiowa/Rover/teensy:latest"
+    image: "ghcr.io/roboticsatiowa/teensy:latest"
     build: 
       context: ..
-      dockerfile: ./teensy/Dockerfile
-    container_name: "teensy_node"
+      dockerfile: ./docker/teensy/Dockerfile
+    container_name: "teensy_interface"
     environment:
       - ROS_DOMAIN_ID=1
     volumes:
