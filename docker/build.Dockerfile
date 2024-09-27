@@ -143,3 +143,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 #     RUN chown -R robotics:robotics /home/robotics
 #     USER robotics
 #     WORKDIR /home/robotics/Rover
+
+# Beware the Jabberwock my son. The teeth that bite, the claws that catch. Beware the JubJub bird and beware the frumious Bandersnatch!
