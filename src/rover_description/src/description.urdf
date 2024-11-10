@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<robot name="uiowa_rover" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- XACRO CONSTANTS -->
+
+  <xacro:property name="wheel_diameter" value="0.23"/>
+  <xacro:property name="chassis_width" value="0.45"/>
+  <xacro:property name="chassis_length" value="0.45"/>
+  <xacro:property name="chassis_height" value="0.30"/>
+  <xacro:property name="chassis_mass" value="5"/>
+
+  <xacro:property name="arm_platform_width" value="${chassis_width}"/>
+  <xacro:property name="arm_platform_length" value="0.3"/>
+  <xacro:property name="arm_platform_height" value="0.05"/>
+  <xacro:property name="arm_platform_mass" value="3"/>
+
+  <xacro:property name="wheel_width" value="0.05"/>
+  <xacro:property name="wheel_diameter" value="0.228"/>
+  <xacro:property name="wheel_mass" value="0.5"/>
+  <xacro:property name="wheel_distance_side" value="0.4"/>
+  <xacro:property name="wheel_spacing" value="0.4"/>
+
+    <!-- XACRO MACROS -->
+
+  <xacro:macro name="box_inertia_tensor" params="mass len_x len_y len_z">
+    <inertial>
+      <mass value="${mass}"/>
+      <inertia ixx="${(1/12)*mass*(len_z*len_z+len_y*len_y)}" ixy="0.0" ixz="0.0" iyy="${(1/12)*mass*(len_z*len_z+len_x*len_x)}" iyz="0.0" izz="${(1/12)*mass*(len_x*len_x+len_y*len_y)}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_inertia_tensor" params="mass radius length">
+    <inertial>
+      <mass value="${mass}"/>
+      <inertia ixx="${(1/12)*mass*(3*radius*radius+length*length)}" ixy="0.0" ixz="0.0" iyy="${(1/12)*mass*(3*radius*radius+length*length)}" iyz="0.0" izz="${(1/2)*mass*radius*radius}"/>
+    </inertial>
+  </xacro:macro>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="${chassis_length/2 + arm_platform_length/2} 0 ${-chassis_height/2 + arm_platform_height/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${arm_platform_length} ${arm_platform_width} ${arm_platform_height}"/>
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+
+
+    <collision>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="${chassis_length/2 + arm_platform_length/2} 0 ${-chassis_height/2 + arm_platform_height/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${arm_platform_length} ${arm_platform_width} ${arm_platform_height}"/>
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia_tensor mass="${chassis_mass}" len_x="${chassis_length}" len_y="${chassis_width}" len_z="${chassis_height}"/>
+  </link> b 
+
+   <!-- Robot Footprint -->
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+</robot>
