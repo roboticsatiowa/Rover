@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 from glob import glob
 
-package_name = "rover_launch"
+package_name = "rover_bringup"
 
 setup(
     name=package_name,

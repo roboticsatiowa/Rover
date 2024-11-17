@@ -10,14 +10,14 @@ Panels:
         - /RobotModel1/Mass Properties1
         - /TF1
       Splitter Ratio: 0.5
-    Tree Height: 519
+    Tree Height: 479
   - Class: rviz_common/Displays
     Help Height: 70
     Name: Displays
     Property Tree Widget:
       Expanded: ~
       Splitter Ratio: 0.5
-    Tree Height: 170
+    Tree Height: 149
 Visualization Manager:
   Class: ""
   Displays:
@@ -75,7 +75,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
         chassis:
           Alpha: 1
           Show Axes: false
@@ -111,6 +110,8 @@ Visualization Manager:
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
       Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: true
@@ -192,18 +193,18 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5797963738441467
+      Pitch: 0.20979638397693634
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.9472194910049438
+      Yaw: 1.122219204902649
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1047
+  Height: 1004
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000010000000000000156000003c1fc0200000002fb000000100044006900730070006c006100790073010000003b00000290000000c700fffffffb000000100044006900730070006c00610079007301000002d10000012b000000c700ffffff00000618000003c100000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000001560000038efc0200000002fb000000100044006900730070006c006100790073010000003f0000026d000000cc00fffffffb000000100044006900730070006c00610079007301000002b20000011b000000cc00ffffff000006180000038e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Width: 1908
-  X: -32
-  Y: -32
+  X: 0
+  Y: 40
