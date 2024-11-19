@@ -57,7 +57,7 @@ chmod u+x ./Rover/install.sh
 There are several launch files for various subsystems. To run the entire system, use the following command.
 
 ```bash
-ros2 launch rover_bringup all.launch.py
+ros2 launch uirover_bringup all.launch.py
 ```
 
 [ROS Isaac Installation](https://nvidia-isaac-ros.github.io/getting_started/isaac_ros_buildfarm_cdn.html)
