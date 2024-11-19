@@ -5,7 +5,6 @@ from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import ExecuteProcess
-from time import strftime
 import os
 
 
@@ -14,17 +13,19 @@ def generate_launch_description():
 
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
-    arducam_devices = [int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")]
-    for i in arducam_devices:
-        launch_description_list.append(
-            Node(
-                package="arducam",
-                executable="arducam_video",
-                parameters=[{"cam_index": i}],
-                respawn=True,
-                respawn_delay=10,
+    if os.path.exists("/dev/Arducam"):
+        arducam_devices = [int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")]
+        for i in arducam_devices:
+            launch_description_list.append(
+                Node(
+                    package="arducam",
+                    executable="arducam_video",
+                    parameters=[{"cam_index": i}],
+                    respawn=True,
+                    respawn_delay=10,
+                )
             )
-        )
+
 
     # GPS
     launch_description_list.append(
