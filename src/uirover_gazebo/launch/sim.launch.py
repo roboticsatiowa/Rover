@@ -14,16 +14,16 @@ def generate_launch_description():
     
     gz_launch_path = PathJoinSubstitution([pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'])
     gz_spawn_model_path = PathJoinSubstitution([pkg_ros_gz_sim, 'launch', 'gz_spawn_model.launch.py'])
-    gz_model_path = PathJoinSubstitution([pkg_uirover_gazebo, 'worlds'])
+    gz_world_path = PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'moon.sdf'])
     gz_urdf_path = PathJoinSubstitution([pkg_uirover_description, 'urdf', 'physical.urdf'])
 
     return LaunchDescription([
         # <param name="robot_description" command="$(find xacro)/xacro.py $(find robot_package)/urdf/robot.urdf.xacro" />
-        SetEnvironmentVariable('GZ_SIM_RESOURCE_PATH', gz_model_path),
+        SetEnvironmentVariable('GZ_SIM_RESOURCE_PATH', PathJoinSubstitution([pkg_uirover_gazebo, 'worlds'])),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gz_launch_path),
             launch_arguments={
-                'gz_args': [PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'moon.sdf'])],
+                'gz_args': [PathJoinSubstitution(gz_world_path)],
                 'on_exit_shutdown': 'True'
             }.items(),
         ),
@@ -38,7 +38,6 @@ def generate_launch_description():
                 'z': '8.0',
             }.items(),
         ),
-        
         Node(
             package='ros_gz_bridge',
             executable='parameter_bridge',
