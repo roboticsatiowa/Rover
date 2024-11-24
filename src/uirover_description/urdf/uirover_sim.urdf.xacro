@@ -3,4 +3,5 @@
     <xacro:include filename="$(find uirover_description)/urdf_components/physical_description.urdf.xacro"/>
     <xacro:include filename="$(find uirover_description)/urdf_components/sensors.urdf.xacro"/>
     <xacro:include filename="$(find uirover_description)/urdf_components/ros2_control.urdf.xacro"/>
+    <xacro:include filename="$(find uirover_description)/urdf_components/gazebo.urdf.xacro"/>
 </robot>

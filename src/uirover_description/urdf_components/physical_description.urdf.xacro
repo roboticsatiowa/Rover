@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- IMPORTS -->
+  <xacro:include filename="$(find uirover_description)/xacro/macros.xacro" />
+  <xacro:include filename="$(find uirover_description)/xacro/properties.xacro" />
+
+  <!-- BASE LINK -->
+  <link name="base_link" />
+
+  <!-- CHASSIS -->
+  <xacro:box name="chassis" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}" mass="${5}" />
+  <xacro:box_inertia_tensor mass="${chassis_mass}" len_x="${chassis_length}" len_y="${chassis_width}" len_z="${chassis_height}" />
+  <joint name="chassis_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="chassis" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <!-- ARM PLATFORM -->
+  <xacro:box name="arm_platform" x="${arm_platform_length}" y="${arm_platform_width}" z="${arm_platform_height}" mass="${3}" />
+  <joint name="arm_platform_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="arm_platform" />
+    <origin xyz="${chassis_length/2 + arm_platform_length/2} 0 ${-chassis_height/2 + arm_platform_height/2}" rpy="0 0 0" />
+  </joint>
+
+  <!-- SWIVEL JOINTS -->
+  <xacro:wheel_swivel name="fl_swivel" x="${chassis_length/2.5+wheel_spacing}" y="${wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
+  <xacro:wheel_swivel name="fr_swivel" x="${chassis_length/2.5+wheel_spacing}" y="${-wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
+  <xacro:wheel_swivel name="bl_swivel" x="${chassis_length/2.5-wheel_spacing}" y="${wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
+  <xacro:wheel_swivel name="br_swivel" x="${chassis_length/2.5-wheel_spacing}" y="${-wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
+
+  <!-- WHEELS -->
+  <xacro:wheel name="fl_wheel" x="0" y="0" z ="0" parent="fl_swivel" />
+  <xacro:wheel name="fr_wheel" x="0" y="0" z ="0" parent="fr_swivel" />
+  <xacro:wheel name="ml_wheel" x="${chassis_length/2.5}" y="${wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" parent="chassis" />
+  <xacro:wheel name="mr_wheel" x="${chassis_length/2.5}" y="${-wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" parent="chassis"/>
+  <xacro:wheel name="bl_wheel" x="0" y="0" z ="0" parent="bl_swivel" />
+  <xacro:wheel name="br_wheel" x="0" y="0" z ="0" parent="br_swivel" />
+
+  <!-- Robot Footprint -->
+  <!-- This is needed for nav libraries. Its the 2D top-down profile of the robot. Makes for simpler collision detection. -->
+  <link name="base_footprint" />
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="base_footprint" />
+    <origin xyz="0.0 0.0 ${-0.3-chassis_height/2}" rpy="0 0 0" />
+  </joint> 
+
+
+</robot>
