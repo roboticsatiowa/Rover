@@ -15,7 +15,7 @@ def generate_launch_description():
     gz_launch_path = PathJoinSubstitution([pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'])
     gz_spawn_model_path = PathJoinSubstitution([pkg_ros_gz_sim, 'launch', 'gz_spawn_model.launch.py'])
     gz_world_path = PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'moon.sdf'])
-    gz_urdf_path = PathJoinSubstitution([pkg_uirover_description, 'urdf', 'physical.urdf'])
+    gz_urdf_path = PathJoinSubstitution([pkg_uirover_description, 'urdf', 'uirover.urdf'])
 
     return LaunchDescription([
         # <param name="robot_description" command="$(find xacro)/xacro.py $(find robot_package)/urdf/robot.urdf.xacro" />
@@ -30,7 +30,7 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gz_spawn_model_path),
             launch_arguments={
-                'model': [PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'moon.sdf'])],
+                'model': PathJoinSubstitution(gz_world_path),
                 'file': gz_urdf_path,
                 'robot_namespace': 'uirover',
                 'x': '0.0',
