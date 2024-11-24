@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# ensure ubuntu 24.04 is installed
+# ensure ubuntu noble (24.04) is installed
 if ! command -v lsb_release &> /dev/null; then
   echo "ERROR: lsb_release is not installed. This likely means you are not running Ubuntu and ROS2 Jazzy is not supported on your system."
-  echo "It is also possible you are running a lightweight version of Ubuntu that does not include lsb_release. In this case, you can install it with 'sudo apt install lsb-release'"
+  echo "It is also possible (but unlikely) you are simply missing that package. In this case, you can install it with 'sudo apt install lsb-release'"
   exit 1
 fi
 
 if [ "$(lsb_release -cs)" != "noble" ]; then
-  echo "ERROR: Ubuntu 24.04 is required. You are have $(lsb_release -cs)"
+  echo "ERROR: Ubuntu noble is required. You have $(lsb_release -cs)"
   exit 1
 fi
 
