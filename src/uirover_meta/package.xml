@@ -9,8 +9,8 @@
 
   <exec_depend>uirover_arducam</exec_depend>
   <exec_depend>uirover_aruco</exec_depend>
-  <exec_depend>uiuirover_bringup</exec_depend>
-  <exec_depend>uiuirover_description</exec_depend>
+  <exec_depend>uirover_bringup</exec_depend>
+  <exec_depend>uirover_description</exec_depend>
   <exec_depend>uirover_hardware</exec_depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
