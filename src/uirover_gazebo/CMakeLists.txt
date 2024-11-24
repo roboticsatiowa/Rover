@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(uirover_description)
+project(uirover_gazebo)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -7,18 +7,14 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(xacro REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY launch rviz xacro urdf
+  DIRECTORY launch worlds
   DESTINATION share/${PROJECT_NAME}
 )
-
-file(GLOB xacro_files urdf/*.urdf.xacro)
-xacro_add_files(${xacro_files} TARGET urdf)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

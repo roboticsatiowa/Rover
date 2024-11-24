@@ -41,7 +41,7 @@ Visualization Manager:
       Value: true
     - Alpha: 0.6000000238418579
       Class: rviz_default_plugins/RobotModel
-      Collision Enabled: false
+      Collision Enabled: true
       Description File: ""
       Description Source: Topic
       Description Topic:
@@ -57,12 +57,7 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        back_l_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        back_r_wheel:
+        arm_platform:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -75,34 +70,60 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        bl_swivel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        bl_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        br_swivel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        br_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         chassis:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_l_wheel:
+        fl_swivel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        fl_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_r_wheel:
+        fr_swivel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        fr_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        mid_l_wheel:
+        ml_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        mid_r_wheel:
+        mr_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
       Mass Properties:
-        Inertia: false
-        Mass: false
+        Inertia: true
+        Mass: true
       Name: RobotModel
       TF Prefix: ""
       Update Interval: 0
@@ -115,23 +136,33 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        back_l_wheel:
-          Value: true
-        back_r_wheel:
+        arm_platform:
           Value: true
         base_footprint:
           Value: true
         base_link:
           Value: true
+        bl_swivel:
+          Value: true
+        bl_wheel:
+          Value: true
+        br_swivel:
+          Value: true
+        br_wheel:
+          Value: true
         chassis:
           Value: true
-        front_l_wheel:
+        fl_swivel:
           Value: true
-        front_r_wheel:
+        fl_wheel:
           Value: true
-        mid_l_wheel:
+        fr_swivel:
           Value: true
-        mid_r_wheel:
+        fr_wheel:
+          Value: true
+        ml_wheel:
+          Value: true
+        mr_wheel:
           Value: true
       Marker Scale: 0.30000001192092896
       Name: TF
@@ -140,20 +171,26 @@ Visualization Manager:
       Show Names: true
       Tree:
         base_link:
+          arm_platform:
+            {}
           base_footprint:
             {}
+          bl_swivel:
+            bl_wheel:
+              {}
+          br_swivel:
+            br_wheel:
+              {}
           chassis:
-            back_l_wheel:
+            ml_wheel:
               {}
-            back_r_wheel:
+            mr_wheel:
               {}
-            front_l_wheel:
+          fl_swivel:
+            fl_wheel:
               {}
-            front_r_wheel:
-              {}
-            mid_l_wheel:
-              {}
-            mid_r_wheel:
+          fr_swivel:
+            fr_wheel:
               {}
       Update Interval: 0
       Value: true
@@ -193,10 +230,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.20979638397693634
+      Pitch: 0.6697960495948792
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.122219204902649
+      Yaw: 1.0772192478179932
     Saved: ~
 Window Geometry:
   Displays:
