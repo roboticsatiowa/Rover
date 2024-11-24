@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="uiowa_rover" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- INERTIA -->
+  <xacro:macro name="box_inertia_tensor" params="mass len_x len_y len_z">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="${(1/12)*mass*(len_z*len_z+len_y*len_y)}" ixy="0.0" ixz="0.0"
+        iyy="${(1/12)*mass*(len_z*len_z+len_x*len_x)}" iyz="0.0"
+        izz="${(1/12)*mass*(len_x*len_x+len_y*len_y)}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_inertia_tensor" params="mass radius length">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="${(1/12)*mass*(3*radius*radius+length*length)}" ixy="0.0" ixz="0.0"
+        iyy="${(1/12)*mass*(3*radius*radius+length*length)}" iyz="0.0"
+        izz="${(1/2)*mass*radius*radius}" />
+    </inertial>
+  </xacro:macro>
+
+  <!-- BOX -->
+  <xacro:macro name="box" params="name x y z mass">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="${x} ${y} ${z}" />
+        </geometry>
+        <material name="Grey">
+          <color rgba="0.7 0.7 0.7 1.0" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${x} ${y} ${z}" />
+        </geometry>
+      </collision>
+      <xacro:box_inertia_tensor mass="${mass}" len_x="${x}" len_y="${y}" len_z="${z}" />
+    </link>
+  </xacro:macro>
+
+  <!-- WHEEL -->
+  <xacro:macro name="wheel" params="name x y z parent">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+        </geometry>
+        <material name="Grey">
+          <color rgba="0.7 0.7 0.7 1.0" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia_tensor mass="${wheel_mass}" radius="${wheel_diameter/2}"
+        length="${wheel_width}" />
+    </link>
+    <joint name="${name}_joint" type="continuous">
+      <parent link="${parent}" />
+      <child link="${name}" />
+      <origin xyz="${x} ${y} ${z}" rpy="${-pi/2} 0 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+  </xacro:macro>
+
+  <!-- WHEEL SWIVELS -->
+  <xacro:macro name="wheel_swivel" params="name x y z">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <sphere radius="0.05" />
+        </geometry>
+        <material name="Grey">
+          <color rgba="0.7 0.7 0.7 1.0" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <sphere radius="0.05" />
+        </geometry>
+      </collision>
+      <xacro:box_inertia_tensor mass="0.1" len_x="0.1" len_y="0.1" len_z="0.1" />
+    </link>
+    <joint name="${name}_joint" type="revolute">
+      <parent link="base_link" />
+      <child link="${name}" />
+      <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+      <limit lower="${-pi/2}" upper="${pi/2}" effort="10" velocity="1" />
+    </joint>
+  </xacro:macro>
+</robot>
