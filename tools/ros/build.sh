@@ -1,9 +1,30 @@
 #!/usr/bin/env bash
 set -eo pipefail
+shopt -s globstar nullglob
 
 WS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." &> /dev/null && pwd )" # workspace directory
 
-(cd $WS_DIR && colcon build --symlink-install --event-handlers desktop_notification- console_stderr-)
+# colcon has a very weird cli so instead we manually concatenate all the logs in the event of a faliure.
+# This results in a much more readable output.
+function print_stderr_logs () {
+    for file in $WS_DIR/log/latest/**/stderr.log;
+    do
+        # check if file is empty
+        if [ ! -s "$file" ]; then
+            continue
+        fi
+        echo
+        echo
+        echo "ERROR $file:"
+        cat "$file"
+    done
+}
 
-echo
-echo "Stderr has been surpressed. Complete logs can be found at ${WS_DIR}/log/latest/events.log"
+# desktop_notification- console_stderr- disable annoying features of colcon
+(cd $WS_DIR && colcon build --symlink-install --event-handlers desktop_notification- console_stderr- || print_stderr_logs)
+
+
+# Ideally we would automatically source the setup.bash file after building, but this is causing bash tab completion to completetly crash gnome-terminal.
+# Not sure why, but in case this ever gets fixed, here is the line to do it:
+## shellcheck source=/dev/null
+#. "${WS_DIR}/install/setup.bash"
