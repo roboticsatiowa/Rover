@@ -13,12 +13,13 @@ find_package(xacro REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY launch rviz xacro urdf urdf_components
+  DIRECTORY launch rviz xacro urdf
   DESTINATION share/${PROJECT_NAME}
 )
 
 file(GLOB xacro_files urdf/*.urdf.xacro)
 xacro_add_files(${xacro_files} TARGET urdf)
+add_custom_target(media_files ALL DEPENDS ${xacro_files})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

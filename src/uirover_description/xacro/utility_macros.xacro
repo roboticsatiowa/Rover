@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot name="uiowa_rover" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- INERTIA -->
+  <!-- BOX INERTIA -->
   <xacro:macro name="box_inertia_tensor" params="mass len_x len_y len_z">
     <inertial>
       <mass value="${mass}" />
@@ -11,6 +11,7 @@
     </inertial>
   </xacro:macro>
 
+  <!-- CYLINDER INERTIA -->
   <xacro:macro name="cylinder_inertia_tensor" params="mass radius length">
     <inertial>
       <mass value="${mass}" />
@@ -20,7 +21,7 @@
     </inertial>
   </xacro:macro>
 
-  <!-- BOX -->
+  <!-- COLLIDABLE BOX -->
   <xacro:macro name="box" params="name x y z mass">
     <link name="${name}">
       <visual>

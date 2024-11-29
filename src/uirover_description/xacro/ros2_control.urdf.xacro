@@ -6,22 +6,18 @@
     <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
 
     <xacro:macro name="uirover_ros2_control" params="use_gazebo:=^|false">
-        
-        
         <ros2_control name="uirover_control" type="system" >
             <hardware>
                 <xacro:if value="${use_gazebo}">
                     <plugin>gz_ros2_control/GazeboSimSystem</plugin>
                 </xacro:if>
-                <xacro:unless value="${use_gazebo}">
+                <!-- <xacro:unless value="${use_gazebo}">
                     <plugin>uirover_hardware/RRBotSystemPositionOnlyHardware</plugin>
                     <param name="example_param_hw_start_duration_sec">0</param>
                     <param name="example_param_hw_stop_duration_sec">3.0</param>
                     <param name="example_param_hw_slowdown">100</param>
-                </xacro:unless>
+                </xacro:unless> -->
             </hardware>
-            
         </ros2_control>
-        
     </xacro:macro>
 </robot>
