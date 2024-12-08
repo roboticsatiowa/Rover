@@ -20,6 +20,10 @@ function print_stderr_logs () {
     done
 }
 
+# clean up generated urdf before building. Sometimes when building the urdf is not properly generated if the file already exists.
+# This workaround forces the urdf to freshly generated each build
+rm -f "${WS_DIR}"/src/uirover_description/urdf/*.urdf
+
 # desktop_notification- console_stderr- disable annoying features of colcon
 (cd $WS_DIR && colcon build --symlink-install --event-handlers desktop_notification- console_stderr- || print_stderr_logs)
 

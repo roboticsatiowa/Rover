@@ -19,7 +19,6 @@ install(
 
 file(GLOB xacro_files urdf/*.urdf.xacro)
 xacro_add_files(${xacro_files} TARGET urdf)
-add_custom_target(media_files ALL DEPENDS ${xacro_files})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

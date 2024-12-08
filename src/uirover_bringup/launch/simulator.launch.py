@@ -45,14 +45,12 @@ def generate_launch_description():
     #         output="screen",
     #     )
     # )
-
-    launch_description_list.append(
-        ExecuteProcess(
-            cmd=["rqt_graph"],
-            output="screen",
-        )
-    )
-
+    # launch_description_list.append(
+    #     ExecuteProcess(
+    #         cmd=["rqt_graph"],
+    #         output="screen",
+    #     )
+    # )
 
     launch_description_list.append(
         IncludeLaunchDescription(

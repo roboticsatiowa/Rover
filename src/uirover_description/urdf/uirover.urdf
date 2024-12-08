@@ -339,12 +339,19 @@
   <!-- =============================== -->
   <link name="demo_camera">
     <visual>
+      <origin rpy="0.0 1.5707963267948966 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
         <cylinder length="0.01" radius="0.01"/>
       </geometry>
       <material name="Grey">
         <color rgba="0.7 0.7 0.7 1.0"/>
       </material>
+    </visual>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.005 0.0 0.0"/>
+      <geometry>
+        <box size="0.005 0.03 0.03"/>
+      </geometry>
     </visual>
     <collision>
       <geometry>
@@ -358,10 +365,11 @@
   </link>
   <gazebo reference="demo_camera">
     <sensor name="boundingbox_camera" type="boundingbox_camera">
-      <topic>boxes</topic>
+      <topic>demo_camera</topic>
       <camera>
         <box_type>2d</box_type>
-        <horizontal_fov>1.047</horizontal_fov>
+        <!-- 110 deg FOV -->
+        <horizontal_fov>1.9198</horizontal_fov>
         <image>
           <width>800</width>
           <height>600</height>
@@ -377,7 +385,7 @@
     </sensor>
   </gazebo>
   <joint name="front_camera_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="1.0 0.0 0.0"/>
+    <origin rpy="0.0 0.5 0.0" xyz="0.0 0.2 0.8"/>
     <parent link="base_link"/>
     <child link="demo_camera"/>
   </joint>
