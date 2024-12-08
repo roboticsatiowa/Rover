@@ -1,2 +1,2 @@
-# use LF line ending
+# use LF line ending. Removing this will cause compatibility issues between unix-based and windows systems
 * text=auto eol=lf

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="uiowa_rover" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="wheel_diameter" value="0.23" />
+    <xacro:property name="chassis_width" value="0.45" />
+    <xacro:property name="chassis_length" value="0.45" />
+    <xacro:property name="chassis_height" value="0.30" />
+    <xacro:property name="chassis_mass" value="5" />
+    
+    <xacro:property name="arm_platform_width" value="${chassis_width}" />
+    <xacro:property name="arm_platform_length" value="0.3" />
+    <xacro:property name="arm_platform_height" value="0.05" />
+    <xacro:property name="arm_platform_mass" value="3" />
+    
+    <xacro:property name="wheel_width" value="0.1" />
+    <xacro:property name="wheel_diameter" value="0.228" />
+    <xacro:property name="wheel_mass" value="0.5" />
+    <xacro:property name="wheel_distance_side" value="0.4" />
+    <xacro:property name="wheel_spacing" value="0.4" />
+    <xacro:property name="suspension_height" value="0.20"/>
+</robot>
