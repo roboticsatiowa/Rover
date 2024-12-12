@@ -13,7 +13,7 @@ find_package(xacro REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY launch rviz xacro urdf urdf_components
+  DIRECTORY launch rviz xacro urdf
   DESTINATION share/${PROJECT_NAME}
 )
 

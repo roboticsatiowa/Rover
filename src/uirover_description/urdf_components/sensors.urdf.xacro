@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <!-- this is a placeholder for now. Will include things such as IMU sensors, lidar, depth cameras, etc -->
-    <!-- basically any sensor who's position in space is important (things like voltage sensors or encoders can be ommited) -->
-</robot>

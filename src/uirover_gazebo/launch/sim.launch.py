@@ -9,6 +9,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    pkg_ros_gz_bridge = get_package_share_directory('ros_gz_bridge')
     pkg_uirover_gazebo = get_package_share_directory('uirover_gazebo')
     pkg_uirover_description = get_package_share_directory('uirover_description')
     
@@ -38,11 +39,11 @@ def generate_launch_description():
                 'z': '8.0',
             }.items(),
         ),
-        Node(
-            package='ros_gz_bridge',
-            executable='parameter_bridge',
-            arguments=[],
-            remappings=[],
-            output='screen'
-        ),       
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(PathJoinSubstitution([pkg_ros_gz_bridge, 'launch', 'ros_gz_bridge.launch.py'])),
+            launch_arguments={
+                'bridge_name': 'gazebo_bridge',
+                'config_file': PathJoinSubstitution([pkg_uirover_gazebo, 'config', 'bridge_config.yaml']),
+            }.items(),
+        ),
     ])

@@ -1,5 +1,6 @@
 .idea
-.vscode
+.vscode/*
+!.vscode/tasks.json
 bag/
 build/
 install/
