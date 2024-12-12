@@ -6,22 +6,75 @@
     <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
 
     <xacro:macro name="uirover_ros2_control" params="use_gazebo:=^|false">
-        
-        
-        <ros2_control name="uirover_control" type="system" >
+
+
+        <ros2_control name="uirover_control" type="system">
+            <!-- PLUGINS-->
             <hardware>
                 <xacro:if value="${use_gazebo}">
                     <plugin>gz_ros2_control/GazeboSimSystem</plugin>
                 </xacro:if>
-                <xacro:unless value="${use_gazebo}">
+                <!-- <xacro:unless value="${use_gazebo}">
                     <plugin>uirover_hardware/RRBotSystemPositionOnlyHardware</plugin>
                     <param name="example_param_hw_start_duration_sec">0</param>
                     <param name="example_param_hw_stop_duration_sec">3.0</param>
                     <param name="example_param_hw_slowdown">100</param>
-                </xacro:unless>
+                </xacro:unless> -->
             </hardware>
-            
+
+
+            <!-- WHEELS -->
+            <joint name="fl_wheel_joint">
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+            <joint name="fr_wheel_joint">
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+            <joint name="ml_wheel_joint">
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+            <joint name="mr_wheel_joint">
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+            <joint name="bl_wheel_joint">
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+            <joint name="br_wheel_joint">
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <!-- WHEEL SWIVEL JOINTS -->
+            <joint name="fl_swivel" >
+                <command_interface name="position" />
+                <state_interface name="position" />
+            </joint>
+            <joint name="fr_swivel" >
+                <command_interface name="position" />
+                <state_interface name="position" />
+            </joint>
+            <joint name="bl_swivel" >
+                <command_interface name="position" />
+                <state_interface name="position" />
+            </joint>
+            <joint name="br_swivel" >
+                <command_interface name="position" />
+                <state_interface name="position" />
+            </joint>
+
+
+
         </ros2_control>
-        
     </xacro:macro>
 </robot>

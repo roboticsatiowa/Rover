@@ -313,6 +313,7 @@
     <axis xyz="0 0 1"/>
   </joint>
   <!-- Robot Footprint -->
+  <!-- This is needed for nav libraries. Its the 2D top-down profile of the robot. Makes for simpler collision detection. -->
   <link name="base_footprint"/>
   <joint name="base_footprint_joint" type="fixed">
     <parent link="base_link"/>
@@ -330,6 +331,7 @@
             <parameters>$(find ros2_control_demo_example_9)/config/rrbot_controllers.yaml</parameters>
         </plugin>
     </gazebo> -->
+  <!-- should probably change the color at some point. or not. orange is cool -->
   <gazebo reference="br_wheel">
     <material>Gazebo/Orange</material>
   </gazebo>
@@ -354,4 +356,64 @@
   <gazebo reference="arm_platform">
     <material>Gazebo/Orange</material>
   </gazebo>
+  <ros2_control name="uirover_control" type="system">
+    <!-- PLUGINS-->
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      <!-- <xacro:unless value="${use_gazebo}">
+                    <plugin>uirover_hardware/RRBotSystemPositionOnlyHardware</plugin>
+                    <param name="example_param_hw_start_duration_sec">0</param>
+                    <param name="example_param_hw_stop_duration_sec">3.0</param>
+                    <param name="example_param_hw_slowdown">100</param>
+                </xacro:unless> -->
+    </hardware>
+    <!-- WHEELS -->
+    <joint name="fl_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="ml_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="mr_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="bl_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="br_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <!-- WHEEL SWIVEL JOINTS -->
+    <joint name="fl_swivel">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="fr_swivel">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="bl_swivel">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="br_swivel">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+  </ros2_control>
 </robot>
