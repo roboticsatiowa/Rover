@@ -64,6 +64,23 @@ Install ROS and project dependencies. (Recommended even if you already have ROS2
 ./tools/ros/install_dependencies.sh
 ```
 
+### Building
+
+
+A convenience script is provided to build the project
+
+```bash
+./tools/ros/build.sh
+source install/setup.bash
+```
+<br>
+It is recommended to occasionally clean out the workspace. This will remove any generated files which can sometimes cause issues.
+
+```bash
+./tools/ros/clean.sh
+```
+
+
 ## Usage <a name = "usage"></a>
 
 This will likely change as the project matures. The current launch file will start the gazebo simulation with the rover model. There will also be multiple launch files for different configurations of the rover or for different testing environments.
