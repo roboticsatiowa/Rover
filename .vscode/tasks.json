@@ -1,0 +1,109 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "ros",
+			"command": "./tools/ros/build.sh",
+			"label": "ROS build",
+			"options": {
+				"statusbar": {
+					"label": "ROS build",
+					"backgroundColor": "statusBarItem.warningBackground",
+					"running": {
+						"label": "Building..."
+					},
+				},
+				"shell": {
+					"executable": "/bin/bash",
+					"args": ["-c"]
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
+		},
+		{
+			"type": "ros",
+			"command": "./tools/ros/clean.sh",
+			"label": "ROS clean",
+			"options": {
+				"statusbar": {
+					"label": "ROS clean",
+					"backgroundColor": "statusBarItem.warningBackground",
+					"running": {
+						"label": "Cleaning..."
+					}
+				},
+				"shell": {
+					"executable": "/bin/bash",
+					"args": ["-c"]
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
+		},
+		{
+			"type": "ros",
+			"command": "source  install/setup.bash && ros2 launch uirover_bringup simulator.launch.py",
+			"label": "ROS run sim",
+			"options": {
+				"statusbar": {
+					"label": "ROS run sim",
+					"backgroundColor": "statusBarItem.warningBackground",
+					"running": {
+						"label": "Sim is running"
+					},
+				},
+				"shell": {
+					"executable": "/bin/bash",
+					"args": ["-c"]
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
+		},
+		{
+			"type": "ros",
+			"command": "source  install/setup.bash && ros2 launch uirover_description preview_urdf.launch.py",
+			"label": "ROS view urdf",
+			"options": {
+				"statusbar": {
+					"label": "ROS view urdf",
+					"backgroundColor": "statusBarItem.warningBackground",
+					"running": {
+						"label": "Preview is open"
+					},
+				},
+				"shell": {
+					"executable": "/bin/bash",
+					"args": ["-c"]
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
+		},
+	]
+}

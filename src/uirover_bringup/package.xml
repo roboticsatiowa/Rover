@@ -7,6 +7,8 @@
   <maintainer email="holterethan@gmail.com">ethan</maintainer>
   <license>GPL-3.0-only</license>
 
+  <exec_depend>foxglove_bridge</exec_depend>
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
