@@ -11,23 +11,15 @@
 
 </div>
 
----
-
-
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
-
----
 
 ## About <a name = "about"></a>
 
 This is a ROS2 based project for the University of Iowa Robotics Club's Mars Rover. It is primarily designed around remote operation with future plans for partial or full autonomy. The rover is equipped with a 6 wheeled rocker bogie suspension system, a 5 DOF custom arm, and a variety of sensors. The onboard computing is handled by an Nvidia Jetson Orin coupled with a Teensy 4.1 microcontroller to assist with IO. The rover is equipped with an Intel Realsense depth camera, 3 Cameras, GPS, and a suite of miscellanious sensors for improved situational awareness.
-
----
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -41,20 +33,20 @@ There are a variety of ways to run this project. The easiest is to use the ROS2 
   - [ ] Ubuntu 24.04 LTS
   - [ ] ROS2 Jazzy
 <br>
+
 - ROS 2 Humble (may require minimal source changes)
   - [ ] Ubuntu 22.04 LTS
   - [ ] ROS2 Humble
 <br>
+
 - Docker install
   - [ ] Any Unix based OS
   - [ ] Docker
-  - [ ] Systemd based init system (recommended for udev rules)
-
-<br>
+  - [ ] Systemd based init system recommended (for udev rules)
 
 ### Installation
 
-This guide assumes you are using ROS2 Jazzy on Ubuntu 24.04 LTS. If you are using a different version of ROS2, you may consult the ROS2 documentation for installation instructions [here](hhttps://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
+This guide assumes you are using ROS2 Jazzy on Ubuntu 24.04 LTS. If you are using a different version of ROS2, you may consult the ROS2 documentation for installation instructions [here](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 
 <br>
 Clone the repository to your workspace.
@@ -72,17 +64,13 @@ Install ROS and project dependencies. (Recommended even if you already have ROS2
 ./tools/ros/install_dependencies.sh
 ```
 
----
-
 ## Usage <a name = "usage"></a>
 
-This will likely change as the project matures. The current launch file will start the gazebo simulation with the rover model. There will also be multiple launch files for different configurations of the rover or for different testing environments.S
+This will likely change as the project matures. The current launch file will start the gazebo simulation with the rover model. There will also be multiple launch files for different configurations of the rover or for different testing environments.
 
 ```bash
 ros2 launch uirover_bringup simulator.launch.py
 ```
-
----
 
 ## Roadmap
 
@@ -107,10 +95,7 @@ ros2 launch uirover_bringup simulator.launch.py
 - [ ] Nav2 basic path planning
 - [ ] Nav2 obstacle avoidance
 
-
----
-
 ## Contributers <a name = "authors"></a>
 
-Ethan Holter [@ethanholter](https://github.com/ethanholter)
-Charlie Killian [@charlie-killian](https://github.com/charlie-killian)
+- Ethan Holter [@ethanholter](https://github.com/ethanholter)
+- Charlie Killian [@charlie-killian](https://github.com/charlie-killian)
