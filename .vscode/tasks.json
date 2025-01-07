@@ -79,5 +79,31 @@
 				"clear": false
 			}
 		},
+		{
+			"type": "ros",
+			"command": "source  install/setup.bash && ros2 launch uirover_description preview_urdf.launch.py",
+			"label": "ROS view urdf",
+			"options": {
+				"statusbar": {
+					"label": "ROS view urdf",
+					"backgroundColor": "statusBarItem.warningBackground",
+					"running": {
+						"label": "Preview is open"
+					},
+				},
+				"shell": {
+					"executable": "/bin/bash",
+					"args": ["-c"]
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
+		},
 	]
 }
