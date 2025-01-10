@@ -6,6 +6,7 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import ExecuteProcess
 import os
+from time import strftime
 
 
 def generate_launch_description():
@@ -14,7 +15,9 @@ def generate_launch_description():
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
     if os.path.exists("/dev/Arducam"):
-        arducam_devices = [int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")]
+        arducam_devices = [
+            int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")
+        ]
         for i in arducam_devices:
             launch_description_list.append(
                 Node(
@@ -25,7 +28,6 @@ def generate_launch_description():
                     respawn_delay=10,
                 )
             )
-
 
     # GPS
     launch_description_list.append(
@@ -52,15 +54,26 @@ def generate_launch_description():
         )
     )
 
+    # Zenoh Bridge
+    # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
+    launch_description_list.append(
+        ExecuteProcess(
+            cmd="zenoh-bridge-dds --no-multicast-scouting -l udp/0.0.0.0:7447".split(
+                " "
+            ),
+            output="screen",
+        )
+    )
+
     # Rosbag
     # Start rosbag recording [-a = all topics] [ -d = file split duration in seconds]
-    # launch_description_list.append(
-    #     ExecuteProcess(
-    #         cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")} -a --compression-mode file --compression-format zstd -d 9000'.split(
-    #             " "
-    #         ),
-    #         output="screen",
-    #     )
-    # )
+    launch_description_list.append(
+        ExecuteProcess(
+            cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')} -a --compression-mode file --compression-format zstd -d 9000".split(
+                " "
+            ),
+            output="screen",
+        )
+    )
 
     return LaunchDescription(launch_description_list)
