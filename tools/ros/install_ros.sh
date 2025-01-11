@@ -29,7 +29,7 @@ grep -qxF "source /opt/ros/jazzy/setup.bash" ~/.bashrc || echo "source /opt/ros/
 
 # locks ROS to localhost. Prevents accidental interace with other ROS systems on the same network. 
 # Any ROS2 communication across machines should be done explicitly (i.e. with zenoh_bridge)
-grep -qxF "export ROS_LOCALHOST_ONLY=1" ~/.bashrc || echo "export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc
+grep -qxF "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST" ~/.bashrc || echo "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST" >> ~/.bashrc
 
 # shellcheck source=/dev/null
 . /opt/ros/jazzy/setup.bash
