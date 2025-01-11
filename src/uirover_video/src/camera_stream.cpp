@@ -13,120 +13,66 @@
 // opencv
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
+#include <opencv2/aruco.hpp>
 
 using namespace std::chrono_literals;
 
 class MinimalPublisher : public rclcpp::Node {
 public:
-    GstElement* pipeline, * v4lsrc, * jpegdec, * appsrc, * appsink, * queue, * videoconvert, * x264enc, * rtph264pay, * udpsink;
-    GstBus* bus;
-    GstMessage* msg;
-    GstStateChangeReturn ret;
-
     MinimalPublisher() : Node("gstreamer_source") {
-
-        RCLCPP_INFO(this->get_logger(), "Starting gstreamer source node");
-
-        // initialize gstreamer
-        gst_init(NULL, NULL);
-
-        // create pipeline elements
-        v4lsrc = gst_element_factory_make("v4l2src", "v4l_src");
-        jpegdec = gst_element_factory_make("jpegdec", "jpeg_dec");
-        appsink = gst_element_factory_make("appsink", "app_sink");
-        appsrc = gst_element_factory_make("appsrc", "app_src");
-        queue = gst_element_factory_make("queue", "queue");
-        videoconvert = gst_element_factory_make("videoconvert", "video_convert");
-        x264enc = gst_element_factory_make("x264enc", "x264_enc");
-        rtph264pay = gst_element_factory_make("rtph264pay", "rtp_h264_pay");
-        udpsink = gst_element_factory_make("udpsink", "udp_sink");
-
-        gst_app_sink_set_emit_signals((GstAppSink*)appsink, true);
-        gst_app_sink_set_drop((GstAppSink*)appsink, true);
-        gst_app_sink_set_max_buffers((GstAppSink*)appsink, 1);
-
-        g_signal_connect(appsink, "new-buffer", G_CALLBACK(cv_process_frame), (gpointer)mark);
-
-        // empty pipeline
-        pipeline = gst_pipeline_new("pipeline");
-
-        if (!pipeline || !v4lsrc || !jpegdec || !appsrc || !appsink || !queue || !videoconvert || !x264enc || !rtph264pay || !udpsink) {
-            RCLCPP_ERROR(this->get_logger(), "Failed to create elements");
-        }
-
-        // build pipeline
-        gst_bin_add_many(GST_BIN(pipeline), v4lsrc, jpegdec, appsink, appsrc, queue, videoconvert, x264enc, rtph264pay, udpsink, NULL);
-        if (gst_element_link_many(v4lsrc, jpegdec, appsink, appsrc, queue, videoconvert, x264enc, rtph264pay, udpsink, NULL) != TRUE) {
-            RCLCPP_ERROR(this->get_logger(), "Failed to link elements");
-        }
-
-        // set properties
-        g_object_set(v4lsrc, "device", "/dev/video0", NULL);
-        g_object_set(x264enc, "tune", 0x00000004, NULL); // zerolatency
-        g_object_set(x264enc, "key-int-max", 15, NULL);
-        g_object_set(rtph264pay, "pt", 96, NULL);
-        g_object_set(rtph264pay, "config-interval", -1, NULL);
-        g_object_set(udpsink, "host", "0.0.0.0", NULL);
-        g_object_set(udpsink, "port", 5000, NULL);
-
-        // start playing
-        ret = gst_element_set_state(pipeline, GST_STATE_PLAYING);
-        if (ret == GST_STATE_CHANGE_FAILURE) {
-            RCLCPP_ERROR(this->get_logger(), "Failed to start pipeline");
-        }
-
-        bus = gst_element_get_bus(pipeline);
-        gst_bus_add_watch(bus, (GstBusFunc)gst_bus_callback, this);
-    }
-
-    ~MinimalPublisher() {
-        if (msg != NULL) {
-            gst_message_unref(msg);
-        }
-        gst_object_unref(bus);
-        gst_element_set_state(pipeline, GST_STATE_NULL);
-        gst_object_unref(pipeline);
-    }
-
-    gst_bus_callback() {
-        msg = gst_bus_pop_filtered(bus, (GstMessageType)(GST_MESSAGE_ERROR | GST_MESSAGE_EOS));
-
-        if (msg == NULL) {
+        RCLCPP_INFO(this->get_logger(), "Starting camera stream.");
+        cap = cv::VideoCapture("v4l2src device=/dev/video0 ! jpegdec ! queue ! videoconvert ! appsink");
+        if (!cap.isOpened()) {
+            RCLCPP_ERROR(this->get_logger(), "Failed to open camera.");
             return;
         }
 
-        switch (GST_MESSAGE_TYPE(msg)) {
-            case GST_MESSAGE_ERROR:
-                GError* err;
-                gchar* debug_info;
-                gst_message_parse_error(msg, &err, &debug_info);
-                RCLCPP_ERROR(this->get_logger(), "Error received from element %s: %s", GST_OBJECT_NAME(msg->src), err->message);
-                RCLCPP_ERROR(this->get_logger(), "Debugging information: %s", debug_info ? debug_info : "none");
-                g_clear_error(&err);
-                g_free(debug_info);
-                break;
-            case GST_MESSAGE_EOS:
-                RCLCPP_INFO(this->get_logger(), "End of stream");
-                rclcpp::shutdown();
-                break;
-            default:
-                RCLCPP_ERROR(this->get_logger(), "Unexpected message received");
-                break;
+        RCLCPP_INFO(this->get_logger(), "Camera opened.");
+
+        // FPS set to 31 but actual FPS is 30. When the FPS matches exactly, the latency gets progressively 
+        // worse because of small delays accumulating. This is not the proper way to fix it but it works for now.
+        writer = cv::VideoWriter("appsrc ! videoconvert ! x264enc tune=zerolatency key-int-max=15 ! video/x-h264,profile=main ! rtph264pay pt=96 config-interval=-1 ! udpsink host=0.0.0.0 port=5000", 0, 31.0, cv::Size(1920, 1080), true);
+        if (!writer.isOpened()) {
+            RCLCPP_ERROR(this->get_logger(), "Failed to open writer.");
+            return;
         }
 
-        gst_message_unref(msg);
+        RCLCPP_INFO(this->get_logger(), "Writer opened.");
+
+        auto timer_callback = [this]() -> void {
+            this->process_frame();
+            };
+
+        timer = this->create_wall_timer(1ms, timer_callback);
+
+        RCLCPP_INFO(this->get_logger(), "Camera stream started.");
     }
 
-    cv_process_frame(GstAppSink *fks, gpointer mark) {
+    void process_frame() {
+        cap >> frame;
+        if (frame.empty()) {
+            RCLCPP_ERROR(this->get_logger(), "Failed to capture frame.");
+            return;
+        }
 
+        std::vector<int> ids;
+        std::vector<std::vector<cv::Point2f> > corners;
+        cv::aruco::detectMarkers(frame, dictionary, corners, ids);
+        if (ids.size() > 0) {
+            cv::aruco::drawDetectedMarkers(frame, corners, ids);
+        }
+
+        writer << frame;
     }
-
-
-
 
 
 private:
+    cv::Mat frame;
+    cv::VideoCapture cap;
+    cv::VideoWriter writer;
     rclcpp::TimerBase::SharedPtr timer;
+
+    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
 
 };
 
