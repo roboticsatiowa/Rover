@@ -50,7 +50,7 @@ def generate_launch_description():
             package="uirover_hardware",
             executable="uirover_hardware",
             respawn=True,
-            respawn_delay=10,
+            respawn_delay=2,
         )
     )
 

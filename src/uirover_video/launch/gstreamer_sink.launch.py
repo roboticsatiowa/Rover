@@ -40,6 +40,8 @@ def generate_launch_description():
                     "!",
                     "videoconvert",
                     "!",
+                    "queue",
+                    "!",
                     "xvimagesink",
                 ],
                 output="screen",

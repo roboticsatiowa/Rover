@@ -95,7 +95,8 @@ ros2 launch uirover_bringup simulator.launch.py
 - [x] Simplified rover 3D model
 - [ ] Full rover 3D model with meshes
 - [x] Video capture and streaming
-- [ ] Video compression
+- [x] Video compression
+- [ ] Relative pose estimation
 - [ ] Object classification
 - [x] Basic aruco marker detection
 - [x] ROS2 Control boilerplate
@@ -111,6 +112,28 @@ ros2 launch uirover_bringup simulator.launch.py
 - [ ] Nav2 basic environment mapping
 - [ ] Nav2 basic path planning
 - [ ] Nav2 obstacle avoidance
+
+## CIRC Specific Capabilities
+
+<https://circ.cstag.ca/2025/tasks/>
+
+## Required Capabilities
+
+- [ ] record distance between two gps waypoints
+- [x] identify aruco markers of 4x4_100
+- [ ] take photos BEFORE disturbing scene (need cam with better res or zoom)
+- [ ] take photos and automatically upload to base station usb drive
+- [ ] communicate with a gieger counter via serial interface
+- [ ] night time operation (flood lights, spot lights, low light camera, etc.)
+- [ ] 940 nm IR camera
+- [ ] must fit in a "storm shelter" dimensions provided by april 2025
+
+#### Bonus Capabilities
+
+- [ ] vision based text identification and translation (no bonus points - to save time)
+- [x] Aruco identification running in background and automatically display on screen
+- [ ] navigate to a gps waypoint autonomously
+- [ ] autonomously follow light points of varying colors
 
 ## Contributers <a name = "authors"></a>
 
