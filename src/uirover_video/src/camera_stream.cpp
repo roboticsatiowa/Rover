@@ -51,7 +51,7 @@ public:
         this->declare_parameter("bitrate", 2048, param_desc_bitrate);
         this->declare_parameter("publish_topic", false, param_desc_publish_topic); // TODO unimplemented
         this->declare_parameter("publish_topic_name", "camera_stream", param_desc_publish_topic_name); // TODO unimplemented
-        this->declare_parameter("dictionary", "DICT_4X4_250", param_desc_dictionary);
+        this->declare_parameter("dictionary", "DICT_4X4_100", param_desc_dictionary);
 
         set_aruco_dict(this->get_parameter("dictionary").as_string());
 

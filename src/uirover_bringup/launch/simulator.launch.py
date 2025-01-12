@@ -4,6 +4,7 @@ from launch.actions import IncludeLaunchDescription, ExecuteProcess
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
+from time import strftime
 
 
 FOXGLOVE_URL="https://app.foxglove.dev/uiowarobotics/view?openIn=desktop&ds=foxglove-websocket&ds.url=ws%3A%2F%2Flocalhost%3A8765"
@@ -62,13 +63,13 @@ def generate_launch_description():
         )
     )
 
-    # launch_description_list.append(
-    #     ExecuteProcess(
-    #         cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")} -a --compression-mode file --compression-format zstd -d 9000'.split(
-    #             " "
-    #         ),
-    #         output="screen",
-    #     )
-    # )
+    launch_description_list.append(
+        ExecuteProcess(
+            cmd=f'ros2 bag record -o bag/{strftime("%Y-%m-%d-%H-%M-%S")}_gazebo -a --compression-mode file --compression-format zstd -d 9000'.split(
+                " "
+            ),
+            output="screen",
+        )
+    )
 
     return LaunchDescription(launch_description_list)
