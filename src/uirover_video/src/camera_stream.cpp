@@ -7,9 +7,6 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp" 
 
-// gstreamer https://gstreamer.freedesktop.org/documentation/
-#include <gst/gst.h>
-
 // opencv
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
