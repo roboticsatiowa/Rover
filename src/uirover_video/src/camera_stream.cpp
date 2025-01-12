@@ -14,9 +14,9 @@
 
 using namespace std::chrono_literals;
 
-class MinimalPublisher : public rclcpp::Node {
+class GStreamerNode : public rclcpp::Node {
 public:
-    MinimalPublisher() : Node("gstreamer_source") {
+    GStreamerNode() : Node("gstreamer_stream_source") {
 
         auto param_desc_port = rcl_interfaces::msg::ParameterDescriptor{};
         param_desc_port.description = "UDP port to stream video to.";
@@ -79,7 +79,7 @@ public:
 
     }
 
-    ~MinimalPublisher() {
+    ~GStreamerNode() {
         end_stream();
     }
 
@@ -227,7 +227,7 @@ private:
 
 int main(int argc, char* argv[]) {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<MinimalPublisher>());
+    rclcpp::spin(std::make_shared<GStreamerNode>());
     rclcpp::shutdown();
     return 0;
 }
