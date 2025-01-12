@@ -95,7 +95,8 @@ ros2 launch uirover_bringup simulator.launch.py
 - [x] Simplified rover 3D model
 - [ ] Full rover 3D model with meshes
 - [x] Video capture and streaming
-- [ ] Video compression
+- [x] Video compression
+- [ ] Relative pose estimation
 - [ ] Object classification
 - [x] Basic aruco marker detection
 - [x] ROS2 Control boilerplate
