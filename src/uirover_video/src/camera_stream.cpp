@@ -37,7 +37,10 @@ public:
         auto param_desc_publish_topic_name = rcl_interfaces::msg::ParameterDescriptor{};
         param_desc_publish_topic_name.description = "Name of the ROS2 topic to publish to.";
         auto param_desc_dictionary = rcl_interfaces::msg::ParameterDescriptor{};
-        param_desc_dictionary.description = "aruco dictionary to use for marker detection. Valid options are: DICT_4X4_50, DICT_4X4_100, DICT_4X4_250, DICT_4X4_1000, DICT_5X5_50, DICT_5X5_100, DICT_5X5_250, DICT_5X5_1000, DICT_6X6_50, DICT_6X6_100, DICT_6X6_250, DICT_6X6_1000, DICT_7X7_50, DICT_7X7_100, DICT_7X7_250, DICT_7X7_1000, DICT_ARUCO_ORIGINAL";
+        param_desc_dictionary.description = "aruco dictionary to use for marker detection.";
+        param_desc_dictionary.additional_constraints = "Valid options are: DICT_4X4_50, DICT_4X4_100, DICT_4X4_250, DICT_4X4_1000, DICT_5X5_50, DICT_5X5_100, DICT_5X5_250, DICT_5X5_1000, DICT_6X6_50, DICT_6X6_100, DICT_6X6_250, DICT_6X6_1000, DICT_7X7_50, DICT_7X7_100, DICT_7X7_250, DICT_7X7_1000, DICT_ARUCO_ORIGINAL";
+
+
 
         this->declare_parameter("port", "5000", param_desc_port);
         this->declare_parameter("host", "0.0.0.0", param_desc_host);
