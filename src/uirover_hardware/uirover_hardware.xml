@@ -1,0 +1,9 @@
+<library path="uirover_hardware">
+  <class name="uirover_hardware/UiroverHardwareInterface"
+         type="uirover_hardware::UiroverHardwareInterface"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      ros2_control hardware interface.
+    </description>
+  </class>
+</library>
