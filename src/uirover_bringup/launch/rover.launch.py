@@ -14,45 +14,45 @@ def generate_launch_description():
 
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
-    if os.path.exists("/dev/Arducam"):
-        arducam_devices = [
-            int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")
-        ]
-        for i in arducam_devices:
-            launch_description_list.append(
-                Node(
-                    package="uirover_arducam",
-                    executable="arducam_video",
-                    parameters=[{"cam_index": i}],
-                    respawn=True,
-                    respawn_delay=10,
-                )
-            )
+    # if os.path.exists("/dev/Arducam"):
+    #     arducam_devices = [
+    #         int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")
+    #     ]
+    #     for i in arducam_devices:
+    #         launch_description_list.append(
+    #             Node(
+    #                 package="uirover_arducam",
+    #                 executable="arducam_video",
+    #                 parameters=[{"cam_index": i}],
+    #                 respawn=True,
+    #                 respawn_delay=10,
+    #             )
+    #         )
 
     # GPS
     launch_description_list.append(
-        IncludeLaunchDescription(
-            AnyLaunchDescriptionSource(
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("ublox_gps"),
-                        "launch/ublox_gps_node_zedf9p-launch.py",
-                    ]
-                )
-            )
+        Node (
+            package="nmea_navsat_driver",
+            executable="nmea_serial_driver",
+            name="ZED_F9P",
+            parameters=[
+                {"port": "/dev/ttyGPS"},
+            ],
+            respawn=True,
+            respawn_delay=5,
         )
     )
 
     # # Teensy Interface
-    launch_description_list.append(
-        Node(
-            name="uirover_hardware",
-            package="uirover_hardware",
-            executable="uirover_hardware",
-            respawn=True,
-            respawn_delay=2,
-        )
-    )
+    # launch_description_list.append(
+    #     Node(
+    #         name="uirover_hardware",
+    #         package="uirover_hardware",
+    #         executable="uirover_hardware",
+    #         respawn=True,
+    #         respawn_delay=2,
+    #     )
+    # )
 
     # Zenoh Bridge
     # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/

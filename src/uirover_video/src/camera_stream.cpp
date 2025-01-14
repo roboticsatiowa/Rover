@@ -42,7 +42,7 @@ public:
 
 
 
-        this->declare_parameter("port", "5000", param_desc_port);
+        this->declare_parameter("port", 5000, param_desc_port);
         this->declare_parameter("host", "0.0.0.0", param_desc_host);
         this->declare_parameter("device", "/dev/video0", param_desc_device);
         // this->declare_parameter("framerate", "30", param_desc_framerate); // TODO unimplemented
@@ -105,7 +105,7 @@ public:
             + " ! video/x-h264,profile=main ! rtph264pay pt=96 config-interval=-1 ! udpsink host="
             + this->get_parameter("host").as_string()
             + " port="
-            + this->get_parameter("port").as_string(), 0, 31.0, cv::Size(1920, 1080), true);
+            + this->get_parameter("port").value_to_string(), 0, 31.0, cv::Size(1920, 1080), true);
 
         if (!writer.isOpened()) {
             RCLCPP_ERROR(this->get_logger(), "Failed to open writer.");
