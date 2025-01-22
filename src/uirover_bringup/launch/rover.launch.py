@@ -54,6 +54,33 @@ def generate_launch_description():
         )
     )
 
+    # https://github.com/introlab/rtabmap_ros/blob/ros2/rtabmap_examples/launch/realsense_d435i_stereo.launch.py
+    # Realsense Camera
+    launch_description_list.append(
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(
+                    PathJoinSubstitution(
+                    [
+                        FindPackageShare("realsense2_camera"),
+                        "launch/rs_launch.py",
+                    ]
+
+                )
+            ),
+            launch_arguments={
+                "camera_namespace": "uirover",
+                "camera_name": "D435i_realsense_camera",
+                "depth_module.depth_profile": "640x480x30",
+                "pointcloud.enable": "true",
+                "unite_imu_method": "2",
+                "tf_publish_rate": "5.0",
+                "enable_gyro": "true",
+                "enable_accel": "true",
+                "enable_infra1": "true",
+            }.items(),
+        )
+    )
+
     # Zenoh Bridge
     # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
     launch_description_list.append(
