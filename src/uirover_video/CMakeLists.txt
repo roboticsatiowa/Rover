@@ -13,11 +13,8 @@ find_package(std_msgs REQUIRED)
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-find_package(PkgConfig REQUIRED)
-pkg_search_module(gstreamer REQUIRED IMPORTED_TARGET gstreamer-1.0>=4.6 )
-
 add_executable(stream src/camera_stream.cpp)
-ament_target_dependencies(stream rclcpp std_msgs gstreamer OpenCV)
+ament_target_dependencies(stream rclcpp std_msgs OpenCV)
 
 install(
   DIRECTORY launch
