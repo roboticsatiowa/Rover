@@ -3,6 +3,7 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.actions import SetParameter
 
 
 def generate_launch_description():
@@ -13,21 +14,18 @@ def generate_launch_description():
         IncludeLaunchDescription(
             AnyLaunchDescriptionSource(
                     PathJoinSubstitution(
-                    [
-                        FindPackageShare("realsense2_camera"),
-                        "launch/rs_launch.py",
-                    ]
+                        [
+                            FindPackageShare("realsense2_camera"),
+                            "launch/rs_launch.py",
+                        ]
 
                 )
             ),
             launch_arguments={
+                "initial_reset": "true",
                 "depth_module.depth_profile": "640x480x30",
-                "pointcloud.enable": "true",
-                "unite_imu_method": "2",
-                "tf_publish_rate": "5.0",
-                "enable_gyro": "true",
-                "enable_accel": "true",
-                "enable_infra1": "true",
+                "enable_pointcloud": "true",
+                
             }.items(),
         )
     )
