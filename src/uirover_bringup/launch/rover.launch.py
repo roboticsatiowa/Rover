@@ -12,6 +12,13 @@ from time import strftime
 def generate_launch_description():
     launch_description_list = []
 
+    common_params = {
+        "rover_host": "192.168.1.2",
+        "rover_hostname": "uirover",
+        "basestation_host": "192.168.1.3",
+        "basestation_hostname": "uibasestation",
+    }
+
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
     if os.path.exists("/dev/Arducam"):
@@ -23,7 +30,7 @@ def generate_launch_description():
                 Node(
                     package="uirover_arducam",
                     executable="arducam_video",
-                    parameters=[{"cam_index": i}],
+                    parameters=[{"cam_index": i}, common_params],
                     respawn=True,
                     respawn_delay=10,
                 )
