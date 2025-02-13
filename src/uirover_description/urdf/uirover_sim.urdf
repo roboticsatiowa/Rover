@@ -36,57 +36,47 @@
   </gazebo>
   <!-- BASE LINK -->
   <link name="base_link"/>
+  <!-- CHASSIS -->
   <link name="chassis">
     <visual>
+      <origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 0.21 0.0"/>
       <geometry>
-        <box size="0.45 0.45 0.3"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/chassis.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
-    <collision>
-      <geometry>
-        <box size="0.45 0.45 0.3"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="5"/>
-      <inertia ixx="0.12187499999999998" ixy="0.0" ixz="0.0" iyy="0.12187499999999998" iyz="0.0" izz="0.16874999999999998"/>
-    </inertial>
   </link>
-  <inertial>
-    <mass value="5"/>
-    <inertia ixx="0.12187499999999998" ixy="0.0" ixz="0.0" iyy="0.12187499999999998" iyz="0.0" izz="0.16874999999999998"/>
-  </inertial>
   <joint name="chassis_joint" type="fixed">
     <parent link="base_link"/>
     <child link="chassis"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
-  <link name="arm_platform">
+  <!--L SUSPENSIONS-->
+  <link name="l_suspension">
     <visual>
+      <origin rpy="1.5707963267948966 0.0 0.0" xyz="-0.085 -0.02 -0.06"/>
       <geometry>
-        <box size="0.3 0.45 0.05"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
-    <collision>
-      <geometry>
-        <box size="0.3 0.45 0.05"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="3"/>
-      <inertia ixx="0.051250000000000004" ixy="0.0" ixz="0.0" iyy="0.023125" iyz="0.0" izz="0.073125"/>
-    </inertial>
   </link>
-  <joint name="arm_platform_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="arm_platform"/>
-    <origin rpy="0 0 0" xyz="0.375 0 -0.125"/>
+  <joint name="l_suspension" type="fixed">
+    <parent link="chassis"/>
+    <child link="l_suspension"/>
+    <origin rpy="0 0 0" xyz="0.35 0.28 0.1"/>
+  </joint>
+  <!--R SUSPENSIONS-->
+  <link name="r_suspension">
+    <visual>
+      <origin rpy="1.5707963267948966 0.0 0.0" xyz="-0.085 -0.02 -0.06"/>
+      <geometry>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="r_suspension" type="fixed">
+    <parent link="chassis"/>
+    <child link="r_suspension"/>
+    <origin rpy="0 0 0" xyz="0.35 -0.28 0.1"/>
   </joint>
   <link name="fl_swivel">
     <visual>

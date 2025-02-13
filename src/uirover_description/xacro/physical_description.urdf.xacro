@@ -8,20 +8,48 @@
   <link name="base_link" />
 
   <!-- CHASSIS -->
-  <xacro:box name="chassis" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}" mass="${5}" />
-  <xacro:box_inertia_tensor mass="${chassis_mass}" len_x="${chassis_length}" len_y="${chassis_width}" len_z="${chassis_height}" />
+  <link name="chassis">
+  <visual>
+    <origin xyz="0.0 0.21 0.0" rpy="${pi/2} 0.0 0.0"/>
+    <geometry>
+      <mesh filename="file://$(find uirover_description)/dae/chassis.dae"/>
+    </geometry>
+  </visual>
+  </link>
   <joint name="chassis_joint" type="fixed">
     <parent link="base_link" />
     <child link="chassis" />
     <origin xyz="0 0 0" rpy="0 0 0" />
   </joint>
 
-  <!-- ARM PLATFORM -->
-  <xacro:box name="arm_platform" x="${arm_platform_length}" y="${arm_platform_width}" z="${arm_platform_height}" mass="${3}" />
-  <joint name="arm_platform_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="arm_platform" />
-    <origin xyz="${chassis_length/2 + arm_platform_length/2} 0 ${-chassis_height/2 + arm_platform_height/2}" rpy="0 0 0" />
+  <!--L SUSPENSIONS-->
+  <link name="l_suspension">
+    <visual>
+    <origin xyz="-0.085 -0.02 -0.06" rpy="${pi/2} 0.0 0.0"/>
+    <geometry>
+      <mesh filename="file://$(find uirover_description)/dae/suspension.dae"/>
+    </geometry>
+  </visual>
+  </link>
+  <joint name="l_suspension" type="fixed">
+    <parent link="chassis" />
+    <child link="l_suspension" />
+    <origin xyz="0.35 0.28 0.1" rpy="0 0 0" />
+  </joint>
+
+  <!--R SUSPENSIONS-->
+  <link name="r_suspension">
+    <visual>
+    <origin xyz="-0.085 -0.02 -0.06" rpy="${pi/2} 0.0 0.0"/>
+    <geometry>
+      <mesh filename="file://$(find uirover_description)/dae/suspension.dae"/>
+    </geometry>
+  </visual>
+  </link>
+  <joint name="r_suspension" type="fixed">
+    <parent link="chassis" />
+    <child link="r_suspension" />
+    <origin xyz="0.35 -0.28 0.1" rpy="0 0 0" />
   </joint>
 
   <!-- SWIVEL JOINTS -->
