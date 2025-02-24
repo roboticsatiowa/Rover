@@ -25,7 +25,7 @@ function print_stderr_logs () {
 rm -f "${WS_DIR}"/src/uirover_description/urdf/*.urdf
 
 # desktop_notification- console_stderr- disable annoying features of colcon
-(cd $WS_DIR && colcon build --symlink-install --event-handlers desktop_notification- console_stderr- || print_stderr_logs)
+(cd $WS_DIR && colcon build --parallel-workers 0 --symlink-install --event-handlers desktop_notification- console_stderr- || print_stderr_logs)
 
 
 # Ideally we would automatically source the setup.bash file after building, but this is causing bash tab completion to completetly crash gnome-terminal.

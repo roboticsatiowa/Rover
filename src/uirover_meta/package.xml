@@ -8,6 +8,7 @@
   <license>GPL-3.0-only</license>
 
   <depend>uirover_bringup</depend>
+  <depend>uirover_controllers</depend>
   <depend>uirover_description</depend>
   <depend>uirover_gazebo</depend>
   <depend>uirover_hardware</depend>
