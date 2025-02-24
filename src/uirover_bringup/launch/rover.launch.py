@@ -12,6 +12,13 @@ from time import strftime
 def generate_launch_description():
     launch_description_list = []
 
+    common_params = {
+        "rover_host": "192.168.1.2",
+        "rover_hostname": "uirover",
+        "basestation_host": "192.168.1.3",
+        "basestation_hostname": "uibasestation",
+    }
+
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
     if os.path.exists("/dev/Arducam"):
@@ -23,7 +30,7 @@ def generate_launch_description():
                 Node(
                     package="uirover_arducam",
                     executable="arducam_video",
-                    parameters=[{"cam_index": i}],
+                    parameters=[{"cam_index": i}, common_params],
                     respawn=True,
                     respawn_delay=10,
                 )
@@ -51,6 +58,33 @@ def generate_launch_description():
             executable="uirover_hardware",
             respawn=True,
             respawn_delay=2,
+        )
+    )
+
+    # https://github.com/introlab/rtabmap_ros/blob/ros2/rtabmap_examples/launch/realsense_d435i_stereo.launch.py
+    # Realsense Camera
+    launch_description_list.append(
+        IncludeLaunchDescription(
+            AnyLaunchDescriptionSource(
+                    PathJoinSubstitution(
+                    [
+                        FindPackageShare("realsense2_camera"),
+                        "launch/rs_launch.py",
+                    ]
+
+                )
+            ),
+            launch_arguments={
+                "camera_namespace": "uirover",
+                "camera_name": "D435i_realsense_camera",
+                "depth_module.depth_profile": "640x480x30",
+                "pointcloud.enable": "true",
+                "unite_imu_method": "2",
+                "tf_publish_rate": "5.0",
+                "enable_gyro": "true",
+                "enable_accel": "true",
+                "enable_infra1": "true",
+            }.items(),
         )
     )
 

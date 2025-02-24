@@ -12,6 +12,9 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/aruco.hpp>
 
+// https://trepo.tuni.fi/bitstream/handle/10024/149126/VechtomovVladimir.pdf?sequence=2
+// Very useful paper about optimization of H264 parameters for low latency streaming
+
 using namespace std::chrono_literals;
 
 class GStreamerNode : public rclcpp::Node {
@@ -42,18 +45,16 @@ public:
 
 
 
-        this->declare_parameter("port", "5000", param_desc_port);
+        this->declare_parameter("port", 5000, param_desc_port);
         this->declare_parameter("host", "0.0.0.0", param_desc_host);
         this->declare_parameter("device", "/dev/video0", param_desc_device);
-        // this->declare_parameter("framerate", "30", param_desc_framerate); // TODO unimplemented
-        // this->declare_parameter("width", "1920", param_desc_width); // TODO unimplemented
-        // this->declare_parameter("height", "1080", param_desc_height); // TODO unimplemented
+        this->declare_parameter("framerate", 30.0, param_desc_framerate); // TODO unimplemented
+        this->declare_parameter("width", 1920, param_desc_width); // TODO unimplemented
+        this->declare_parameter("height", 1080, param_desc_height); // TODO unimplemented
         this->declare_parameter("bitrate", 2048, param_desc_bitrate);
         this->declare_parameter("publish_topic", false, param_desc_publish_topic); // TODO unimplemented
         this->declare_parameter("publish_topic_name", "camera_stream", param_desc_publish_topic_name); // TODO unimplemented
         this->declare_parameter("dictionary", "DICT_4X4_100", param_desc_dictionary);
-
-        set_aruco_dict(this->get_parameter("dictionary").as_string());
 
         start_stream();
 
@@ -66,7 +67,6 @@ public:
 
             RCLCPP_INFO(this->get_logger(), "Restarting camera stream.");
             end_stream();
-            set_aruco_dict(this->get_parameter("dictionary").as_string());
             start_stream();
         };
         param_subscriber = std::make_shared<rclcpp::ParameterEventHandler>(this);
@@ -85,27 +85,36 @@ public:
 
     void start_stream() {
 
-        cap = cv::VideoCapture("v4l2src device="
-            + this->get_parameter("device").as_string()
-            + " ! jpegdec ! queue ! videoconvert ! appsink");
+        std::string dictionary = this->get_parameter("dictionary").as_string();
+        std::string device = this->get_parameter("device").as_string();
+        std::string host = this->get_parameter("host").as_string();
+        int bitrate = this->get_parameter("bitrate").as_int();
+        int port = this->get_parameter("port").as_int();
+        double framerate = this->get_parameter("framerate").as_double();
+        int width = this->get_parameter("width").as_int();
+        int height = this->get_parameter("height").as_int();
 
+        set_aruco_dict(dictionary);
+
+        std::string pipeline_video_capture = "v4l2src device="
+            + device
+            + " ! jpegdec ! videoconvert ! appsink drop=1";
+
+        std::string pipeline_video_writer = "appsrc ! videoconvert ! x264enc tune=zerolatency key-int-max=15 insert-vui=1 speed-preset=veryfast bitrate="
+            + std::to_string(bitrate)
+            + " ! video/x-h264,profile=main ! rtph264pay pt=96 config-interval=-1 ! udpsink host="
+            + host
+            + " port="
+            + std::to_string(port);
+
+        cap = cv::VideoCapture(pipeline_video_capture);
 
         if (!cap.isOpened()) {
             RCLCPP_ERROR(this->get_logger(), "Failed to open camera.");
             return;
         }
 
-
-        // FPS set to 31 despite the video streams FPS being 30. When the FPS matches exactly, the latency gets progressively 
-        // worse because of a very slight mismatch. Keeping the senders framerate slightly higher than the reciever ensures
-        // that it wont fall behind and induce latency. This is a pretty hacky solution but it works.
-        writer = cv::VideoWriter(
-            "appsrc ! videoconvert ! x264enc tune=zerolatency key-int-max=15 bitrate="
-            + this->get_parameter("bitrate").value_to_string()
-            + " ! video/x-h264,profile=main ! rtph264pay pt=96 config-interval=-1 ! udpsink host="
-            + this->get_parameter("host").as_string()
-            + " port="
-            + this->get_parameter("port").as_string(), 0, 31.0, cv::Size(1920, 1080), true);
+        writer = cv::VideoWriter(pipeline_video_writer, 0, framerate, cv::Size(width, height), true);
 
         if (!writer.isOpened()) {
             RCLCPP_ERROR(this->get_logger(), "Failed to open writer.");
