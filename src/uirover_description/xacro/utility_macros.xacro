@@ -42,15 +42,18 @@
   </xacro:macro>
 
   <!-- WHEEL -->
-  <xacro:macro name="wheel" params="name x y z parent">
+  <xacro:macro name="wheel" params="name x y z parent side:=^|left">
     <link name="${name}">
       <visual>
+        <xacro:if value="${side == 'left'}">
+          <origin xyz="0 0 -0.08" rpy="0 ${pi/2} 0" />
+        </xacro:if>
+        <xacro:if value="${side == 'right'}">
+          <origin xyz="0 0 0.08" rpy="0 ${-pi/2} 0" />
+        </xacro:if>
         <geometry>
-          <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+          <mesh filename="file://$(find uirover_description)/dae/wheel.dae"/>
         </geometry>
-        <material name="Grey">
-          <color rgba="0.7 0.7 0.7 1.0" />
-        </material>
       </visual>
       <collision>
         <geometry>
@@ -65,33 +68,6 @@
       <child link="${name}" />
       <origin xyz="${x} ${y} ${z}" rpy="${-pi/2} 0 0" />
       <axis xyz="0 0 1" />
-    </joint>
-  </xacro:macro>
-
-  <!-- WHEEL SWIVELS -->
-  <xacro:macro name="wheel_swivel" params="name x y z">
-    <link name="${name}">
-      <visual>
-        <geometry>
-          <sphere radius="0.05" />
-        </geometry>
-        <material name="Grey">
-          <color rgba="0.7 0.7 0.7 1.0" />
-        </material>
-      </visual>
-      <collision>
-        <geometry>
-          <sphere radius="0.05" />
-        </geometry>
-      </collision>
-      <xacro:box_inertia_tensor mass="0.1" len_x="0.1" len_y="0.1" len_z="0.1" />
-    </link>
-    <joint name="${name}_joint" type="revolute">
-      <parent link="base_link" />
-      <child link="${name}" />
-      <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
-      <axis xyz="0 0 1" />
-      <limit lower="${-pi/2}" upper="${pi/2}" effort="10" velocity="1" />
     </joint>
   </xacro:macro>
 

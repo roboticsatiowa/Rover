@@ -52,19 +52,13 @@
     <origin xyz="0.35 -0.28 0.1" rpy="0 0 0" />
   </joint>
 
-  <!-- SWIVEL JOINTS -->
-  <xacro:wheel_swivel name="fl_swivel" x="${chassis_length/2.5+wheel_spacing}" y="${wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
-  <xacro:wheel_swivel name="fr_swivel" x="${chassis_length/2.5+wheel_spacing}" y="${-wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
-  <xacro:wheel_swivel name="bl_swivel" x="${chassis_length/2.5-wheel_spacing}" y="${wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
-  <xacro:wheel_swivel name="br_swivel" x="${chassis_length/2.5-wheel_spacing}" y="${-wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" />
-
   <!-- WHEELS -->
-  <xacro:wheel name="fl_wheel" x="0" y="0" z ="0" parent="fl_swivel" />
-  <xacro:wheel name="fr_wheel" x="0" y="0" z ="0" parent="fr_swivel" />
-  <xacro:wheel name="ml_wheel" x="${chassis_length/2.5}" y="${wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" parent="chassis" />
-  <xacro:wheel name="mr_wheel" x="${chassis_length/2.5}" y="${-wheel_distance_side}" z="${-suspension_height-(chassis_height/2)}" parent="chassis"/>
-  <xacro:wheel name="bl_wheel" x="0" y="0" z ="0" parent="bl_swivel" />
-  <xacro:wheel name="br_wheel" x="0" y="0" z ="0" parent="br_swivel" />
+  <xacro:wheel name="fl_wheel" x="0.436"  y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
+  <xacro:wheel name="fr_wheel" x="0.436"  y="-0.1" z="-0.342" parent="r_suspension" side="right"/>
+  <xacro:wheel name="ml_wheel" x="0.016"  y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
+  <xacro:wheel name="mr_wheel" x="0.016"  y="-0.1" z="-0.342" parent="r_suspension" side="right"/>
+  <xacro:wheel name="bl_wheel" x="-0.434" y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
+  <xacro:wheel name="br_wheel" x="-0.434" y="-0.1" z="-0.342" parent="r_suspension" side="right"/>
 
   <!-- Robot Footprint -->
   <!-- This is needed for nav libraries. Its the 2D top-down profile of the robot. Makes for simpler collision detection. -->
