@@ -10,7 +10,7 @@
   <!-- CHASSIS -->
   <link name="chassis">
   <visual>
-    <origin xyz="0.0 0.21 0.0" rpy="${pi/2} 0.0 0.0"/>
+    <origin xyz="0.0 0.203 0.0" rpy="${pi/2} 0.0 0.0"/>
     <geometry>
       <mesh filename="file://$(find uirover_description)/dae/chassis.dae"/>
     </geometry>
@@ -25,7 +25,7 @@
   <!--L SUSPENSIONS-->
   <link name="l_suspension">
     <visual>
-    <origin xyz="-0.085 -0.02 -0.06" rpy="${pi/2} 0.0 0.0"/>
+      <origin xyz="0.085 0.02 -0.06" rpy="${pi/2} 0.0 ${pi}"/>
     <geometry>
       <mesh filename="file://$(find uirover_description)/dae/suspension.dae"/>
     </geometry>
@@ -40,7 +40,7 @@
   <!--R SUSPENSIONS-->
   <link name="r_suspension">
     <visual>
-    <origin xyz="-0.085 -0.02 -0.06" rpy="${pi/2} 0.0 0.0"/>
+      <origin xyz="0.085 0.02 -0.06" rpy="${pi/2} 0.0 ${pi}"/>
     <geometry>
       <mesh filename="file://$(find uirover_description)/dae/suspension.dae"/>
     </geometry>
