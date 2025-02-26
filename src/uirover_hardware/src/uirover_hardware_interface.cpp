@@ -14,93 +14,125 @@
 
 #include <limits>
 #include <vector>
+#include <unistd.h>
+#include <fcntl.h>
+#include <termios.h>
 
 #include "uirover_hardware/uirover_hardware_interface.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace uirover_hardware
-{
-hardware_interface::CallbackReturn UiroverHardwareInterface::on_init(
-  const hardware_interface::HardwareInfo & info)
-{
-  if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS)
-  {
-    return CallbackReturn::ERROR;
+namespace uirover_hardware {
+
+  hardware_interface::CallbackReturn UiroverHardwareInterface::on_init(const hardware_interface::HardwareInfo& info) {
+
+    if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS) {
+      return CallbackReturn::ERROR;
+    }
+
+    // TODO(anyone): read parameters and initialize the hardware
+    hw_states_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
+    hw_commands_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
+
+    return CallbackReturn::SUCCESS;
   }
 
-  // TODO(anyone): read parameters and initialize the hardware
-  hw_states_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
-  hw_commands_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
+  hardware_interface::CallbackReturn UiroverHardwareInterface::on_configure(
+    const rclcpp_lifecycle::State& /*previous_state*/) {
 
-  return CallbackReturn::SUCCESS;
-}
+    // https://blog.mbedded.ninja/programming/operating-systems/linux/linux-serial-ports-using-c-cpp/
+    // open the serial port
+    teensy_fd = open("/dev/ttyTEENSY", O_RDWR | O_NOCTTY | O_SYNC);
+    if (teensy_fd < 0) {
+      return CallbackReturn::ERROR;
+    }
 
-hardware_interface::CallbackReturn UiroverHardwareInterface::on_configure(
-  const rclcpp_lifecycle::State & /*previous_state*/)
-{
-  // TODO(anyone): prepare the robot to be ready for read calls and write calls of some interfaces
+    // Set up the serial port
+    if (tcgetattr(teensy_fd, &tty) != 0) {
+      return CallbackReturn::ERROR;
+    }
 
-  return CallbackReturn::SUCCESS;
-}
+    // Configure the serial port settings
+    tty.c_cflag &= ~PARENB;        // No parity
+    tty.c_cflag &= ~CSTOPB;        // 1 stop bit
+    tty.c_cflag &= ~CSIZE;         // Clear size mask. prep for setting number of data bits below
+    tty.c_cflag |= CS8;            // 8 data bits
+    tty.c_cflag &= ~CRTSCTS;       // No RTS and CTS pins (hardware flow control)
+    tty.c_cflag |= CREAD | CLOCAL; // Enable receiver, ignore modem control lines
+    tty.c_lflag &= ~ICANON;        // No canonical mode
+    tty.c_lflag &= ~ECHO;          // Disable echo
+    tty.c_lflag &= ~ECHOE;         // Disable erasure
+    tty.c_lflag &= ~ECHONL;        // Disable new-line echo
+    tty.c_lflag &= ~ISIG;          // Disable signals
+    tty.c_iflag &= ~(IXON | IXOFF | IXANY);  // Turn off s/w flow ctrl   
+    tty.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL); // Disable any special handling of received bytes
+    tty.c_oflag &= ~OPOST;         // Prevent special interpretation of output bytes (e.g. newline chars)
+    tty.c_oflag &= ~ONLCR;         // Prevent conversion of newline to carriage return/line feed
 
-std::vector<hardware_interface::StateInterface> UiroverHardwareInterface::export_state_interfaces()
-{
-  std::vector<hardware_interface::StateInterface> state_interfaces;
-  for (size_t i = 0; i < info_.joints.size(); ++i)
-  {
-    state_interfaces.emplace_back(hardware_interface::StateInterface(
-      // TODO(anyone): insert correct interfaces
-      info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_states_[i]));
+    // read op will block for 0.01 seconds if no data is available. Timeout was chosen completely arbitrarily.
+    tty.c_cc[VMIN] = 0;     // No minimum number of bytes to read
+    tty.c_cc[VTIME] = 0.1;  // 0.1 deciseconds (0.01 seconds) timeout for read
+
+    // Set the baud rate
+    cfsetspeed(&tty, baudrate); 
+
+    // Save tty settings, also checking for error
+    if (tcsetattr(teensy_fd, TCSANOW, &tty) != 0) {
+      return CallbackReturn::ERROR;
+    }
+
+    return CallbackReturn::SUCCESS;
   }
 
-  return state_interfaces;
-}
+  std::vector<hardware_interface::StateInterface> UiroverHardwareInterface::export_state_interfaces() {
+    std::vector<hardware_interface::StateInterface> state_interfaces;
+    for (size_t i = 0; i < info_.joints.size(); ++i) {
+      state_interfaces.emplace_back(hardware_interface::StateInterface(
+        // TODO(anyone): insert correct interfaces
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_states_[i]));
+    }
 
-std::vector<hardware_interface::CommandInterface> UiroverHardwareInterface::export_command_interfaces()
-{
-  std::vector<hardware_interface::CommandInterface> command_interfaces;
-  for (size_t i = 0; i < info_.joints.size(); ++i)
-  {
-    command_interfaces.emplace_back(hardware_interface::CommandInterface(
-      // TODO(anyone): insert correct interfaces
-      info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_commands_[i]));
+    return state_interfaces;
   }
 
-  return command_interfaces;
-}
+  std::vector<hardware_interface::CommandInterface> UiroverHardwareInterface::export_command_interfaces() {
+    std::vector<hardware_interface::CommandInterface> command_interfaces;
+    for (size_t i = 0; i < info_.joints.size(); ++i) {
+      command_interfaces.emplace_back(hardware_interface::CommandInterface(
+        // TODO(anyone): insert correct interfaces
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_commands_[i]));
+    }
 
-hardware_interface::CallbackReturn UiroverHardwareInterface::on_activate(
-  const rclcpp_lifecycle::State & /*previous_state*/)
-{
-  // TODO(anyone): prepare the robot to receive commands
+    return command_interfaces;
+  }
 
-  return CallbackReturn::SUCCESS;
-}
+  hardware_interface::CallbackReturn UiroverHardwareInterface::on_activate(
+    const rclcpp_lifecycle::State& /*previous_state*/) {
+    // TODO(anyone): prepare the robot to receive commands
 
-hardware_interface::CallbackReturn UiroverHardwareInterface::on_deactivate(
-  const rclcpp_lifecycle::State & /*previous_state*/)
-{
-  // TODO(anyone): prepare the robot to stop receiving commands
+    return CallbackReturn::SUCCESS;
+  }
 
-  return CallbackReturn::SUCCESS;
-}
+  hardware_interface::CallbackReturn UiroverHardwareInterface::on_deactivate(
+    const rclcpp_lifecycle::State& /*previous_state*/) {
+    // TODO(anyone): prepare the robot to stop receiving commands
 
-hardware_interface::return_type UiroverHardwareInterface::read(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
-{
-  // TODO(anyone): read robot states
+    return CallbackReturn::SUCCESS;
+  }
 
-  return hardware_interface::return_type::OK;
-}
+  hardware_interface::return_type UiroverHardwareInterface::read(
+    const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
+    // TODO(anyone): read robot states
 
-hardware_interface::return_type UiroverHardwareInterface::write(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
-{
-  // TODO(anyone): write robot's commands'
+    return hardware_interface::return_type::OK;
+  }
 
-  return hardware_interface::return_type::OK;
-}
+  hardware_interface::return_type UiroverHardwareInterface::write(
+    const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
+    // TODO(anyone): write robot's commands'
+
+    return hardware_interface::return_type::OK;
+  }
 
 }  // namespace uirover_hardware
 
