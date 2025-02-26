@@ -1,23 +1,27 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 78
+    Help Height: 0
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /RobotModel1
         - /RobotModel1/Mass Properties1
-        - /TF1
       Splitter Ratio: 0.5
-    Tree Height: 479
+    Tree Height: 474
   - Class: rviz_common/Displays
-    Help Height: 70
+    Help Height: 0
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /Grid1
+        - /RobotModel1
+        - /RobotModel1/Mass Properties1
       Splitter Ratio: 0.5
-    Tree Height: 149
+    Tree Height: 846
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
 Visualization Manager:
   Class: ""
   Displays:
@@ -39,7 +43,7 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 0.6000000238418579
+    - Alpha: 1
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: true
       Description File: ""
@@ -57,11 +61,6 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        arm_platform:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         base_footprint:
           Alpha: 1
           Show Axes: false
@@ -74,6 +73,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         bl_wheel:
           Alpha: 1
           Show Axes: false
@@ -83,6 +83,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         br_wheel:
           Alpha: 1
           Show Axes: false
@@ -93,10 +94,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        demo_camera:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         fl_swivel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         fl_wheel:
           Alpha: 1
           Show Axes: false
@@ -106,7 +113,13 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         fr_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_suspension:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -117,6 +130,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         mr_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_suspension:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -136,8 +154,6 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        arm_platform:
-          Value: true
         base_footprint:
           Value: true
         base_link:
@@ -152,6 +168,8 @@ Visualization Manager:
           Value: true
         chassis:
           Value: true
+        demo_camera:
+          Value: true
         fl_swivel:
           Value: true
         fl_wheel:
@@ -160,9 +178,13 @@ Visualization Manager:
           Value: true
         fr_wheel:
           Value: true
+        l_suspension:
+          Value: true
         ml_wheel:
           Value: true
         mr_wheel:
+          Value: true
+        r_suspension:
           Value: true
       Marker Scale: 0.30000001192092896
       Name: TF
@@ -171,8 +193,6 @@ Visualization Manager:
       Show Names: true
       Tree:
         base_link:
-          arm_platform:
-            {}
           base_footprint:
             {}
           bl_swivel:
@@ -182,10 +202,16 @@ Visualization Manager:
             br_wheel:
               {}
           chassis:
+            l_suspension:
+              {}
             ml_wheel:
               {}
             mr_wheel:
               {}
+            r_suspension:
+              {}
+          demo_camera:
+            {}
           fl_swivel:
             fl_wheel:
               {}
@@ -215,25 +241,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.957821011543274
+      Distance: 3.7342255115509033
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.2743585407733917
+        Y: 0.29737770557403564
+        Z: 0.009048408828675747
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6697960495948792
+      Pitch: 0.47979736328125
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
-      Yaw: 1.0772192478179932
+      Value: Orbit (rviz_default_plugins)
+      Yaw: 5.118170738220215
     Saved: ~
 Window Geometry:
   Displays:
@@ -241,7 +267,9 @@ Window Geometry:
   Height: 1004
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000001560000038efc0200000002fb000000100044006900730070006c006100790073010000003f0000026d000000cc00fffffffb000000100044006900730070006c00610079007301000002b20000011b000000cc00ffffff000006180000038e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
-  Width: 1908
+  QMainWindow State: 000000ff00000000fd0000000200000000000001560000038efc0200000002fb000000100044006900730070006c006100790073010000003f0000021a000000cc00fffffffb0000000a00560069006500770073010000025f0000016e000000a900ffffff00000001000001560000038efc0200000001fb000000100044006900730070006c006100790073010000003f0000038e000000cc00ffffff000004c80000038e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: false
+  Width: 1920
   X: 0
   Y: 40
