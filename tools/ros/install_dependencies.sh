@@ -23,7 +23,7 @@ rosdep install --from-paths "${WS_DIR}/src" --ignore-src -y
 sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds
 
 # PlatformIO
-if ! command -v platformio 2>&1 > /dev/null;  then
+if ! command -v platformio > /dev/null;  then
     curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
     python3 get-platformio.py
     rm -f get-platformio.py
@@ -42,3 +42,4 @@ echo
 echo
 echo "Success"
 echo "Please restart your terminal or run 'source ~/.bashrc' to apply changes"
+
