@@ -20,7 +20,16 @@ rosdep install --from-paths "${WS_DIR}/src" --ignore-src -y
 
 
 # other dependencies
-sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds
+sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds platformio
+
+# PlatformIO
+if ! command -v platformio 2>&1 > /dev/null;  then
+    curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
+    python3 get-platformio.py
+    rm -f get-platformio.py
+    grep -q "export PATH=$HOME/.platformio/penv/bin:\$PATH" ~/.bashrc || echo "export PATH=$HOME/.platformio/penv/bin:\$PATH" >> ~/.bashrc
+    curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/system/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
+fi
 
 # Foxglove Studio
 if [ ! -f /usr/bin/foxglove-studio ]; then
@@ -28,3 +37,8 @@ if [ ! -f /usr/bin/foxglove-studio ]; then
     sudo apt install -y ./foxglove-studio-latest-linux-amd64.deb
     rm -f ./foxglove-studio-latest-linux-amd64.deb
 fi
+
+echo
+echo
+echo "Success"
+echo "Please restart your terminal or run 'source ~/.bashrc' to apply changes"
