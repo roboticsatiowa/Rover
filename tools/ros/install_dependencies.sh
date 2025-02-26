@@ -20,7 +20,7 @@ rosdep install --from-paths "${WS_DIR}/src" --ignore-src -y
 
 
 # other dependencies
-sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds platformio
+sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds
 
 # PlatformIO
 if ! command -v platformio 2>&1 > /dev/null;  then
