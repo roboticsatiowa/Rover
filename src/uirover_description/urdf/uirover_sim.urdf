@@ -59,7 +59,7 @@
       </geometry>
     </visual>
   </link>
-  <joint name="l_suspension" type="fixed">
+  <joint name="l_suspension_joint" type="fixed">
     <parent link="chassis"/>
     <child link="l_suspension"/>
     <origin rpy="0 0 0" xyz="0.35 0.28 0.1"/>
@@ -73,7 +73,7 @@
       </geometry>
     </visual>
   </link>
-  <joint name="r_suspension" type="fixed">
+  <joint name="r_suspension_joint" type="fixed">
     <parent link="chassis"/>
     <child link="r_suspension"/>
     <origin rpy="0 0 0" xyz="0.35 -0.28 0.1"/>
