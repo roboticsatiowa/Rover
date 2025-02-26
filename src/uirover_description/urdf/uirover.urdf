@@ -6,170 +6,54 @@
 <robot name="uirover">
   <!-- BASE LINK -->
   <link name="base_link"/>
+  <!-- CHASSIS -->
   <link name="chassis">
     <visual>
+      <origin rpy="1.5707963267948966 0.0 0.0" xyz="0.0 0.203 0.0"/>
       <geometry>
-        <box size="0.45 0.45 0.3"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/chassis.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
-    <collision>
-      <geometry>
-        <box size="0.45 0.45 0.3"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="5"/>
-      <inertia ixx="0.12187499999999998" ixy="0.0" ixz="0.0" iyy="0.12187499999999998" iyz="0.0" izz="0.16874999999999998"/>
-    </inertial>
   </link>
-  <inertial>
-    <mass value="5"/>
-    <inertia ixx="0.12187499999999998" ixy="0.0" ixz="0.0" iyy="0.12187499999999998" iyz="0.0" izz="0.16874999999999998"/>
-  </inertial>
   <joint name="chassis_joint" type="fixed">
     <parent link="base_link"/>
     <child link="chassis"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
-  <link name="arm_platform">
+  <!--L SUSPENSIONS-->
+  <link name="l_suspension">
     <visual>
+      <origin rpy="1.5707963267948966 0.0 3.141592653589793" xyz="0.085 0.02 -0.06"/>
       <geometry>
-        <box size="0.3 0.45 0.05"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
-    <collision>
-      <geometry>
-        <box size="0.3 0.45 0.05"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="3"/>
-      <inertia ixx="0.051250000000000004" ixy="0.0" ixz="0.0" iyy="0.023125" iyz="0.0" izz="0.073125"/>
-    </inertial>
   </link>
-  <joint name="arm_platform_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="arm_platform"/>
-    <origin rpy="0 0 0" xyz="0.375 0 -0.125"/>
+  <joint name="l_suspension_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="l_suspension"/>
+    <origin rpy="0 0 0" xyz="0.35 0.28 0.1"/>
   </joint>
-  <link name="fl_swivel">
+  <!--R SUSPENSIONS-->
+  <link name="r_suspension">
     <visual>
+      <origin rpy="1.5707963267948966 0.0 3.141592653589793" xyz="0.085 0.02 -0.06"/>
       <geometry>
-        <sphere radius="0.05"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
-    <collision>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.1"/>
-      <inertia ixx="0.0001666666666666667" ixy="0.0" ixz="0.0" iyy="0.0001666666666666667" iyz="0.0" izz="0.0001666666666666667"/>
-    </inertial>
   </link>
-  <joint name="fl_swivel_joint" type="revolute">
-    <parent link="base_link"/>
-    <child link="fl_swivel"/>
-    <origin rpy="0 0 0" xyz="0.5800000000000001 0.4 -0.35"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="10" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="1"/>
-  </joint>
-  <link name="fr_swivel">
-    <visual>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.1"/>
-      <inertia ixx="0.0001666666666666667" ixy="0.0" ixz="0.0" iyy="0.0001666666666666667" iyz="0.0" izz="0.0001666666666666667"/>
-    </inertial>
-  </link>
-  <joint name="fr_swivel_joint" type="revolute">
-    <parent link="base_link"/>
-    <child link="fr_swivel"/>
-    <origin rpy="0 0 0" xyz="0.5800000000000001 -0.4 -0.35"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="10" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="1"/>
-  </joint>
-  <link name="bl_swivel">
-    <visual>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.1"/>
-      <inertia ixx="0.0001666666666666667" ixy="0.0" ixz="0.0" iyy="0.0001666666666666667" iyz="0.0" izz="0.0001666666666666667"/>
-    </inertial>
-  </link>
-  <joint name="bl_swivel_joint" type="revolute">
-    <parent link="base_link"/>
-    <child link="bl_swivel"/>
-    <origin rpy="0 0 0" xyz="-0.22000000000000003 0.4 -0.35"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="10" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="1"/>
-  </joint>
-  <link name="br_swivel">
-    <visual>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.1"/>
-      <inertia ixx="0.0001666666666666667" ixy="0.0" ixz="0.0" iyy="0.0001666666666666667" iyz="0.0" izz="0.0001666666666666667"/>
-    </inertial>
-  </link>
-  <joint name="br_swivel_joint" type="revolute">
-    <parent link="base_link"/>
-    <child link="br_swivel"/>
-    <origin rpy="0 0 0" xyz="-0.22000000000000003 -0.4 -0.35"/>
-    <axis xyz="0 0 1"/>
-    <limit effort="10" lower="-1.5707963267948966" upper="1.5707963267948966" velocity="1"/>
+  <joint name="r_suspension_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="r_suspension"/>
+    <origin rpy="0 0 0" xyz="0.35 -0.28 0.1"/>
   </joint>
   <link name="fl_wheel">
     <visual>
+      <origin rpy="0 1.5707963267948966 0" xyz="0 0 -0.08"/>
       <geometry>
-        <cylinder length="0.1" radius="0.114"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/wheel.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -182,19 +66,17 @@
     </inertial>
   </link>
   <joint name="fl_wheel_joint" type="continuous">
-    <parent link="fl_swivel"/>
+    <parent link="l_suspension"/>
     <child link="fl_wheel"/>
-    <origin rpy="-1.5707963267948966 0 0" xyz="0 0 0"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="0.436 0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>
   <link name="fr_wheel">
     <visual>
+      <origin rpy="0 -1.5707963267948966 0" xyz="0 0 0.08"/>
       <geometry>
-        <cylinder length="0.1" radius="0.114"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/wheel.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -207,19 +89,17 @@
     </inertial>
   </link>
   <joint name="fr_wheel_joint" type="continuous">
-    <parent link="fr_swivel"/>
+    <parent link="r_suspension"/>
     <child link="fr_wheel"/>
-    <origin rpy="-1.5707963267948966 0 0" xyz="0 0 0"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="0.436 -0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>
   <link name="ml_wheel">
     <visual>
+      <origin rpy="0 1.5707963267948966 0" xyz="0 0 -0.08"/>
       <geometry>
-        <cylinder length="0.1" radius="0.114"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/wheel.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -232,19 +112,17 @@
     </inertial>
   </link>
   <joint name="ml_wheel_joint" type="continuous">
-    <parent link="chassis"/>
+    <parent link="l_suspension"/>
     <child link="ml_wheel"/>
-    <origin rpy="-1.5707963267948966 0 0" xyz="0.18 0.4 -0.35"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="0.016 0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>
   <link name="mr_wheel">
     <visual>
+      <origin rpy="0 -1.5707963267948966 0" xyz="0 0 0.08"/>
       <geometry>
-        <cylinder length="0.1" radius="0.114"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/wheel.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -257,19 +135,17 @@
     </inertial>
   </link>
   <joint name="mr_wheel_joint" type="continuous">
-    <parent link="chassis"/>
+    <parent link="r_suspension"/>
     <child link="mr_wheel"/>
-    <origin rpy="-1.5707963267948966 0 0" xyz="0.18 -0.4 -0.35"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="0.016 -0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>
   <link name="bl_wheel">
     <visual>
+      <origin rpy="0 1.5707963267948966 0" xyz="0 0 -0.08"/>
       <geometry>
-        <cylinder length="0.1" radius="0.114"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/wheel.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -282,19 +158,17 @@
     </inertial>
   </link>
   <joint name="bl_wheel_joint" type="continuous">
-    <parent link="bl_swivel"/>
+    <parent link="l_suspension"/>
     <child link="bl_wheel"/>
-    <origin rpy="-1.5707963267948966 0 0" xyz="0 0 0"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="-0.434 0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>
   <link name="br_wheel">
     <visual>
+      <origin rpy="0 -1.5707963267948966 0" xyz="0 0 0.08"/>
       <geometry>
-        <cylinder length="0.1" radius="0.114"/>
+        <mesh filename="file:///home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/wheel.dae"/>
       </geometry>
-      <material name="Grey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
     </visual>
     <collision>
       <geometry>
@@ -307,9 +181,9 @@
     </inertial>
   </link>
   <joint name="br_wheel_joint" type="continuous">
-    <parent link="br_swivel"/>
+    <parent link="r_suspension"/>
     <child link="br_wheel"/>
-    <origin rpy="-1.5707963267948966 0 0" xyz="0 0 0"/>
+    <origin rpy="-1.5707963267948966 0 0" xyz="-0.434 -0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>
   <!-- Robot Footprint -->
