@@ -4,7 +4,7 @@
   <xacro:include filename="$(find uirover_description)/xacro/utility_macros.xacro" />
   <xacro:include filename="$(find uirover_description)/xacro/properties.xacro" />
 
-  <!-- BASE LINK -->
+  <!-- BASE LINK -->  
   <link name="base_link" />
 
   <!-- CHASSIS -->
@@ -53,7 +53,7 @@
   </joint>
 
   <!-- WHEELS -->
-  <xacro:wheel name="fl_wheel" x="0.436"  y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
+  <xacro:wheel name=" " x="0.436"  y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
   <xacro:wheel name="fr_wheel" x="0.436"  y="-0.1" z="-0.342" parent="r_suspension" side="right"/>
   <xacro:wheel name="ml_wheel" x="0.016"  y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
   <xacro:wheel name="mr_wheel" x="0.016"  y="-0.1" z="-0.342" parent="r_suspension" side="right"/>

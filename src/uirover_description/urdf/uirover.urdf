@@ -48,7 +48,7 @@
     <child link="r_suspension"/>
     <origin rpy="0 0 0" xyz="0.35 -0.28 0.1"/>
   </joint>
-  <link name="fl_wheel">
+  <link name=" ">
     <visual>
       <origin rpy="0 1.5707963267948966 0" xyz="0 0 -0.08"/>
       <geometry>
@@ -65,9 +65,9 @@
       <inertia ixx="0.002041166666666667" ixy="0.0" ixz="0.0" iyy="0.002041166666666667" iyz="0.0" izz="0.003249"/>
     </inertial>
   </link>
-  <joint name="fl_wheel_joint" type="continuous">
+  <joint name=" _joint" type="continuous">
     <parent link="l_suspension"/>
-    <child link="fl_wheel"/>
+    <child link=" "/>
     <origin rpy="-1.5707963267948966 0 0" xyz="0.436 0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>

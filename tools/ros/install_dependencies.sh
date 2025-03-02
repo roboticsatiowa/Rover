@@ -22,6 +22,8 @@ rosdep install --from-paths "${WS_DIR}/src" --ignore-src -y
 # other dependencies
 sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds
 
+python3-
+
 # Foxglove Studio
 if [ ! -f /usr/bin/foxglove-studio ]; then
     wget https://get.foxglove.dev/desktop/latest/foxglove-studio-latest-linux-amd64.deb

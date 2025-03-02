@@ -4,11 +4,6 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="uirover">
-  <!-- <gazebo>
-        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-            <parameters>$(find ros2_control_demo_example_9)/config/rrbot_controllers.yaml</parameters>
-        </plugin>
-    </gazebo> -->
   <!-- should probably change the color at some point. or not. orange is cool -->
   <gazebo reference="br_wheel">
     <material>Gazebo/Orange</material>
@@ -28,11 +23,75 @@
   <gazebo reference="fl_wheel">
     <material>Gazebo/Orange</material>
   </gazebo>
+  <gazebo reference="r_suspension">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <gazebo reference="l_suspension">
+    <material>Gazebo/Orange</material>
+  </gazebo>
   <gazebo reference="chassis">
     <material>Gazebo/Orange</material>
   </gazebo>
   <gazebo reference="arm_platform">
     <material>Gazebo/Orange</material>
+  </gazebo>
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <joint name="fl_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="bl_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="br_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="ml_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="mr_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>/home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/config/diff_drive.yaml</parameters>
+    </plugin>
   </gazebo>
   <!-- BASE LINK -->
   <link name="base_link"/>
@@ -78,7 +137,7 @@
     <child link="r_suspension"/>
     <origin rpy="0 0 0" xyz="0.35 -0.28 0.1"/>
   </joint>
-  <link name="fl_wheel">
+  <link name=" ">
     <visual>
       <origin rpy="0 1.5707963267948966 0" xyz="0 0 -0.08"/>
       <geometry>
@@ -95,9 +154,9 @@
       <inertia ixx="0.002041166666666667" ixy="0.0" ixz="0.0" iyy="0.002041166666666667" iyz="0.0" izz="0.003249"/>
     </inertial>
   </link>
-  <joint name="fl_wheel_joint" type="continuous">
+  <joint name=" _joint" type="continuous">
     <parent link="l_suspension"/>
-    <child link="fl_wheel"/>
+    <child link=" "/>
     <origin rpy="-1.5707963267948966 0 0" xyz="0.436 0.1 -0.342"/>
     <axis xyz="0 0 1"/>
   </joint>
