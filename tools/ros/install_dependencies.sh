@@ -18,6 +18,8 @@ fi
 rosdep update --rosdistro jazzy
 rosdep install --from-paths "${WS_DIR}/src" --ignore-src -y
 
+python3 -m pip install -U catkin_pkg
+
 # other dependencies
 sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds
 

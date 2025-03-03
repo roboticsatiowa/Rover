@@ -1,4 +1,3 @@
-from sympy import rem
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -30,11 +29,13 @@ def generate_launch_description():
 
     controller_config = (
         PathJoinSubstitution(
-            [
-                FindPackageShare("uirover_description"),
-                "config",
-                "diff_drive.yaml",
-            ],
+            [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
+        )
+    )
+
+    gz_bridg_config = (
+        PathJoinSubstitution(
+            [FindPackageShare("uirover_gazebo"), "config", "bridge_config.yaml"]
         ),
     )
 
@@ -55,25 +56,13 @@ def generate_launch_description():
         launch_arguments=[("gz_args", [" -r -v 1 empty.sdf"])],
     )
 
-    robot_description = (
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("uirover_description"),
-                    "urdf",
-                    "uirover_sim.urdf",
-                ],
-            )
-        )
-
     def robot_state_publisher(context):
-        robot_description = (
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("uirover_description"),
-                    "urdf",
-                    "uirover_sim.urdf",
-                ],
-            )
+        robot_description = PathJoinSubstitution(
+            [
+                FindPackageShare("uirover_description"),
+                "urdf",
+                "uirover_sim.urdf",
+            ],
         )
 
         with open(robot_description.perform(context), "r") as fd:
@@ -90,7 +79,7 @@ def generate_launch_description():
 
     # ======= Nodes ======= #
 
-    node_gazebo_spawn_entity = Node(
+    node_gazebo_spawn_urdf = Node(
         package="ros_gz_sim",
         executable="create",
         output="screen",
@@ -98,7 +87,7 @@ def generate_launch_description():
             "-topic",
             "robot_description",
             "-name",
-            "diff_drive",
+            "uirover",
             "-allow_renaming",
             "true",
             "-z",
@@ -118,8 +107,9 @@ def generate_launch_description():
     node_gazebo_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
-        arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
         output="screen",
+        arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
+        # parameters=[{"config_file": gz_bridg_config}],
     )
     node_foxglove_bridge = Node(
         package="foxglove_bridge",
@@ -131,16 +121,22 @@ def generate_launch_description():
         package="joy",
         executable="joy_node",
         name="joy_node",
-        parameters=[{"coalesce_interval": "0.5", "default_trig_val": "true"}],
+        parameters=[{"coalesce_interval": "0.5"}],
     )
     node_twist_publisher = Node(
         package="teleop_twist_joy",
         executable="teleop_node",
         name="teleop_twist_joy_node",
         remappings=[("/cmd_vel", "/diff_drive_base_controller/cmd_vel")],
-        parameters=[{"publish_stamped_twist":True, "require_enable_button":False}],
+        parameters=[
+            {
+                "publish_stamped_twist": True,
+                "require_enable_button": False,
+                "axis_angular.yaw": 0,
+                "axis_linear.x": 3,
+            }
+        ],
     )
-
 
     # ======= Processes ======= #
 
@@ -164,7 +160,7 @@ def generate_launch_description():
             # Event handlers used to start nodes in a predictable order
             RegisterEventHandler(
                 event_handler=OnProcessExit(
-                    target_action=node_gazebo_spawn_entity,
+                    target_action=node_gazebo_spawn_urdf,
                     on_exit=[node_joint_state_broadcaster_spawner],
                 )
             ),
@@ -174,7 +170,7 @@ def generate_launch_description():
                     on_exit=[node_diff_drive_controller_spawner],
                 )
             ),
-            node_gazebo_spawn_entity,
+            node_gazebo_spawn_urdf,
             launch_gazebo,
             node_gazebo_bridge,
             node_foxglove_bridge,
