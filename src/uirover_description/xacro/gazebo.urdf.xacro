@@ -35,7 +35,7 @@
         <material>Gazebo/Orange</material>
     </gazebo>
 
-    <ros2_control name="GazeboSimSystem" type="system">
+    <ros2_control name="uirover_simulator_system" type="system">
         <hardware>
             <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>

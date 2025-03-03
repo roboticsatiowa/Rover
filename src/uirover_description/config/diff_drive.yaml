@@ -1,9 +1,18 @@
-diff_drive_controller:
+/**/controller_manager:
   ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+/**/diff_drive_base_controller:
+  ros__parameters:
+    type: diff_drive_controller/DiffDriveController
     left_wheel_names: ["fl_wheel_joint", "ml_wheel_joint", "bl_wheel_joint"]
     right_wheel_names: ["fr_wheel_joint", "mr_wheel_joint", "br_wheel_joint"]
 
     wheel_separation: 0.7493
+    wheels_per_side: 3
     wheel_radius: 0.01143
 
     wheel_separation_multiplier: 1.0
@@ -23,20 +32,21 @@ diff_drive_controller:
     publish_limited_velocity: true
     velocity_rolling_window_size: 10
 
-    linear.x.max_velocity: .NAN
-    linear.x.min_velocity: .NAN
-    linear.x.max_acceleration: .NAN
-    linear.x.max_deceleration: .NAN
-    linear.x.max_acceleration_reverse: .NAN
-    linear.x.max_deceleration_reverse: .NAN
+    # Velocity and acceleration limits
+    # Whenever a min_* is unspecified, default to -max_*
+    linear.x.has_velocity_limits: true
+    linear.x.has_acceleration_limits: true
+    linear.x.max_velocity: 1.0
+    linear.x.min_velocity: -1.0
+    linear.x.max_acceleration: 1.0
     linear.x.max_jerk: .NAN
     linear.x.min_jerk: .NAN
 
-    angular.z.max_velocity: .NAN
-    angular.z.min_velocity: .NAN
-    angular.z.max_acceleration: .NAN
-    angular.z.max_deceleration: .NAN
-    angular.z.max_acceleration_reverse: .NAN
-    angular.z.max_deceleration_reverse: .NAN
+    angular.z.has_velocity_limits: true
+    angular.z.has_acceleration_limits: true
+    angular.z.max_velocity: 1.0
+    angular.z.min_velocity: -1.0
+    angular.z.max_acceleration: 1.0
+    angular.z.min_acceleration: -1.0
     angular.z.max_jerk: .NAN
     angular.z.min_jerk: .NAN

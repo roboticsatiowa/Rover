@@ -1,3 +1,4 @@
+from sympy import rem
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -100,6 +101,8 @@ def generate_launch_description():
             "diff_drive",
             "-allow_renaming",
             "true",
+            "-z",
+            "1",
         ],
     )
     node_joint_state_broadcaster_spawner = Node(
@@ -130,6 +133,14 @@ def generate_launch_description():
         name="joy_node",
         parameters=[{"coalesce_interval": "0.5", "default_trig_val": "true"}],
     )
+    node_twist_publisher = Node(
+        package="teleop_twist_joy",
+        executable="teleop_node",
+        name="teleop_twist_joy_node",
+        remappings=[("/cmd_vel", "/diff_drive_base_controller/cmd_vel")],
+        parameters=[{"publish_stamped_twist":True, "require_enable_button":False}],
+    )
+
 
     # ======= Processes ======= #
 
@@ -168,6 +179,7 @@ def generate_launch_description():
             node_gazebo_bridge,
             node_foxglove_bridge,
             node_gamepad_publisher,
+            node_twist_publisher,
             cmd_ros_bag,
             arg_use_sim_time,
         ]
