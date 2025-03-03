@@ -71,7 +71,7 @@
     </joint>
   </xacro:macro>
 
-  <xacro:macro name="arducam" params="name use_gazebo:=^|false">
+  <xacro:macro name="arducam" params="name">
     <link name="${name}">
       <visual>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} 0.0" />
@@ -95,30 +95,27 @@
       </collision>
       <xacro:cylinder_inertia_tensor mass="0.1" radius="0.01" length="0.01" />
     </link>
-
-    <xacro:if value="${use_gazebo}">
-      <gazebo reference="${name}">
-        <sensor name="boundingbox_camera" type="boundingbox_camera">
-          <topic>${name}</topic>
-          <camera>
-            <box_type>2d</box_type>
-            <!-- 110 deg FOV -->
-            <horizontal_fov>1.9198</horizontal_fov>
-            <image>
-              <width>800</width>
-              <height>600</height>
-            </image>
-            <clip>
-              <near>0.1</near>
-              <far>10</far>
-            </clip>
-          </camera>
-          <always_on>1</always_on>
-          <update_rate>30</update_rate>
-          <visualize>true</visualize>
-        </sensor>
-      </gazebo>
-    </xacro:if>
+    <gazebo reference="${name}">
+      <sensor name="boundingbox_camera" type="boundingbox_camera">
+        <topic>${name}</topic>
+        <camera>
+          <box_type>2d</box_type>
+          <!-- 110 deg FOV -->
+          <horizontal_fov>1.9198</horizontal_fov>
+          <image>
+            <width>800</width>
+            <height>600</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10</far>
+          </clip>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+    </gazebo>
   </xacro:macro>
 
 </robot>

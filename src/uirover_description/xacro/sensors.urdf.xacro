@@ -1,19 +1,15 @@
 <?xml version="1.0"?>
 <robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="$(find uirover_description)/xacro/utility_macros.xacro" />
-
-    <xacro:macro name="uirover_sensors" params="use_gazebo:=^|false">
         <!-- =============================== -->
         <!--            SENSORS              -->
         <!-- =============================== -->
 
         <!-- ARDUCAM CAMERA -->
-        <xacro:arducam name="demo_camera" use_gazebo="true" />
+        <xacro:arducam name="antenna_camera"/>
         <joint name="front_camera_joint" type="fixed">
             <origin xyz="0.0 0.2 0.8" rpy="0.0 0.5 0.0" />
             <parent link="base_link" />
             <child link="demo_camera" />
         </joint>
-    </xacro:macro>
-
 </robot>
