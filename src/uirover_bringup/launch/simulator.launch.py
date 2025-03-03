@@ -141,7 +141,7 @@ def generate_launch_description():
     # ======= Processes ======= #
 
     cmd_ros_bag = ExecuteProcess(
-        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')}_gazebo -a --compression-mode file --compression-format zstd -d 9000".split(
+        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')}_gazebo -a -d 9000".split(
             " "
         ),
         output="screen",
