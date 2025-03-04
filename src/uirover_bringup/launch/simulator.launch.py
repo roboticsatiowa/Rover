@@ -39,6 +39,7 @@ def generate_launch_description():
 
     # ======= Launch files ======= #
 
+    # bullet featherstone physics engine supports mimic joints which are needed to properly simulate rocker suspension
     launch_gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
