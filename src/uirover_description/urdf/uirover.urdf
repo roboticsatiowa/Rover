@@ -20,7 +20,8 @@
     <child link="chassis"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
-  <!--L SUSPENSIONS-->
+  <!--L
+  SUSPENSIONS-->
   <link name="l_suspension">
     <visual>
       <origin rpy="1.5707963267948966 0.0 3.141592653589793" xyz="0.085 0.02 -0.06"/>
@@ -28,13 +29,20 @@
         <mesh filename="file:///home/ethan/Projects/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
       </geometry>
     </visual>
+    <inertial>
+      <mass value="2"/>
+      <inertia ixx="0.004166666666666667" ixy="0.0" ixz="0.0" iyy="0.07416666666666667" iyz="0.0" izz="0.07083333333333333"/>
+      <origin rpy="0 0 0" xyz="0.1 0 -0.1"/>
+    </inertial>
   </link>
-  <joint name="l_suspension_joint" type="fixed">
+  <joint name="l_suspension_joint" type="continuous">
     <parent link="chassis"/>
     <child link="l_suspension"/>
     <origin rpy="0 0 0" xyz="0 0.28 0.1"/>
+    <axis xyz="0 1 0"/>
   </joint>
-  <!--R SUSPENSIONS-->
+  <!--R
+  SUSPENSIONS-->
   <link name="r_suspension">
     <visual>
       <origin rpy="1.5707963267948966 0.0 3.141592653589793" xyz="0.085 0.02 -0.06"/>
@@ -42,11 +50,18 @@
         <mesh filename="file:///home/ethan/Projects/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
       </geometry>
     </visual>
+    <inertial>
+      <mass value="2"/>
+      <inertia ixx="0.004166666666666667" ixy="0.0" ixz="0.0" iyy="0.07416666666666667" iyz="0.0" izz="0.07083333333333333"/>
+      <origin rpy="0 0 0" xyz="0.1 0 -0.1"/>
+    </inertial>
   </link>
-  <joint name="r_suspension_joint" type="fixed">
+  <joint name="r_suspension_joint" type="continuous">
+    <mimic joint="l_suspension_joint" multiplier="-1" offset="0"/>
     <parent link="chassis"/>
     <child link="r_suspension"/>
     <origin rpy="0 0 0" xyz="0 -0.28 0.1"/>
+    <axis xyz="0 1 0"/>
   </joint>
   <link name="fl_wheel">
     <visual>
@@ -187,7 +202,8 @@
     <axis xyz="0 0 1"/>
   </joint>
   <!-- Robot Footprint -->
-  <!-- This is needed for nav libraries. Its the 2D top-down profile of the robot. Makes for simpler collision detection. -->
+  <!-- This is needed for nav libraries. Its the 2D top-down profile of the robot. Makes for simpler
+  collision detection. -->
   <link name="base_footprint"/>
   <joint name="base_footprint_joint" type="fixed">
     <parent link="base_link"/>
@@ -236,7 +252,7 @@
         </image>
         <clip>
           <near>0.1</near>
-          <far>10</far>
+          <far>100</far>
         </clip>
       </camera>
       <always_on>1</always_on>

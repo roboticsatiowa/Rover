@@ -4,17 +4,17 @@
   <xacro:include filename="$(find uirover_description)/xacro/utility_macros.xacro" />
   <xacro:include filename="$(find uirover_description)/xacro/properties.xacro" />
 
-  <!-- BASE LINK -->  
+  <!-- BASE LINK -->
   <link name="base_link" />
 
   <!-- CHASSIS -->
   <link name="chassis">
-  <visual>
-    <origin xyz="-0.35 0.203 0.0" rpy="${pi/2} 0.0 0.0"/>
-    <geometry>
-      <mesh filename="file://$(find uirover_description)/dae/chassis.dae"/>
-    </geometry>
-  </visual>
+    <visual>
+      <origin xyz="-0.35 0.203 0.0" rpy="${pi/2} 0.0 0.0" />
+      <geometry>
+        <mesh filename="file://$(find uirover_description)/dae/chassis.dae" />
+      </geometry>
+    </visual>
   </link>
   <joint name="chassis_joint" type="fixed">
     <parent link="base_link" />
@@ -22,52 +22,60 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
   </joint>
 
-  <!--L SUSPENSIONS-->
+  <!--L
+  SUSPENSIONS-->
   <link name="l_suspension">
     <visual>
-      <origin xyz="0.085 0.02 -0.06" rpy="${pi/2} 0.0 ${pi}"/>
-    <geometry>
-      <mesh filename="file://$(find uirover_description)/dae/suspension.dae"/>
-    </geometry>
-  </visual>
+      <origin xyz="0.085 0.02 -0.06" rpy="${pi/2} 0.0 ${pi}" />
+      <geometry>
+        <mesh filename="file://$(find uirover_description)/dae/suspension.dae" />
+      </geometry>
+    </visual>
+    <xacro:box_inertia_tensor mass="2" len_x="0.65" len_y="0.05" len_z="0.15" x="0.1" y="0" z="-0.1" />
   </link>
-  <joint name="l_suspension_joint" type="fixed">
+  <joint name="l_suspension_joint" type="continuous">
     <parent link="chassis" />
     <child link="l_suspension" />
     <origin xyz="0 0.28 0.1" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
   </joint>
 
-  <!--R SUSPENSIONS-->
+  <!--R
+  SUSPENSIONS-->
   <link name="r_suspension">
     <visual>
-      <origin xyz="0.085 0.02 -0.06" rpy="${pi/2} 0.0 ${pi}"/>
-    <geometry>
-      <mesh filename="file://$(find uirover_description)/dae/suspension.dae"/>
-    </geometry>
-  </visual>
+      <origin xyz="0.085 0.02 -0.06" rpy="${pi/2} 0.0 ${pi}" />
+      <geometry>
+        <mesh filename="file://$(find uirover_description)/dae/suspension.dae" />
+      </geometry>
+    </visual>
+    <xacro:box_inertia_tensor mass="2" len_x="0.65" len_y="0.05" len_z="0.15" x="0.1" y="0" z="-0.1" />
   </link>
-  <joint name="r_suspension_joint" type="fixed">
+  <joint name="r_suspension_joint" type="continuous">
+    <mimic joint="l_suspension_joint" multiplier="-1" offset="0" />
     <parent link="chassis" />
     <child link="r_suspension" />
     <origin xyz="0 -0.28 0.1" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
   </joint>
 
   <!-- WHEELS -->
-  <xacro:wheel name="fl_wheel" x="0.436"  y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
-  <xacro:wheel name="fr_wheel" x="0.436"  y="-0.1" z="-0.342" parent="r_suspension" side="right"/>
-  <xacro:wheel name="ml_wheel" x="0.016"  y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
-  <xacro:wheel name="mr_wheel" x="0.016"  y="-0.1" z="-0.342" parent="r_suspension" side="right"/>
-  <xacro:wheel name="bl_wheel" x="-0.434" y="0.1"  z="-0.342" parent="l_suspension" side="left"/>
-  <xacro:wheel name="br_wheel" x="-0.434" y="-0.1" z="-0.342" parent="r_suspension" side="right"/>
+  <xacro:wheel name="fl_wheel" x="0.436" y="0.1" z="-0.342" parent="l_suspension" side="left" />
+  <xacro:wheel name="fr_wheel" x="0.436" y="-0.1" z="-0.342" parent="r_suspension" side="right" />
+  <xacro:wheel name="ml_wheel" x="0.016" y="0.1" z="-0.342" parent="l_suspension" side="left" />
+  <xacro:wheel name="mr_wheel" x="0.016" y="-0.1" z="-0.342" parent="r_suspension" side="right" />
+  <xacro:wheel name="bl_wheel" x="-0.434" y="0.1" z="-0.342" parent="l_suspension" side="left" />
+  <xacro:wheel name="br_wheel" x="-0.434" y="-0.1" z="-0.342" parent="r_suspension" side="right" />
 
   <!-- Robot Footprint -->
-  <!-- This is needed for nav libraries. Its the 2D top-down profile of the robot. Makes for simpler collision detection. -->
+  <!-- This is needed for nav libraries. Its the 2D top-down profile of the robot. Makes for simpler
+  collision detection. -->
   <link name="base_footprint" />
   <joint name="base_footprint_joint" type="fixed">
     <parent link="base_link" />
     <child link="base_footprint" />
     <origin xyz="0.0 0.0 -0.3" rpy="0 0 0" />
-  </joint> 
+  </joint>
 
 
 </robot>

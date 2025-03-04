@@ -22,8 +22,8 @@
     odom_frame_id: odom
     base_frame_id: base_link
     # http://wiki.ros.org/diff_drive_controller#Skid_steer    covariance values ripped from the skid steer controller example
-    pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 0.03]
-    twist_covariance_diagonal: [0.001, 0.001, 0.001, 1000000.0, 1000000.0, 0.03]
+    pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
 
     position_feedback: false
     open_loop: true

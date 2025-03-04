@@ -27,10 +27,8 @@ def generate_launch_description():
 
     # ======= Supplimentary config files ======= #
 
-    controller_config = (
-        PathJoinSubstitution(
-            [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
-        )
+    controller_config = PathJoinSubstitution(
+        [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
     )
 
     gz_bridg_config = (
@@ -53,8 +51,15 @@ def generate_launch_description():
                 )
             ]
         ),
-        # launch_arguments=[("gz_args", [" -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World'"])],
-        launch_arguments=[("gz_args", [" -r -v 1 empty.sdf"])],
+        launch_arguments=[
+            (
+                "gz_args",
+                [
+                    " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World' --physics-engine gz-physics-bullet-featherstone-plugin"
+                ],
+            )
+        ],
+        # launch_arguments=[("gz_args", [" -r -v 1 empty.sdf"])],
     )
 
     def robot_state_publisher(context):
@@ -95,15 +100,26 @@ def generate_launch_description():
             "4",
         ],
     )
+    # increased timeouts to give gazebo more time to load
     node_joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_state_broadcaster"],
+        arguments=["joint_state_broadcaster", 
+                   "--switch-timeout", 
+                   "20.0",
+                   "--service-call-timeout",
+                   "20.0"],
     )
     node_diff_drive_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["diff_drive_base_controller", "--param-file", controller_config],
+        arguments=[
+            "diff_drive_base_controller",
+            "--switch-timeout",
+            "20.0",
+            "-p",
+            controller_config,
+        ],
     )
     node_gazebo_parameter_bridge = Node(
         package="ros_gz_bridge",
@@ -116,15 +132,13 @@ def generate_launch_description():
         package="foxglove_bridge",
         executable="foxglove_bridge",
         name="foxglove_bridge",
-        output="screen",
     )
     # higher deadzone makes it easier to drive straight
     node_gamepad_publisher = Node(
         package="joy",
         executable="joy_node",
         name="joy_node",
-        parameters=[{"coalesce_interval": 0.5,
-                     "deadzone": 0.20}],
+        parameters=[{"coalesce_interval": 0.5, "deadzone": 0.20}],
     )
     node_twist_publisher = Node(
         package="teleop_twist_joy",

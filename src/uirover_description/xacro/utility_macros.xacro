@@ -2,12 +2,13 @@
 <robot name="uiowa_rover" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- BOX INERTIA -->
-  <xacro:macro name="box_inertia_tensor" params="mass len_x len_y len_z">
+  <xacro:macro name="box_inertia_tensor" params="mass len_x len_y len_z x y z">
     <inertial>
       <mass value="${mass}" />
       <inertia ixx="${(1/12)*mass*(len_z*len_z+len_y*len_y)}" ixy="0.0" ixz="0.0"
         iyy="${(1/12)*mass*(len_z*len_z+len_x*len_x)}" iyz="0.0"
         izz="${(1/12)*mass*(len_x*len_x+len_y*len_y)}" />
+        <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
     </inertial>
   </xacro:macro>
 
@@ -108,7 +109,7 @@
           </image>
           <clip>
             <near>0.1</near>
-            <far>10</far>
+            <far>100</far>
           </clip>
         </camera>
         <always_on>1</always_on>
