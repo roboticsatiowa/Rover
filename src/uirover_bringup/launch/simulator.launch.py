@@ -53,6 +53,7 @@ def generate_launch_description():
                 )
             ]
         ),
+        # launch_arguments=[("gz_args", [" -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World'"])],
         launch_arguments=[("gz_args", [" -r -v 1 empty.sdf"])],
     )
 
@@ -91,7 +92,7 @@ def generate_launch_description():
             "-allow_renaming",
             "true",
             "-z",
-            "1",
+            "4",
         ],
     )
     node_joint_state_broadcaster_spawner = Node(
@@ -104,12 +105,12 @@ def generate_launch_description():
         executable="spawner",
         arguments=["diff_drive_base_controller", "--param-file", controller_config],
     )
-    node_gazebo_bridge = Node(
+    node_gazebo_parameter_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
         output="screen",
-        arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
-        # parameters=[{"config_file": gz_bridg_config}],
+        # arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
+        parameters=[{"config_file": gz_bridg_config}],
     )
     node_foxglove_bridge = Node(
         package="foxglove_bridge",
@@ -117,11 +118,13 @@ def generate_launch_description():
         name="foxglove_bridge",
         output="screen",
     )
+    # higher deadzone makes it easier to drive straight
     node_gamepad_publisher = Node(
         package="joy",
         executable="joy_node",
         name="joy_node",
-        parameters=[{"coalesce_interval": "0.5"}],
+        parameters=[{"coalesce_interval": 0.5,
+                     "deadzone": 0.20}],
     )
     node_twist_publisher = Node(
         package="teleop_twist_joy",
@@ -133,7 +136,7 @@ def generate_launch_description():
                 "publish_stamped_twist": True,
                 "require_enable_button": False,
                 "axis_angular.yaw": 0,
-                "axis_linear.x": 3,
+                "axis_linear.x": 1,
             }
         ],
     )
@@ -172,7 +175,7 @@ def generate_launch_description():
             ),
             node_gazebo_spawn_urdf,
             launch_gazebo,
-            node_gazebo_bridge,
+            node_gazebo_parameter_bridge,
             node_foxglove_bridge,
             node_gamepad_publisher,
             node_twist_publisher,

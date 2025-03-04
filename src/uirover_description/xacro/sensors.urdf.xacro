@@ -7,9 +7,9 @@
 
         <!-- ARDUCAM CAMERA -->
         <xacro:arducam name="antenna_camera"/>
-        <joint name="front_camera_joint" type="fixed">
+        <joint name="antenna_camera_joint" type="fixed">
             <origin xyz="0.0 0.2 0.8" rpy="0.0 0.5 0.0" />
             <parent link="base_link" />
-            <child link="demo_camera" />
+            <child link="antenna_camera" />
         </joint>
 </robot>

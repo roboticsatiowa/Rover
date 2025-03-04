@@ -1,10 +1,10 @@
 # https://github.com/gazebosim/ros_gz/blob/ros2/ros_gz_bridge/README.md
 
-- ros_topic_name: "demo_cam"
-  gz_topic_name: "/demo_camera_image"
+- topic_name: "/antenna_camera_image"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
-  subscriber_queue: 5
-  publisher_queue: 6
-  lazy: true
-  direction: BIDIRECTIONAL
+
+- topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
