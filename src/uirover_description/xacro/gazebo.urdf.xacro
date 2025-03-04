@@ -4,37 +4,6 @@
 
     <!-- should probably change the color at some point. or not. orange is cool -->
 
-    <gazebo reference="br_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="bl_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="mr_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="ml_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="fr_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="fl_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="r_suspension">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="l_suspension">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="chassis">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="arm_platform">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-
     <ros2_control name="uirover_simulator_system" type="system">
         <hardware>
             <plugin>gz_ros2_control/GazeboSimSystem</plugin>
