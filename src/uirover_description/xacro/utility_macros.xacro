@@ -2,7 +2,7 @@
 <robot name="uiowa_rover" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- BOX INERTIA -->
-  <xacro:macro name="box_inertia_tensor" params="mass len_x len_y len_z x y z">
+  <xacro:macro name="box_inertia_tensor" params="mass len_x len_y len_z x:=0 y:=0 z:=0">
     <inertial>
       <mass value="${mass}" />
       <inertia ixx="${(1/12)*mass*(len_z*len_z+len_y*len_y)}" ixy="0.0" ixz="0.0"
@@ -71,52 +71,4 @@
       <axis xyz="0 0 1" />
     </joint>
   </xacro:macro>
-
-  <xacro:macro name="arducam" params="name">
-    <link name="${name}">
-      <visual>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} 0.0" />
-        <geometry>
-          <cylinder radius="0.01" length="0.01" />
-        </geometry>
-        <material name="Grey">
-          <color rgba="0.7 0.7 0.7 1.0" />
-        </material>
-      </visual>
-      <visual>
-        <origin xyz="-0.005 0.0 0.0" rpy="0.0 0.0 0.0" />
-        <geometry>
-          <box size="0.005 0.03 0.03" />
-        </geometry>
-      </visual>
-      <collision>
-        <geometry>
-          <cylinder radius="0.01" length="0.01" />
-        </geometry>
-      </collision>
-      <xacro:cylinder_inertia_tensor mass="0.1" radius="0.01" length="0.01" />
-    </link>
-    <gazebo reference="${name}">
-      <sensor name="boundingbox_camera" type="boundingbox_camera">
-        <topic>${name}</topic>
-        <camera>
-          <box_type>2d</box_type>
-          <!-- 110 deg FOV -->
-          <horizontal_fov>1.9198</horizontal_fov>
-          <image>
-            <width>800</width>
-            <height>600</height>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
-      </sensor>
-    </gazebo>
-  </xacro:macro>
-
 </robot>

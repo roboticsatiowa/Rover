@@ -1,6 +1,6 @@
 # https://github.com/gazebosim/ros_gz/blob/ros2/ros_gz_bridge/README.md
 
-- topic_name: "/antenna_camera_image"
+- topic_name: "/antenna_camera"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
 

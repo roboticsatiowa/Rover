@@ -5,7 +5,7 @@
   <xacro:include filename="$(find uirover_description)/xacro/properties.xacro" />
 
   <!-- BASE LINK -->
-  <link name="base_link" />
+  <link name="base_link"></link>
 
   <!-- CHASSIS -->
   <link name="chassis">
@@ -15,6 +15,12 @@
         <mesh filename="file://$(find uirover_description)/dae/chassis.dae" />
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <box size="0.65 0.4 0.2" />
+      </geometry>
+    </collision>
+    <xacro:box_inertia_tensor mass="10" len_x="0.65" len_y="0.4" len_z="0.2"/>
   </link>
   <joint name="chassis_joint" type="fixed">
     <parent link="base_link" />
@@ -31,9 +37,14 @@
         <mesh filename="file://$(find uirover_description)/dae/suspension.dae" />
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
     <xacro:box_inertia_tensor mass="2" len_x="0.65" len_y="0.05" len_z="0.15" x="0.1" y="0" z="-0.1" />
   </link>
-  <joint name="l_suspension_joint" type="continuous">
+  <joint name="l_suspension_joint" type="fixed">
     <parent link="chassis" />
     <child link="l_suspension" />
     <origin xyz="0 0.28 0.1" rpy="0 0 0" />
@@ -49,10 +60,15 @@
         <mesh filename="file://$(find uirover_description)/dae/suspension.dae" />
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
     <xacro:box_inertia_tensor mass="2" len_x="0.65" len_y="0.05" len_z="0.15" x="0.1" y="0" z="-0.1" />
   </link>
-  <joint name="r_suspension_joint" type="continuous">
-    <mimic joint="l_suspension_joint" multiplier="-1" offset="0" />
+  <joint name="r_suspension_joint" type="fixed">
+    <!-- <mimic joint="l_suspension_joint" multiplier="-1" offset="0" /> -->
     <parent link="chassis" />
     <child link="r_suspension" />
     <origin xyz="0 -0.28 0.1" rpy="0 0 0" />

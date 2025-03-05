@@ -56,13 +56,15 @@ def generate_launch_description():
             (
                 "gz_args",
                 [
-                    " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World' --physics-engine gz-physics-bullet-featherstone-plugin"
+                    # " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World' --physics-engine gz-physics-bullet-featherstone-plugin"
+                    " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World'"
                 ],
             )
         ],
         # launch_arguments=[("gz_args", [" -r -v 1 empty.sdf"])],
     )
 
+    # We use a launch action to launch the robot state publisher because the launch context is needed to perform the path join substitution
     def robot_state_publisher(context):
         robot_description = PathJoinSubstitution(
             [

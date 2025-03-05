@@ -14,6 +14,16 @@
         <mesh filename="file:///home/ethan/Projects/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/chassis.dae"/>
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <box size="0.65 0.4 0.2"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="0.16666666666666669" ixy="0.0" ixz="0.0" iyy="0.38541666666666663" iyz="0.0" izz="0.48541666666666666"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </inertial>
   </link>
   <joint name="chassis_joint" type="fixed">
     <parent link="base_link"/>
@@ -29,13 +39,18 @@
         <mesh filename="file:///home/ethan/Projects/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
     <inertial>
       <mass value="2"/>
       <inertia ixx="0.004166666666666667" ixy="0.0" ixz="0.0" iyy="0.07416666666666667" iyz="0.0" izz="0.07083333333333333"/>
       <origin rpy="0 0 0" xyz="0.1 0 -0.1"/>
     </inertial>
   </link>
-  <joint name="l_suspension_joint" type="continuous">
+  <joint name="l_suspension_joint" type="fixed">
     <parent link="chassis"/>
     <child link="l_suspension"/>
     <origin rpy="0 0 0" xyz="0 0.28 0.1"/>
@@ -50,14 +65,19 @@
         <mesh filename="file:///home/ethan/Projects/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/dae/suspension.dae"/>
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
     <inertial>
       <mass value="2"/>
       <inertia ixx="0.004166666666666667" ixy="0.0" ixz="0.0" iyy="0.07416666666666667" iyz="0.0" izz="0.07083333333333333"/>
       <origin rpy="0 0 0" xyz="0.1 0 -0.1"/>
     </inertial>
   </link>
-  <joint name="r_suspension_joint" type="continuous">
-    <mimic joint="l_suspension_joint" multiplier="-1" offset="0"/>
+  <joint name="r_suspension_joint" type="fixed">
+    <!-- <mimic joint="l_suspension_joint" multiplier="-1" offset="0" /> -->
     <parent link="chassis"/>
     <child link="r_suspension"/>
     <origin rpy="0 0 0" xyz="0 -0.28 0.1"/>
@@ -240,7 +260,7 @@
     </inertial>
   </link>
   <gazebo reference="antenna_camera">
-    <sensor name="boundingbox_camera" type="boundingbox_camera">
+    <sensor name="camera" type="camera">
       <topic>antenna_camera</topic>
       <camera>
         <box_type>2d</box_type>
