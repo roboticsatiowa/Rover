@@ -2,7 +2,7 @@ from launch import LaunchDescription
 
 from launch.actions import IncludeLaunchDescription, ExecuteProcess, OpaqueFunction, RegisterEventHandler
 from launch.launch_description_sources import AnyLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution, Command, FindExecutable
 from launch.event_handlers import OnProcessExit
 
 from launch_ros.actions import Node
@@ -25,32 +25,32 @@ def generate_launch_description():
         [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
     )
 
-    # We use a launch action to launch the robot state publisher because the launch context is needed to perform the path join substitution
-    def robot_state_publisher(context):
-        robot_description = PathJoinSubstitution(
-            [
-                FindPackageShare("uirover_description"),
-                "urdf",
-                "uirover_sim.urdf",
-            ],
-        )
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [
+                    FindPackageShare("ros2_control_demo_example_9"),
+                    "urdf",
+                    "rrbot.urdf.xacro",
+                ]
+            ),
+        ]
+    )
 
-        with open(robot_description.perform(context), "r") as fd:
-            robot_description_content = fd.read()
-
-        node_robot_state_publisher = Node(
-            package="robot_state_publisher",
-            executable="robot_state_publisher",
-            output="screen",
-            parameters=[{"robot_description": robot_description_content}],
-        )
-
-        return [node_robot_state_publisher]
+    # publishes a topic containing the robots urdf description
+    node_robot_state_publisher = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="both",
+        parameters=[{"robot_description":robot_description_content}],
+    )
     
-    arducam_nodes = []
 
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
+    arducam_nodes = []
     if os.path.exists("/dev/Arducam"):
         arducam_devices = [
             int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")
@@ -110,6 +110,12 @@ def generate_launch_description():
         respawn=True,
         respawn_delay=2,
     )
+    node_ros2_control = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[controller_config],
+        output="both",
+    )
     node_joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -119,7 +125,7 @@ def generate_launch_description():
                    "--service-call-timeout",
                    "20.0"],
     )
-    node_diff_drive_controller_spawner = Node(
+    node_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
@@ -175,21 +181,13 @@ def generate_launch_description():
     )
 
     launch_description = LaunchDescription([
-        # Event handlers used to start nodes in a predictable order
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=node_hardware_interface,
-                on_exit=[node_joint_state_broadcaster_spawner],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=node_joint_state_broadcaster_spawner,
-                on_exit=[node_diff_drive_controller_spawner],
-            )
-        ),
+        # ros2_control
+        node_ros2_control,
+        node_robot_state_publisher,
+        node_controller_spawner,
         node_hardware_interface,
-        # node_joint_state_broadcaster_spawner,
+        node_joint_state_broadcaster_spawner,
+
         node_foxglove_bridge,
         node_gamepad_publisher,
         node_twist_publisher,
@@ -197,8 +195,6 @@ def generate_launch_description():
         cmd_ros_bag,
         launch_ublox_gps,
         launch_realsense_d435i,
-    ].extend(arducam_nodes))
-
-    launch_description.add_action(OpaqueFunction(function=robot_state_publisher))
+    ])
 
     return launch_description
