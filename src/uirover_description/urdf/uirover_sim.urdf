@@ -4,60 +4,6 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="uirover">
-  <!-- should probably change the color at some point. or not. orange is cool -->
-  <ros2_control name="uirover_simulator_system" type="system">
-    <hardware>
-      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-    </hardware>
-    <joint name="fl_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="fr_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="bl_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="br_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="ml_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="mr_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-  </ros2_control>
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>/home/ethan/Robotics/Rover/build/uirover_description/ament_cmake_index/share/uirover_description/config/diff_drive.yaml</parameters>
@@ -66,6 +12,53 @@
       <render_engine>ogre2</render_engine>
     </plugin>
   </gazebo>
+  <!-- placeholder for ros2 control -->
+  <!-- https://github.com/ros-controls/ros2_control_demos/blob/master/example_9/ -->
+  <!-- https://control.ros.org/rolling/doc/getting_started/getting_started.html -->
+  <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
+  <ros2_control name="uirover_hardware_system" type="system">
+    <!-- Hardware Plugin -->
+    <hardware>
+      <plugin>uirover_hardware/UiroverHardwareInterface</plugin>
+    </hardware>
+    <!-- Joints -->
+    <joint name="fl_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="fr_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="bl_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="br_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="ml_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="mr_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+  </ros2_control>
   <!-- BASE LINK -->
   <link name="base_link"/>
   <!-- CHASSIS -->

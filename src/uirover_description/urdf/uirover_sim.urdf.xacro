@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="$(find uirover_description)/xacro/gazebo.urdf.xacro"/>
+
+    <xacro:include filename="$(find uirover_description)/xacro/ros2_control.urdf.xacro"/>
+    <xacro:uirover_ros2_control use_gazebo="false"/>
+
     <xacro:include filename="$(find uirover_description)/xacro/physical_description.urdf.xacro"/>
+    
     <xacro:include filename="$(find uirover_description)/xacro/sensors.urdf.xacro"/>
 </robot>

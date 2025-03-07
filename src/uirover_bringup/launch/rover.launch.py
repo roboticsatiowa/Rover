@@ -25,26 +25,22 @@ def generate_launch_description():
         [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
     )
 
+    ublox_config = PathJoinSubstitution(
+        [FindPackageShare("uirover_gnss"), "config", "zed_f9p.yaml"]
+    )
+
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare("ros2_control_demo_example_9"),
+                    FindPackageShare("uirover_description"),
                     "urdf",
-                    "rrbot.urdf.xacro",
+                    "uirover.urdf.xacro",
                 ]
             ),
         ]
-    )
-
-    # publishes a topic containing the robots urdf description
-    node_robot_state_publisher = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        output="both",
-        parameters=[{"robot_description":robot_description_content}],
     )
     
 
@@ -65,18 +61,6 @@ def generate_launch_description():
                     respawn_delay=10,
                 )
             )
-
-    # GPS
-    launch_ublox_gps = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource(
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("ublox_gps"),
-                    "launch/ublox_gps_node_zedf9p-launch.py",
-                ]
-            )
-        )
-    )
     # https://github.com/introlab/rtabmap_ros/blob/ros2/rtabmap_examples/launch/realsense_d435i_stereo.launch.py
     # Realsense Camera
     launch_realsense_d435i = IncludeLaunchDescription(
@@ -101,14 +85,19 @@ def generate_launch_description():
             "enable_infra1": "true",
         }.items(),
     )
-
-    # # Teensy Interface
-    node_hardware_interface = Node(
-        name="uirover_hardware",
-        package="uirover_hardware",
-        executable="uirover_hardware",
-        respawn=True,
-        respawn_delay=2,
+    # publishes a topic containing the robots urdf description
+    node_robot_state_publisher = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="both",
+        parameters=[{"robot_description":robot_description_content}],
+    )
+    node_ublox_gps = Node(
+        package="ublox_gps",
+        executable="ublox_gps_node",
+        name="ublox_gps_node",
+        parameters=[ublox_config]
+        
     )
     node_ros2_control = Node(
         package="controller_manager",
@@ -185,7 +174,6 @@ def generate_launch_description():
         node_ros2_control,
         node_robot_state_publisher,
         node_controller_spawner,
-        node_hardware_interface,
         node_joint_state_broadcaster_spawner,
 
         node_foxglove_bridge,
@@ -193,7 +181,7 @@ def generate_launch_description():
         node_twist_publisher,
         cmd_zenoh_bridge,
         cmd_ros_bag,
-        launch_ublox_gps,
+        node_ublox_gps,
         launch_realsense_d435i,
     ])
 

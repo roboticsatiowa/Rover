@@ -230,6 +230,53 @@
     <child link="base_footprint"/>
     <origin rpy="0 0 0" xyz="0.0 0.0 -0.3"/>
   </joint>
+  <!-- placeholder for ros2 control -->
+  <!-- https://github.com/ros-controls/ros2_control_demos/blob/master/example_9/ -->
+  <!-- https://control.ros.org/rolling/doc/getting_started/getting_started.html -->
+  <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
+  <ros2_control name="uirover_hardware_system" type="system">
+    <!-- Hardware Plugin -->
+    <hardware>
+      <plugin>uirover_hardware/UiroverHardwareInterface</plugin>
+    </hardware>
+    <!-- Joints -->
+    <joint name="fl_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="fr_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="bl_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="br_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="ml_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+    <joint name="mr_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
+    </joint>
+  </ros2_control>
   <!-- =============================== -->
   <!--            SENSORS              -->
   <!-- =============================== -->
@@ -285,8 +332,4 @@
     <parent link="base_link"/>
     <child link="antenna_camera"/>
   </joint>
-  <!-- placeholder for ros2 control -->
-  <!-- https://github.com/ros-controls/ros2_control_demos/blob/master/example_9/ -->
-  <!-- https://control.ros.org/rolling/doc/getting_started/getting_started.html -->
-  <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
 </robot>

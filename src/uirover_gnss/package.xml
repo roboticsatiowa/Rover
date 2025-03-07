@@ -1,20 +1,14 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>uirover_meta</name>
+  <name>uirover_gnss</name>
   <version>0.0.0</version>
-  <description>Meta-package for uiowa rover</description>
+  <description>TODO: Package description</description>
   <maintainer email="holterethan@gmail.com">ethan</maintainer>
-  <license>GPL-3.0-only</license>
+  <license>TODO: License declaration</license>
+  
 
-  <!-- UIROVER -->
-  <depend>uirover_bringup</depend>
-  <depend>uirover_controllers</depend>
-  <depend>uirover_description</depend>
-  <depend>uirover_gazebo</depend>
-  <depend>uirover_hardware</depend>
-  <depend>uirover_msgs</depend>
-  <depend>uirover_video</depend>
+  <depend>ublox</depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
