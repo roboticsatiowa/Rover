@@ -23,10 +23,6 @@ python3 -m pip install -U catkin_pkg
 # other dependencies
 sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds
 
-# SDF worlds
-mkdir -p ~/.gazebo/worlds
-wget -o ~/.gazebo/worlds/rubicon.sdf "https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World"
-
 # PlatformIO
 if ! command -v platformio > /dev/null;  then
     curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
