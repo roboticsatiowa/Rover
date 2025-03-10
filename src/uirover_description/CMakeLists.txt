@@ -17,9 +17,6 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
-file(GLOB xacro_files urdf/*.urdf.xacro)
-xacro_add_files(${xacro_files} TARGET urdf)
-
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
