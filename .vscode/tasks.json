@@ -88,7 +88,7 @@
 					"label": "ROS run rover",
 					"backgroundColor": "statusBarItem.warningBackground",
 					"running": {
-						"label": "Sim is running"
+						"label": "Rover is running"
 					},
 				},
 				"shell": {

@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
+#include <errno.h>
 
 #include "uirover_hardware/uirover_hardware_interface.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
@@ -30,9 +31,11 @@ namespace uirover_hardware {
       return CallbackReturn::ERROR;
     }
 
-    // TODO(anyone): read parameters and initialize the hardware
+    // Get number of joint state/command interfaces from URDF (stored in info_)
     hw_states_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
     hw_commands_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
+
+    RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "Hardware interface initialized successfully.");
 
     return CallbackReturn::SUCCESS;
   }
@@ -43,14 +46,17 @@ namespace uirover_hardware {
     // https://blog.mbedded.ninja/programming/operating-systems/linux/linux-serial-ports-using-c-cpp/
     // open the serial port
     teensy_fd = open("/dev/ttyTEENSY", O_RDWR | O_NOCTTY | O_SYNC);
-    if (teensy_fd < 0) {
+    if (teensy_fd == -1) {
+      RCLCPP_ERROR(rclcpp::get_logger("uirover_hardware"), "Failed to open serial port /dev/ttyTEENSY. Error code: %d - %s", errno, strerror(errno));
       return CallbackReturn::ERROR;
     }
+    
 
     // Set up the serial port
     if (tcgetattr(teensy_fd, &tty) != 0) {
       return CallbackReturn::ERROR;
     }
+    RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "B");
 
     // Configure the serial port settings
     tty.c_cflag &= ~PARENB;        // No parity
@@ -74,41 +80,51 @@ namespace uirover_hardware {
     tty.c_cc[VTIME] = 0.1;  // 0.1 deciseconds (0.01 seconds) timeout for read
 
     // Set the baud rate
-    cfsetspeed(&tty, baudrate); 
+    cfsetspeed(&tty, baudrate);
 
     // Save tty settings, also checking for error
     if (tcsetattr(teensy_fd, TCSANOW, &tty) != 0) {
       return CallbackReturn::ERROR;
     }
 
+    RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "Hardware interface configured successfully.");
+
     return CallbackReturn::SUCCESS;
   }
 
-  std::vector<hardware_interface::StateInterface> UiroverHardwareInterface::export_state_interfaces() {
-    std::vector<hardware_interface::StateInterface> state_interfaces;
-    for (size_t i = 0; i < info_.joints.size(); ++i) {
-      state_interfaces.emplace_back(hardware_interface::StateInterface(
-        // TODO(anyone): insert correct interfaces
-        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_states_[i]));
-    }
+  // std::vector<hardware_interface::StateInterface> UiroverHardwareInterface::export_state_interfaces() {
+  //   std::vector<hardware_interface::StateInterface> state_interfaces;
 
-    return state_interfaces;
-  }
+  //   // Currently, we only have no state interfaces, although that is expected to change in the future.
+  //   // Normally leaving ghost code is bad practice, but documentation is difficult to come by
+  //   // so Im leaving this for the future 
 
-  std::vector<hardware_interface::CommandInterface> UiroverHardwareInterface::export_command_interfaces() {
-    std::vector<hardware_interface::CommandInterface> command_interfaces;
-    for (size_t i = 0; i < info_.joints.size(); ++i) {
-      command_interfaces.emplace_back(hardware_interface::CommandInterface(
-        // TODO(anyone): insert correct interfaces
-        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_commands_[i]));
-    }
+  //   // for (size_t i = 0; i < info_.joints.size(); ++i) {
+  //   //   state_interfaces.emplace_back(hardware_interface::StateInterface(
+  //   //     info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_states_[i]));
+  //   // }
 
-    return command_interfaces;
-  }
+  //   return state_interfaces;
+  // }
+
+  // std::vector<hardware_interface::CommandInterface> UiroverHardwareInterface::export_command_interfaces() {
+  //   std::vector<hardware_interface::CommandInterface> command_interfaces;
+  //   command_interfaces.emplace_back(hardware_interface::CommandInterface(
+  //     "fl_wheel_joint", hardware_interface::HW_IF_VELOCITY, &hw_commands_[0])
+  //   );
+
+
+  //   for (size_t i = 0; i < info_.joints.size(); ++i) {
+  //     command_interfaces.emplace_back(hardware_interface::CommandInterface(
+  //       // TODO(anyone): insert correct interfaces
+  //       info_.joints[i].name, hardware_interface::HW_IF_EFFORT, &hw_commands_[i]));
+  //   }
+
+  //   return command_interfaces;
+  // }
 
   hardware_interface::CallbackReturn UiroverHardwareInterface::on_activate(
     const rclcpp_lifecycle::State& /*previous_state*/) {
-    // TODO(anyone): prepare the robot to receive commands
 
     return CallbackReturn::SUCCESS;
   }

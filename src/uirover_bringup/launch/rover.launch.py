@@ -1,16 +1,20 @@
-from launch import LaunchDescription
-
-from launch.actions import IncludeLaunchDescription, ExecuteProcess, OpaqueFunction, RegisterEventHandler
-from launch.launch_description_sources import AnyLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution, Command, FindExecutable
-from launch.event_handlers import OnProcessExit
-
-from launch_ros.actions import Node
-from launch_ros.substitutions import FindPackageShare
 
 import os
 from time import strftime
 
+# Setting env variables before importing ROS2 packages just in case they are read during import
+os.environ["ROS_DOMAIN_ID"] = "1"
+os.environ["ROS_AUTOMATIC_DISCOVERY_RANGE"] = "SYSTEM_DEFAULT"
+os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
+
+from launch import LaunchDescription
+
+from launch.actions import IncludeLaunchDescription, ExecuteProcess
+from launch.launch_description_sources import AnyLaunchDescriptionSource
+from launch.substitutions import PathJoinSubstitution, Command, FindExecutable
+
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
 
@@ -129,6 +133,7 @@ def generate_launch_description():
         package="foxglove_bridge",
         executable="foxglove_bridge",
         name="foxglove_bridge",
+        output="log"
     )
     # higher deadzone makes it easier to drive straight
     node_gamepad_publisher = Node(
@@ -157,16 +162,16 @@ def generate_launch_description():
     # Zenoh Bridge
     # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
     cmd_zenoh_bridge = ExecuteProcess(
-        cmd="zenoh-bridge-dds --no-multicast-scouting -l udp/0.0.0.0:7447".split(
+        cmd="zenoh-bridge-ros2dds --no-multicast-scouting -l udp/0.0.0.0:7447".split(
             " "
         ),
-        output="screen",
+        output="log",
     )
     cmd_ros_bag = ExecuteProcess(
-        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')}_gazebo -a -d 9000".split(
+        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')} -a -d 9000".split(
             " "
         ),
-        output="screen",
+        output="log",
     )
 
     launch_description = LaunchDescription([

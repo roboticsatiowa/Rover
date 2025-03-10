@@ -1,3 +1,9 @@
+import os
+from time import strftime
+
+# Setting env variables before importing ROS2 packages just in case they are read during import
+os.environ["ROS_AUTOMATIC_DISCOVERY_RANGE"] = "LOCALHOST"
+
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -15,8 +21,6 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-
-from time import strftime
 
 
 FOXGLOVE_URL = "https://app.foxglove.dev/uiowarobotics/view?openIn=desktop&ds=foxglove-websocket&ds.url=ws%3A%2F%2Flocalhost%3A8765"

@@ -20,37 +20,37 @@
 
             <!-- Joints -->
             <joint name="fl_wheel_joint">
-                <command_interface name="velocity">
+                <command_interface name="effort">
                     <param name="min">-1</param>
                     <param name="max">1</param>
                 </command_interface>
             </joint>
             <joint name="fr_wheel_joint">
-                <command_interface name="velocity">
+                <command_interface name="effort">
                     <param name="min">-1</param>
                     <param name="max">1</param>
                 </command_interface>
             </joint>
             <joint name="bl_wheel_joint">
-                <command_interface name="velocity">
+                <command_interface name="effort">
                     <param name="min">-1</param>
                     <param name="max">1</param>
                 </command_interface>
             </joint>
             <joint name="br_wheel_joint">
-                <command_interface name="velocity">
+                <command_interface name="effort">
                     <param name="min">-1</param>
                     <param name="max">1</param>
                 </command_interface>
             </joint>
             <joint name="ml_wheel_joint">
-                <command_interface name="velocity">
+                <command_interface name="effort">
                     <param name="min">-1</param>
                     <param name="max">1</param>
                 </command_interface>
             </joint>
             <joint name="mr_wheel_joint">
-                <command_interface name="velocity">
+                <command_interface name="effort">
                     <param name="min">-1</param>
                     <param name="max">1</param>
                 </command_interface>
