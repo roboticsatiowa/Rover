@@ -3,6 +3,7 @@ from time import strftime
 
 # Setting env variables before importing ROS2 packages just in case they are read during import
 os.environ["ROS_AUTOMATIC_DISCOVERY_RANGE"] = "LOCALHOST"
+os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
 
 from launch import LaunchDescription
 from launch.actions import (
@@ -10,11 +11,12 @@ from launch.actions import (
     ExecuteProcess,
     IncludeLaunchDescription,
     RegisterEventHandler,
-    OpaqueFunction,
 )
 from launch.substitutions import (
     PathJoinSubstitution,
     LaunchConfiguration,
+    FindExecutable,
+    Command
 )
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -39,6 +41,20 @@ def generate_launch_description():
         PathJoinSubstitution(
             [FindPackageShare("uirover_gazebo"), "config", "bridge_config.yaml"]
         ),
+    )
+
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [
+                    FindPackageShare("uirover_description"),
+                    "urdf",
+                    "uirover.urdf.xacro",
+                ]
+            ),
+        ]
     )
 
     # ======= Launch files ======= #
@@ -68,28 +84,6 @@ def generate_launch_description():
         # launch_arguments=[("gz_args", [" -r -v 1 empty.sdf"])],
     )
 
-    # We use a launch action to launch the robot state publisher because the launch context is needed to perform the path join substitution
-    def robot_state_publisher(context):
-        robot_description = PathJoinSubstitution(
-            [
-                FindPackageShare("uirover_description"),
-                "urdf",
-                "uirover_sim.urdf",
-            ],
-        )
-
-        with open(robot_description.perform(context), "r") as fd:
-            robot_description_content = fd.read()
-
-        node_robot_state_publisher = Node(
-            package="robot_state_publisher",
-            executable="robot_state_publisher",
-            output="screen",
-            parameters=[{"robot_description": robot_description_content}],
-        )
-
-        return [node_robot_state_publisher]
-
     # ======= Nodes ======= #
 
     node_gazebo_spawn_urdf = Node(
@@ -107,15 +101,23 @@ def generate_launch_description():
             "4",
         ],
     )
+    node_robot_state_publisher = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="screen",
+        parameters=[{"robot_description": robot_description_content}],
+    )
     # increased timeouts to give gazebo more time to load
     node_joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_state_broadcaster", 
-                   "--switch-timeout", 
-                   "20.0",
-                   "--service-call-timeout",
-                   "20.0"],
+        arguments=[
+            "joint_state_broadcaster",
+            "--switch-timeout",
+            "20.0",
+            "--service-call-timeout",
+            "20.0",
+        ],
     )
     node_diff_drive_controller_spawner = Node(
         package="controller_manager",
@@ -158,6 +160,7 @@ def generate_launch_description():
                 "require_enable_button": False,
                 "axis_angular.yaw": 0,
                 "axis_linear.x": 1,
+                "scale_linear.x": 2.5, # 0 - 255 
             }
         ],
     )
@@ -196,6 +199,7 @@ def generate_launch_description():
             ),
             node_gazebo_spawn_urdf,
             launch_gazebo,
+            node_robot_state_publisher,
             node_gazebo_parameter_bridge,
             node_foxglove_bridge,
             node_gamepad_publisher,
@@ -204,7 +208,5 @@ def generate_launch_description():
             arg_use_sim_time,
         ]
     )
-
-    launch_description.add_action(OpaqueFunction(function=robot_state_publisher))
 
     return launch_description

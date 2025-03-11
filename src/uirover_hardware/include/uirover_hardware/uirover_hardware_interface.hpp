@@ -19,6 +19,7 @@
 #include <vector>
 #include <termios.h>
 
+
 #include "uirover_hardware/visibility_control.h"
 #include "hardware_interface/system_interface.hpp"
 #include "hardware_interface/handle.hpp"
@@ -38,11 +39,11 @@ public:
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
   hardware_interface::CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
 
-  // TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  // std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+  TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
+  std::vector<hardware_interface::StateInterface::ConstSharedPtr> on_export_state_interfaces() override;
 
-  // TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
-  // std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+  TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
+  std::vector<hardware_interface::CommandInterface::SharedPtr> on_export_command_interfaces() override;
 
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
   hardware_interface::CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
@@ -56,12 +57,27 @@ public:
   TEMPLATES__ROS2_CONTROL__VISIBILITY_PUBLIC
   hardware_interface::return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
+  ~UiroverHardwareInterface();
+
 private:
-  std::vector<double> hw_commands_;
+  double fl_wheel_velocity_command_;
+  double fr_wheel_velocity_command_;
+  double ml_wheel_velocity_command_;
+  double mr_wheel_velocity_command_;
+  double bl_wheel_velocity_command_;
+  double br_wheel_velocity_command_;
+
   std::vector<double> hw_states_;
+
+  std::vector<double> prev_hw_commands_;
+
   int teensy_fd;
   struct termios tty;
+  char* serial_buffer;
   int baudrate = B115200;
+
+
+  void serial_write(std::string msg);
 };
 
 }  // namespace uirover_hardware

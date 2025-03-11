@@ -153,6 +153,7 @@ def generate_launch_description():
                 "require_enable_button": False,
                 "axis_angular.yaw": 0,
                 "axis_linear.x": 1,
+                "scale_linear.x": 2.5, # 0 - 255 
             }
         ],
     )
@@ -180,7 +181,6 @@ def generate_launch_description():
         node_robot_state_publisher,
         node_controller_spawner,
         node_joint_state_broadcaster_spawner,
-
         node_foxglove_bridge,
         node_gamepad_publisher,
         node_twist_publisher,
