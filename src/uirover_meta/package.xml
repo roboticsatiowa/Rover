@@ -7,6 +7,7 @@
   <maintainer email="holterethan@gmail.com">ethan</maintainer>
   <license>GPL-3.0-only</license>
 
+  <!-- UIROVER -->
   <depend>uirover_bringup</depend>
   <depend>uirover_controllers</depend>
   <depend>uirover_description</depend>

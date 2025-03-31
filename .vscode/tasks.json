@@ -81,6 +81,32 @@
 		},
 		{
 			"type": "ros",
+			"command": "source  install/setup.bash && ros2 launch uirover_bringup rover.launch.py",
+			"label": "ROS run rover",
+			"options": {
+				"statusbar": {
+					"label": "ROS run rover",
+					"backgroundColor": "statusBarItem.warningBackground",
+					"running": {
+						"label": "Rover is running"
+					},
+				},
+				"shell": {
+					"executable": "/bin/bash",
+					"args": ["-c"]
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
+		},
+		{
+			"type": "ros",
 			"command": "source  install/setup.bash && ros2 launch uirover_description preview_urdf.launch.py",
 			"label": "ROS view urdf",
 			"options": {

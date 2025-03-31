@@ -6,18 +6,64 @@
     <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
 
     <xacro:macro name="uirover_ros2_control" params="use_gazebo:=^|false">
-        <ros2_control name="uirover_control" type="system" >
+
+        <ros2_control name="uirover_hardware_system" type="system">
+            <!-- Hardware Plugin -->
             <hardware>
                 <xacro:if value="${use_gazebo}">
                     <plugin>gz_ros2_control/GazeboSimSystem</plugin>
                 </xacro:if>
-                <!-- <xacro:unless value="${use_gazebo}">
-                    <plugin>uirover_hardware/RRBotSystemPositionOnlyHardware</plugin>
-                    <param name="example_param_hw_start_duration_sec">0</param>
-                    <param name="example_param_hw_stop_duration_sec">3.0</param>
-                    <param name="example_param_hw_slowdown">100</param>
-                </xacro:unless> -->
+                <xacro:unless value="${use_gazebo}">
+                    <plugin>uirover_hardware/UiroverHardwareInterface</plugin>
+                </xacro:unless>
             </hardware>
+
+            <!-- Joints -->
+            <joint name="fl_wheel_joint">
+                <command_interface name="velocity">
+                    <param name="min">-1</param>
+                    <param name="max">1</param>
+                </command_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="fr_wheel_joint">
+                <command_interface name="velocity">
+                    <param name="min">-1</param>
+                    <param name="max">1</param>
+                </command_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="bl_wheel_joint">
+                <command_interface name="velocity">
+                    <param name="min">-1</param>
+                    <param name="max">1</param>
+                </command_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="br_wheel_joint">
+                <command_interface name="velocity">
+                    <param name="min">-1</param>
+                    <param name="max">1</param>
+                </command_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="ml_wheel_joint">
+                <command_interface name="velocity">
+                    <param name="min">-1</param>
+                    <param name="max">1</param>
+                </command_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="mr_wheel_joint">
+                <command_interface name="velocity">
+                    <param name="min">-1</param>
+                    <param name="max">1</param>
+                </command_interface>
+                <state_interface name="velocity"/>
+            </joint>
         </ros2_control>
+
     </xacro:macro>
+
+
 </robot>

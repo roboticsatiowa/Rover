@@ -1,38 +1,11 @@
 <?xml version="1.0"?>
 <robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-    <!-- <gazebo>
+    <gazebo>
         <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-            <parameters>$(find ros2_control_demo_example_9)/config/rrbot_controllers.yaml</parameters>
+            <parameters>$(find uirover_description)/config/diff_drive.yaml</parameters>
         </plugin>
-    </gazebo> -->
-
-    <!-- should probably change the color at some point. or not. orange is cool -->
-
-    <gazebo reference="br_wheel">
-        <material>Gazebo/Orange</material>
+        <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
     </gazebo>
-    <gazebo reference="bl_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="mr_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="ml_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="fr_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="fl_wheel">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-
-    <gazebo reference="chassis">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <gazebo reference="arm_platform">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-
 </robot>

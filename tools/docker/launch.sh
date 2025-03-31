@@ -12,6 +12,6 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-docker compose -f docker/compose.yml up
+docker run -it --privileged --network host uirover:latest
 
 echo "Rover is running"

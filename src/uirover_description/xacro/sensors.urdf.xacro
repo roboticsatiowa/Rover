@@ -2,18 +2,62 @@
 <robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="$(find uirover_description)/xacro/utility_macros.xacro" />
 
-    <xacro:macro name="uirover_sensors" params="use_gazebo:=^|false">
-        <!-- =============================== -->
-        <!--            SENSORS              -->
-        <!-- =============================== -->
-
-        <!-- ARDUCAM CAMERA -->
-        <xacro:arducam name="demo_camera" use_gazebo="true" />
-        <joint name="front_camera_joint" type="fixed">
-            <origin xyz="0.0 0.2 0.8" rpy="0.0 0.5 0.0" />
-            <parent link="base_link" />
-            <child link="demo_camera" />
-        </joint>
+    <xacro:macro name="arducam" params="name">
+        <link name="${name}">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} 0.0" />
+                <geometry>
+                    <cylinder radius="0.01" length="0.01" />
+                </geometry>
+                <material name="Grey">
+                    <color rgba="0.7 0.7 0.7 1.0" />
+                </material>
+            </visual>
+            <visual>
+                <origin xyz="-0.005 0.0 0.0" rpy="0.0 0.0 0.0" />
+                <geometry>
+                    <box size="0.005 0.03 0.03" />
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="0.01" length="0.01" />
+                </geometry>
+            </collision>
+            <xacro:cylinder_inertia_tensor mass="0.1" radius="0.01" length="0.01" />
+        </link>
+        <gazebo reference="${name}">
+            <sensor name="camera" type="camera">
+                <topic>${name}</topic>
+                <camera>
+                    <box_type>2d</box_type>
+                    <!-- 110 deg FOV -->
+                    <horizontal_fov>1.9198</horizontal_fov>
+                    <image>
+                        <width>800</width>
+                        <height>600</height>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>30</update_rate>
+                <visualize>true</visualize>
+            </sensor>
+        </gazebo>
     </xacro:macro>
 
+    <!-- =============================== -->
+    <!--            SENSORS              -->
+    <!-- =============================== -->
+
+    <!-- ARDUCAM CAMERA -->
+    <xacro:arducam name="antenna_camera" />
+    <joint name="antenna_camera_joint" type="fixed">
+        <origin xyz="-0.24 0.28 1.3" rpy="0.0 0.5 0.0" />
+        <parent link="base_link" />
+        <child link="antenna_camera" />
+    </joint>
 </robot>
