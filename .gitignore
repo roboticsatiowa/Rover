@@ -1,7 +1,10 @@
 .idea
 .vscode/*
 !.vscode/tasks.json
+.cache/
+ros_logs/
 bag/
 build/
 install/
 log/
+
