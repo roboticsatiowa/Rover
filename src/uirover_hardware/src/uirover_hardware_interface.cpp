@@ -23,7 +23,6 @@
 
 #include "uirover_hardware/uirover_hardware_interface.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
-#include "rclcpp/rclcpp.hpp"
 
 namespace uirover_hardware {
 
@@ -75,9 +74,8 @@ namespace uirover_hardware {
     tty.c_oflag &= ~OPOST;         // Prevent special interpretation of output bytes (e.g. newline chars)
     tty.c_oflag &= ~ONLCR;         // Prevent conversion of newline to carriage return/line feed
 
-    // read op will block for 0.01 seconds if no data is available. Timeout was chosen completely arbitrarily.
     tty.c_cc[VMIN] = 0;     // No minimum number of bytes to read
-    tty.c_cc[VTIME] = 0.1;  // 0.1 deciseconds (0.01 seconds) timeout for read
+    tty.c_cc[VTIME] = 0;  // deciseconds - timeout for read
 
     // Set the baud rate
     cfsetspeed(&tty, baudrate);
@@ -149,7 +147,7 @@ namespace uirover_hardware {
   hardware_interface::return_type UiroverHardwareInterface::write(
     const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
       std::string msg = "l " + std::to_string((int)(ml_wheel_velocity_command_)) + " " + std::to_string((int)(mr_wheel_velocity_command_)) + "\n\r";
-      RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"),msg.c_str());
+      RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"),"%s", msg.c_str());
       serial_write(msg);
     return hardware_interface::return_type::OK;
   }

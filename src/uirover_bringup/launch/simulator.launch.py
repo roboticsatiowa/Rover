@@ -16,7 +16,7 @@ from launch.substitutions import (
     PathJoinSubstitution,
     LaunchConfiguration,
     FindExecutable,
-    Command
+    Command,
 )
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -51,7 +51,7 @@ def generate_launch_description():
                 [
                     FindPackageShare("uirover_description"),
                     "urdf",
-                    "uirover.urdf.xacro",
+                    "uirover_sim.urdf.xacro",
                 ]
             ),
         ]
@@ -134,13 +134,14 @@ def generate_launch_description():
         package="ros_gz_bridge",
         executable="parameter_bridge",
         output="screen",
-        # arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
         parameters=[{"config_file": gz_bridg_config}],
+
     )
     node_foxglove_bridge = Node(
         package="foxglove_bridge",
         executable="foxglove_bridge",
         name="foxglove_bridge",
+        ros_arguments=["--log-level", "foxglove_bridge:=ERROR"],
     )
     # higher deadzone makes it easier to drive straight
     node_gamepad_publisher = Node(
@@ -160,7 +161,7 @@ def generate_launch_description():
                 "require_enable_button": False,
                 "axis_angular.yaw": 0,
                 "axis_linear.x": 1,
-                "scale_linear.x": 2.5, # 0 - 255 
+                "scale_linear.x": 2.5,  # 0 - 255
             }
         ],
     )
@@ -168,7 +169,7 @@ def generate_launch_description():
     # ======= Processes ======= #
 
     cmd_ros_bag = ExecuteProcess(
-        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')}_gazebo -a -d 9000".split(
+        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')}_gazebo -a -d 9000 --log-level error".split(
             " "
         ),
         output="screen",
@@ -185,20 +186,21 @@ def generate_launch_description():
     launch_description = LaunchDescription(
         [
             # Event handlers used to start nodes in a predictable order
-            RegisterEventHandler(
-                event_handler=OnProcessExit(
-                    target_action=node_gazebo_spawn_urdf,
-                    on_exit=[node_joint_state_broadcaster_spawner],
-                )
-            ),
-            RegisterEventHandler(
-                event_handler=OnProcessExit(
-                    target_action=node_joint_state_broadcaster_spawner,
-                    on_exit=[node_diff_drive_controller_spawner],
-                )
-            ),
+            # RegisterEventHandler(
+            #     event_handler=OnProcessExit(
+            #         target_action=node_gazebo_spawn_urdf,
+            #         on_exit=[node_joint_state_broadcaster_spawner],
+            #     )
+            # ),
+            # RegisterEventHandler(
+            #     event_handler=OnProcessExit(
+            #         target_action=node_joint_state_broadcaster_spawner,
+            #         on_exit=[],
+            #     )
+            # ),
+            node_joint_state_broadcaster_spawner,
+            node_diff_drive_controller_spawner,
             node_gazebo_spawn_urdf,
-            launch_gazebo,
             node_robot_state_publisher,
             node_gazebo_parameter_bridge,
             node_foxglove_bridge,
@@ -206,6 +208,7 @@ def generate_launch_description():
             node_twist_publisher,
             cmd_ros_bag,
             arg_use_sim_time,
+            launch_gazebo,
         ]
     )
 

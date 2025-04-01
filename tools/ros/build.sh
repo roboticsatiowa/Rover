@@ -25,8 +25,12 @@ function print_stderr_logs () {
 rm -f "${WS_DIR}"/src/uirover_description/urdf/*.urdf
 
 # desktop_notification- console_stderr- disable annoying features of colcon
-(cd $WS_DIR && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug --parallel-workers 0 --symlink-install --event-handlers desktop_notification- console_stderr- || print_stderr_logs)
+(cd $WS_DIR && colcon build --mixin compile-commands --cmake-args -DCMAKE_BUILD_TYPE=Debug --parallel-workers 0 --symlink-install --event-handlers desktop_notification- console_stderr- || print_stderr_logs)
 
+echo "export ROS_DOMAIN_ID=1" >> "${WS_DIR}/install/setup.bash"
+echo "export RCUTILS_COLORIZED_OUTPUT=1" >> "${WS_DIR}/install/setup.bash"
+echo "export FASTRTPS_DEFAULT_PROFILES_FILE='${WS_DIR}/super_client_configuration_file.xml'" >> "${WS_DIR}/install/setup.bash"
+echo "export ROS_DISCOVERY_SERVER=192.168.1.2:11811" >> "${WS_DIR}/install/setup.bash"
 
 # Ideally we would automatically source the setup.bash file after building, but this is causing bash tab completion to completetly crash gnome-terminal.
 # Not sure why, but in case this ever gets fixed, here is the line to do it:

@@ -1,5 +1,11 @@
+
 import os
 from time import strftime
+
+# Setting env variables before importing ROS2 packages just in case they are read during import
+os.environ["ROS_DOMAIN_ID"] = "1"
+os.environ["ROS_AUTOMATIC_DISCOVERY_RANGE"] = "SYSTEM_DEFAULT"
+os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
 
 from launch import LaunchDescription
 
@@ -10,8 +16,15 @@ from launch.substitutions import PathJoinSubstitution, Command, FindExecutable
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
-
 def generate_launch_description():
+
+    common_params = {
+        "rover_host": "192.168.1.2",
+        "rover_hostname": "uirover",
+        "basestation_host": "192.168.1.3",
+        "basestation_hostname": "uibasestation",
+    }
+
     controller_config = PathJoinSubstitution(
         [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
     )
@@ -33,6 +46,7 @@ def generate_launch_description():
             ),
         ]
     )
+    
 
     # Arducam
     # list devices in /dev that start with "CAM" as per the udev rule
@@ -46,7 +60,7 @@ def generate_launch_description():
                 Node(
                     package="uirover_arducam",
                     executable="arducam_video",
-                    parameters=[{"cam_index": i}],
+                    parameters=[{"cam_index": i}, common_params],
                     respawn=True,
                     respawn_delay=10,
                 )
@@ -55,11 +69,12 @@ def generate_launch_description():
     # Realsense Camera
     launch_realsense_d435i = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
-            PathJoinSubstitution(
+                PathJoinSubstitution(
                 [
                     FindPackageShare("realsense2_camera"),
                     "launch/rs_launch.py",
                 ]
+
             )
         ),
         launch_arguments={
@@ -79,13 +94,14 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
-        parameters=[{"robot_description": robot_description_content}],
+        parameters=[{"robot_description":robot_description_content}],
     )
     node_ublox_gps = Node(
         package="ublox_gps",
         executable="ublox_gps_node",
         name="ublox_gps_node",
-        parameters=[ublox_config],
+        parameters=[ublox_config]
+        
     )
     node_ros2_control = Node(
         package="controller_manager",
@@ -96,13 +112,11 @@ def generate_launch_description():
     node_joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=[
-            "joint_state_broadcaster",
-            "--switch-timeout",
-            "20.0",
-            "--service-call-timeout",
-            "20.0",
-        ],
+        arguments=["joint_state_broadcaster", 
+                   "--switch-timeout", 
+                   "20.0",
+                   "--service-call-timeout",
+                   "20.0"],
     )
     node_controller_spawner = Node(
         package="controller_manager",
@@ -119,7 +133,7 @@ def generate_launch_description():
         package="foxglove_bridge",
         executable="foxglove_bridge",
         name="foxglove_bridge",
-        output="log",
+        output="log"
     )
     # higher deadzone makes it easier to drive straight
     node_gamepad_publisher = Node(
@@ -139,24 +153,13 @@ def generate_launch_description():
                 "require_enable_button": False,
                 "axis_angular.yaw": 0,
                 "axis_linear.x": 1,
-                "scale_linear.x": 2.5,  # 0 - 255
+                "scale_linear.x": 2.5, # 0 - 255 
             }
         ],
     )
 
     # ======= Processes ======= #
 
-    # Zenoh Bridge
-    # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
-    cmd_zenoh_bridge = ExecuteProcess(
-        cmd=[
-            "zenoh-bridge-ros2dds",
-            "--no-multicast-scouting",
-            "-l",
-            "udp/0.0.0.0:7447",
-        ],
-        output="log",
-    )
     cmd_ros_bag = ExecuteProcess(
         cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')} -a -d 9000".split(
             " "
@@ -164,20 +167,17 @@ def generate_launch_description():
         output="log",
     )
 
-    launch_description = LaunchDescription(
-        [
-            node_ros2_control,
-            node_robot_state_publisher,
-            node_controller_spawner,
-            node_joint_state_broadcaster_spawner,
-            node_foxglove_bridge,
-            node_gamepad_publisher,
-            node_twist_publisher,
-            cmd_zenoh_bridge,
-            cmd_ros_bag,
-            node_ublox_gps,
-            launch_realsense_d435i,
-        ]
-    )
+    launch_description = LaunchDescription([
+        node_ros2_control,
+        node_robot_state_publisher,
+        node_controller_spawner,
+        node_joint_state_broadcaster_spawner,
+        node_foxglove_bridge,
+        node_gamepad_publisher,
+        node_twist_publisher,
+        cmd_ros_bag,
+        node_ublox_gps,
+        launch_realsense_d435i,
+    ])
 
     return launch_description
