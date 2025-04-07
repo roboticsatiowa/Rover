@@ -1,10 +1,6 @@
-
 import os
 from time import strftime
 
-# Setting env variables before importing ROS2 packages just in case they are read during import
-os.environ["ROS_DOMAIN_ID"] = "1"
-os.environ["ROS_AUTOMATIC_DISCOVERY_RANGE"] = "SYSTEM_DEFAULT"
 os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
 
 from launch import LaunchDescription
@@ -17,13 +13,6 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
-
-    common_params = {
-        "rover_host": "192.168.1.2",
-        "rover_hostname": "uirover",
-        "basestation_host": "192.168.1.3",
-        "basestation_hostname": "uibasestation",
-    }
 
     controller_config = PathJoinSubstitution(
         [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
@@ -46,25 +35,7 @@ def generate_launch_description():
             ),
         ]
     )
-    
 
-    # Arducam
-    # list devices in /dev that start with "CAM" as per the udev rule
-    arducam_nodes = []
-    if os.path.exists("/dev/Arducam"):
-        arducam_devices = [
-            int(i[3]) for i in os.listdir("/dev/Arducam") if i.startswith("CAM")
-        ]
-        for i in arducam_devices:
-            arducam_nodes.append(
-                Node(
-                    package="uirover_arducam",
-                    executable="arducam_video",
-                    parameters=[{"cam_index": i}, common_params],
-                    respawn=True,
-                    respawn_delay=10,
-                )
-            )
     # https://github.com/introlab/rtabmap_ros/blob/ros2/rtabmap_examples/launch/realsense_d435i_stereo.launch.py
     # Realsense Camera
     launch_realsense_d435i = IncludeLaunchDescription(
@@ -88,6 +59,11 @@ def generate_launch_description():
             "enable_accel": "true",
             "enable_infra1": "true",
         }.items(),
+    )
+    node_video = Node(
+        package="uirover_video",
+        executable="camera_stream",
+        output="both",
     )
     # publishes a topic containing the robots urdf description
     node_robot_state_publisher = Node(
@@ -128,19 +104,6 @@ def generate_launch_description():
             "-p",
             controller_config,
         ],
-    )
-    node_foxglove_bridge = Node(
-        package="foxglove_bridge",
-        executable="foxglove_bridge",
-        name="foxglove_bridge",
-        output="log"
-    )
-    # higher deadzone makes it easier to drive straight
-    node_gamepad_publisher = Node(
-        package="joy",
-        executable="joy_node",
-        name="joy_node",
-        parameters=[{"coalesce_interval": 0.5, "deadzone": 0.20}],
     )
     node_twist_publisher = Node(
         package="teleop_twist_joy",
