@@ -2,17 +2,17 @@
 
 set -eo pipefail
 
-SCRIPT_DIR=$(cd "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+SCRIPT_DIR=$( cd "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 cd "$SCRIPT_DIR"
 
 #make sure docker is installed
-if ! command -v docker &>/dev/null; then
-  echo "ERROR: Docker is not installed"
-  exit 1
+if ! command -v docker &> /dev/null; then
+    echo "ERROR: Docker is not installed"
+    exit 1
 fi
 
-docker run -it --privileged --network host -P 11811:11811, uirover:latest
+docker run -it --privileged --net host -v $SCRIPT_DIR/../..:/rover -v /dev:/dev uirover:latest $1
 
 echo "Rover is running"
 

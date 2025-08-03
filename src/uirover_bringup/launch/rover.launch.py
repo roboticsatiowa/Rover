@@ -1,4 +1,5 @@
 import os
+from platform import node
 from time import strftime
 
 os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
@@ -35,6 +36,26 @@ def generate_launch_description():
             ),
         ]
     )
+
+    camera_nodes = []
+    for camera in os.listdir('/dev/Arducam'):
+        index = int(camera[3:])
+        camera_nodes.append(
+            Node(
+                package="uirover_video",
+                executable="stream",
+                name=f"arducam_{index}",
+                output="both",
+                parameters=[{
+                    'port': 5000 + index,
+                    'device': f"/dev/Arducam/{camera}",
+                    'host': '192.168.55.2'
+                }]
+            )
+        )
+
+    # Include the camera nodes in the launch description
+        
 
     # https://github.com/introlab/rtabmap_ros/blob/ros2/rtabmap_examples/launch/realsense_d435i_stereo.launch.py
     # Realsense Camera
@@ -126,9 +147,7 @@ def generate_launch_description():
     # Zenoh Bridge
     # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
     cmd_zenoh_bridge = ExecuteProcess(
-        cmd="zenoh-bridge-ros2dds --no-multicast-scouting -l udp/0.0.0.0:7447".split(
-            " "
-        ),
+        cmd=["zenoh-bridge-ros2dds"],
         output="log",
     )
     cmd_ros_bag = ExecuteProcess(
@@ -137,20 +156,22 @@ def generate_launch_description():
         ),
         output="log",
     )
-
-    launch_description = LaunchDescription([
+    
+    nodes = [
         # ros2_control
         node_ros2_control,
         node_robot_state_publisher,
         node_controller_spawner,
         node_joint_state_broadcaster_spawner,
-        node_foxglove_bridge,
-        node_gamepad_publisher,
         node_twist_publisher,
         cmd_zenoh_bridge,
         cmd_ros_bag,
         node_ublox_gps,
         launch_realsense_d435i,
-    ])
+    ]
+    nodes.extend(camera_nodes)
+
+    launch_description = LaunchDescription(nodes)
 
     return launch_description
+
