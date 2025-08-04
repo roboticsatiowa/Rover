@@ -124,6 +124,8 @@ namespace uirover_hardware {
 
   hardware_interface::CallbackReturn UiroverHardwareInterface::on_activate(
     const rclcpp_lifecycle::State& /*previous_state*/) {
+      RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "recieved activation signal");
+
 
     return CallbackReturn::SUCCESS;
   }
@@ -149,7 +151,6 @@ namespace uirover_hardware {
   hardware_interface::return_type UiroverHardwareInterface::write(
     const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
       std::string msg = "l " + std::to_string((int)(ml_wheel_velocity_command_)) + " " + std::to_string((int)(mr_wheel_velocity_command_)) + "\n\r";
-      RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"),msg.c_str());
       serial_write(msg);
     return hardware_interface::return_type::OK;
   }

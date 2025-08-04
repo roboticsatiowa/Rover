@@ -32,7 +32,8 @@ RUN apt-get update && apt-get install -y \
 RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | tee -a /etc/apt/sources.list > /dev/null
 RUN apt-get update && apt-get install -y \
     zenoh-bridge-ros2dds \
-    ros-jazzy-rmw-cyclonedds-cpp
+    ros-jazzy-rmw-cyclonedds-cpp \
+    python3-serial
 
     
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp

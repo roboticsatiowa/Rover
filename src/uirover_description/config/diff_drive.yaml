@@ -5,6 +5,10 @@
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    hardware_components_initial_state:
+      inactive:
+        - "uirover_hardware_system"
+
 /**/diff_drive_base_controller:
   ros__parameters:
     type: diff_drive_controller/DiffDriveController
