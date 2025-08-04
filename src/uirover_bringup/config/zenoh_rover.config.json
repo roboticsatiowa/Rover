@@ -3,16 +3,18 @@
     "ros2dds": {
       "nodename": "zenoh-bridge",
       "namespace": "/",
-      "domain": 1,
-
+      "domain": 0,
       "ros_automatic_discovery_range": "LOCALHOST",
       "reliable_routes_blocking": false,
-      "pub_priorities": ["/joy=1:express"]
+      "allow": {
+        "publishers": [".*/cmd_vel"],
+        "subscribers": ["/joy"]
+      }
     }
   },
   "connect": {
     "endpoints": [
-      "udp/192.168.55.1:7447"
+      "udp/192.168.55.100:7447"
     ]
   },
   "listen": {
