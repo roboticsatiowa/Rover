@@ -38,21 +38,25 @@ def generate_launch_description():
     )
 
     camera_nodes = []
-    for camera in os.listdir('/dev/Arducam'):
-        index = int(camera[3:])
-        camera_nodes.append(
-            Node(
-                package="uirover_video",
-                executable="stream",
-                name=f"arducam_{index}",
-                output="both",
-                parameters=[{
-                    'port': 5000 + index,
-                    'device': f"/dev/Arducam/{camera}",
-                    'host': '192.168.55.2'
-                }]
+    try :
+        for camera in os.listdir('/dev/Arducam'):
+            index = int(camera[3:])
+            camera_nodes.append(
+                Node(
+                    package="uirover_video",
+                    executable="stream",
+                    name=f"arducam_{index}",
+                    output="both",
+                    parameters=[{
+                        'port': 5000 + index,
+                        'device': f"/dev/Arducam/{camera}",
+                        'host': '192.168.55.100'
+                    }]
+                )
             )
-        )
+    except FileNotFoundError:
+        # If the directory does not exist, we assume no cameras are connected
+        pass
 
     # Include the camera nodes in the launch description
         
@@ -147,6 +151,7 @@ def generate_launch_description():
     # Zenoh Bridge
     # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
     cmd_zenoh_bridge = ExecuteProcess(
+        # cmd=["zenoh-bridge-ros2dds", "-e", "tcp/192.168.55.100:7447"],
         cmd=["zenoh-bridge-ros2dds"],
         output="log",
     )
@@ -164,7 +169,7 @@ def generate_launch_description():
         node_controller_spawner,
         node_joint_state_broadcaster_spawner,
         node_twist_publisher,
-        cmd_zenoh_bridge,
+        # cmd_zenoh_bridge,
         cmd_ros_bag,
         node_ublox_gps,
         launch_realsense_d435i,

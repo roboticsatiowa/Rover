@@ -4,7 +4,6 @@ FROM ros:jazzy-ros-base-noble
 
 SHELL ["/bin/bash", "-c"]
 
-# This is technically redundant but installing most of the big dependencies here reduces build times significantly via caching
 RUN apt-get update && apt-get install -y \
     ros-jazzy-controller-manager \
     ros-jazzy-cv-bridge \
@@ -39,4 +38,5 @@ RUN apt-get update && apt-get install -y \
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 WORKDIR /rover
 SHELL ["/bin/bash", "-c"]
-ENTRYPOINT ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /rover/install/setup.bas
+ENTRYPOINT ["bash", "-c"]
+CMD ["/rover/docker_entrypoint"]
