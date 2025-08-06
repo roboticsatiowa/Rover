@@ -17,11 +17,9 @@ def generate_launch_description():
     # Zenoh Bridge
     # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
     launch_description_list.append(
-        ExecuteProcess(
-            cmd=['zenoh-bridge-ros2dds', 
-                 '-c', 
-                 zenoh_config],
-            output="both",
+        Node(
+            package="rmw_zenoh_cpp",
+            executable="rmw_zenohd"
         )
     )
     

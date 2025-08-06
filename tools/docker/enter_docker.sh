@@ -12,7 +12,12 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-docker run -it --privileged --net host -v $SCRIPT_DIR/../..:/rover -v /dev:/dev uirover:latest $1
+docker run \
+    -it \
+    --privileged \
+    --net host \
+    -v "$SCRIPT_DIR"/../..:/rover \
+    uirover:latest "$1"
 
 echo "Rover is running"
 

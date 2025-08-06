@@ -1,0 +1,21 @@
+// Default config: https://github.com/eclipse-zenoh/zenoh/blob/main/DEFAULT_CONFIG.json5
+// Default session config: https://github.com/ros2/rmw_zenoh/blob/rolling/rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5
+
+{
+    mode: "peer",
+    connect: {
+        endpoints: [
+            "udp/192.168.55.100:7447" // Static IP of the base station. Nvidia Jetson setup default IP address.
+        ]
+    },
+    scouting: {
+        multicast: {
+            enabled: false
+        }
+    }
+    
+    // TODO topic whitelist
+    // TODO downsampling
+    // TODO compression
+    // TODO QOS
+}
