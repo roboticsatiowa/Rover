@@ -1,0 +1,49 @@
+# -------------------------------
+# MapProxy configuration.
+# -------------------------------
+
+# http://localhost:8080/tiles/satellite/webmercator/{z}/{x}/{y}.png
+
+services:
+  demo:
+  tms:
+    use_grid_names: true
+
+layers:
+  - name: satellite
+    title: Maptiler Satellite
+    sources: [satellite_cache]
+
+  - name: topographic
+    title: Maptiler Topographic
+    sources: [topographic_cache]
+  
+
+caches:
+  satellite_cache:
+    grids: [webmercator]
+    sources: [satellite]
+
+  topographic_cache:
+    grids: [webmercator]
+    sources: [topographic]
+    format: image/png
+
+sources:
+  satellite:
+    type: tile
+    grid: webmercator
+    url: https://api.maptiler.com/maps/satellite/%(z)s/%(x)s/%(y)s@2x.jpg?key=WxFfu53BH4R0zjFB5O7W # TODO remove this key
+    transparent: false
+  topographic:
+    type: tile
+    grid: webmercator
+    url: https://api.maptiler.com/maps/topo-v2/%(z)s/%(x)s/%(y)s@2x.png?key=WxFfu53BH4R0zjFB5O7W
+    transparent: true
+
+grids:
+  webmercator:
+    base: GLOBAL_MERCATOR
+    origin: 'nw'
+  geodetic:
+    base: GLOBAL_GEODETIC

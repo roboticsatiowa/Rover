@@ -6,5 +6,6 @@ bag/
 build/
 install/
 log/
+**/mapproxy/cache_data
 .cache/
 ros_logs
