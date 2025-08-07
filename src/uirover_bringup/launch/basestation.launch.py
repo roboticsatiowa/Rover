@@ -1,7 +1,7 @@
 from launch import LaunchDescription 
 import launch
 from launch.actions import ExecuteProcess, IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource, AnyLaunchDescriptionSource
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import PathJoinSubstitution
@@ -37,6 +37,18 @@ def generate_launch_description():
             launch_arguments={
                 "host": "192.168.55.1"
             }.items()
+        )
+    )
+    
+    launch_description_list.append(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                PathJoinSubstitution([
+                    FindPackageShare("uirover_basestation"),
+                    "launch",
+                    "mapproxy.launch.py"
+                ])
+            )
         )
     )
         
