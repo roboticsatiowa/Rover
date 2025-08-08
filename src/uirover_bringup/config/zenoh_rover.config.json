@@ -1,13 +1,13 @@
 {
   "plugins": {
     "ros2dds": {
-      "nodename": "zenoh-bridge",
+      "nodename": "zenoh_bridge",
       "namespace": "/",
       "domain": 0,
       "ros_automatic_discovery_range": "LOCALHOST",
       "reliable_routes_blocking": false,
       "allow": {
-        "publishers": [".*/cmd_vel"],
+        "publishers": ["/fix"],
         "subscribers": ["/joy"]
       }
     }
