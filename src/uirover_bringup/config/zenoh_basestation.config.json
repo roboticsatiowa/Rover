@@ -1,13 +1,12 @@
 {
   "plugins": {
     "ros2dds": {
-      "nodename": "zenoh-bridge",
+      "nodename": "zenoh_bridge_rover",
       "namespace": "/",
-      "domain": 1,
+      "domain": 0,
 
       "ros_automatic_discovery_range": "LOCALHOST",
-      "reliable_routes_blocking": false,
-      "pub_priorities": ["/joy=1:express"]
+      "reliable_routes_blocking": false
     }
   },
   "connect": {
@@ -22,7 +21,7 @@
   },
   "scouting": {
     "multicast": {
-      "enabled": false
+      "enabled": true
     }
   }
 }

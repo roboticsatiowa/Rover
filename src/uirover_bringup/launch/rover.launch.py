@@ -6,7 +6,7 @@ os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
 
 from launch import LaunchDescription
 
-from launch.actions import IncludeLaunchDescription, ExecuteProcess
+from launch.actions import IncludeLaunchDescription, ExecuteProcess, RegisterEventHandler
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution, Command, FindExecutable
 
@@ -85,18 +85,13 @@ def generate_launch_description():
             "enable_infra1": "true",
         }.items(),
     )
-    node_video = Node(
-        package="uirover_video",
-        executable="camera_stream",
-        output="both",
-    )
     # publishes a topic containing the robots urdf description
-    node_robot_state_publisher = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        output="both",
-        parameters=[{"robot_description":robot_description_content}],
-    )
+    # node_robot_state_publisher = Node(
+    #     package="robot_state_publisher",
+    #     executable="robot_state_publisher",
+    #     output="both",
+    #     parameters=[{"robot_description":robot_description_content}],
+    # )
     node_ublox_gps = Node(
         package="ublox_gps",
         executable="ublox_gps_node",
@@ -104,6 +99,11 @@ def generate_launch_description():
         parameters=[ublox_config]
         
     )
+    simple_harware_node = Node(
+        package='uirover_simple_hardware',
+        executable='hardware_node'
+    )
+    
     node_ros2_control = Node(
         package="controller_manager",
         executable="ros2_control_node",
@@ -147,14 +147,19 @@ def generate_launch_description():
     )
 
     # ======= Processes ======= #
-
+    
+    zenoh_config = PathJoinSubstitution(
+        [FindPackageShare("uirover_bringup"), "config", "zenoh_rover.config.json"]
+    )
+    
     # Zenoh Bridge
     # https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/
     cmd_zenoh_bridge = ExecuteProcess(
-        # cmd=["zenoh-bridge-ros2dds", "-e", "tcp/192.168.55.100:7447"],
-        cmd=["zenoh-bridge-ros2dds"],
-        output="log",
-    )
+            cmd=['zenoh-bridge-ros2dds', 
+                 '-c', 
+                 zenoh_config],
+            output="log",
+        )
     cmd_ros_bag = ExecuteProcess(
         cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')} -a -d 9000".split(
             " "
@@ -163,16 +168,16 @@ def generate_launch_description():
     )
     
     nodes = [
-        # ros2_control
-        node_ros2_control,
-        node_robot_state_publisher,
-        node_controller_spawner,
-        node_joint_state_broadcaster_spawner,
-        node_twist_publisher,
-        # cmd_zenoh_bridge,
         cmd_ros_bag,
-        node_ublox_gps,
+        cmd_zenoh_bridge,
         launch_realsense_d435i,
+        # node_controller_spawner,
+        # node_joint_state_broadcaster_spawner,
+        # node_robot_state_publisher,
+        # node_ros2_control,
+        # node_twist_publisher,
+        simple_harware_node,
+        node_ublox_gps,
     ]
     nodes.extend(camera_nodes)
 

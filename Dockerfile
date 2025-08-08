@@ -36,9 +36,16 @@ RUN apt-get update && apt-get install -y \
     
 RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
 
+
 ENV RMW_IMPLEMENTATION=rmw_zenoh_cpp
 ENV ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 ENV ZENOH_SESSION_CONFIG_URI=/rover/zenoh_rover.config.json5
+
+RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | tee -a /etc/apt/sources.list > /dev/null
+RUN apt-get update && apt-get install -y \
+    zenoh-bridge-ros2dds \
+    ros-jazzy-rmw-cyclonedds-cpp \
+    python3-serial
 
 WORKDIR /rover
 ENTRYPOINT ["bash", "-c"] 

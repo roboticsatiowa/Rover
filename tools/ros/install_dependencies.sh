@@ -20,7 +20,7 @@ rosdep install --from-paths "${WS_DIR}/src" --ignore-src -y
 
 
 # other dependencies
-sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds python3-pip python3-catkin-pkg python3-venv
+sudo apt install -y python3-colcon-common-extensions python3-colcon-clean libopencv-dev zenoh-bridge-ros2dds python3-pip python3-catkin-pkg python3-venv mapproxy
 
 # gstreamer
 sudo apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio

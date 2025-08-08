@@ -1,0 +1,13 @@
+seeds:
+  precache_drumheller:
+    coverages: [drumheller]
+    sources: [satellite]
+    caches: [satellite_cache]
+    grids: [webmercator]
+
+
+
+coverages:
+  drumheller:
+    datasource: drumheller.geojson
+    srs: 'EPSG:4326'
