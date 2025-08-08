@@ -4,6 +4,7 @@ FROM ros:jazzy-ros-base-noble
 
 SHELL ["/bin/bash", "-c"]
 
+# ROS Dependencies
 RUN apt-get update && apt-get install -y \
     ros-jazzy-controller-manager \
     ros-jazzy-cv-bridge \
@@ -13,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-joint-limits \
     ros-jazzy-joy \
     ros-jazzy-realsense2-camera \
+    ros-jazzy-rmw-zenoh-cpp \
     ros-jazzy-ros-gz \
     ros-jazzy-ros2-control \
     ros-jazzy-ros2-control-test-assets \
@@ -20,14 +22,24 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-rtabmap-ros \
     ros-jazzy-teleop-twist-joy \
     ros-jazzy-ublox \
-    ros-jazzy-usb-cam
+    ros-jazzy-usb-cam \
+    && rm -rf /var/lib/apt/lists/*
 
+# Gstreamer
 RUN apt-get update && apt-get install -y \
     libgstreamer1.0-dev \
     gstreamer1.0-plugins-bad \
     gstreamer1.0-plugins-good \
     gstreamer1.0-plugins-ugly \
-    gstreamer1.0-tools
+    gstreamer1.0-tools \
+    && rm -rf /var/lib/apt/lists/*
+    
+RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
+
+
+ENV RMW_IMPLEMENTATION=rmw_zenoh_cpp
+ENV ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+ENV ZENOH_SESSION_CONFIG_URI=/rover/zenoh_rover.config.json5
 
 RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | tee -a /etc/apt/sources.list > /dev/null
 RUN apt-get update && apt-get install -y \
@@ -35,9 +47,6 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-rmw-cyclonedds-cpp \
     python3-serial
 
-    
-ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 WORKDIR /rover
-SHELL ["/bin/bash", "-c"]
-ENTRYPOINT ["bash", "-c"]
+ENTRYPOINT ["bash", "-c"] 
 CMD ["/rover/docker_entrypoint"]
