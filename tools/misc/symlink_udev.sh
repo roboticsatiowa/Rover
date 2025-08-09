@@ -17,14 +17,20 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+SCRIPT_DIR=$( cd "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 # check if udev rules are already symlinked
-if [ -L /etc/udev/rules.d/99-uirover.rules ]; then
-  echo "udev rules already symlinked"
-  exit
+if [ ! -L /etc/udev/rules.d/99-uirover.rules ]; then
+  ln -s "$SCRIPT_DIR"/99-uirover.rules /etc/udev/rules.d/99-uirover.rules || exit 1
 fi
 
-SCRIPT_DIR=$( cd "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-ln -s "$SCRIPT_DIR"/udev.rules /etc/udev/rules.d/99-uirover.rules || exit 1
+if [ ! -L /etc/udev/rules.d/99-realsense-d4xx-mipi-dfu.rules ]; then
+  ln -s "$SCRIPT_DIR"/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/99-realsense-d4xx-mipi-dfu.rules || exit 1
+fi
+
+if [ ! -L /etc/udev/rules.d/99-realsense-libusb.rules ]; then
+  ln -s "$SCRIPT_DIR"/99-realsense-libusb.rules /etc/udev/rules.d/99-realsense-libusb.rules || exit 1
+fi
 udevadm control --reload-rules || exit 1
 
 echo "Success"

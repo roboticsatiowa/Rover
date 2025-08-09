@@ -1,3 +1,4 @@
+from doctest import OutputChecker
 from launch import LaunchDescription 
 import launch
 from launch.actions import ExecuteProcess, IncludeLaunchDescription
@@ -19,7 +20,8 @@ def generate_launch_description():
     launch_description_list.append(
         Node(
             package="rmw_zenoh_cpp",
-            executable="rmw_zenohd"
+            executable="rmw_zenohd",
+            output="both"
         )
     )
     
