@@ -1,7 +1,7 @@
 {
   "plugins": {
     "ros2dds": {
-      "nodename": "zenoh_bridge_rover",
+      "nodename": "zenoh_bridge_basestation",
       "namespace": "/",
       "domain": 0,
 

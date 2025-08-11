@@ -2,6 +2,5 @@
 
 source /opt/ros/jazzy/setup.bash
 source /rover/install/setup.bash
-source /rover/tools/rover_env.sh
 
 ros2 launch uirover_bringup rover.launch.py

@@ -2,15 +2,20 @@
 // Default session config: https://github.com/ros2/rmw_zenoh/blob/rolling/rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5
 
 {
-    mode: "peer",
+    mode: "router",
+    listen: {
+        endpoints: [
+            "tcp/0.0.0.0:7447", // Listen on all interfaces on port 7447
+        ]
+    },
     connect: {
         endpoints: [
-            "udp/192.168.55.100:7447" // Static IP of the base station. Nvidia Jetson setup default IP address.
+            "tcp/192.168.55.100:7447" // Static IP of the base station. Nvidia Jetson setup default IP address.
         ]
     },
     scouting: {
         multicast: {
-            enabled: false
+            enabled: true
         }
     }
     
@@ -18,4 +23,4 @@
     // TODO downsampling
     // TODO compression
     // TODO QOS
-}
+}   

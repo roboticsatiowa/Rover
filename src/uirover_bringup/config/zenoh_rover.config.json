@@ -1,7 +1,7 @@
 {
   "plugins": {
     "ros2dds": {
-      "nodename": "zenoh_bridge",
+      "nodename": "zenoh_bridge_rover",
       "namespace": "/",
       "domain": 0,
       "ros_automatic_discovery_range": "LOCALHOST",

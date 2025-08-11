@@ -17,6 +17,7 @@ docker run \
     --privileged \
     --net host \
     -v "$SCRIPT_DIR"/../..:/rover \
+    -v /dev:/dev \
     uirover:latest "$1"
 
 echo "Rover is running"
