@@ -5,6 +5,7 @@
 
 // ros
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp/publisher.hpp"
 #include "std_msgs/msg/string.hpp" 
 
 // opencv
@@ -20,6 +21,9 @@ using namespace std::chrono_literals;
 class GStreamerNode : public rclcpp::Node {
 public:
     GStreamerNode() : Node("gstreamer_stream_source") {
+
+        // declare aruco topic
+        this->declare_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
 
         auto param_desc_port = rcl_interfaces::msg::ParameterDescriptor{};
         param_desc_port.description = "UDP port to stream video to.";
@@ -69,6 +73,7 @@ public:
             end_stream();
             start_stream();
         };
+
         param_subscriber = std::make_shared<rclcpp::ParameterEventHandler>(this);
 
         cb_handle_dictionary = param_subscriber->add_parameter_callback("dictionary", cb_restart_stream);
@@ -149,7 +154,7 @@ public:
         std::vector<std::vector<cv::Point2f> > corners;
         cv::aruco::detectMarkers(frame, aruco_dictionary, corners, ids);
         if (ids.size() > 0) {
-            cv::aruco::drawDetectedMarkers(frame, corners, ids);
+            cv::aruco::drawDetectedMarkers(frame, corners, ids, cv::Scalar(255, 0, 0));
         }
 
         writer << frame;
