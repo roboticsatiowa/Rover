@@ -23,7 +23,7 @@ public:
     GStreamerNode() : Node("gstreamer_stream_source") {
 
         // declare aruco topic
-        this->declare_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
+        this->create_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
 
         auto param_desc_port = rcl_interfaces::msg::ParameterDescriptor{};
         param_desc_port.description = "UDP port to stream video to.";
@@ -59,7 +59,7 @@ public:
         this->declare_parameter("publish_topic", false, param_desc_publish_topic); // TODO unimplemented
         this->declare_parameter("publish_topic_name", "camera_stream", param_desc_publish_topic_name); // TODO unimplemented
         this->declare_parameter("dictionary", "DICT_4X4_100", param_desc_dictionary);
-        this->declare_parameter("invert", false)
+        this->declare_parameter("invert", false);
 
         start_stream();
 
@@ -82,7 +82,7 @@ public:
         cb_handle_port = param_subscriber->add_parameter_callback("port", cb_restart_stream);
         cb_handle_host = param_subscriber->add_parameter_callback("host", cb_restart_stream);
         cb_handle_device = param_subscriber->add_parameter_callback("device", cb_restart_stream);
-        cb_invert = param_subscriber->add_parameter_callback("invert", cb_restart_stream)
+        cb_invert = param_subscriber->add_parameter_callback("invert", cb_restart_stream);
 
     }
 
@@ -100,7 +100,7 @@ public:
         double framerate = this->get_parameter("framerate").as_double();
         int width = this->get_parameter("width").as_int();
         int height = this->get_parameter("height").as_int();
-        bool invert = this->get_parameter("invert")
+        bool invert = this->get_parameter("invert").as_bool();
 
         set_aruco_dict(dictionary);
 
@@ -176,6 +176,7 @@ private:
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_port;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_host;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_device;
+    std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_invert;
 
 
     rclcpp::TimerBase::SharedPtr timer;

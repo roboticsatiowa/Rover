@@ -1,10 +1,8 @@
-# https://github.com/introlab/rtabmap_ros/blob/ros2/rtabmap_examples/launch/realsense_d435i_stereo.launch.py
-
 # Requirements:
 #   A realsense D435i
 #   Install realsense2 ros2 package (ros-$ROS_DISTRO-realsense2-camera)
 # Example:
-#   $ ros2 launch rtabmap_examples realsense_d435i_stereo.launch.py
+#   $ ros2 launch rtabmap_examples realsense_d435i_infra.launch.py
 
 import os
 
@@ -20,16 +18,16 @@ from launch.substitutions import LaunchConfiguration
 def generate_launch_description():
     parameters=[{
           'frame_id':'camera_link',
-          'subscribe_stereo':True,
+          'subscribe_depth':True,
           'subscribe_odom_info':True,
+          'approx_sync':False,
           'wait_imu_to_init':True}]
 
     remappings=[
           ('imu', '/imu/data'),
-          ('left/image_rect', '/camera/infra1/image_rect_raw'),
-          ('left/camera_info', '/camera/infra1/camera_info'),
-          ('right/image_rect', '/camera/infra2/image_rect_raw'),
-          ('right/camera_info', '/camera/infra2/camera_info')]
+          ('rgb/image', '/camera/infra1/image_rect_raw'),
+          ('rgb/camera_info', '/camera/infra1/camera_info'),
+          ('depth/image', '/camera/depth/image_rect_raw')]
 
     return LaunchDescription([
 
@@ -56,7 +54,7 @@ def generate_launch_description():
         ),
 
         Node(
-            package='rtabmap_odom', executable='stereo_odometry', output='screen',
+            package='rtabmap_odom', executable='rgbd_odometry', output='screen',
             parameters=parameters,
             remappings=remappings),
 
@@ -70,11 +68,6 @@ def generate_launch_description():
             package='rtabmap_viz', executable='rtabmap_viz', output='screen',
             parameters=parameters,
             remappings=remappings),
-
-        # Node(
-        #     package='foxglove_bridge', executable='foxglove_bridge', output='screen',
-        #     parameters=parameters,
-        #     remappings=remappings),
                 
         # Compute quaternion of the IMU
         Node(

@@ -1,10 +1,8 @@
-# https://github.com/introlab/rtabmap_ros/blob/ros2/rtabmap_examples/launch/realsense_d435i_infra.launch.py
-
 # Requirements:
 #   A realsense D435i
 #   Install realsense2 ros2 package (ros-$ROS_DISTRO-realsense2-camera)
 # Example:
-#   $ ros2 launch rtabmap_examples realsense_d435i_infra.launch.py
+#   $ ros2 launch rtabmap_examples realsense_d435i_color.launch.py
 
 import os
 
@@ -12,7 +10,6 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch_ros.actions import Node, SetParameter
-from launch.actions import IncludeLaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
@@ -27,9 +24,9 @@ def generate_launch_description():
 
     remappings=[
           ('imu', '/imu/data'),
-          ('rgb/image', '/camera/infra1/image_rect_raw'),
-          ('rgb/camera_info', '/camera/infra1/camera_info'),
-          ('depth/image', '/camera/depth/image_rect_raw')]
+          ('rgb/image', '/camera/color/image_raw'),
+          ('rgb/camera_info', '/camera/color/camera_info'),
+          ('depth/image', '/camera/aligned_depth_to_color/image_raw')]
 
     return LaunchDescription([
 
@@ -38,8 +35,8 @@ def generate_launch_description():
             'unite_imu_method', default_value='2',
             description='0-None, 1-copy, 2-linear_interpolation. Use unite_imu_method:="1" if imu topics stop being published.'),
 
-        #Hack to disable IR emitter
-        SetParameter(name='depth_module.emitter_enabled', value=0),
+        # Make sure IR emitter is enabled
+        SetParameter(name='depth_module.emitter_enabled', value=1),
 
         # Launch camera driver
         IncludeLaunchDescription(
@@ -50,9 +47,9 @@ def generate_launch_description():
                                   'enable_gyro': 'true',
                                   'enable_accel': 'true',
                                   'unite_imu_method': LaunchConfiguration('unite_imu_method'),
-                                  'enable_infra1': 'true',
-                                  'enable_infra2': 'true',
-                                  'enable_sync': 'true'}.items(),
+                                  'align_depth.enable': 'true',
+                                  'enable_sync': 'true',
+                                  'rgb_camera.profile': '640x360x30'}.items(),
         ),
 
         Node(
@@ -70,7 +67,7 @@ def generate_launch_description():
             package='rtabmap_viz', executable='rtabmap_viz', output='screen',
             parameters=parameters,
             remappings=remappings),
-                
+
         # Compute quaternion of the IMU
         Node(
             package='imu_filter_madgwick', executable='imu_filter_madgwick_node', output='screen',
