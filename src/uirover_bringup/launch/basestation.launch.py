@@ -30,7 +30,7 @@ def generate_launch_description():
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     PathJoinSubstitution([
-                        FindPackageShare("uirover_video"),
+                        FindPackageShare("uirover_perception"),
                         "launch",
                         "gstreamer_sink.launch.py"
                     ])
