@@ -14,7 +14,7 @@
   <depend>uirover_gazebo</depend>
   <depend>uirover_hardware</depend>
   <depend>uirover_msgs</depend>
-  <depend>uirover_video</depend>
+  <depend>uirover_perception</depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
