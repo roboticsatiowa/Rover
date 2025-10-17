@@ -25,6 +25,20 @@ def generate_launch_description():
     zenoh_config = PathJoinSubstitution(
         [FindPackageShare("uirover_bringup"), "config", "zenoh_rover.config.json"]
     )
+    
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [
+                    FindPackageShare("uirover_description"),
+                    "urdf",
+                    "uirover.urdf.xacro",
+                ]
+            ),
+        ]
+    )
 
     nodes = []
 
@@ -53,6 +67,15 @@ def generate_launch_description():
             i+= 1
     except FileNotFoundError:
         pass
+    
+    nodes.append(
+        Node(
+            package="robot_state_publisher",
+            executable="robot_state_publisher",
+            output="screen",
+            parameters=[{"robot_description": robot_description_content}],
+        )
+    )
 
     nodes.append(
         IncludeLaunchDescription(

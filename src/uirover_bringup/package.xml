@@ -8,6 +8,7 @@
   <license>GPL-3.0-only</license>
 
   <depend>realsense2_camera</depend>
+  <depend>rmw_zenoh_cpp</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
