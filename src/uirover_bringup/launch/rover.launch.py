@@ -1,23 +1,19 @@
 import os
-from platform import node
-from time import strftime
 
 os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, ExecuteProcess
-from launch.launch_description_sources import AnyLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution, Command, FindExecutable
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import PathJoinSubstitution
+
+from ament_index_python.packages import get_package_share_directory
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+
 def generate_launch_description():
-
-    controller_config = PathJoinSubstitution(
-        [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
-    )
-
     ublox_config = PathJoinSubstitution(
         [FindPackageShare("uirover_gnss"), "config", "zed_f9p.yaml"]
     )
@@ -44,27 +40,29 @@ def generate_launch_description():
 
     try:
         i = 0
-        for camera in os.listdir('/dev/Arducam'):
-            if not camera.startswith('CAM'): 
+        for camera in os.listdir("/dev/Arducam"):
+            if not camera.startswith("CAM"):
                 continue
             index = int(camera[3:])
             nodes.append(
                 Node(
-                    package="uirover_video",
+                    package="uirover_perception",
                     executable="stream",
                     name=f"arducam_{i}",
                     output="both",
-                    parameters=[{
-                        'port': 5000 + index,
-                        'device': f"/dev/Arducam/{camera}",
-                        'host': '192.168.55.100',
-                        # 'width': 1280,
-                        # 'height': 720,
-                        'framerate': 20.0
-                    }]
+                    parameters=[
+                        {
+                            "port": 5000 + index,
+                            "device": f"/dev/Arducam/{camera}",
+                            "host": "192.168.55.100",
+                            # 'width': 1280,
+                            # 'height': 720,
+                            "framerate": 20.0,
+                        }
+                    ],
                 )
             )
-            i+= 1
+            i += 1
     except FileNotFoundError:
         pass
     
@@ -77,25 +75,118 @@ def generate_launch_description():
         )
     )
 
+    # ============================
+    # Visual SLAM
+    # ============================
+
     nodes.append(
         IncludeLaunchDescription(
-            AnyLaunchDescriptionSource(
-                PathJoinSubstitution(
-                    [FindPackageShare("realsense2_camera"), "launch/rs_launch.py"]
-                )
+            PythonLaunchDescriptionSource(
+                [
+                    os.path.join(
+                        get_package_share_directory("realsense2_camera"), "launch"
+                    ),
+                    "/rs_launch.py",
+                ]
             ),
             launch_arguments={
-                "camera_namespace": "uirover",
-                "camera_name": "D435i_realsense_camera",
-                "depth_module.depth_profile": "640x480x30",
-                "pointcloud.enable": "true",
-                "unite_imu_method": "2",
-                "tf_publish_rate": "5.0",
+                "camera_name": "realsense",
+                "camera_namespace": "rover",
                 "enable_gyro": "true",
                 "enable_accel": "true",
+                "unite_imu_method": "2",
                 "enable_infra1": "true",
+                "enable_infra2": "true",
+                "enable_sync": "true",
+                "initial_reset": "true",
             }.items(),
-        )
+        ),
+    )
+
+    nodes.append(
+        Node(
+            package="imu_filter_madgwick",
+            executable="imu_filter_madgwick_node",
+            namespace="rover",
+            output="screen",
+            parameters=[{"use_mag": False, "world_frame": "enu", "publish_tf": False}],
+            remappings=[
+                ("imu/data_raw", "realsense/imu"),
+                ("imu/data", "realsense/imu/data"),
+            ],
+        ),
+    )
+
+    nodes.append(
+        Node(
+            package="rtabmap_odom",
+            executable="rgbd_odometry",
+            namespace="rover/slam",
+            output="screen",
+            parameters=[
+                {
+                    "frame_id": "realsense_link",
+                    "subscribe_depth": True,
+                    "subscribe_odom_info": True,
+                    "approx_sync": False,
+                    "wait_imu_to_init": True,
+                }
+            ],
+            remappings=[
+                ("imu", "/rover/realsense/imu/data"),
+                ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
+                ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
+                ("depth/image", "/rover/realsense/depth/image_rect_raw"),
+            ],
+        ),
+    )
+
+    nodes.append(
+        Node(
+            package="rtabmap_slam",
+            executable="rtabmap",
+            namespace="rover/slam",
+            output="screen",
+            parameters=[
+                {
+                    "frame_id": "realsense_link",
+                    "subscribe_depth": True,
+                    "subscribe_odom_info": True,
+                    "approx_sync": False,
+                    "wait_imu_to_init": True,
+                }
+            ],
+            remappings=[
+                ("imu", "/rover/realsense/imu/data"),
+                ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
+                ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
+                ("depth/image", "/rover/realsense/depth/image_rect_raw"),
+            ],
+            arguments=["-d"],
+        ),
+    )
+
+    nodes.append(
+        Node(
+            package="rtabmap_viz",
+            executable="rtabmap_viz",
+            namespace="rover/slam",
+            output="screen",
+            parameters=[
+                {
+                    "frame_id": "realsense_link",
+                    "subscribe_depth": True,
+                    "subscribe_odom_info": True,
+                    "approx_sync": False,
+                    "wait_imu_to_init": True,
+                }
+            ],
+            remappings=[
+                ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
+                ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
+                ("depth/image", "/rover/realsense/depth/image_rect_raw"),
+            ],
+        ),
     )
 
     nodes.append(
@@ -103,16 +194,11 @@ def generate_launch_description():
             package="ublox_gps",
             executable="ublox_gps_node",
             name="ublox_gps_node",
-            parameters=[ublox_config]
+            parameters=[ublox_config],
         )
     )
 
-    nodes.append(
-        Node(
-            package='uirover_simple_hardware',
-            executable='hardware_node'
-        )
-    )
+    nodes.append(Node(package="uirover_simple_hardware", executable="hardware_node"))
 
     nodes.append(
         Node(
@@ -122,11 +208,11 @@ def generate_launch_description():
         )
     )
 
-    nodes.append(
-        ExecuteProcess(
-            cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')} -a -d 9000".split(" "),
-            output="log",
-        )
-    )
+    # nodes.append(
+    #     ExecuteProcess(
+    #         cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')} -a -d 9000".split(" "),
+    #         output="log",
+    #     )
+    # )
 
     return LaunchDescription(nodes)

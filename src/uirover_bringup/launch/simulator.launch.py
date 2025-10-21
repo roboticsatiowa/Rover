@@ -1,16 +1,10 @@
-import os
 from time import strftime
-
-# Setting env variables before importing ROS2 packages just in case they are read during import
-os.environ["ROS_AUTOMATIC_DISCOVERY_RANGE"] = "LOCALHOST"
-os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
 
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
-    ExecuteProcess,
     IncludeLaunchDescription,
-    RegisterEventHandler,
+    ExecuteProcess,
 )
 from launch.substitutions import (
     PathJoinSubstitution,
@@ -18,7 +12,6 @@ from launch.substitutions import (
     FindExecutable,
     Command
 )
-from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import Node
@@ -76,7 +69,6 @@ def generate_launch_description():
             (
                 "gz_args",
                 [
-                    # " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World' --physics-engine gz-physics-bullet-featherstone-plugin"
                     " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World'"
                 ],
             )
@@ -114,18 +106,20 @@ def generate_launch_description():
         arguments=[
             "joint_state_broadcaster",
             "--switch-timeout",
-            "20.0",
+            "30.0",
             "--service-call-timeout",
-            "20.0",
+            "30.0",
         ],
     )
+    
+    
     node_diff_drive_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
             "diff_drive_base_controller",
             "--switch-timeout",
-            "20.0",
+            "30.0",
             "-p",
             controller_config,
         ],
@@ -141,13 +135,16 @@ def generate_launch_description():
         package="foxglove_bridge",
         executable="foxglove_bridge",
         name="foxglove_bridge",
+        namespace="basestation",
     )
     # higher deadzone makes it easier to drive straight
     node_gamepad_publisher = Node(
         package="joy",
         executable="joy_node",
         name="joy_node",
+        namespace="basestation/gamepad",
         parameters=[{"coalesce_interval": 0.5, "deadzone": 0.20}],
+        remappings=[("/joy", "/basestation/gamepad/joy")],
     )
     node_twist_publisher = Node(
         package="teleop_twist_joy",
@@ -168,7 +165,7 @@ def generate_launch_description():
     # ======= Processes ======= #
 
     cmd_ros_bag = ExecuteProcess(
-        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')}_gazebo -a -d 9000".split(
+        cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')}_gazebo -a -d 9000 --node-name bag".split(
             " "
         ),
         output="screen",
@@ -185,18 +182,8 @@ def generate_launch_description():
     launch_description = LaunchDescription(
         [
             # Event handlers used to start nodes in a predictable order
-            RegisterEventHandler(
-                event_handler=OnProcessExit(
-                    target_action=node_gazebo_spawn_urdf,
-                    on_exit=[node_joint_state_broadcaster_spawner],
-                )
-            ),
-            RegisterEventHandler(
-                event_handler=OnProcessExit(
-                    target_action=node_joint_state_broadcaster_spawner,
-                    on_exit=[node_diff_drive_controller_spawner],
-                )
-            ),
+            node_joint_state_broadcaster_spawner,
+            node_diff_drive_controller_spawner,
             node_gazebo_spawn_urdf,
             launch_gazebo,
             node_robot_state_publisher,
