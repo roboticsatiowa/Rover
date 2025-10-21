@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <material name="grey">
+        <color rgba=".7 .7 .7 1.0"/>
+    </material>
+
+    <link name="arm_base_link"></link>
+
+    <link name="arm_l0">
+        <visual>
+            <origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file://$(find uirover_description)/dae/Arm_L0.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.06" length="0.14" />
+            </geometry>
+            <origin xyz="0 0 0.11" rpy="${pi/2} 0 0" />
+        </collision>
+    </link>
+    <joint name="arm_j0" type="revolute">
+        <parent link="arm_base_link" />
+        <child link="arm_l0" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit lower="-2.0" upper="2.0" effort="10.0" velocity="0.5"/>
+    </joint>
+
+
+    <link name="arm_l1">
+        <visual>
+            <origin xyz="0 0 -0.104" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file://$(find uirover_description)/dae/Arm_L1.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.03" length="0.38" />
+            </geometry>
+            <origin xyz="0 0 0.27" rpy="0 0 0" />
+        </collision>
+        <collision>
+            <geometry>
+                <cylinder radius="0.055" length="0.11" />
+            </geometry>
+            <origin xyz="0 -0.02 0.53" rpy="${pi/2} 0 0" />
+        </collision>
+    </link>
+    <joint name="arm_j1" type="revolute">
+        <parent link="arm_l0" />
+        <child link="arm_l1" />
+        <origin xyz="0 0 0.104" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <limit lower="-2.0" upper="2.0" effort="10.0" velocity="0.5"/>
+    </joint>
+
+    <link name="arm_l2">
+        <visual>
+            <origin xyz="0 0 -0.638" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file://$(find uirover_description)/dae/Arm_L2.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.055" length="0.08" />
+            </geometry>
+            <origin xyz="0 0.08 -0.005" rpy="${pi/2} 0 0" />
+        </collision>
+        <collision>
+            <geometry>
+                <cylinder radius="0.03" length="0.08" />
+            </geometry>
+            <origin xyz="0 0.08 0.1" rpy="0 0 0" />
+        </collision>
+    </link>
+    <joint name="arm_j2" type="revolute">
+        <parent link="arm_l1" />
+        <child link="arm_l2" />
+        <origin xyz="0 0 0.534" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <limit lower="-${pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+    </joint>
+
+
+    <link name="arm_l3">
+        <visual>
+            <origin xyz="0 -.076 -0.841" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file://$(find uirover_description)/dae/Arm_L3.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.055" length="0.08" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} 0" />
+        </collision>
+        <collision>
+            <geometry>
+                <cylinder radius="0.03" length="0.08" />
+            </geometry>
+            <origin xyz="0 0 0.1" rpy="0 0 0" />
+        </collision>
+        <collision>
+            <geometry>
+                <cylinder radius="0.055" length="0.1" />
+            </geometry>
+            <origin xyz="0 0.03 0.18" rpy="${pi/2} 0 0" />
+        </collision>
+    </link>
+    <joint name="arm_j3" type="revolute">
+        <parent link="arm_l2" />
+        <child link="arm_l3" />
+        <origin xyz="0 0.076 0.203" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit lower="${-pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+    </joint>
+
+    <link name="arm_l4">
+        <visual>
+            <origin xyz="0 -.05 -1.02" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file://$(find uirover_description)/dae/Arm_L4.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.06" length="0.12" />
+            </geometry>
+            <origin xyz="0 -0.075 0" rpy="0 0 0" />
+        </collision>
+    </link>
+    <joint name="arm_j4" type="revolute">
+        <parent link="arm_l3" />
+        <child link="arm_l4" />
+        <origin xyz="0 -0.025 0.179" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <limit lower="${-pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+    </joint>
+
+    <link name="arm_l5">
+        <visual>
+            <origin xyz="0 0.026 -1.1" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="file://$(find uirover_description)/dae/Arm_L5.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.06" length="0.05" />
+            </geometry>
+            <origin xyz="0 0 0.03" rpy="0 0 0" />
+        </collision>
+    </link>
+    <joint name="arm_j5" type="continuous">
+        <parent link="arm_l4" />
+        <child link="arm_l5" />
+        <origin xyz="0 -0.075 0.08" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="10.0" velocity="0.5"/>
+    </joint>
+
+    <link name="end_effector">
+        <visual>
+            <geometry>
+                <box size=".1 .1 .1"/> 
+            </geometry>
+            <origin xyz="0 0 0.05" rpy="0 0 0" />
+            <material name="grey"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".1 .1 .1"/>
+            </geometry>
+            <origin xyz="0 0 0.05" rpy="0 0 0" />
+        </collision>
+    </link>
+    <joint name="end_effector_joint" type="fixed">
+        <parent link="arm_l5" />
+        <child link="end_effector" />
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
+    </joint>
+
+
+</robot>

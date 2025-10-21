@@ -5,7 +5,7 @@
     <xacro:include filename="$(find uirover_description)/xacro/ros2_control.urdf.xacro"/>
     <xacro:uirover_ros2_control use_gazebo="false"/>
 
-    <xacro:include filename="$(find uirover_description)/xacro/physical_description.urdf.xacro"/>
+    <xacro:include filename="$(find uirover_description)/xacro/chassis.urdf.xacro"/>
     
     <xacro:include filename="$(find uirover_description)/xacro/sensors.urdf.xacro"/>
 </robot>

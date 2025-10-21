@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <!-- Physical Description -->
-    <xacro:include filename="$(find uirover_description)/xacro/physical_description.urdf.xacro"/>
+    <xacro:include filename="$(find uirover_description)/xacro/chassis.urdf.xacro"/>
 
     <!-- Hardware -->
     <xacro:include filename="$(find uirover_description)/xacro/ros2_control.urdf.xacro"/>
@@ -9,4 +9,7 @@
     
     <!-- Sensors -->
     <xacro:include filename="$(find uirover_description)/xacro/sensors.urdf.xacro"/>
+
+    <!-- Arm -->
+    <xacro:include filename="$(find uirover_description)/xacro/arm.urdf.xacro"/>
 </robot>

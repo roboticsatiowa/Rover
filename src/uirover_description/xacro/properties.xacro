@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot name="uiowa_rover" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="uirover" xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:property name="wheel_diameter" value="0.23" />
     <xacro:property name="chassis_width" value="0.45" />
     <xacro:property name="chassis_length" value="0.45" />

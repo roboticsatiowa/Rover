@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="uirover">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import uirover urdf file -->
+    <xacro:include filename="$(find uirover_description)/xacro/arm.urdf.xacro" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="uirover.ros2_control.xacro" />
+
+
+    <xacro:uirover_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>
