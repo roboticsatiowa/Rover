@@ -6,6 +6,12 @@
     </material>
 
     <link name="arm_base_link"></link>
+    <joint name="arm_base_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="arm_base_link" />
+        <origin xyz="0.2 0 0" rpy="0 0 0" />
+
+    </joint>
 
     <link name="arm_l0">
         <visual>
@@ -168,22 +174,22 @@
     <link name="end_effector">
         <visual>
             <geometry>
-                <box size=".1 .1 .1"/> 
+                <box size=".02 .02 .1"/> 
             </geometry>
-            <origin xyz="0 0 0.05" rpy="0 0 0" />
+            <origin xyz="0 0 -0.05" rpy="0 0 0" />
             <material name="grey"/>
         </visual>
         <collision>
             <geometry>
-                <box size=".1 .1 .1"/>
+                <box size=".02 .02 .1"/>
             </geometry>
-            <origin xyz="0 0 0.05" rpy="0 0 0" />
+            <origin xyz="0 0 -0.05" rpy="0 0 0" />
         </collision>
     </link>
     <joint name="end_effector_joint" type="fixed">
         <parent link="arm_l5" />
         <child link="end_effector" />
-        <origin xyz="0 0 0.05" rpy="0 0 0" />
+        <origin xyz="0 0 0.12" rpy="0 0 0" />
     </joint>
 
 
