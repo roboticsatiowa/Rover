@@ -93,21 +93,21 @@ ros2 launch uirover_bringup simulator.launch.py
 
 - [x] Gazebo simulation boilerplate
 - [x] Simplified rover 3D model
-- [ ] Full rover 3D model with meshes
+- [x] Full rover 3D model with meshes
 - [x] Video capture and streaming
 - [x] Video compression
 - [ ] Relative pose estimation
 - [ ] Object classification
 - [x] Basic aruco marker detection
 - [x] ROS2 Control boilerplate
-- [ ] Full ROS2 Control hardware support
+- [x] Full ROS2 Control hardware support
 - [ ] Custom wheel controller for differential swerve drive
-- [ ] MoveIt! boilerplate
-- [ ] Simplified arm 3D model
-- [ ] Full arm 3D model with meshes
-- [ ] Arm IK solver
+- [x] MoveIt! boilerplate
+- [x] Simplified arm 3D model
+- [x] Full arm 3D model with meshes
+- [x] Arm IK solver
 - [ ] Preset arm poses (grab, drop, tool change, etc.)
-- [ ] Zenoh middleware
+- [x] Zenoh middleware
 - [ ] Nav2 boilerplate
 - [ ] Nav2 basic environment mapping
 - [ ] Nav2 basic path planning
@@ -139,3 +139,4 @@ ros2 launch uirover_bringup simulator.launch.py
 
 - Ethan Holter [@ethanholter](https://github.com/ethanholter)
 - Charlie Killian [@charlie-killian](https://github.com/charlie-killian)
+
