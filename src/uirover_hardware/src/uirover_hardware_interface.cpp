@@ -21,9 +21,9 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "uirover_hardware/uirover_hardware_interface.hpp"
+#include "uirover_hardware/uirover_hardware_interface.hpp" // NOLINT(build/include_subdir)
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include "rclcpp/rclcpp.hpp" // IWYU pragma: keep
 
 namespace uirover_hardware {
 

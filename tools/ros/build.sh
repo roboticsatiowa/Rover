@@ -22,7 +22,7 @@ function print_stderr_logs () {
 
 # Auto detect and install mandatory colcon packages if not already installed
 UPDATED=false
-if dpkg-query -W python3-colcon-common-extensions &> /dev/null; then
+if apt -qq list python3-colcon-common-extensions 2> /dev/null | grep -q installed; then
     echo "colcon-common-extensions is already installed"
 else
     echo "Installing colcon-common-extensions"
@@ -33,7 +33,7 @@ else
     fi
     sudo apt install -y python3-colcon-common-extensions
 fi
-if dpkg-query -W python3-colcon-mixin &> /dev/null; then
+if apt -qq list python3-colcon-mixin 2> /dev/null | grep -q installed; then
     echo "colcon-mixin is already installed"
 else
     echo "Installing colcon-mixin"
@@ -64,8 +64,3 @@ COLCON_ARGS="--mixin compile-commands \
 
 # Enable colored output for ROS2 command line tools
 echo "export RCUTILS_COLORIZED_OUTPUT=1" >> "${WS_DIR}/install/setup.bash"
-
-# Ideally we would automatically source the setup.bash file after building, but this is causing bash tab completion to completetly crash gnome-terminal.
-# Not sure why, but in case this ever gets fixed, here is the line to do it:
-## shellcheck source=/dev/null
-#. "${WS_DIR}/install/setup.bash"
