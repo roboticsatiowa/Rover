@@ -21,28 +21,17 @@ function print_stderr_logs () {
 }
 
 # Auto detect and install mandatory colcon packages if not already installed
-UPDATED=false
 if apt -qq list python3-colcon-common-extensions 2> /dev/null | grep -q installed; then
     echo "colcon-common-extensions is already installed"
 else
     echo "Installing colcon-common-extensions"
-    
-    if [ "$UPDATED" = false ]; then
-        sudo apt update
-        UPDATED=true
-    fi
-    sudo apt install -y python3-colcon-common-extensions
+    sudo apt update && sudo apt install -y python3-colcon-common-extensions
 fi
 if apt -qq list python3-colcon-mixin 2> /dev/null | grep -q installed; then
     echo "colcon-mixin is already installed"
 else
     echo "Installing colcon-mixin"
-    
-    if [ "$UPDATED" = false ]; then
-        sudo apt update
-        UPDATED=true
-    fi
-    sudo apt install -y python3-colcon-mixin
+    sudo apt update && sudo apt install -y python3-colcon-mixin
 fi
 MIXIN_URL="https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml"
 if ! colcon mixin list 2>/dev/null | grep -q "$MIXIN_URL"; then

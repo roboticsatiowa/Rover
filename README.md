@@ -12,60 +12,66 @@
 </div>
 
 - [About](#about)
-- [Getting Started](#getting_started)
+- [Getting Started](#getting-started)
 - [Usage](#usage)
-- [Roadmap](#roadmap)
-- [Authors](#authors)
+- [Contributors](#contributers)
 
-## About <a name = "about"></a>
+---
+
+## About
 
 This is a ROS2 based project for the University of Iowa Robotics Club's Mars Rover. It is primarily designed around remote operation with future plans for partial or full autonomy. The rover is equipped with a 6 wheeled rocker bogie suspension system, a 5 DOF custom arm, and a variety of sensors. The onboard computing is handled by an Nvidia Jetson Orin coupled with a Teensy 4.1 microcontroller to assist with IO. The rover is equipped with an Intel Realsense depth camera, 3 Cameras, GPS, and a suite of miscellanious sensors for improved situational awareness.
 
-## Getting Started <a name = "getting_started"></a>
+---
+
+## Getting Started
 
 ### System Requirements
 
-There are a variety of ways to run this project. The easiest is to use the ROS2 Jazzy running natively on Ubuntu 24.04 LTS. The included install scripts located in the tools/ directory can help with installation of ROS2 and this projects dependencies.
+**Native Install:**
 
-<b>IMPORTANT: This project is still in active development and has not yet been tested on the target environment. These platforms are for development. The Jetson hardware will likely require specialized builds of ROS2 and other dependencies.</b> [ROS Isaac Installation](https://nvidia-isaac-ros.github.io/getting_started/isaac_ros_buildfarm_cdn.html)
+- Ubuntu 24.04 LTS
 
-- ROS 2 Jazzy
-  - [ ] Ubuntu 24.04 LTS
-  - [ ] ROS2 Jazzy
-<br>
+**Docker install:**
 
-- ROS 2 Humble (may require minimal source changes)
-  - [ ] Ubuntu 22.04 LTS
-  - [ ] ROS2 Humble
-<br>
-
-- Docker install
-  - [ ] Any Unix based OS
-  - [ ] Docker
-  - [ ] Systemd based init system recommended (for udev rules)
+- Any Unix based OS (Windows will also work, but has limititations)
+- Docker
+- Systemd based init system (for udev rules)
 
 ### Installation
 
-This guide assumes you are using ROS2 Jazzy on Ubuntu 24.04 LTS. If you are using a different version of ROS2, you may consult the ROS2 documentation for installation instructions [here](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
-
-<br>
-Clone the repository to your workspace.
+Clone the repository to your workspace
 
 ```bash
 git clone https://github.com/roboticsatiowa/Rover.git
 cd Rover
 ```
 
-<br>
-Install ROS and project dependencies. (Recommended even if you already have ROS2 installed)
+Install ROS2 (you may skip this step if you already followed install instructions from their [documentation](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html))
 
 ```bash
 ./tools/ros/install_ros.sh
+```
+
+Install [rosdep](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Rosdep.html#what-is-rosdep) dependencies
+
+```bash
+./tools/ros/rosdep.sh
+```
+
+Install additional dependencies
+
+```bash
 ./tools/ros/install_dependencies.sh
 ```
 
-### Building
+Install udev rules. These create more descriptive device names in `/dev` for example `/dev/ttyACM0 -> /dev/ttyTEENSY` and are required for ROS2 nodes to properly recognize hardware. More info in the [man page](https://man7.org/linux/man-pages/man7/udev.7.html) (`$ man udev`)
 
+```bash
+./tools/misc/symlink_udev.sh
+```
+
+### Building
 
 A convenience script is provided to build the project
 
@@ -73,70 +79,86 @@ A convenience script is provided to build the project
 ./tools/ros/build.sh
 source install/setup.bash
 ```
-<br>
+
 It is recommended to occasionally clean out the workspace. This will remove any generated files which can sometimes cause issues.
 
 ```bash
 ./tools/ros/clean.sh
 ```
 
+## Usage
 
-## Usage <a name = "usage"></a>
-
-This will likely change as the project matures. The current launch file will start the gazebo simulation with the rover model. There will also be multiple launch files for different configurations of the rover or for different testing environments.
+Basestation launch
 
 ```bash
-ros2 launch uirover_bringup simulator.launch.py
+ros2 launch uirover_bringup basestation.launch.py
 ```
 
-## Roadmap
+Rover launch
 
-- [x] Gazebo simulation boilerplate
-- [x] Simplified rover 3D model
-- [x] Full rover 3D model with meshes
-- [x] Video capture and streaming
-- [x] Video compression
-- [ ] Relative pose estimation
-- [ ] Object classification
-- [x] Basic aruco marker detection
-- [x] ROS2 Control boilerplate
-- [x] Full ROS2 Control hardware support
-- [ ] Custom wheel controller for differential swerve drive
-- [x] MoveIt! boilerplate
-- [x] Simplified arm 3D model
-- [x] Full arm 3D model with meshes
-- [x] Arm IK solver
-- [ ] Preset arm poses (grab, drop, tool change, etc.)
-- [x] Zenoh middleware
-- [ ] Nav2 boilerplate
-- [ ] Nav2 basic environment mapping
-- [ ] Nav2 basic path planning
-- [ ] Nav2 obstacle avoidance
+```bash
+ros2 launch uirover_bringup rover.launch.py
+```
 
-## CIRC Specific Capabilities
+---
 
-<https://circ.cstag.ca/2025/tasks/>
+## Other Launch Files
 
-## Required Capabilities
 
-- [ ] record distance between two gps waypoints
-- [x] identify aruco markers of 4x4_100
-- [ ] take photos BEFORE disturbing scene (need cam with better res or zoom)
-- [ ] take photos and automatically upload to base station usb drive
-- [ ] communicate with a gieger counter via serial interface
-- [ ] night time operation (flood lights, spot lights, low light camera, etc.)
-- [ ] 940 nm IR camera
-- [ ] must fit in a "storm shelter" dimensions provided by april 2025
 
-#### Bonus Capabilities
+---
 
-- [ ] vision based text identification and translation (no bonus points - to save time)
-- [x] Aruco identification running in background and automatically display on screen
-- [ ] navigate to a gps waypoint autonomously
-- [ ] autonomously follow light points of varying colors
+## Development Tools and Utilities
 
-## Contributers <a name = "authors"></a>
+### VCAN
+
+VCAN (Virtual Controller Area Network) is a linux kernel module which allows a [CAN bus](https://en.wikipedia.org/wiki/CAN_bus) network to be simulated entirely on-system. This allows firmware to be tested in conditions nearly identical to the real world. The following script can be used to enable it
+
+```bash
+./tools/misc/enable_vcan.sh
+```
+
+you can then check its working with
+
+```bash
+ip link
+```
+
+and you should see something like this
+
+```text
+9: vcan0: <NOARP,UP,LOWER_UP> mtu 72 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/can 
+```
+
+More info in the [linux netmodule docs](https://netmodule-linux.readthedocs.io/en/latest/howto/can.html)
+
+### Network Stress Testing
+
+To test nodes under lossy/delayed network conditions you may want to artificially induce packet loss, delay, and/or bandwidth restrictions on localhost. The following command will enable it:
+
+```bash
+sudo tc qdisc add dev lo root netem delay 200ms loss 20% 50%
+```
+
+To disable this you may run
+
+```bash
+sudo tc qdisc delete dev lo root netem
+```
+
+More information can be found in the [man page](https://man7.org/linux/man-pages/man8/tc-netem.8.html) (`$ man tc-netem`)
+
+---
+
+## CIRC Task Lists
+
+- [2022](https://circ.cstag.ca/2022/tasks/)
+- [2023](https://circ.cstag.ca/2023/tasks/)
+- [2024](https://circ.cstag.ca/2024/tasks/)
+- [2025](https://circ.cstag.ca/2025/tasks/)
+
+## Contributers
 
 - Ethan Holter [@ethanholter](https://github.com/ethanholter)
 - Charlie Killian [@charlie-killian](https://github.com/charlie-killian)
-
