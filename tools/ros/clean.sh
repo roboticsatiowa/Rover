@@ -8,12 +8,12 @@ WS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." &> /dev/null && pwd )" # 
 # This workaround forces the urdf to freshly generated each build
 rm -f "${WS_DIR}"/src/uirover_description/urdf/*.urdf
 
-if apt -qq list python3-colcon-common-extensions 2> /dev/null | grep -q installed; then
-    echo "colcon-common-extensions is already installed"
+if apt -qq list python3-colcon-clean 2> /dev/null | grep -q installed; then
+    echo "colcon-clean is already installed"
 else
-    echo "Installing colcon-common-extensions"
+    echo "Installing colcon-clean"
     sudo apt update
-    sudo apt install -y python3-colcon-common-extensions
+    sudo apt install -y python3-colcon-clean
 fi
 
 (cd "$WS_DIR" && colcon clean workspace -y)

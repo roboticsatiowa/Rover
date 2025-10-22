@@ -7,14 +7,17 @@
   <maintainer email="holterethan@gmail.com">ethan</maintainer>
   <license>GPL-3.0-only</license>
 
-  <!-- UIROVER -->
+  <depend>uirover_basestation</depend>
   <depend>uirover_bringup</depend>
   <depend>uirover_controllers</depend>
   <depend>uirover_description</depend>
   <depend>uirover_gazebo</depend>
+  <depend>uirover_gnss</depend>
   <depend>uirover_hardware</depend>
+  <depend>uirover_moveit</depend>
   <depend>uirover_msgs</depend>
   <depend>uirover_perception</depend>
+  <depend>uirover_simple_hardware</depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

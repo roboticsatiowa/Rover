@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Author: Ethan Holter
-Author: Ethan Holter
 
 echo "This script deletes all docker containers and images. Very
 often if the raspberry pi is killed ungracefully while building, 
