@@ -1,5 +1,0 @@
-- commit decent starter vscode configuration
-- commit decent starter .idea configuration
-- dev containers
-
-https://www.allisonthackston.com/articles/vscode-docker-ros2.html
