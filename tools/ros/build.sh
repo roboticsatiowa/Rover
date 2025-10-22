@@ -33,6 +33,8 @@ rm -f "${WS_DIR}"/src/uirover_description/urdf/*.urdf
 --symlink-install \
 --event-handlers desktop_notification- console_stderr- || print_stderr_logs)
 
+echo "export RCUTILS_COLORIZED_OUTPUT=1" >> "${WS_DIR}/install/setup.bash"
+
 
 # Ideally we would automatically source the setup.bash file after building, but this is causing bash tab completion to completetly crash gnome-terminal.
 # Not sure why, but in case this ever gets fixed, here is the line to do it:
