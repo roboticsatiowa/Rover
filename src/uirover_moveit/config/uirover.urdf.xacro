@@ -3,7 +3,7 @@
     <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
 
     <!-- Import uirover urdf file -->
-    <xacro:include filename="$(find uirover_description)/xacro/arm.urdf.xacro" />
+    <xacro:include filename="$(find uirover_description)/urdf/uirover.urdf.xacro" />
 
     <!-- Import control_xacro -->
     <xacro:include filename="uirover.ros2_control.xacro" />

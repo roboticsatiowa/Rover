@@ -1,13 +1,13 @@
 moveit_setup_assistant_config:
   urdf:
     package: uirover_description
-    relative_path: xacro/arm.urdf.xacro
+    relative_path: urdf/uirover.urdf.xacro
   srdf:
     relative_path: config/uirover.srdf
   package_settings:
-    author_name: ""
-    author_email: ""
-    generated_timestamp: 1761015135
+    author_name: Ethan Holter
+    author_email: eholter@uiowa.edu
+    generated_timestamp: 1761095085
   control_xacro:
     command:
       - position

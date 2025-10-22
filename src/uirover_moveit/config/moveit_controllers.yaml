@@ -15,5 +15,3 @@ moveit_simple_controller_manager:
       - arm_j3
       - arm_j4
       - arm_j5
-    action_ns: follow_joint_trajectory
-    default: true

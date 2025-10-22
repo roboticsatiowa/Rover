@@ -10,13 +10,12 @@
         <parent link="base_link" />
         <child link="arm_base_link" />
         <origin xyz="0.2 0 0" rpy="0 0 0" />
-
     </joint>
 
     <link name="arm_l0">
         <visual>
             <origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
-            <geometry>
+            <geometry>  
                 <mesh filename="file://$(find uirover_description)/dae/Arm_L0.dae" />
             </geometry>
         </visual>

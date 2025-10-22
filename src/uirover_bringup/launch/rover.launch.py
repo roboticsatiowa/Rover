@@ -1,7 +1,3 @@
-import os
-
-os.environ["RCUTILS_COLORIZED_OUTPUT"] = "1"
-
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -11,6 +7,10 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch.substitutions import Command, FindExecutable
+
+from moveit_configs_utils import MoveItConfigsBuilder
+from moveit_configs_utils.launches import generate_demo_launch
 
 
 def generate_launch_description():
@@ -70,10 +70,33 @@ def generate_launch_description():
         Node(
             package="robot_state_publisher",
             executable="robot_state_publisher",
+            name="chassis_state_publisher",
             output="screen",
             parameters=[{"robot_description": robot_description_content}],
+            remappings=[("/robot_description", "/uirover/robot_description")],
         )
     )
+    nodes.append(
+        Node(
+            package="joint_state_publisher",
+            executable="joint_state_publisher",
+            name="chassis_joint_state_publisher",
+            output="screen",
+            remappings=[("/joint_states", "/uirover/joint_states")],
+        )
+    )
+    nodes.append(
+        Node(
+            package="joint_state_publisher_gui",
+            executable="joint_state_publisher_gui",
+            name="chassis_joint_state_publisher_gui",
+            output="screen",
+            remappings=[("/joint_states", "/uirover/joint_states"),
+                        ("/robot_description", "/uirover/robot_description")],
+        )
+    )
+    
+    nodes.append(generate_demo_launch(MoveItConfigsBuilder("uirover", package_name="uirover_moveit").to_moveit_configs()))
 
     # ============================
     # Visual SLAM
@@ -103,91 +126,96 @@ def generate_launch_description():
         ),
     )
 
-    nodes.append(
-        Node(
-            package="imu_filter_madgwick",
-            executable="imu_filter_madgwick_node",
-            namespace="rover",
-            output="screen",
-            parameters=[{"use_mag": False, "world_frame": "enu", "publish_tf": False}],
-            remappings=[
-                ("imu/data_raw", "realsense/imu"),
-                ("imu/data", "realsense/imu/data"),
-            ],
-        ),
-    )
+    # ============================= 
+    # SLAM Nodes
+    # work in progress
+    # =============================
+    
+    # nodes.append(
+    #     Node(
+    #         package="imu_filter_madgwick",
+    #         executable="imu_filter_madgwick_node",
+    #         namespace="rover",
+    #         output="screen",
+    #         parameters=[{"use_mag": False, "world_frame": "enu", "publish_tf": False}],
+    #         remappings=[
+    #             ("imu/data_raw", "realsense/imu"),
+    #             ("imu/data", "realsense/imu/data"),
+    #         ],
+    #     ),
+    # )
 
-    nodes.append(
-        Node(
-            package="rtabmap_odom",
-            executable="rgbd_odometry",
-            namespace="rover/slam",
-            output="screen",
-            parameters=[
-                {
-                    "frame_id": "realsense_link",
-                    "subscribe_depth": True,
-                    "subscribe_odom_info": True,
-                    "approx_sync": False,
-                    "wait_imu_to_init": True,
-                }
-            ],
-            remappings=[
-                ("imu", "/rover/realsense/imu/data"),
-                ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
-                ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
-                ("depth/image", "/rover/realsense/depth/image_rect_raw"),
-            ],
-        ),
-    )
+    # nodes.append(
+    #     Node(
+    #         package="rtabmap_odom",
+    #         executable="rgbd_odometry",
+    #         namespace="rover/slam",
+    #         output="screen",
+    #         parameters=[
+    #             {
+    #                 "frame_id": "realsense_link",
+    #                 "subscribe_depth": True,
+    #                 "subscribe_odom_info": True,
+    #                 "approx_sync": False,
+    #                 "wait_imu_to_init": True,
+    #             }
+    #         ],
+    #         remappings=[
+    #             ("imu", "/rover/realsense/imu/data"),
+    #             ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
+    #             ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
+    #             ("depth/image", "/rover/realsense/depth/image_rect_raw"),
+    #         ],
+    #     ),
+    # )
 
-    nodes.append(
-        Node(
-            package="rtabmap_slam",
-            executable="rtabmap",
-            namespace="rover/slam",
-            output="screen",
-            parameters=[
-                {
-                    "frame_id": "realsense_link",
-                    "subscribe_depth": True,
-                    "subscribe_odom_info": True,
-                    "approx_sync": False,
-                    "wait_imu_to_init": True,
-                }
-            ],
-            remappings=[
-                ("imu", "/rover/realsense/imu/data"),
-                ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
-                ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
-                ("depth/image", "/rover/realsense/depth/image_rect_raw"),
-            ],
-            arguments=["-d"],
-        ),
-    )
+    # nodes.append(
+    #     Node(
+    #         package="rtabmap_slam",
+    #         executable="rtabmap",
+    #         namespace="rover/slam",
+    #         output="screen",
+    #         parameters=[
+    #             {
+    #                 "frame_id": "realsense_link",
+    #                 "subscribe_depth": True,
+    #                 "subscribe_odom_info": True,
+    #                 "approx_sync": False,
+    #                 "wait_imu_to_init": True,
+    #             }
+    #         ],
+    #         remappings=[
+    #             ("imu", "/rover/realsense/imu/data"),
+    #             ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
+    #             ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
+    #             ("depth/image", "/rover/realsense/depth/image_rect_raw"),
+    #         ],
+    #         arguments=["-d"],
+    #     ),
+    # )
 
-    nodes.append(
-        Node(
-            package="rtabmap_viz",
-            executable="rtabmap_viz",
-            namespace="rover/slam",
-            output="screen",
-            parameters=[
-                {
-                    "frame_id": "realsense_link",
-                    "subscribe_depth": True,
-                    "subscribe_odom_info": True,
-                    "approx_sync": False,
-                    "wait_imu_to_init": True,
-                }
-            ],
-            remappings=[
-                ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
-                ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
-                ("depth/image", "/rover/realsense/depth/image_rect_raw"),
-            ],
-        ),
-    )
+    # nodes.append(
+    #     Node(
+    #         package="rtabmap_viz",
+    #         executable="rtabmap_viz",
+    #         namespace="rover/slam",
+    #         output="screen",
+    #         parameters=[
+    #             {
+    #                 "frame_id": "realsense_link",
+    #                 "subscribe_depth": True,
+    #                 "subscribe_odom_info": True,
+    #                 "approx_sync": False,
+    #                 "wait_imu_to_init": True,
+    #             }
+    #         ],
+    #         remappings=[
+    #             ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
+    #             ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
+    #             ("depth/image", "/rover/realsense/depth/image_rect_raw"),
+    #         ],
+    #     ),
+    # )
 
     nodes.append(
         Node(

@@ -9,6 +9,11 @@
 
   <depend>realsense2_camera</depend>
   <depend>rmw_zenoh_cpp</depend>
+  <depend>imu_filter_madgwick</depend>
+  <depend>rtabmap_odom</depend>
+  <depend>rtabmap_slam</depend>
+  <depend>rtabmap_viz</depend>
+  
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
