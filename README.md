@@ -102,9 +102,82 @@ ros2 launch uirover_bringup rover.launch.py
 
 ---
 
-## Other Launch Files
+## Other Launch Files/Scripts
+
+### URDF development
+
+Preview the robot model in RViz. Useful when manually tweaking urdf files.
+
+```bash
+ros2 launch uirover_description preview.launch.py
+```
+
+### Mapproxy
+
+[Mapproxy](https://mapproxy.org/) is a map tile provider which allows map data to be cached locally for offline use. To use it offline, the map cache must first be "seeded" with data from an online source.
+
+To seed the map cache with data, run:
+
+```bash
+ros2 launch uirover_basestation mapproxy_seed.launch.py
+```
+
+this launch file starts the mapproxy server:
+
+```bash
+ros2 launch uirover_basestation mapproxy.launch.py
+```
+
+Map proxy UI can be found at [http://localhost:8080/demo/](http://localhost:8080/demo/) while the service is running.
+
+Map tiles will be served at [http://localhost:8080/tiles/satellite/webmercator/{z}/{x}/{y}.png](http://localhost:8080/tiles/satellite/webmercator/1/1/1.png) where {x}, {y}, and {z} are the tile coordinates.
+
+More info can be found in the [mapproxy docs](https://mapproxy.github.io/mapproxy/latest/index.html)
+
+### MoveIt2
+
+[MoveIt2](https://moveit.ros.org/) is a motion planning framework for ROS2. It will do inverse kinematics, path planning, and collision checking for the rover arm.
+
+To view the demo for our arm, run:
+
+```bash
+ros2 launch uirover_moveit demo.launch.py
+```
+
+More info can be found in the [MoveIt2 docs](https://moveit.picknik.ai/main/index.html)
+
+> [!WARNING]
+>
+> As of **October 2025**, MoveIt2's setup assistant has a fatal issue caused by a version incompatibility with Rviz2. The current workaround is to downgrade to an older version of Rviz2. The GitHub issue is found [here](https://github.com/moveit/moveit2/issues/3546). A script is provided to automate this process:
+>
+>```bash
+>./tools/misc/moveit_rviz_workaround.sh
+>```
+
+### Perception
+
+Camera streams (sources) and viewers (sinks) can be launched with the following commands:
+
+```bash
+ros2 launch uirover_perception gstream_source.launch.py
+ros2 launch uirover_perception gstream_sink.launch.py
+```
+
+The realsense D435i can be demoed with this file
 
 
+```bash
+ros2 launch uirover_perception realsense.launch.py
+```
+
+A more complete SLAM demo using the realsense can be run with
+
+```bash
+ros2 launch uirover_perception stereo_slam.launch.py
+```
+
+> [!NOTE]
+> To make full use of the D435i make sure that you are using a USB 3.0 compatible port and cable.
 
 ---
 

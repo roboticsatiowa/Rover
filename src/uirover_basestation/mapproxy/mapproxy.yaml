@@ -2,8 +2,6 @@
 # MapProxy configuration.
 # -------------------------------
 
-# http://localhost:8080/tiles/satellite/webmercator/{z}/{x}/{y}.png
-
 services:
   demo:
   tms:
