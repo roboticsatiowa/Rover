@@ -80,7 +80,14 @@ A convenience script is provided to build the project
 source install/setup.bash
 ```
 
+> [!NOTE]
+> You must source the `install/setup.bash` file in every new terminal so ROS2 can find the uirover packages. Otherwise you will see errors like `package 'uirover_bringup' not found`.
+
+> [!IMPORTANT]
+> Running `source install/setup.bash` will automatically set the appropriate environment variables for Zenoh Middleware. It defaults to using the basestation config file (`zenoh_basestation.config.json5`). If you are working on the rover you must manually set the `ZENOH_ROUTER_CONFIG_URI` environment variable to point to `zenoh_rover.config.json5` in `~/.bashrc` or manually before launching any nodes.
+
 It is recommended to occasionally clean out the workspace. This will remove any generated files which can sometimes cause issues.
+
 
 ```bash
 ./tools/ros/clean.sh
