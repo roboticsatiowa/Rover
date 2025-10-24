@@ -16,6 +16,7 @@ add_library(
   uirover_hardware
   SHARED
   src/uirover_hardware_interface.cpp
+  src/uirover_canbus_interface.cpp
 )
 target_include_directories(
   uirover_hardware

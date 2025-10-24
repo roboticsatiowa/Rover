@@ -14,7 +14,8 @@
                     <plugin>gz_ros2_control/GazeboSimSystem</plugin>
                 </xacro:if>
                 <xacro:unless value="${use_gazebo}">
-                    <plugin>uirover_hardware/UiroverHardwareInterface</plugin>
+                    <!-- <plugin>uirover_hardware/UiroverHardwareInterface</plugin> -->
+                    <plugin>mock_components/GenericSystem</plugin>
                 </xacro:unless>
             </hardware>
 
