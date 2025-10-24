@@ -4,6 +4,13 @@ shopt -s globstar nullglob
 
 WS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." &> /dev/null && pwd )" # workspace directory
 
+# check if --debug flag is passed
+if [[ " $* " == *" --debug "* ]]; then
+    DEBUG=1
+else
+    DEBUG=0
+fi
+
 # colcon has a very weird cli so instead we manually concatenate all the logs in the event of a failure.
 # This results in a much more readable output.
 function print_stderr_logs () {
@@ -47,7 +54,11 @@ COLCON_ARGS="--mixin compile-commands \
 --continue-on-error \
 --parallel-workers 0 \
 --symlink-install \
---event-handlers desktop_notification- console_stderr-"
+--event-handlers desktop_notification-"
+
+if [ "$DEBUG" -eq 1 ]; then
+    COLCON_ARGS+=" --cmake-args -DCMAKE_BUILD_TYPE=Debug"
+fi
 
 (cd $WS_DIR && colcon build $COLCON_ARGS || print_stderr_logs)
 
