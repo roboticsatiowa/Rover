@@ -21,7 +21,6 @@ fi
 
 if ! groups "$(whoami)" | grep -q realtime; then
     sudo usermod -aG realtime "$(whoami)"
-    newgrp realtime
     echo "Added $(whoami) to realtime group"
 else
     echo "$(whoami) already in realtime group"
