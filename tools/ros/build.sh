@@ -40,11 +40,14 @@ else
     echo "Installing colcon-mixin"
     sudo apt update && sudo apt install -y python3-colcon-mixin
 fi
-MIXIN_URL="https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml"
-if ! colcon mixin list 2>/dev/null | grep -q "$MIXIN_URL"; then
-    colcon mixin add default "$MIXIN_URL"
-fi
+if [ -e "${HOME}/.colcon/mixin/default/compile-commands.mixin" ]; then
+    echo "Colcon mixins already initialized"
+else
+    colcon mixin add default "https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml" \
+    || echo "Default mixins repo already set"
 
+    colcon mixin update default
+fi
 # desktop_notification- console_stderr- disable annoying features of colcon
 # --continue-on-error continues building other packages even if one fails
 # --parallel-workers 0 uses all available CPU cores
