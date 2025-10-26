@@ -12,37 +12,37 @@
                 <command_interface name="position"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-                <param name="odrive_serial_number">100</param>
+                <param name="odrive_serial_number">C0FFEE00</param>
             </joint>
             <joint name="arm_j1">
                 <command_interface name="position"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-                <param name="odrive_serial_number">101</param>
+                <param name="odrive_serial_number">C0FFEE01</param>
             </joint>
             <joint name="arm_j2">
                 <command_interface name="position"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-                <param name="odrive_serial_number">102</param>
+                <param name="odrive_serial_number">C0FFEE02</param>
             </joint>
             <joint name="arm_j3">
                 <command_interface name="position"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-                <param name="odrive_serial_number">103</param>
+                <param name="odrive_serial_number">C0FFEE03</param>
             </joint>
             <joint name="arm_j4">
                 <command_interface name="position"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-                <param name="odrive_serial_number">104</param>
+                <param name="odrive_serial_number">C0FFEE04</param>
             </joint>
             <joint name="arm_j5">
                 <command_interface name="position"/>
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
-                <param name="odrive_serial_number">105</param>
+                <param name="odrive_serial_number">C0FFEE05</param>
             </joint>
 
         </ros2_control>

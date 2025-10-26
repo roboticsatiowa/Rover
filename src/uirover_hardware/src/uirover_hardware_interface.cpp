@@ -33,6 +33,13 @@ namespace uirover_hardware {
       return CallbackReturn::ERROR;
     }
 
+    fl_wheel_velocity_command_ = 0;
+    fr_wheel_velocity_command_ = 0;
+    ml_wheel_velocity_command_ = 0;
+    mr_wheel_velocity_command_ = 0;
+    bl_wheel_velocity_command_ = 0;
+    br_wheel_velocity_command_ = 0;
+
     // Get number of joint state/command interfaces from URDF (stored in info_)
     hw_states_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
     prev_hw_commands_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
@@ -75,9 +82,9 @@ namespace uirover_hardware {
     tty.c_oflag &= ~OPOST;         // Prevent special interpretation of output bytes (e.g. newline chars)
     tty.c_oflag &= ~ONLCR;         // Prevent conversion of newline to carriage return/line feed
 
-    // read op will block for 0.01 seconds if no data is available. Timeout was chosen completely arbitrarily.
+    // read op will block for 0.1 seconds if no data is available. Timeout was chosen completely arbitrarily.
     tty.c_cc[VMIN] = 0;     // No minimum number of bytes to read
-    tty.c_cc[VTIME] = 0.1;  // 0.1 deciseconds (0.01 seconds) timeout for read
+    tty.c_cc[VTIME] = 1;  // 1 deciseconds (0.1 seconds) timeout for read
 
     // Set the baud rate
     cfsetspeed(&tty, baudrate);

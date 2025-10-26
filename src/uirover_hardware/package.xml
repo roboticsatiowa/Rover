@@ -9,10 +9,11 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <depend>hardware_interface</depend>
-  <depend>pluginlib</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_lifecycle</depend>
+  
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
   <depend>joint_limits</depend>
 
   <test_depend>ament_lint_auto</test_depend>

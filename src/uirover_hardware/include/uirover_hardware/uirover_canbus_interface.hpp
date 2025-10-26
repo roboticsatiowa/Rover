@@ -3,6 +3,8 @@
 
 #include <linux/can.h>
 #include <net/if.h>
+#include <rclcpp/logger.hpp>
+#include <sys/types.h>
 #include <termios.h>
 #include <vector>
 
@@ -12,7 +14,9 @@
 #include "rclcpp/macros.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 
-namespace CANCmd {
+namespace uirover_hardware {
+
+namespace ODRIVE_CMDS {
 
 constexpr uint16_t GET_VERSION = 0x000;
 constexpr uint16_t HEARTBEAT = 0x001;
@@ -43,9 +47,24 @@ constexpr uint16_t GET_TORQUES = 0x01C;
 constexpr uint16_t GET_POWERS = 0x01D;
 constexpr uint16_t ENTER_DFU_MODE = 0x01F;
 
-} // namespace CANCmd
+} // namespace OdriveCommands
 
-namespace uirover_hardware {
+struct Odrive {
+  std::string joint_name;
+  u_int64_t serial_num;
+  u_int32_t node_id;
+  double position_command;
+  double position_state;
+  double velocity_state;
+};
+struct Wheel {
+  std::string joint_name;
+  u_int32_t node_id;
+  double velocity_command;
+  double position_state;
+  double velocity_state;
+};
+
 class CANInterface : public hardware_interface::SystemInterface {
 public:
   hardware_interface::CallbackReturn
@@ -76,33 +95,17 @@ public:
   ~CANInterface();
 
 private:
+  Odrive odrives[6];
+  Wheel wheels[6];
+
   int cansock;
   struct sockaddr_can addr;  // CAN socket address
   struct ifreq ifr;          // interface request
   struct can_frame canframe; // CAN frame
 
-  std::string wheel_map[6] = {"fl_wheel_joint", "fr_wheel_joint",
-                              "ml_wheel_joint", "mr_wheel_joint",
-                              "bl_wheel_joint", "br_wheel_joint"};
-
-  std::string arm_map[6] = {"arm_j0", "arm_j1", "arm_j2",
-                            "arm_j3", "arm_j4", "arm_j5"};
-
-  // 6 bit identifiers
-  int wheel_can_ids[6] = {0x010, 0x011, 0x012, 0x013, 0x014, 0x015};
-  int arm_can_ids[6] = {0x020, 0x021, 0x022, 0x023, 0x024, 0x025};
-
-  // commands
-  double arm_position_commands[6];
-  double wheel_velocity_commands[6];
-
-  // states - velocity
-  double arm_velocity_states[6];
-  double wheel_velocity_states[6];
-
-  // states - position
-  double arm_position_states[6];
-  double wheel_position_states[6];
+  int send_cmd(uint8_t node_id, uint8_t cmd, uint8_t len,
+                      const uint8_t *data);
+  int send_rtr(uint8_t node_id, uint8_t cmd);
 };
 
 } // namespace uirover_hardware
