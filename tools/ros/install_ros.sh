@@ -19,11 +19,10 @@ sudo apt update
 sudo apt upgrade
 sudo apt install ros-dev-tools ros-jazzy-desktop python3-colcon-argcomplete -y
 
-# source ROS2 on opening terminal. Done by default since its assumed anyone with a level of expertise where they would not want this would also know how to remove it.
-# most people would probably not know what this is, so its better just not to ask.
+# source ROS2 on opening terminal. Sorry if you're upset with me screwing with your bashrc  ¯\_(ツ)_/¯
 grep -qxF "source /opt/ros/jazzy/setup.bash" ~/.bashrc || echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 
-# locks ROS to localhost. Prevents accidental interace with other ROS systems on the same network. 
+# locks ROS to localhost. Prevents accidental interactions with other ROS systems on the same network. 
 # Any ROS2 communication across machines should be done explicitly (i.e. with zenoh_bridge)
 grep -qxF "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST" ~/.bashrc || echo "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST" >> ~/.bashrc
 
