@@ -9,6 +9,7 @@
 #include <linux/can/raw.h>
 #include <linux/can.h>
 #include <cstring>
+#include <errno.h>
 #include <cstdint>
 #include <cstddef>
 #include <chrono>
@@ -21,7 +22,7 @@
 
 namespace uirover_hardware {
 
-    int CANInterface::send_cmd(uint8_t node_id, uint8_t cmd, uint8_t len, const uint8_t *data){
+    int CANInterface::send_cmd(uint8_t node_id, uint8_t cmd, uint8_t len, const uint8_t* data) {
         canframe.can_id = node_id << 5 | cmd;
         canframe.len = len;
         memcpy(canframe.data, data, len);
@@ -46,8 +47,8 @@ namespace uirover_hardware {
 
 
 
-    hardware_interface::CallbackReturn CANInterface::on_init(const hardware_interface::HardwareComponentInterfaceParams & params) {
-    
+    hardware_interface::CallbackReturn CANInterface::on_init(const hardware_interface::HardwareComponentInterfaceParams& params) {
+
         if (hardware_interface::SystemInterface::on_init(params) != CallbackReturn::SUCCESS) {
             return CallbackReturn::ERROR;
         }
@@ -59,6 +60,8 @@ namespace uirover_hardware {
             odrives[i].position_state = 0;
             odrives[i].velocity_state = 0;
         }
+
+        odrives[0].node_id = 0x07;
 
         for (size_t i = 0; i < 6; ++i) {
             wheels[i].node_id = 0x00; // TODO placeholder
@@ -79,7 +82,7 @@ namespace uirover_hardware {
         memset(&canframe, 0, sizeof(canframe));
 
         for (hardware_interface::ComponentInfo info : params.hardware_info.joints) {
-            for (Odrive &odrive : odrives) {
+            for (Odrive& odrive : odrives) {
                 if (odrive.joint_name == info.name) {
                     odrive.serial_num = std::stol(info.parameters.at("odrive_serial_number"), nullptr, 16);
                 }
@@ -94,11 +97,11 @@ namespace uirover_hardware {
 
         RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "CANInterface initialized successfully");
         return CallbackReturn::SUCCESS;
-    
+
     }
 
     hardware_interface::CallbackReturn CANInterface::on_configure(
-    const rclcpp_lifecycle::State& /*previous_state*/) {
+        const rclcpp_lifecycle::State& /*previous_state*/) {
 
         CANInterface::cansock = socket(PF_CAN, SOCK_RAW | SOCK_NONBLOCK, CAN_RAW);
         if (CANInterface::cansock < 0) {
@@ -106,60 +109,63 @@ namespace uirover_hardware {
             return CallbackReturn::ERROR;
         }
 
-        strncpy(CANInterface::ifr.ifr_name, "vcan0", IFNAMSIZ - 1);
+        strncpy(CANInterface::ifr.ifr_name, "can0", IFNAMSIZ - 1);
         ioctl(CANInterface::cansock, SIOCGIFINDEX, &ifr);
         addr.can_family = AF_CAN;
         addr.can_ifindex = CANInterface::ifr.ifr_ifindex;
-        
-        int bind_result = bind(CANInterface::cansock, (struct sockaddr *)&addr, sizeof(addr));
+
+        int bind_result = bind(CANInterface::cansock, (struct sockaddr*)&addr, sizeof(addr));
 
         if (bind_result < 0) {
-            RCLCPP_ERROR(rclcpp::get_logger("uirover_hardware"), "Error in CAN socket bind: %d - %s", errno, strerror(errno)); 
+            RCLCPP_ERROR(rclcpp::get_logger("uirover_hardware"), "Error in CAN socket bind: %d - %s", errno, strerror(errno));
             return CallbackReturn::ERROR;
         }
-        
+
+        for (Odrive odrive : odrives) {
+            uint8_t mode_data[8] = { 3,0,0,0,1,0,0,0 };
+            if (send_cmd(odrive.node_id, ODRIVE_CMDS::SET_CONTROLLER_MODE, 8, mode_data) != 0) {
+                RCLCPP_WARN(rclcpp::get_logger("uirover_hardware"), "Failed to set controller mode for node 0x%02x", odrive.node_id);
+            }
+            uint8_t axis_state_data[8] = {8,0,0,0,0,0,0,0};
+            send_cmd(odrive.node_id, ODRIVE_CMDS::SET_AXIS_STATE, 8, axis_state_data);
+        }
+
         RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "CAN socket opened successfully");
 
-        // attempt to re-address odrives every 2 sec until timout (10 sec) or success
-        std::chrono::time_point start = std::chrono::steady_clock::now();
-        std::chrono::time_point last_cmd = std::chrono::steady_clock::now();
-        send_rtr(0x3F, ODRIVE_CMDS::ADDRESS);
-        while (std::chrono::steady_clock::now() - start < std::chrono::seconds(10)) {
-            if (std::chrono::steady_clock::now() - last_cmd > std::chrono::seconds(2)) {
-                send_rtr(0x3F, ODRIVE_CMDS::ADDRESS);
-                last_cmd = std::chrono::steady_clock::now();
-                RCLCPP_WARN(rclcpp::get_logger("uirover_hardware"), "No response from address command. Retrying...");
-            }
+        // // attempt to re-address odrives every 2 sec until timout (10 sec) or success
+        // std::chrono::time_point start = std::chrono::steady_clock::now();
+        // std::chrono::time_point last_cmd = std::chrono::steady_clock::now();
+        // send_rtr(0x3F, ODRIVE_CMDS::ADDRESS);
+        // while (std::chrono::steady_clock::now() - start < std::chrono::seconds(10)) {
+        //     if (std::chrono::steady_clock::now() - last_cmd > std::chrono::seconds(2)) {
+        //         send_rtr(0x3F, ODRIVE_CMDS::ADDRESS);
+        //         last_cmd = std::chrono::steady_clock::now();
+        //         RCLCPP_WARN(rclcpp::get_logger("uirover_hardware"), "No response from address command. Retrying...");
+        //     }
 
-            memset(&canframe.data, 0, sizeof(uint8_t[8]));
-            int nbytes = ::read(cansock, &canframe, sizeof(struct can_frame));
-            if (nbytes <= 0) {
-                continue;
-            }
-            
-            // lower 5 bits are command, upper bits (shifted right 5) are node id
-            int cmd = static_cast<int>(canframe.can_id & 0x1F);
-            int node_id = static_cast<int>((canframe.can_id >> 5) & 0x7F);
+        //     memset(&canframe.data, 0, sizeof(uint8_t[8]));
+        //     int nbytes = ::read(cansock, &canframe, sizeof(struct can_frame));
+        //     if (nbytes <= 0) {
+        //         continue;
+        //     }
 
-            // assemble little-endian 64-bit serial number from CAN data bytes
-            uint64_t serial_num = 0;
-            // Use can_dlc when available; fall back to 8 if not set
-            int dlc = static_cast<int>(canframe.can_dlc);
-            if (dlc <= 0 || dlc > 8) dlc = 8;
-            for (int i = 0; i < dlc; ++i) {
-                serial_num |= (static_cast<uint64_t>(canframe.data[i]) << (8 * i));
-            }
+        //     // lower 5 bits are command, upper bits (shifted right 5) are node id
+        //     int cmd = static_cast<int>(canframe.can_id & 0x1F);
+        //     int node_id = static_cast<int>((canframe.can_id >> 5) & 0x7F);
+
+        //     // assemble little-endian 64-bit serial number from CAN data bytes
+        //     uint64_t serial_num = (data[0]<<0) | (data[1]<<8) | (data[2]<<16) | ((unsigned)data[3]<<24);
 
 
-            if (cmd == 6) {
-                RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "%lu", serial_num);
-                for (Odrive odrive : odrives) {
-                    
-                }
+        //     if (cmd == 6) {
+        //         RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "%lu", serial_num);
+        //         for (Odrive odrive : odrives) {
 
-            }
-            
-        }
+        //         }
+
+        //     }
+
+        // }
 
         return CallbackReturn::SUCCESS;
     }
@@ -176,7 +182,7 @@ namespace uirover_hardware {
                 wheels[i].joint_name, hardware_interface::HW_IF_VELOCITY, &wheels[i].velocity_state));
             state_interfaces.emplace_back(new hardware_interface::StateInterface(
                 wheels[i].joint_name, hardware_interface::HW_IF_POSITION, &wheels[i].position_state));
-            
+
         }
         return state_interfaces;
     }
@@ -195,42 +201,44 @@ namespace uirover_hardware {
     }
 
     hardware_interface::CallbackReturn CANInterface::on_activate(
-    const rclcpp_lifecycle::State& /*previous_state*/) {
+        const rclcpp_lifecycle::State& /*previous_state*/) {
         RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "CANInterface activated");
         return CallbackReturn::SUCCESS;
     }
 
     hardware_interface::CallbackReturn CANInterface::on_deactivate(
-    const rclcpp_lifecycle::State& /*previous_state*/) {
+        const rclcpp_lifecycle::State& /*previous_state*/) {
         RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "CANInterface deactivated");
         return CallbackReturn::SUCCESS;
     }
 
     hardware_interface::return_type CANInterface::read(
-    const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
+        const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
         // TODO placeholder. currently returning commanded positions/velocities as states
         for (size_t i = 0; i < 6; ++i) {
-            odrives[i].position_state = odrives[i].velocity_state;
+            odrives[i].position_state = odrives[i].position_command;
             wheels[i].velocity_state = wheels[i].velocity_command;
         }
-        
+
         return hardware_interface::return_type::OK;
     }
 
     hardware_interface::return_type CANInterface::write(
-    const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
+        const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
         for (size_t i = 0; i < 6; ++i) {
             canframe.can_id = odrives[i].node_id << 5;
             canframe.can_id |= ODRIVE_CMDS::SET_INPUT_POS;
-            canframe.len = 4;
+            canframe.len = 8;
 
             float arm_pos_float = static_cast<float>(odrives[i].position_command);
             memcpy(&canframe.data[0], &arm_pos_float, sizeof(float));
+            memset(&canframe.data[4], 1000, sizeof(uint16_t));
+            memset(&canframe.data[6], 1000, sizeof(uint16_t));
             int nbytes = ::write(CANInterface::cansock, &canframe, sizeof(struct can_frame));
             if (nbytes < 0) {
                 RCLCPP_ERROR(rclcpp::get_logger("uirover_hardware"), "Error in CAN frame transmission: %d - %s", errno, strerror(errno));
                 return hardware_interface::return_type::ERROR;
-            }  
+            }
         }
 
 
@@ -242,7 +250,7 @@ namespace uirover_hardware {
             close(cansock);
         }
     }
-    
+
 }
 
 #include "pluginlib/class_list_macros.hpp"

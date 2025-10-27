@@ -59,7 +59,7 @@ struct Odrive {
 };
 struct Wheel {
   std::string joint_name;
-  u_int32_t node_id;
+  u_int8_t node_id;
   double velocity_command;
   double position_state;
   double velocity_state;
