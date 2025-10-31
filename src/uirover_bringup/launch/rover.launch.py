@@ -14,8 +14,9 @@ from launch.substitutions import Command, FindExecutable
 from moveit_configs_utils import MoveItConfigsBuilder
 from moveit_configs_utils.launches import generate_demo_launch
 
-
+# ROS2 launch description function generator. Returns LaunchDescription object.
 def generate_launch_description():
+    
     ublox_config = PathJoinSubstitution(
         [FindPackageShare("uirover_gnss"), "config", "zed_f9p.yaml"]
     )
@@ -59,6 +60,7 @@ def generate_launch_description():
                             "host": "192.168.55.100",
                             # 'width': 1280,
                             # 'height': 720,
+                            # Frames per second
                             "framerate": 20.0,
                         }
                     ],
@@ -245,4 +247,5 @@ def generate_launch_description():
     #     )
     # )
 
+    #Create launch descriptions from nodes
     return LaunchDescription(nodes)
