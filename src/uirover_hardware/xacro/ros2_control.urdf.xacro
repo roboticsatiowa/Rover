@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:arg name="hw_type" default="target"/>
+    <xacro:property name='hw_type' value="$(arg hw_type)"/>
+
+    <!-- placeholder for ros2 control -->
+    <!-- https://github.com/ros-controls/ros2_control_demos/blob/master/example_9/ -->
+    <!-- https://control.ros.org/rolling/doc/getting_started/getting_started.html -->
+    <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
+    <!-- <ros2_control name="wheels" type="system">
+        <hardware>
+            <xacro:if value="${hw_type=='gazebo'}">
+                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+            </xacro:if>
+
+            <xacro:if value="${hw_type=='target'}">
+                <plugin>uirover_hardware/UiroverHardwareInterface</plugin>
+            </xacro:if>
+            <xacro:if value="${hw_type=='mock'}">
+                <plugin>mock_components/GenericSystem</plugin>
+            </xacro:if>
+        </hardware>
+
+        <joint name="fl_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-1</param>
+                <param name="max">1</param>
+            </command_interface>
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="fr_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-1</param>
+                <param name="max">1</param>
+            </command_interface>
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="bl_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-1</param>
+                <param name="max">1</param>
+            </command_interface>
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="br_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-1</param>
+                <param name="max">1</param>
+            </command_interface>
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="ml_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-1</param>
+                <param name="max">1</param>
+            </command_interface>
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="mr_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-1</param>
+                <param name="max">1</param>
+            </command_interface>
+            <state_interface name="velocity" />
+        </joint>
+    </ros2_control> -->
+
+
+    <ros2_control name="arm" type="system" params="hw_type:='target'">
+        <hardware>
+            <!-- Hardware plugin for Gazebo Sim -->
+            <xacro:if value="${hw_type=='gazebo'}">
+                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+            </xacro:if>
+
+            <!-- Real Hardware -->
+            <xacro:if value="${hw_type=='target'}">
+                <plugin>uirover_hardware/UiroverHardwareInterface</plugin>
+            </xacro:if>
+
+            <!-- All state interfaces match coresponding command interface exactly -->
+            <xacro:if value="${hw_type=='mock'}">
+                <plugin>mock_components/GenericSystem</plugin>
+            </xacro:if>
+        </hardware>
+
+        <joint name="arm_j0">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+            <param name="odrive_serial_number">C0FFEE00</param>
+        </joint>
+        <joint name="arm_j1">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+            <param name="odrive_serial_number">C0FFEE01</param>
+        </joint>
+        <joint name="arm_j2">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+            <param name="odrive_serial_number">C0FFEE02</param>
+        </joint>
+        <joint name="arm_j3">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+            <param name="odrive_serial_number">C0FFEE03</param>
+        </joint>
+        <joint name="arm_j4">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+            <param name="odrive_serial_number">C0FFEE04</param>
+        </joint>
+        <joint name="arm_j5">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+            <param name="odrive_serial_number">C0FFEE05</param>
+        </joint>
+
+    </ros2_control>
+</robot>

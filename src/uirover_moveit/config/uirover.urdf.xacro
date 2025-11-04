@@ -9,6 +9,6 @@
     <xacro:include filename="uirover.ros2_control.xacro" />
 
 
-    <xacro:uirover_ros2_control name="CANBusArm" initial_positions_file="$(arg initial_positions_file)"/>
+    <xacro:uirover_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
 
 </robot>

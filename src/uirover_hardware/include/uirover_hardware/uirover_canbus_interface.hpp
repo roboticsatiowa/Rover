@@ -16,6 +16,8 @@
 
 namespace uirover_hardware {
 
+using namespace hardware_interface;
+
 namespace ODRIVE_CMDS {
 
 constexpr uint16_t GET_VERSION = 0x000;
@@ -47,7 +49,7 @@ constexpr uint16_t GET_TORQUES = 0x01C;
 constexpr uint16_t GET_POWERS = 0x01D;
 constexpr uint16_t ENTER_DFU_MODE = 0x01F;
 
-} // namespace OdriveCommands
+} // namespace ODRIVE_CMDS
 
 struct Odrive {
   std::string joint_name;
@@ -67,31 +69,14 @@ struct Wheel {
 
 class CANInterface : public hardware_interface::SystemInterface {
 public:
-  hardware_interface::CallbackReturn
-  on_init(const hardware_interface::HardwareComponentInterfaceParams &params)
-      override;
-
-  hardware_interface::CallbackReturn
-  on_configure(const rclcpp_lifecycle::State &previous_state) override;
-
-  std::vector<hardware_interface::StateInterface::ConstSharedPtr>
-  on_export_state_interfaces() override;
-
-  std::vector<hardware_interface::CommandInterface::SharedPtr>
-  on_export_command_interfaces() override;
-
-  hardware_interface::CallbackReturn
-  on_activate(const rclcpp_lifecycle::State &previous_state) override;
-
-  hardware_interface::CallbackReturn
-  on_deactivate(const rclcpp_lifecycle::State &previous_state) override;
-
-  hardware_interface::return_type read(const rclcpp::Time &time,
-                                       const rclcpp::Duration &period) override;
-
-  hardware_interface::return_type
-  write(const rclcpp::Time &time, const rclcpp::Duration &period) override;
-
+  CallbackReturn on_init(const HardwareComponentInterfaceParams &params) override;
+  CallbackReturn on_configure(const rclcpp_lifecycle::State &previous_state) override;
+  std::vector<StateInterface::ConstSharedPtr> on_export_state_interfaces() override;
+  std::vector<CommandInterface::SharedPtr> on_export_command_interfaces() override;
+  CallbackReturn on_activate(const rclcpp_lifecycle::State &previous_state) override;
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State &previous_state) override;
+  return_type read(const rclcpp::Time &time, const rclcpp::Duration &period) override;
+  return_type write(const rclcpp::Time &time, const rclcpp::Duration &period) override;
   ~CANInterface();
 
 private:
@@ -103,8 +88,7 @@ private:
   struct ifreq ifr;          // interface request
   struct can_frame canframe; // CAN frame
 
-  int send_cmd(uint8_t node_id, uint8_t cmd, uint8_t len,
-                      const uint8_t *data);
+  int send_cmd(uint8_t node_id, uint8_t cmd, const uint8_t *data);
   int send_rtr(uint8_t node_id, uint8_t cmd);
 };
 

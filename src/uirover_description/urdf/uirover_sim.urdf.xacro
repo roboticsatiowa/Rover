@@ -2,8 +2,8 @@
 <robot name="uirover" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="$(find uirover_description)/xacro/gazebo.urdf.xacro"/>
 
-    <xacro:include filename="$(find uirover_description)/xacro/ros2_control.urdf.xacro"/>
-    <xacro:uirover_ros2_control use_gazebo="true"/>
+    <xacro:include filename="$(find uirover_hardware)/xacro/ros2_control.urdf.xacro"/>
+    <xacro:uirover_ros2_control hw_type="target"/>
 
     <xacro:include filename="$(find uirover_description)/xacro/chassis.urdf.xacro"/>
     

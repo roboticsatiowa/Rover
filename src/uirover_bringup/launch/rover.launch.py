@@ -1,4 +1,5 @@
 import os
+import json
 
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
@@ -10,32 +11,69 @@ from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import Command, FindExecutable
-
 from moveit_configs_utils import MoveItConfigsBuilder
-from moveit_configs_utils.launches import generate_demo_launch
 
 
 def generate_launch_description():
+    ld = LaunchDescription()
+
+    # ================================
+    # Configs
+    # ================================
+
     ublox_config = PathJoinSubstitution(
         [FindPackageShare("uirover_gnss"), "config", "zed_f9p.yaml"]
+    )
+
+    controller_config = PathJoinSubstitution(
+        [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
     )
 
     zenoh_config = PathJoinSubstitution(
         [FindPackageShare("uirover_bringup"), "config", "zenoh_rover.config.json"]
     )
     
+    moveit_controller_config = PathJoinSubstitution(
+        [FindPackageShare("uirover_moveit"), "config", "ros2_controllers.yaml"]
+    )
+
+    robot_description_path = PathJoinSubstitution(
+        [
+            FindPackageShare("uirover_description"),
+            "urdf",
+            "uirover.urdf.xacro",
+        ]
+    )
+
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("uirover_description"),
-                    "urdf",
-                    "uirover.urdf.xacro",
-                ]
-            ),
+            robot_description_path,
+            " hw_type:='mock'",
         ]
+    )
+
+    moveit_config = (
+        MoveItConfigsBuilder(
+            robot_name="uirover",
+            package_name="uirover_moveit",
+        )
+        .robot_description(
+            file_path=os.path.join(
+                get_package_share_directory("uirover_description"),
+                "urdf",
+                "uirover.urdf.xacro",
+            )
+        )
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
+        .planning_scene_monitor(
+            publish_robot_description=True, publish_robot_description_semantic=True
+        )
+        .planning_pipelines(
+            pipelines=["ompl", "stomp", "pilz_industrial_motion_planner"]
+        )
+        .to_moveit_configs()
     )
 
     nodes = []
@@ -46,7 +84,7 @@ def generate_launch_description():
             if not camera.startswith("CAM"):
                 continue
             index = int(camera[3:])
-            nodes.append(
+            ld.add_action(
                 Node(
                     package="uirover_perception",
                     executable="stream",
@@ -67,44 +105,96 @@ def generate_launch_description():
             i += 1
     except FileNotFoundError:
         pass
-    
-    nodes.append(
+
+    ld.add_action(
         Node(
             package="robot_state_publisher",
             executable="robot_state_publisher",
-            name="chassis_state_publisher",
+            name="robot_state_publisher",
             output="screen",
-            parameters=[{"robot_description": robot_description_content}],
-            remappings=[("/robot_description", "/uirover/robot_description")],
+            namespace="uirover",
+            parameters=[
+                {"robot_description": robot_description_content},
+            ],
         )
     )
-    nodes.append(
+    ld.add_action(
         Node(
             package="joint_state_publisher",
             executable="joint_state_publisher",
-            name="chassis_joint_state_publisher",
+            name="joint_state_publisher",
+            namespace="uirover",
             output="screen",
-            remappings=[("/joint_states", "/uirover/joint_states")],
         )
     )
-    nodes.append(
+    ld.add_action(
         Node(
-            package="joint_state_publisher_gui",
-            executable="joint_state_publisher_gui",
-            name="chassis_joint_state_publisher_gui",
+            package="moveit_ros_move_group",
+            executable="move_group",
             output="screen",
-            remappings=[("/joint_states", "/uirover/joint_states"),
-                        ("/robot_description", "/uirover/robot_description")],
+            namespace="uirover",
+            parameters=[moveit_config.to_dict()],
         )
     )
-    
-    nodes.append(generate_demo_launch(MoveItConfigsBuilder("uirover", package_name="uirover_moveit").to_moveit_configs()))
+
+    # This node spawns controllers AND hardware interfaces based on the
+    # contents of the <ros2_control> tags in the URDF
+    ld.add_action(
+        Node(
+            package="controller_manager",
+            executable="ros2_control_node",
+            namespace="uirover",
+            parameters=[
+                controller_config,
+                moveit_controller_config
+
+            ],
+            output="both",
+        )
+    )
+
+    ld.add_action(
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            namespace="uirover",
+            arguments=["arm_controller", 
+                       "-c", 
+                       "/uirover/moveit_simple_controller_manager",
+                       ],
+        )
+    )
+
+    # ld.add_action(
+    #     Node(
+    #         package="controller_manager",
+    #         executable="spawner",
+    #         arguments=["robotiq_gripper_controller", "-c", "/uirover/controller_manager"],
+    #     )
+    # )
+
+    ld.add_action(
+        Node(
+            package="rviz2",
+            namespace="",
+            executable="rviz2",
+            name="rviz2",
+            arguments=[
+                "-d"
+                + os.path.join(
+                    get_package_share_directory("uirover_basestation"),
+                    "rviz",
+                    "default.rviz",
+                )
+            ],
+        )
+    )
 
     # ============================
     # Visual SLAM
     # ============================
 
-    nodes.append(
+    ld.add_action(
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [
@@ -128,98 +218,21 @@ def generate_launch_description():
         ),
     )
 
-    # ============================= 
-    # SLAM Nodes
-    # work in progress
-    # =============================
-    
-    # nodes.append(
-    #     Node(
-    #         package="imu_filter_madgwick",
-    #         executable="imu_filter_madgwick_node",
-    #         namespace="rover",
-    #         output="screen",
-    #         parameters=[{"use_mag": False, "world_frame": "enu", "publish_tf": False}],
-    #         remappings=[
-    #             ("imu/data_raw", "realsense/imu"),
-    #             ("imu/data", "realsense/imu/data"),
-    #         ],
-    #     ),
-    # )
+    ld.add_action(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("uirover_moveit"),
+                        "launch",
+                        "move_group.launch.py",
+                    ]
+                )
+            ),
+        )
+    )
 
-    # nodes.append(
-    #     Node(
-    #         package="rtabmap_odom",
-    #         executable="rgbd_odometry",
-    #         namespace="rover/slam",
-    #         output="screen",
-    #         parameters=[
-    #             {
-    #                 "frame_id": "realsense_link",
-    #                 "subscribe_depth": True,
-    #                 "subscribe_odom_info": True,
-    #                 "approx_sync": False,
-    #                 "wait_imu_to_init": True,
-    #             }
-    #         ],
-    #         remappings=[
-    #             ("imu", "/rover/realsense/imu/data"),
-    #             ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
-    #             ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
-    #             ("depth/image", "/rover/realsense/depth/image_rect_raw"),
-    #         ],
-    #     ),
-    # )
-
-    # nodes.append(
-    #     Node(
-    #         package="rtabmap_slam",
-    #         executable="rtabmap",
-    #         namespace="rover/slam",
-    #         output="screen",
-    #         parameters=[
-    #             {
-    #                 "frame_id": "realsense_link",
-    #                 "subscribe_depth": True,
-    #                 "subscribe_odom_info": True,
-    #                 "approx_sync": False,
-    #                 "wait_imu_to_init": True,
-    #             }
-    #         ],
-    #         remappings=[
-    #             ("imu", "/rover/realsense/imu/data"),
-    #             ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
-    #             ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
-    #             ("depth/image", "/rover/realsense/depth/image_rect_raw"),
-    #         ],
-    #         arguments=["-d"],
-    #     ),
-    # )
-
-    # nodes.append(
-    #     Node(
-    #         package="rtabmap_viz",
-    #         executable="rtabmap_viz",
-    #         namespace="rover/slam",
-    #         output="screen",
-    #         parameters=[
-    #             {
-    #                 "frame_id": "realsense_link",
-    #                 "subscribe_depth": True,
-    #                 "subscribe_odom_info": True,
-    #                 "approx_sync": False,
-    #                 "wait_imu_to_init": True,
-    #             }
-    #         ],
-    #         remappings=[
-    #             ("rgb/image", "/rover/realsense/infra1/image_rect_raw"),
-    #             ("rgb/camera_info", "/rover/realsense/infra1/camera_info"),
-    #             ("depth/image", "/rover/realsense/depth/image_rect_raw"),
-    #         ],
-    #     ),
-    # )
-
-    nodes.append(
+    ld.add_action(
         Node(
             package="ublox_gps",
             executable="ublox_gps_node",
@@ -228,9 +241,7 @@ def generate_launch_description():
         )
     )
 
-    nodes.append(Node(package="uirover_simple_hardware", executable="hardware_node"))
-
-    nodes.append(
+    ld.add_action(
         Node(
             package="rmw_zenoh_cpp",
             executable="rmw_zenohd",
@@ -238,11 +249,11 @@ def generate_launch_description():
         )
     )
 
-    # nodes.append(
+    # ld.add_action(
     #     ExecuteProcess(
     #         cmd=f"ros2 bag record -o bag/{strftime('%Y-%m-%d-%H-%M-%S')} -a -d 9000".split(" "),
     #         output="log",
     #     )
     # )
 
-    return LaunchDescription(nodes)
+    return ld

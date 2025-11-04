@@ -22,10 +22,10 @@
 
 namespace uirover_hardware {
 
-    int CANInterface::send_cmd(uint8_t node_id, uint8_t cmd, uint8_t len, const uint8_t* data) {
+    int CANInterface::send_cmd(uint8_t node_id, uint8_t cmd, const uint8_t* data) {
         canframe.can_id = node_id << 5 | cmd;
-        canframe.len = len;
-        memcpy(canframe.data, data, len);
+        canframe.len = 8;
+        memcpy(canframe.data, data, 8);
         int nbytes = ::write(CANInterface::cansock, &canframe, sizeof(struct can_frame));
         if (nbytes < 0) {
             RCLCPP_ERROR(rclcpp::get_logger("uirover_hardware"), "Error in CAN frame transmission: %d - %s", errno, strerror(errno));
@@ -109,7 +109,7 @@ namespace uirover_hardware {
             return CallbackReturn::ERROR;
         }
 
-        strncpy(CANInterface::ifr.ifr_name, "can0", IFNAMSIZ - 1);
+        strncpy(CANInterface::ifr.ifr_name, "vcan0", IFNAMSIZ - 1); //TODO parameterize can device name
         ioctl(CANInterface::cansock, SIOCGIFINDEX, &ifr);
         addr.can_family = AF_CAN;
         addr.can_ifindex = CANInterface::ifr.ifr_ifindex;
@@ -123,11 +123,11 @@ namespace uirover_hardware {
 
         for (Odrive odrive : odrives) {
             uint8_t mode_data[8] = { 3,0,0,0,1,0,0,0 };
-            if (send_cmd(odrive.node_id, ODRIVE_CMDS::SET_CONTROLLER_MODE, 8, mode_data) != 0) {
+            if (send_cmd(odrive.node_id, ODRIVE_CMDS::SET_CONTROLLER_MODE, mode_data) != 0) {
                 RCLCPP_WARN(rclcpp::get_logger("uirover_hardware"), "Failed to set controller mode for node 0x%02x", odrive.node_id);
             }
             uint8_t axis_state_data[8] = {8,0,0,0,0,0,0,0};
-            send_cmd(odrive.node_id, ODRIVE_CMDS::SET_AXIS_STATE, 8, axis_state_data);
+            send_cmd(odrive.node_id, ODRIVE_CMDS::SET_AXIS_STATE, axis_state_data);
         }
 
         RCLCPP_INFO(rclcpp::get_logger("uirover_hardware"), "CAN socket opened successfully");
