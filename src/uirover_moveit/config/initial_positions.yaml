@@ -1,9 +1,0 @@
-# Default initial positions for uirover's ros2_control fake system
-
-initial_positions:
-  arm_j0: 0
-  arm_j1: 0
-  arm_j2: 0
-  arm_j3: 0
-  arm_j4: 0
-  arm_j5: 0

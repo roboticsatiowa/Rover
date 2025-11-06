@@ -3,16 +3,11 @@
     <xacro:arg name="hw_type" default="target"/>
     <xacro:property name='hw_type' value="$(arg hw_type)"/>
 
-    <!-- placeholder for ros2 control -->
-    <!-- https://github.com/ros-controls/ros2_control_demos/blob/master/example_9/ -->
-    <!-- https://control.ros.org/rolling/doc/getting_started/getting_started.html -->
-    <!-- https://control.ros.org/rolling/doc/gz_ros2_control/doc/index.html -->
-    <!-- <ros2_control name="wheels" type="system">
+    <ros2_control name="wheels" type="system">
         <hardware>
             <xacro:if value="${hw_type=='gazebo'}">
                 <plugin>gz_ros2_control/GazeboSimSystem</plugin>
             </xacro:if>
-
             <xacro:if value="${hw_type=='target'}">
                 <plugin>uirover_hardware/UiroverHardwareInterface</plugin>
             </xacro:if>
@@ -63,7 +58,7 @@
             </command_interface>
             <state_interface name="velocity" />
         </joint>
-    </ros2_control> -->
+    </ros2_control>
 
 
     <ros2_control name="arm" type="system" params="hw_type:='target'">
@@ -86,37 +81,49 @@
 
         <joint name="arm_j0">
             <command_interface name="position" />
-            <state_interface name="position" />
+            <state_interface name="position" >
+                <param name="initial_value">0.0</param>
+            </state_interface>
             <state_interface name="velocity" />
             <param name="odrive_serial_number">C0FFEE00</param>
         </joint>
         <joint name="arm_j1">
             <command_interface name="position" />
-            <state_interface name="position" />
+            <state_interface name="position" >
+                <param name="initial_value">15.0</param>
+            </state_interface>
             <state_interface name="velocity" />
             <param name="odrive_serial_number">C0FFEE01</param>
         </joint>
         <joint name="arm_j2">
             <command_interface name="position" />
-            <state_interface name="position" />
+            <state_interface name="position" >
+                <param name="initial_value">100.0</param>
+            </state_interface>
             <state_interface name="velocity" />
             <param name="odrive_serial_number">C0FFEE02</param>
         </joint>
         <joint name="arm_j3">
             <command_interface name="position" />
-            <state_interface name="position" />
+            <state_interface name="position" >
+                <param name="initial_value">0.0</param>
+            </state_interface>
             <state_interface name="velocity" />
             <param name="odrive_serial_number">C0FFEE03</param>
         </joint>
         <joint name="arm_j4">
             <command_interface name="position" />
-            <state_interface name="position" />
+            <state_interface name="position" >
+                <param name="initial_value">-25.0</param>
+            </state_interface>
             <state_interface name="velocity" />
             <param name="odrive_serial_number">C0FFEE04</param>
         </joint>
         <joint name="arm_j5">
             <command_interface name="position" />
-            <state_interface name="position" />
+            <state_interface name="position" >
+                <param name="initial_value">0.0</param>
+            </state_interface>
             <state_interface name="velocity" />
             <param name="odrive_serial_number">C0FFEE05</param>
         </joint>

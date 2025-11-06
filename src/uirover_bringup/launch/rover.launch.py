@@ -2,9 +2,9 @@ import os
 import json
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -16,10 +16,25 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
     ld = LaunchDescription()
+    
+    # ==================================
+    #      LAUNCH CONFIGURATIONS
+    # ==================================
+    
+    # change this by appending `hw_type:=[hw_type_goes_here]` to the end of launch command
+    hw_type = LaunchConfiguration("hw_type")
+    
+    ld.add_action(
+        DeclareLaunchArgument(
+            'hw_type',
+            default_value='target',
+            choices=["target", "mock", "gazebo"]
+        )
+    )
 
-    # ================================
-    # Configs
-    # ================================
+    # ==================================
+    #      CONFIGURATION FILES
+    # ==================================
 
     ublox_config = PathJoinSubstitution(
         [FindPackageShare("uirover_gnss"), "config", "zed_f9p.yaml"]
@@ -50,32 +65,13 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             robot_description_path,
-            " hw_type:='mock'",
+            f" hw_type:=",
+            hw_type
         ]
     )
+    
 
-    moveit_config = (
-        MoveItConfigsBuilder(
-            robot_name="uirover",
-            package_name="uirover_moveit",
-        )
-        .robot_description(
-            file_path=os.path.join(
-                get_package_share_directory("uirover_description"),
-                "urdf",
-                "uirover.urdf.xacro",
-            )
-        )
-        .trajectory_execution(file_path="config/moveit_controllers.yaml")
-        .planning_scene_monitor(
-            publish_robot_description=True, publish_robot_description_semantic=True
-        )
-        .planning_pipelines(
-            pipelines=["ompl", "stomp", "pilz_industrial_motion_planner"]
-        )
-        .to_moveit_configs()
-    )
-
+    # this is super hacky and needs to go
     nodes = []
 
     try:
@@ -105,74 +101,93 @@ def generate_launch_description():
             i += 1
     except FileNotFoundError:
         pass
-
+    
+    # ld.add_action(
+    #     Node(
+    #         package="moveit_ros_move_group",
+    #         executable="move_group",
+    #         output="screen",
+    #         namespace="uirover",
+    #         parameters=[moveit_config.to_dict()],
+    #     )
+    # )
+    
+    # ==================================
+    #          ROS2 CONTROL
+    # ==================================
+    
+    controllers_config_path = os.path.join(
+        get_package_share_directory("uirover_controllers"),
+        "config",
+        "controllers.yaml",
+    )
+    
+    # Controller Manager. Responsible for managing individual controllers (spawned below) and their access to hardware
+    ld.add_action(
+        Node(
+            package="controller_manager",
+            executable="ros2_control_node",
+            parameters=[controllers_config_path],
+            namespace="/uirover/control",
+            remappings=[
+                ("controller_manager/robot_description", "robot_description"),
+            ],
+            output="both",
+        )
+    )
+    
+    # Solves 3D pose of robot based on the supplied joint states (from joint_state_publisher) and URDF
     ld.add_action(
         Node(
             package="robot_state_publisher",
             executable="robot_state_publisher",
             name="robot_state_publisher",
             output="screen",
-            namespace="uirover",
+            namespace="/uirover/control",
             parameters=[
                 {"robot_description": robot_description_content},
             ],
         )
     )
+    
+    # Reads state interfaces for all harware components and publishes them
     ld.add_action(
         Node(
             package="joint_state_publisher",
             executable="joint_state_publisher",
             name="joint_state_publisher",
-            namespace="uirover",
+            namespace="/uirover/control",
             output="screen",
         )
     )
-    ld.add_action(
-        Node(
-            package="moveit_ros_move_group",
-            executable="move_group",
-            output="screen",
-            namespace="uirover",
-            parameters=[moveit_config.to_dict()],
-        )
-    )
-
-    # This node spawns controllers AND hardware interfaces based on the
-    # contents of the <ros2_control> tags in the URDF
-    ld.add_action(
-        Node(
-            package="controller_manager",
-            executable="ros2_control_node",
-            namespace="uirover",
-            parameters=[
-                controller_config,
-                moveit_controller_config
-
-            ],
-            output="both",
-        )
-    )
-
+    
+    # Spawns arm controller. trajectory controller is used to execute pre-planned trajectories.
     ld.add_action(
         Node(
             package="controller_manager",
             executable="spawner",
-            namespace="uirover",
-            arguments=["arm_controller", 
+            namespace="/uirover/control",
+            arguments=["arm_trajectory_controller", 
                        "-c", 
-                       "/uirover/moveit_simple_controller_manager",
+                       "controller_manager",
+                       ],
+        )
+    )
+    
+    # Spawns diff drive controller. Controls wheels
+    ld.add_action(
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            namespace="/uirover/control",
+            arguments=["diff_drive_controller", 
+                       "-c", 
+                       "controller_manager",
                        ],
         )
     )
 
-    # ld.add_action(
-    #     Node(
-    #         package="controller_manager",
-    #         executable="spawner",
-    #         arguments=["robotiq_gripper_controller", "-c", "/uirover/controller_manager"],
-    #     )
-    # )
-
+    
     ld.add_action(
         Node(
             package="rviz2",
@@ -189,57 +204,44 @@ def generate_launch_description():
             ],
         )
     )
-
-    # ============================
-    # Visual SLAM
-    # ============================
-
-    ld.add_action(
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [
-                    os.path.join(
-                        get_package_share_directory("realsense2_camera"), "launch"
-                    ),
-                    "/rs_launch.py",
-                ]
-            ),
-            launch_arguments={
-                "camera_name": "realsense",
-                "camera_namespace": "rover",
-                "enable_gyro": "true",
-                "enable_accel": "true",
-                "unite_imu_method": "2",
-                "enable_infra1": "true",
-                "enable_infra2": "true",
-                "enable_sync": "true",
-                "initial_reset": "true",
-            }.items(),
-        ),
-    )
-
-    ld.add_action(
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                PathJoinSubstitution(
+    
+    # ==================================
+    #             MISC NODES
+    # ==================================
+    
+    if hw_type == "target":
+        ld.add_action(
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
                     [
-                        FindPackageShare("uirover_moveit"),
-                        "launch",
-                        "move_group.launch.py",
+                        os.path.join(
+                            get_package_share_directory("realsense2_camera"), "launch"
+                        ),
+                        "/rs_launch.py",
                     ]
-                )
+                ),
+                launch_arguments={
+                    "camera_name": "realsense",
+                    "camera_namespace": "rover",
+                    "enable_gyro": "true",
+                    "enable_accel": "true",
+                    "unite_imu_method": "2",
+                    "enable_infra1": "true",
+                    "enable_infra2": "true",
+                    "enable_sync": "true",
+                    "initial_reset": "true",
+                }.items(),
             ),
         )
-    )
-
-    ld.add_action(
-        Node(
-            package="ublox_gps",
-            executable="ublox_gps_node",
-            name="ublox_gps_node",
-            parameters=[ublox_config],
+        
+        ld.add_action(
+            Node(
+                package="ublox_gps",
+                executable="ublox_gps_node",
+                name="ublox_gps_node",
+                parameters=[ublox_config],
+            )
         )
-    )
 
     ld.add_action(
         Node(
