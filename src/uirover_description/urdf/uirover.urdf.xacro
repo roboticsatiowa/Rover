@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <robot name="uirover"
     xmlns:xacro="http://www.ros.org/wiki/xacro">
-        <!-- Chassis -->
-        <xacro:include filename="$(find uirover_description)/xacro/chassis.urdf.xacro"/>
+    <!-- Chassis -->
+    <xacro:include filename="$(find uirover_description)/xacro/chassis.urdf.xacro"/>
 
-        <!-- Arm -->
-        <xacro:include filename="$(find uirover_description)/xacro/arm.urdf.xacro"/>
+    <!-- Arm -->
+    <xacro:include filename="$(find uirover_description)/xacro/arm.urdf.xacro"/>
 
-        <!-- Hardware -->
-        <xacro:include filename="$(find uirover_hardware)/xacro/ros2_control.urdf.xacro"/>
+    <!-- Hardware -->
+    <xacro:include filename="$(find uirover_hardware)/xacro/ros2_control.urdf.xacro"/>
 
-        <!-- Sensors -->
-        <xacro:include filename="$(find uirover_description)/xacro/sensors.urdf.xacro"/>
+    <!-- Sensors -->
+    <xacro:include filename="$(find uirover_description)/xacro/sensors.urdf.xacro"/>
 
 
 </robot>

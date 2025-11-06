@@ -4,7 +4,13 @@ import json
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
+from launch.substitutions import (
+    PathJoinSubstitution,
+    LaunchConfiguration,
+    PythonExpression,
+)
+
+from launch.conditions import IfCondition
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -16,19 +22,18 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
     ld = LaunchDescription()
-    
+
     # ==================================
     #      LAUNCH CONFIGURATIONS
     # ==================================
-    
+
     # change this by appending `hw_type:=[hw_type_goes_here]` to the end of launch command
+    use_sim_time = LaunchConfiguration("use_sim_time", default=True)
     hw_type = LaunchConfiguration("hw_type")
-    
+
     ld.add_action(
         DeclareLaunchArgument(
-            'hw_type',
-            default_value='target',
-            choices=["target", "mock", "gazebo"]
+            "hw_type", default_value="target", choices=["target", "mock", "gazebo"]
         )
     )
 
@@ -47,7 +52,7 @@ def generate_launch_description():
     zenoh_config = PathJoinSubstitution(
         [FindPackageShare("uirover_bringup"), "config", "zenoh_rover.config.json"]
     )
-    
+
     moveit_controller_config = PathJoinSubstitution(
         [FindPackageShare("uirover_moveit"), "config", "ros2_controllers.yaml"]
     )
@@ -66,10 +71,9 @@ def generate_launch_description():
             " ",
             robot_description_path,
             f" hw_type:=",
-            hw_type
+            hw_type,
         ]
     )
-    
 
     # this is super hacky and needs to go
     nodes = []
@@ -101,28 +105,65 @@ def generate_launch_description():
             i += 1
     except FileNotFoundError:
         pass
-    
-    # ld.add_action(
-    #     Node(
-    #         package="moveit_ros_move_group",
-    #         executable="move_group",
-    #         output="screen",
-    #         namespace="uirover",
-    #         parameters=[moveit_config.to_dict()],
-    #     )
-    # )
-    
+
+    # ==================================
+    #             MOVEIT2
+    # ==================================
+
+    moveit_config = (
+        MoveItConfigsBuilder(
+            robot_name="uirover",
+            package_name="uirover_moveit",
+        )
+        .robot_description(
+            file_path=os.path.join(
+                get_package_share_directory("uirover_description"),
+                "urdf",
+                "uirover.urdf.xacro",
+            ),
+            mappings={"hw_type": hw_type},
+        )
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
+        .planning_scene_monitor(
+            publish_robot_description=False, publish_robot_description_semantic=True
+        )
+        .planning_pipelines(pipelines=["ompl"])
+        .to_moveit_configs()
+    )
+
+    ld.add_action(
+        Node(
+            package="moveit_ros_move_group",
+            executable="move_group",
+            output="screen",
+            namespace="/uirover/moveit",
+            parameters=[moveit_config.to_dict()],
+            remappings=[
+                (
+                    "/uirover/moveit/arm_controller/follow_joint_trajectory/_action/feedback",
+                    "/uirover/control/arm_controller/follow_joint_trajectory/_action/feedback",
+                ),
+                (
+                    "/uirover/moveit/arm_controller/follow_joint_trajectory/_action/status",
+                    "/uirover/control/arm_controller/follow_joint_trajectory/_action/status",
+                ),
+                ("/uirover/moveit/joint_states", "/uirover/control/joint_states"),
+            ],
+        )
+    )
+
     # ==================================
     #          ROS2 CONTROL
     # ==================================
-    
+
     controllers_config_path = os.path.join(
         get_package_share_directory("uirover_controllers"),
         "config",
         "controllers.yaml",
     )
-    
+
     # Controller Manager. Responsible for managing individual controllers (spawned below) and their access to hardware
+    # https://control.ros.org/rolling/doc/ros2_control/controller_manager/doc/userdoc.html
     ld.add_action(
         Node(
             package="controller_manager",
@@ -133,10 +174,12 @@ def generate_launch_description():
                 ("controller_manager/robot_description", "robot_description"),
             ],
             output="both",
+            condition=IfCondition(PythonExpression(["'", hw_type, "'!= 'gazebo'"])),
         )
     )
-    
+
     # Solves 3D pose of robot based on the supplied joint states (from joint_state_publisher) and URDF
+    # https://index.ros.org/r/robot_state_publisher/#rolling
     ld.add_action(
         Node(
             package="robot_state_publisher",
@@ -149,49 +192,60 @@ def generate_launch_description():
             ],
         )
     )
-    
-    # Reads state interfaces for all harware components and publishes them
-    ld.add_action(
-        Node(
-            package="joint_state_publisher",
-            executable="joint_state_publisher",
-            name="joint_state_publisher",
-            namespace="/uirover/control",
-            output="screen",
-        )
-    )
-    
+
     # Spawns arm controller. trajectory controller is used to execute pre-planned trajectories.
+    # https://control.ros.org/rolling/doc/ros2_controllers/joint_trajectory_controller/doc/userdoc.html
     ld.add_action(
         Node(
             package="controller_manager",
             executable="spawner",
             namespace="/uirover/control",
-            arguments=["arm_trajectory_controller", 
-                       "-c", 
-                       "controller_manager",
-                       ],
-        )
-    )
-    
-    # Spawns diff drive controller. Controls wheels
-    ld.add_action(
-        Node(
-            package="controller_manager",
-            executable="spawner",
-            namespace="/uirover/control",
-            arguments=["diff_drive_controller", 
-                       "-c", 
-                       "controller_manager",
-                       ],
+            arguments=[
+                "arm_trajectory_controller",
+                "-c",
+                "controller_manager",
+                "--switch-timeout",
+                "15"
+            ],
         )
     )
 
-    
+    # Spawns diff drive controller. Controls wheels
+    # https://control.ros.org/rolling/doc/ros2_controllers/diff_drive_controller/doc/userdoc.html
+    ld.add_action(
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            namespace="/uirover/control",
+            arguments=[
+                "diff_drive_controller",
+                "-c",
+                "controller_manager",
+                "--switch-timeout",
+                "15"
+            ],
+        )
+    )
+
+    # https://control.ros.org/rolling/doc/ros2_controllers/joint_state_broadcaster/doc/userdoc.html
+    ld.add_action(
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            namespace="/uirover/control",
+            arguments=[
+                "joint_state_broadcaster",
+                "-c",
+                "controller_manager",
+                "--switch-timeout",
+                "15"
+            ],
+        )
+    )
+
     ld.add_action(
         Node(
             package="rviz2",
-            namespace="",
             executable="rviz2",
             name="rviz2",
             arguments=[
@@ -202,13 +256,94 @@ def generate_launch_description():
                     "default.rviz",
                 )
             ],
+            parameters=[
+                moveit_config.robot_description,
+                moveit_config.robot_description_semantic,
+                moveit_config.robot_description_kinematics,
+                moveit_config.planning_pipelines,
+                moveit_config.joint_limits,
+            ],
         )
     )
-    
+
+    # ==================================
+    #             GAZEBO SIM
+    # ==================================
+    ld.add_action(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [
+                    PathJoinSubstitution(
+                        [
+                            FindPackageShare("ros_gz_sim"),
+                            "launch",
+                            "gz_sim.launch.py",
+                        ]
+                    )
+                ]
+            ),
+            launch_arguments=[
+                (
+                    "gz_args",
+                    [
+                        " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World'"
+                    ],
+                )
+            ],
+            condition=IfCondition(PythonExpression(["'", hw_type, "'== 'gazebo'"])),
+        )
+    )
+    ld.add_action(
+        Node(
+            package="ros_gz_sim",
+            executable="create",
+            output="screen",
+            arguments=[
+                "-topic",
+                "/uirover/control/robot_description",
+                "-name",
+                "uirover",
+                "-allow_renaming",
+                "true",
+                "-z",
+                "4",
+                "-y",
+                "1",
+            ],
+            condition=IfCondition(PythonExpression(["'", hw_type, "'== 'gazebo'"])),
+        )
+    )
+    ld.add_action(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("ros_gz_bridge"),
+                        "launch",
+                        "ros_gz_bridge.launch.py",
+                    ]
+                )
+            ),
+            launch_arguments={
+                "bridge_name": "gazebo_bridge",
+                "config_file": PathJoinSubstitution(
+                    [FindPackageShare("uirover_gazebo"), "config", "bridge_config.yaml"]
+                ),
+            }.items(),
+        )
+    )
+    ld.add_action(
+        DeclareLaunchArgument(
+            "use_sim_time",
+            default_value=use_sim_time,
+            description="If true, use simulated clock",
+        )
+    )
+
     # ==================================
     #             MISC NODES
     # ==================================
-    
+
     if hw_type == "target":
         ld.add_action(
             IncludeLaunchDescription(
@@ -233,7 +368,7 @@ def generate_launch_description():
                 }.items(),
             ),
         )
-        
+
         ld.add_action(
             Node(
                 package="ublox_gps",

@@ -7,7 +7,8 @@ Panels:
         - /Global Options1
         - /Status1
         - /MotionPlanning1
-        - /RobotModel1
+        - /MotionPlanning1/Scene Geometry1
+        - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.5
     Tree Height: 463
   - Class: rviz_common/Help
@@ -38,10 +39,10 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Acceleration_Scaling_Factor: 0.1
+    - Acceleration_Scaling_Factor: 1
       Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
-      Move Group Namespace: uirover
+      Move Group Namespace: /uirover/moveit
       MoveIt_Allow_Approximate_IK: false
       MoveIt_Allow_External_Program: false
       MoveIt_Allow_Replanning: false
@@ -69,6 +70,103 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          antenna_camera:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_l0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l5:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          base_footprint:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          bl_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          br_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          chassis:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          end_effector:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          fl_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          fr_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          l_suspension:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ml_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          mr_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r_suspension:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
         Loop Animation: true
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
@@ -88,7 +186,7 @@ Visualization Manager:
         TextHeight: 0.07999999821186066
       Planning Request:
         Colliding Link Color: 255; 0; 0
-        Goal State Alpha: 1
+        Goal State Alpha: 0.5
         Goal State Color: 250; 128; 0
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
@@ -115,11 +213,108 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          antenna_camera:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_l0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_l5:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          base_footprint:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          bl_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          br_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          chassis:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          end_effector:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          fl_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          fr_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          l_suspension:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ml_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          mr_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          r_suspension:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
         Robot Alpha: 0.5
         Show Robot Collision: false
-        Show Robot Visual: true
+        Show Robot Visual: false
       Value: true
-      Velocity_Scaling_Factor: 0.1
+      Velocity_Scaling_Factor: 1
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
@@ -261,25 +456,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 11.78481674194336
+      Distance: 1.8472107648849487
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.194889634847641
-        Y: 0.3236616849899292
-        Z: -0.046751052141189575
+        X: 0.3241592347621918
+        Y: 0.10630498826503754
+        Z: 0.10175847262144089
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3949998915195465
+      Pitch: 0.259999543428421
       Target Frame: base_link
       Value: Orbit (rviz_default_plugins)
-      Yaw: 1.207000970840454
+      Yaw: 0.812000572681427
     Saved: ~
 Window Geometry:
   Displays:

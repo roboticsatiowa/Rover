@@ -4,10 +4,10 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 
 moveit_simple_controller_manager:
   controller_names:
-    - arm_controller
+    - /uirover/control/arm_trajectory_controller
     - end_effector
 
-  arm_controller:
+  /uirover/control/arm_trajectory_controller:
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
     joints:

@@ -23,6 +23,21 @@
 # ==================================
 #           CONTROLLERS
 # ==================================
+/uirover/control/joint_state_broadcaster:
+  ros__parameters:
+    joints:
+      - arm_j0
+      - arm_j1
+      - arm_j2
+      - arm_j3
+      - arm_j4
+      - arm_j5
+      - fl_wheel_joint
+      - fr_wheel_joint
+      - ml_wheel_joint
+      - mr_wheel_joint
+      - bl_wheel_joint
+      - br_wheel_joint
 
 /uirover/control/diff_drive_controller:
   ros__parameters:
@@ -43,7 +58,7 @@
     twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
 
     position_feedback: false
-    open_loop: true
+    open_loop: false
     enable_odom_tf: false
 
     cmd_vel_timeout: 0.5 # seconds
