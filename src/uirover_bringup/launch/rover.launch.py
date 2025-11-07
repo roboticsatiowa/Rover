@@ -130,6 +130,9 @@ def generate_launch_description():
         .planning_pipelines(pipelines=["ompl"])
         .to_moveit_configs()
     )
+    
+    moveit_parameters = moveit_config.to_dict()
+    moveit_parameters['use_sim_time'] = True
 
     ld.add_action(
         Node(
@@ -137,7 +140,7 @@ def generate_launch_description():
             executable="move_group",
             output="screen",
             namespace="/uirover/moveit",
-            parameters=[moveit_config.to_dict()],
+            parameters=[moveit_parameters],
             remappings=[
                 (
                     "/uirover/moveit/arm_controller/follow_joint_trajectory/_action/feedback",

@@ -37,7 +37,7 @@
         <child link="arm_l0" />
         <origin xyz="0 0 0" rpy="0 0 0" />
         <axis xyz="0 0 1" />
-        <limit lower="-2.0" upper="2.0" effort="10.0" velocity="0.5"/>
+        <limit lower="-3.0" upper="3.0" effort="40.0" velocity="0.5"/>
     </joint>
 
 
@@ -72,7 +72,7 @@
         <child link="arm_l1" />
         <origin xyz="0 0 0.104" rpy="0 0 0" />
         <axis xyz="0 1 0" />
-        <limit lower="-2.0" upper="2.0" effort="10.0" velocity="0.5"/>
+        <limit lower="-3.0" upper="3.0" effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="arm_l2">
@@ -106,7 +106,7 @@
         <child link="arm_l2" />
         <origin xyz="0 0 0.534" rpy="0 0 0" />
         <axis xyz="0 1 0" />
-        <limit lower="-${pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+        <limit lower="-${pi}" upper="${pi}" effort="40.0" velocity="0.5"/>S
     </joint>
 
 
@@ -147,7 +147,7 @@
         <child link="arm_l3" />
         <origin xyz="0 0.076 0.203" rpy="0 0 0" />
         <axis xyz="1 0 0" />
-        <limit lower="${-pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+        <limit lower="${-pi}" upper="${pi}" effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="arm_l4">
@@ -175,7 +175,7 @@
         <child link="arm_l4" />
         <origin xyz="0 -0.025 0.179" rpy="0 0 0" />
         <axis xyz="0 1 0" />
-        <limit lower="${-pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+        <limit lower="${-pi}" upper="${pi}" effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="arm_l5">
@@ -203,7 +203,7 @@
         <child link="arm_l5" />
         <origin xyz="0 -0.075 0.08" rpy="0 0 0" />
         <axis xyz="0 0 1" />
-        <limit effort="10.0" velocity="0.5"/>
+        <limit effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="end_effector">
