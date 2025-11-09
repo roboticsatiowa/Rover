@@ -2,7 +2,7 @@ import os
 import json
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument,SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     PathJoinSubstitution,
@@ -29,11 +29,26 @@ def generate_launch_description():
 
     # change this by appending `hw_type:=[hw_type_goes_here]` to the end of launch command
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
-    hw_type = LaunchConfiguration("hw_type")
+    headless = LaunchConfiguration("headless", default=True)
+    hw_type = LaunchConfiguration("hw_type", default="target")
 
     ld.add_action(
         DeclareLaunchArgument(
-            "hw_type", default_value="target", choices=["target", "mock", "gazebo"]
+            "hw_type", default_value=hw_type, choices=["target", "mock", "gazebo"]
+        )
+    )
+    ld.add_action(
+        DeclareLaunchArgument(
+            "use_sim_time",
+            default_value=use_sim_time,
+            description="If true, use simulated clock",
+        )
+    )
+    ld.add_action(
+        DeclareLaunchArgument(
+            "headless",
+            default_value=headless,
+            description="If true, assume basestation will handle GUI and user input. Otherwise spawn Rviz and other basestation nodes",
         )
     )
 
@@ -130,9 +145,10 @@ def generate_launch_description():
         .planning_pipelines(pipelines=["ompl"])
         .to_moveit_configs()
     )
-    
+
+    # sort of a hack since move MoveItConfigsBuilder doesnt support use_sim_time directly
     moveit_parameters = moveit_config.to_dict()
-    moveit_parameters['use_sim_time'] = True
+    moveit_parameters["use_sim_time"] = use_sim_time
 
     ld.add_action(
         Node(
@@ -177,6 +193,7 @@ def generate_launch_description():
                 ("controller_manager/robot_description", "robot_description"),
             ],
             output="both",
+            # When using gazebo, the gz_ros2_control plugin acts as the controller manager
             condition=IfCondition(PythonExpression(["'", hw_type, "'!= 'gazebo'"])),
         )
     )
@@ -208,7 +225,7 @@ def generate_launch_description():
                 "-c",
                 "controller_manager",
                 "--switch-timeout",
-                "15"
+                "15",
             ],
         )
     )
@@ -225,7 +242,7 @@ def generate_launch_description():
                 "-c",
                 "controller_manager",
                 "--switch-timeout",
-                "15"
+                "15",
             ],
         )
     )
@@ -241,10 +258,14 @@ def generate_launch_description():
                 "-c",
                 "controller_manager",
                 "--switch-timeout",
-                "15"
+                "15",
             ],
         )
     )
+
+    # ==================================
+    #         BASESTATION NODES
+    # ==================================
 
     ld.add_action(
         Node(
@@ -266,33 +287,57 @@ def generate_launch_description():
                 moveit_config.planning_pipelines,
                 moveit_config.joint_limits,
             ],
+            condition=IfCondition(PythonExpression(["'", headless, "'== 'False'"])),
+        )
+    )
+    ld.add_action(
+        Node(
+            package="joy",
+            executable="joy_node",
+            name="joy_node",
+            namespace="/basestation",
+        )
+    )
+
+    # index.ros.org/r/teleop_twist_joy/#rolling
+    ld.add_action(
+        Node(
+            package="teleop_twist_joy",
+            executable="teleop_node",
+            name="diff_drive_teleop_twist",
+            namespace="/uirover/teleoperation",
+            parameters=[
+                {"publish_stamped_twist": True},
+                {"require_enable_button": False},
+                {"frame": "base_link"},
+                {"axis_angular.yaw": 0},
+                {"axis_linear.x": 1},
+            ],
+            remappings=[
+                ("cmd_vel", "/uirover/control/diff_drive_controller/cmd_vel"),
+                ("joy", "/basestation/joy"),
+            ],
         )
     )
 
     # ==================================
     #             GAZEBO SIM
     # ==================================
+    
+    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    pkg_uirover_gazebo = get_package_share_directory('uirover_gazebo')
+    gz_world_path = PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'rubicon.sdf'])
+    gz_launch_path = PathJoinSubstitution([pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'])
+    
+    ld.add_action(SetEnvironmentVariable('GZ_SIM_RESOURCE_PATH', PathJoinSubstitution([pkg_uirover_gazebo, 'worlds'])),)
+    
     ld.add_action(
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [
-                    PathJoinSubstitution(
-                        [
-                            FindPackageShare("ros_gz_sim"),
-                            "launch",
-                            "gz_sim.launch.py",
-                        ]
-                    )
-                ]
-            ),
-            launch_arguments=[
-                (
-                    "gz_args",
-                    [
-                        " -r -v 1 'https://fuel.gazebosim.org/1.0/Penkatron/worlds/Rubicon World'"
-                    ],
-                )
-            ],
+         IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(gz_launch_path),
+            launch_arguments={
+                'gz_args': PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'rubicon.sdf']),
+                'on_exit_shutdown': 'True'
+            }.items(),
             condition=IfCondition(PythonExpression(["'", hw_type, "'== 'gazebo'"])),
         )
     )
@@ -333,13 +378,6 @@ def generate_launch_description():
                     [FindPackageShare("uirover_gazebo"), "config", "bridge_config.yaml"]
                 ),
             }.items(),
-        )
-    )
-    ld.add_action(
-        DeclareLaunchArgument(
-            "use_sim_time",
-            default_value=use_sim_time,
-            description="If true, use simulated clock",
         )
     )
 

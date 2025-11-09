@@ -188,7 +188,7 @@ Visualization Manager:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 0.5
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0
+        Interactive Marker Size: 0.15000000596046448
         Joint Violation Color: 255; 0; 255
         Planning Group: arm
         Query Goal State: true
@@ -463,18 +463,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.3241592347621918
-        Y: 0.10630498826503754
-        Z: 0.10175847262144089
+        X: 0.30433759093284607
+        Y: -0.03868111968040466
+        Z: 0.5485259890556335
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.259999543428421
+      Pitch: 0.48999953269958496
       Target Frame: base_link
       Value: Orbit (rviz_default_plugins)
-      Yaw: 0.812000572681427
+      Yaw: 0.9170005321502686
     Saved: ~
 Window Geometry:
   Displays:

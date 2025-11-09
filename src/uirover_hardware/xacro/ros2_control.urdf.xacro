@@ -4,18 +4,6 @@
     <xacro:arg name="hw_type" default="target"/>
     <xacro:property name='hw_type' value="$(arg hw_type)"/>
 
-    <gazebo>
-        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-            <ros>
-                <namespace>/uirover/control</namespace>
-            </ros>
-            <parameters>$(find uirover_controllers)/config/controllers.yaml</parameters>
-        </plugin>
-        <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
-            <render_engine>ogre2</render_engine>
-        </plugin>
-    </gazebo>
-
     <ros2_control name="wheels_hardware" type="system">
         <hardware>
             <xacro:if value="${hw_type=='gazebo'}">
