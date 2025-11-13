@@ -1,10 +1,48 @@
 # https://github.com/gazebosim/ros_gz/blob/ros2/ros_gz_bridge/README.md
 
-- topic_name: "/antenna_camera"
-  ros_type_name: "sensor_msgs/msg/Image"
-  gz_type_name: "gz.msgs.Image"
+# - ros_topic_name: "/uirover/perception/cam1"
+#   gz_topic_name: "/antenna_camera"
+#   ros_type_name: "sensor_msgs/msg/Image"
+#   gz_type_name: "gz.msgs.Image"
 
 - topic_name: "/clock"
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "gz.msgs.Clock"
   direction: GZ_TO_ROS
+  direction: BIDIRECTIONAL
+
+- ros_topic_name: "/uirover/navigation/imu"
+  gz_topic_name: "/imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  qos_profile: SENSOR_DATA
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/uirover/navigation/fix"
+  gz_topic_name: "/navsat"
+  ros_type_name: "sensor_msgs/msg/NavSatFix"
+  gz_type_name: "gz.msgs.NavSat"
+  direction: GZ_TO_ROS
+
+# - ros_topic_name: "/uirover/perception/d435i_rgbd"
+#   gz_topic_name: "/d435i_rgbd"
+#   ros_type_name: "sensor_msgs/msg/Image"
+#   gz_type_name: "gz.msgs.Image"
+
+- ros_topic_name: "/uirover/perception/d435i_rgbd_info"
+  gz_topic_name: "/d435i_rgbd_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  qos_profile: SENSOR_DATA
+  direction: GZ_TO_ROS
+
+
+- ros_topic_name: "/uirover/perception/d435i_rgbd/points"
+  gz_topic_name: "/d435i_rgbd/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  subscriber_queue: 2
+  publisher_queue: 2
+  qos_profile: SENSOR_DATA
+  direction: GZ_TO_ROS
+  

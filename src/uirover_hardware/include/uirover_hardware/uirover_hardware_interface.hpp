@@ -43,7 +43,6 @@ public:
 
 private:
 
-  // TODO you forgot to initialize these ya dummy. Thats why rover is commanded at like 203942304 speed right on startup
   double fl_wheel_velocity_command_;
   double fr_wheel_velocity_command_;
   double ml_wheel_velocity_command_;

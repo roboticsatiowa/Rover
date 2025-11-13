@@ -2,7 +2,11 @@ import os
 import json
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument,SetEnvironmentVariable
+from launch.actions import (
+    IncludeLaunchDescription,
+    DeclareLaunchArgument,
+    SetEnvironmentVariable,
+)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     PathJoinSubstitution,
@@ -60,17 +64,11 @@ def generate_launch_description():
         [FindPackageShare("uirover_gnss"), "config", "zed_f9p.yaml"]
     )
 
-    controller_config = PathJoinSubstitution(
-        [FindPackageShare("uirover_description"), "config", "diff_drive.yaml"]
-    )
-
     zenoh_config = PathJoinSubstitution(
         [FindPackageShare("uirover_bringup"), "config", "zenoh_rover.config.json"]
     )
 
-    moveit_controller_config = PathJoinSubstitution(
-        [FindPackageShare("uirover_moveit"), "config", "ros2_controllers.yaml"]
-    )
+    ekf_config_path = os.path.join(get_package_share_directory("uirover_navigation"),"config", "ekf.yaml")
 
     robot_description_path = PathJoinSubstitution(
         [
@@ -89,6 +87,10 @@ def generate_launch_description():
             hw_type,
         ]
     )
+
+    # ==================================
+    #             PERCEPTION
+    # ==================================
 
     # this is super hacky and needs to go
     nodes = []
@@ -120,6 +122,37 @@ def generate_launch_description():
             i += 1
     except FileNotFoundError:
         pass
+
+    # ld.add_action(
+    #     Node(
+    #         package="depth_image_proc",
+    #         executable="point_cloud_xyz_node",
+    #         namespace="/uirover/perception",
+    #         remappings=[
+    #             ("camera_info", "/uirover/perception/d435i_rgbd_info"),
+    #             ("image_rect", "/uirover/perception/d435i_rgbd"),
+    #             ("points", "/uirover/perception/d435i_points")
+    #         ]
+    #     )
+    # )
+
+    # ==================================
+    #     NAVIGATION AND LOCALIZATION
+    # ==================================
+
+    ld.add_action(
+        Node(
+            package="robot_localization",
+            executable="ekf_node",
+            name="ekf_node",
+            output="screen",
+            namespace="/uirover/navigation",
+            parameters=[
+                ekf_config_path, 
+                {"use_sim_time": LaunchConfiguration("use_sim_time")},
+            ],
+        )
+    )
 
     # ==================================
     #             MOVEIT2
@@ -230,6 +263,22 @@ def generate_launch_description():
         )
     )
 
+    ld.add_action(
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            namespace="/uirover/control",
+            arguments=[
+                "arm_position_controller",
+                "-c",
+                "controller_manager",
+                "--switch-timeout",
+                "15",
+                "--load-only",  # do not configure. this will be done when switching control modes
+            ],
+        )
+    )
+
     # Spawns diff drive controller. Controls wheels
     # https://control.ros.org/rolling/doc/ros2_controllers/diff_drive_controller/doc/userdoc.html
     ld.add_action(
@@ -319,24 +368,40 @@ def generate_launch_description():
             ],
         )
     )
+    ld.add_action(
+        Node(
+            package="foxglove_bridge",
+            executable="foxglove_bridge",
+            name="foxglove_bridge",
+            condition=IfCondition(PythonExpression(["'", headless, "'== 'False'"])),
+        )
+    )
 
     # ==================================
     #             GAZEBO SIM
     # ==================================
-    
-    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
-    pkg_uirover_gazebo = get_package_share_directory('uirover_gazebo')
-    gz_world_path = PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'rubicon.sdf'])
-    gz_launch_path = PathJoinSubstitution([pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'])
-    
-    ld.add_action(SetEnvironmentVariable('GZ_SIM_RESOURCE_PATH', PathJoinSubstitution([pkg_uirover_gazebo, 'worlds'])),)
-    
+
+    pkg_ros_gz_sim = get_package_share_directory("ros_gz_sim")
+    pkg_uirover_gazebo = get_package_share_directory("uirover_gazebo")
+    gz_world_path = PathJoinSubstitution([pkg_uirover_gazebo, "worlds", "rubicon.sdf"])
+    gz_launch_path = PathJoinSubstitution(
+        [pkg_ros_gz_sim, "launch", "gz_sim.launch.py"]
+    )
+
     ld.add_action(
-         IncludeLaunchDescription(
+        SetEnvironmentVariable(
+            "GZ_SIM_RESOURCE_PATH", PathJoinSubstitution([pkg_uirover_gazebo, "worlds"])
+        ),
+    )
+
+    ld.add_action(
+        IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gz_launch_path),
             launch_arguments={
-                'gz_args': PathJoinSubstitution([pkg_uirover_gazebo, 'worlds', 'rubicon.sdf']),
-                'on_exit_shutdown': 'True'
+                "gz_args": PathJoinSubstitution(
+                    [pkg_uirover_gazebo, "worlds", "rubicon.sdf"]
+                ),
+                "on_exit_shutdown": "True",
             }.items(),
             condition=IfCondition(PythonExpression(["'", hw_type, "'== 'gazebo'"])),
         )

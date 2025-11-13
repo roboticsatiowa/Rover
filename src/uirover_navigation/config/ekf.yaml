@@ -1,0 +1,56 @@
+# https://docs.nav2.org/setup_guides/odom/setup_robot_localization.html
+
+/uirover/navigation/ekf_global:
+    ros__parameters:
+        frequency: 30.0
+        two_d_mode: false
+        publish_acceleration: true
+        publish_tf: true
+
+        map_frame: map
+        odom_frame: odom
+        base_link_frame: base_link
+        world_frame: map
+
+        odom0: /uirover/control/diff_drive_controller/odom
+        odom0_config: [false, false, false,
+                      false, false, false,
+                      true, true, false,
+                      false, false, true,
+                      false, false, false]
+
+        imu0: /uirover/navigation/imu
+        imu0_config: [false, false, false,
+                      false, false, false,
+                      false, false, false,
+                      false, false, true,
+                      false, false, false]
+
+/uirover/navigation/ekf_local:
+    ros__parameters:
+        frequency: 30.0
+        two_d_mode: false
+        publish_acceleration: true
+        publish_tf: true
+
+        map_frame: map
+        odom_frame: odom
+        base_link_frame: base_link
+        world_frame: odom
+
+        odom0: /uirover/control/diff_drive_controller/odom
+        odom0_config: [false, false, false,
+                      false, false, false,
+                      true, true, false,
+                      false, false, true,
+                      false, false, false]
+
+        imu0: /uirover/navigation/imu
+        imu0_config: [false, false, false,
+                      false, false, false,
+                      false, false, false,
+                      false, false, true,
+                      false, false, false] 
+
+/uirover/navigation/navsat_transform_node:
+  ros__parameters:

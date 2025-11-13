@@ -13,6 +13,7 @@
   <depend>rtabmap_odom</depend>
   <depend>rtabmap_slam</depend>
   <depend>rtabmap_viz</depend>
+  <depend>robot_localization</depend>
   
 
   <test_depend>ament_copyright</test_depend>
