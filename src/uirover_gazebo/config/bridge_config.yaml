@@ -18,7 +18,7 @@
   qos_profile: SENSOR_DATA
   direction: GZ_TO_ROS
 
-- ros_topic_name: "/uirover/navigation/fix"
+- ros_topic_name: "/uirover/navigation/gps/fix"
   gz_topic_name: "/navsat"
   ros_type_name: "sensor_msgs/msg/NavSatFix"
   gz_type_name: "gz.msgs.NavSat"

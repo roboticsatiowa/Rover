@@ -45,7 +45,7 @@
                     </clip>
                 </camera>
                 <always_on>1</always_on>
-                <update_rate>30</update_rate>
+                <update_rate>5</update_rate>
                 <visualize>true</visualize>
             </sensor>
         </gazebo>
@@ -56,19 +56,19 @@
     <!-- =============================== -->
 
     <!-- ARDUCAM CAMERA -->
-    <!-- <xacro:arducam name="antenna_camera" />
+    <xacro:arducam name="antenna_camera" />
     <joint name="antenna_camera_joint" type="fixed">
         <origin xyz="-0.24 0.28 1.3" rpy="0.0 0.5 0.0" />
         <parent link="base_link" />
         <child link="antenna_camera" />
-    </joint> -->
+    </joint>
 
     <link name="zed_f9p_gps"></link>
     <gazebo reference="zed_f9p_gps">
         <sensor name="zed_f9p_gps" type="navsat">
             <topic>navsat</topic>
             <always_on>true</always_on>
-            <update_rate>10</update_rate>
+            <update_rate>5</update_rate>
             <navsat>
                 <!-- <position_sensing>
                     <horizontal>
@@ -100,7 +100,7 @@
         <sensor name="d435i_depth_cam" type="depth">
             <topic>/d435i_rgbd</topic>
             <always_on>1</always_on>
-            <update_rate>10</update_rate>
+            <update_rate>5</update_rate>
             <visualize>true</visualize>
             <camera>
                 <!-- 86 deg FOV -->
@@ -130,72 +130,74 @@
         <child link="d435i_depth_cam"/>
     </joint>
 
-    <link name="imu_link"></link>
-    <sensor name="imu_sensor" type="imu">
-        <always_on>true</always_on>
-        <update_rate>100</update_rate>
-        <visualize>true</visualize>
-        <topic>/imu</topic>
-        <!-- <gz_frame_id>imu_link</gz_frame_id> -->
-        <imu>
-            <angular_velocity>
-                <x>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>2e-4</stddev>
-                        <bias_mean>0.0000075</bias_mean>
-                        <bias_stddev>0.0000008</bias_stddev>
-                    </noise>
-                </x>
-                <y>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>2e-4</stddev>
-                        <bias_mean>0.0000075</bias_mean>
-                        <bias_stddev>0.0000008</bias_stddev>
-                    </noise>
-                </y>
-                <z>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>2e-4</stddev>
-                        <bias_mean>0.0000075</bias_mean>
-                        <bias_stddev>0.0000008</bias_stddev>
-                    </noise>
-                </z>
-            </angular_velocity>
-            <linear_acceleration>
-                <x>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>1.7e-2</stddev>
-                        <bias_mean>0.1</bias_mean>
-                        <bias_stddev>0.001</bias_stddev>
-                    </noise>
-                </x>
-                <y>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>1.7e-2</stddev>
-                        <bias_mean>0.1</bias_mean>
-                        <bias_stddev>0.001</bias_stddev>
-                    </noise>
-                </y>
-                <z>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>1.7e-2</stddev>
-                        <bias_mean>0.1</bias_mean>
-                        <bias_stddev>0.001</bias_stddev>
-                    </noise>
-                </z>
-            </linear_acceleration>
-        </imu>
-    </sensor>
+    <link name="imu_sensor"></link>
+    <gazebo reference="imu_sensor">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>5</update_rate>
+            <visualize>true</visualize>
+            <topic>/imu</topic>
+            <imu>
+                <enable_orientation>true</enable_orientation>
+                <angular_velocity>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>2e-4</stddev>
+                            <bias_mean>0.0000075</bias_mean>
+                            <bias_stddev>0.0000008</bias_stddev>
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>2e-4</stddev>
+                            <bias_mean>0.0000075</bias_mean>
+                            <bias_stddev>0.0000008</bias_stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>2e-4</stddev>
+                            <bias_mean>0.0000075</bias_mean>
+                            <bias_stddev>0.0000008</bias_stddev>
+                        </noise>
+                    </z>
+                </angular_velocity>
+                <linear_acceleration>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>1.7e-2</stddev>
+                            <bias_mean>0.1</bias_mean>
+                            <bias_stddev>0.001</bias_stddev>
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>1.7e-2</stddev>
+                            <bias_mean>0.1</bias_mean>
+                            <bias_stddev>0.001</bias_stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>1.7e-2</stddev>
+                            <bias_mean>0.1</bias_mean>
+                            <bias_stddev>0.001</bias_stddev>
+                        </noise>
+                    </z>
+                </linear_acceleration>
+            </imu>
+        </sensor>
+    </gazebo>
     <joint name="imu_sensor_joint" type="fixed">
         <origin xyz="0 0 0"/>
         <parent link="base_link"/>
-        <child link="imu_link"/>
+        <child link="imu_sensor"/>
     </joint>
 
 </robot>
