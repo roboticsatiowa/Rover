@@ -9,7 +9,6 @@ Panels:
         - /Grid1/Offset1
         - /MotionPlanning1/Scene Geometry1
         - /MotionPlanning1/Planning Request1
-        - /RobotModel1/Links1
       Splitter Ratio: 0.5
     Tree Height: 463
   - Class: rviz_common/Help
@@ -38,7 +37,7 @@ Visualization Manager:
         Z: -0.3499999940395355
       Plane: XY
       Plane Cell Count: 200
-      Reference Frame: odom
+      Reference Frame: map
       Value: true
     - Acceleration_Scaling_Factor: 0.1
       Class: moveit_rviz_plugin/MotionPlanning
@@ -71,6 +70,11 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          antenna_camera:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           arm_base_link:
             Alpha: 1
             Show Axes: false
@@ -147,7 +151,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          imu_link:
+          imu_sensor:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -221,6 +225,11 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          antenna_camera:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           arm_base_link:
             Alpha: 1
             Show Axes: false
@@ -297,7 +306,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          imu_link:
+          imu_sensor:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -348,6 +357,11 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        antenna_camera:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         arm_base_link:
           Alpha: 1
           Show Axes: false
@@ -424,7 +438,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        imu_link:
+        imu_sensor:
           Alpha: 1
           Show Axes: false
           Show Trail: false

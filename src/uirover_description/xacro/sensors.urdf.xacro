@@ -94,6 +94,16 @@
         <child link="zed_f9p_gps"/>
     </joint>
 
+
+    <!-- This joint exists because Gazebo Jetty doesnt support manually setting frame_id of GPS messages. -->
+    <!-- The message uses a really weird namespaceing so we do this rediculous hack so the TF tree doesnt break -->
+    <link name="uirover/base_link/zed_f9p_gps"></link>
+    <joint name="stupid_gazebo_workaround_joint" type="fixed">
+        <origin xyz="0 0 0"/>
+        <parent link="zed_f9p_gps"/>
+        <child link="uirover/base_link/zed_f9p_gps"/>
+    </joint>
+
     <!-- https://cdrdv2-public.intel.com/841984/Intel-RealSense-D400-Series-Datasheet.pdf -->
     <link name="d435i_depth_cam"></link>
     <gazebo reference="d435i_depth_cam">

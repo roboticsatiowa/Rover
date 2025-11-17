@@ -483,6 +483,7 @@ def generate_launch_description():
                     [FindPackageShare("uirover_gazebo"), "config", "bridge_config.yaml"]
                 ),
             }.items(),
+            condition=IfCondition(PythonExpression(["'", hw_type, "'== 'gazebo'"])),
         )
     )
 
