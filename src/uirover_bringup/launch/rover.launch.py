@@ -424,7 +424,7 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory("ros_gz_sim")
     pkg_uirover_gazebo = get_package_share_directory("uirover_gazebo")
     gz_world_path = os.path.join(
-        get_package_share_directory("uirover_gazebo"), "worlds", "empty.sdf"
+        get_package_share_directory("uirover_gazebo"), "worlds", "rubicon.sdf"
     )
     gz_launch_path = PathJoinSubstitution(
         [pkg_ros_gz_sim, "launch", "gz_sim.launch.py"]
