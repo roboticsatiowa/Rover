@@ -1,20 +1,11 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>uirover_bringup</name>
+  <name>uirover_mock_hardware</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
   <maintainer email="holterethan@gmail.com">ethan</maintainer>
-  <license>GPL-3.0-only</license>
-
-  <depend>realsense2_camera</depend>
-  <depend>rmw_zenoh_cpp</depend>
-  <depend>imu_filter_madgwick</depend>
-  <depend>rtabmap_odom</depend>
-  <depend>rtabmap_slam</depend>
-  <depend>rtabmap_viz</depend>
-  <depend>robot_localization</depend>
-  
+  <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
@@ -22,6 +13,6 @@
   <test_depend>python3-pytest</test_depend>
 
   <export>
-    <build_type>ament_cmake</build_type>
+    <build_type>ament_python</build_type>
   </export>
 </package>

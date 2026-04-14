@@ -1,0 +1,23 @@
+move_group_name: arm
+planning_frame: arm_base_link
+ee_frame_name: end_effector
+robot_link_command_frame:  base_link
+  
+publish_joint_positions: true
+publish_joint_velocities: false
+publish_joint_accelerations: false
+
+is_primary_planning_scene_monitor: false
+
+command_in_type: "unitless"
+cartesian_command_in_topic: /servo_node/delta_twist_cmds
+scale:
+  linear: 0.2
+  rotational: 0.2 
+  joint: 0.5
+
+command_out_type: trajectory_msgs/JointTrajectory
+command_out_topic: /arm_controller/joint_trajectory
+
+lower_singularity_threshold:  17.0  # Start decelerating when the condition number hits this (close to singularity)
+hard_stop_singularity_threshold: 30.0 # Stop when the condition number hits this

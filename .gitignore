@@ -10,3 +10,4 @@ log/
 .cache/
 ros_logs
 *.pyc
+todo.txt

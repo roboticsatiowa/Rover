@@ -22,7 +22,7 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gz_launch_path),
             launch_arguments={
-                'gz_args': [PathJoinSubstitution(gz_world_path)],
+                'gz_args': [gz_world_path],
                 'on_exit_shutdown': 'True'
             }.items(),
         ),

@@ -1,0 +1,112 @@
+# https://docs.nav2.org/setup_guides/odom/setup_robot_localization.html
+
+# X   Y   Z     Cartesian 
+# R   P   Y     Polar
+# X'  Y'  Z'    <axis> "prime" aka first derivative
+# R'  P'  Y'
+# X'' Y'' Z''   <axis> "double prime" aka second derivative 
+
+/uirover/navigation/ekf_global:
+  ros__parameters:
+    frequency: 30.0
+    two_d_mode: false
+    publish_tf: true
+    print_diagnostics: true
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_link
+    world_frame: map
+
+    # wheel odom
+    odom0: /uirover/control/diff_drive_controller/odom
+    odom0_config:
+      [ false, false, false,
+        false, false, false,   
+        true,  false, false, 
+        false, false, false, 
+        false, false, false,
+      ]
+    
+    # filtered GPS
+    # We get absolute 3D position and orientation
+    odom1: /uirover/navigation/odometry/gps
+    odom1_config:
+      [ true, true, true, 
+        true, true, true, 
+        false, false, false, 
+        false, false, false, 
+        false, false, false,
+      ]
+
+    # provides everything except absolute cartesian coordinates.
+    imu0_remove_gravitational_acceleration: true
+    imu0: /uirover/navigation/imu
+    imu0_config:
+      [ false, false, false, 
+        true,  true,  true, 
+        false, true,  true, 
+        true,  true,  true, 
+        true,  true,  true,
+      ]
+
+/uirover/navigation/ekf_local:
+  ros__parameters:
+    frequency: 30.0
+    two_d_mode: false
+    publish_tf: true
+    print_diagnostics: true
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_link
+    world_frame: odom
+
+    # wheel odom
+    odom0: /uirover/control/diff_drive_controller/odom
+    odom0_config:
+      [ false, false, false, 
+        false, false, false, 
+        true,  false, false, 
+        false, false, false, 
+        false, false, false,
+      ]
+
+    # provides everything except absolute cartesian coordinates.
+    imu0_remove_gravitational_acceleration: true
+    imu0: /uirover/navigation/imu
+    imu0_config:
+      [ false, false, false, 
+        true, true, true, 
+        true,  true,  true, 
+        true,  true,  true, 
+        true,  true,  true,
+      ]
+
+/uirover/navigation/navsat_transform_node:
+  ros__parameters:
+    frequency: 30.0
+    use_odometry_yaw: false
+    publish_filtered_gps: false
+    # wait_for_datum: true
+    # datum: [0.0, 0.0, 0.0]
+
+    odom0: /uirover/control/diff_drive_controller/odom
+    odom0_config:
+      [ false, false, false, 
+        false, false, false, 
+        true,  false, false, 
+        false, false, false, 
+        false, false, false,
+      ]
+
+    # provides everything except absolute cartesian coordinates.
+    imu0_remove_gravitational_acceleration: true
+    imu0: /uirover/navigation/imu
+    imu0_config:
+      [ false, false, false, 
+        true, true, true, 
+        false,  true,  true, 
+        true,  true,  true, 
+        true,  true,  true,
+      ]

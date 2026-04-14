@@ -1,4 +1,5 @@
 <library path="uirover_hardware">
+  
   <class name="uirover_hardware/UiroverHardwareInterface"
          type="uirover_hardware::UiroverHardwareInterface"
          base_class_type="hardware_interface::SystemInterface">
@@ -6,4 +7,13 @@
       ros2_control hardware interface.
     </description>
   </class>
+
+  <class name="uirover_hardware/CANInterface"
+          type="uirover_hardware::CANInterface"
+          base_class_type="hardware_interface::SystemInterface">
+      <description>
+        ros2_control CAN bus hardware interface.
+      </description>
+  </class>
+
 </library>

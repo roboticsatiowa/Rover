@@ -27,7 +27,7 @@
       </geometry>
       <origin xyz="0.23 0 0.01"/>
     </collision>
-    <xacro:box_inertia_tensor mass="10" len_x="0.65" len_y="0.4" len_z="0.2" />
+    <xacro:box_inertia_tensor mass="30" len_x="0.65" len_y="0.4" len_z="0.2" />
   </link>
   <joint name="chassis_joint" type="fixed">
     <parent link="base_link" />

@@ -2,20 +2,26 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "ros",
-			"command": "./tools/ros/build.sh",
 			"label": "ROS build",
+			"type": "shell",
+			"command": "./tools/ros/build.sh",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"options": {
 				"statusbar": {
 					"label": "ROS build",
 					"backgroundColor": "statusBarItem.warningBackground",
 					"running": {
 						"label": "Building..."
-					},
+					}
 				},
 				"shell": {
 					"executable": "/bin/bash",
-					"args": ["-c"]
+					"args": [
+						"-c"
+					]
 				}
 			},
 			"presentation": {
@@ -25,10 +31,11 @@
 				"panel": "shared",
 				"showReuseMessage": true,
 				"clear": false
-			}
+			},
+			"problemMatcher": []
 		},
 		{
-			"type": "ros",
+			"type": "shell",
 			"command": "./tools/ros/clean.sh",
 			"label": "ROS clean",
 			"options": {
@@ -41,7 +48,9 @@
 				},
 				"shell": {
 					"executable": "/bin/bash",
-					"args": ["-c"]
+					"args": [
+						"-c"
+					]
 				}
 			},
 			"presentation": {
@@ -54,7 +63,7 @@
 			}
 		},
 		{
-			"type": "ros",
+			"type": "shell",
 			"command": "source  install/setup.bash && ros2 launch uirover_bringup simulator.launch.py",
 			"label": "ROS run sim",
 			"options": {
@@ -63,11 +72,13 @@
 					"backgroundColor": "statusBarItem.warningBackground",
 					"running": {
 						"label": "Sim is running"
-					},
+					}
 				},
 				"shell": {
 					"executable": "/bin/bash",
-					"args": ["-c"]
+					"args": [
+						"-c"
+					]
 				}
 			},
 			"presentation": {
@@ -80,7 +91,7 @@
 			}
 		},
 		{
-			"type": "ros",
+			"type": "shell",
 			"command": "source  install/setup.bash && ros2 launch uirover_bringup rover.launch.py",
 			"label": "ROS run rover",
 			"options": {
@@ -89,11 +100,13 @@
 					"backgroundColor": "statusBarItem.warningBackground",
 					"running": {
 						"label": "Rover is running"
-					},
+					}
 				},
 				"shell": {
 					"executable": "/bin/bash",
-					"args": ["-c"]
+					"args": [
+						"-c"
+					]
 				}
 			},
 			"presentation": {
@@ -106,7 +119,7 @@
 			}
 		},
 		{
-			"type": "ros",
+			"type": "shell",
 			"command": "source  install/setup.bash && ros2 launch uirover_description preview_urdf.launch.py",
 			"label": "ROS view urdf",
 			"options": {
@@ -115,11 +128,13 @@
 					"backgroundColor": "statusBarItem.warningBackground",
 					"running": {
 						"label": "Preview is open"
-					},
+					}
 				},
 				"shell": {
 					"executable": "/bin/bash",
-					"args": ["-c"]
+					"args": [
+						"-c"
+					]
 				}
 			},
 			"presentation": {
@@ -130,6 +145,6 @@
 				"showReuseMessage": true,
 				"clear": false
 			}
-		},
+		}
 	]
 }

@@ -25,13 +25,19 @@
             </geometry>
             <origin xyz="0 0 0.11" rpy="${pi/2} 0 0" />
         </collision>
+        <!-- approximate inertial (mass ~1.0 kg) computed from main cylinder collision -->
+        <inertial>
+            <origin xyz="0 0 0.11" rpy="${pi/2} 0 0" />
+            <mass value="1.0"/>
+            <inertia ixx="0.002533" ixy="0.0" ixz="0.0" iyy="0.002533" iyz="0.0" izz="0.001800"/>
+        </inertial>
     </link>
     <joint name="arm_j0" type="revolute">
         <parent link="arm_base_link" />
         <child link="arm_l0" />
         <origin xyz="0 0 0" rpy="0 0 0" />
         <axis xyz="0 0 1" />
-        <limit lower="-2.0" upper="2.0" effort="10.0" velocity="0.5"/>
+        <limit lower="-3.0" upper="3.0" effort="40.0" velocity="0.5"/>
     </joint>
 
 
@@ -54,13 +60,19 @@
             </geometry>
             <origin xyz="0 -0.02 0.53" rpy="${pi/2} 0 0" />
         </collision>
+        <!-- approximate inertial (mass ~2.0 kg) using main long cylinder -->
+        <inertial>
+            <origin xyz="0 0 0.27" rpy="0 0 0" />
+            <mass value="2.0"/>
+            <inertia ixx="0.024517" ixy="0.0" ixz="0.0" iyy="0.024517" iyz="0.0" izz="0.000900"/>
+        </inertial>
     </link>
     <joint name="arm_j1" type="revolute">
         <parent link="arm_l0" />
         <child link="arm_l1" />
         <origin xyz="0 0 0.104" rpy="0 0 0" />
         <axis xyz="0 1 0" />
-        <limit lower="-2.0" upper="2.0" effort="10.0" velocity="0.5"/>
+        <limit lower="-3.0" upper="3.0" effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="arm_l2">
@@ -82,13 +94,19 @@
             </geometry>
             <origin xyz="0 0.08 0.1" rpy="0 0 0" />
         </collision>
+        <!-- approximate inertial (mass ~1.5 kg) using larger-radius cylinder -->
+        <inertial>
+            <origin xyz="0 0.08 -0.005" rpy="${pi/2} 0 0" />
+            <mass value="1.5"/>
+            <inertia ixx="0.001934" ixy="0.0" ixz="0.0" iyy="0.001934" iyz="0.0" izz="0.002269"/>
+        </inertial>
     </link>
     <joint name="arm_j2" type="revolute">
         <parent link="arm_l1" />
         <child link="arm_l2" />
         <origin xyz="0 0 0.534" rpy="0 0 0" />
         <axis xyz="0 1 0" />
-        <limit lower="-${pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+        <limit lower="-${pi}" upper="${pi}" effort="40.0" velocity="0.5"/>S
     </joint>
 
 
@@ -117,13 +135,19 @@
             </geometry>
             <origin xyz="0 0.03 0.18" rpy="${pi/2} 0 0" />
         </collision>
+        <!-- approximate inertial (mass ~1.5 kg) using larger cylinder/combined geometry -->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} 0" />
+            <mass value="1.5"/>
+            <inertia ixx="0.002384" ixy="0.0" ixz="0.0" iyy="0.002384" iyz="0.0" izz="0.002269"/>
+        </inertial>
     </link>
     <joint name="arm_j3" type="revolute">
         <parent link="arm_l2" />
         <child link="arm_l3" />
         <origin xyz="0 0.076 0.203" rpy="0 0 0" />
         <axis xyz="1 0 0" />
-        <limit lower="${-pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+        <limit lower="${-pi}" upper="${pi}" effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="arm_l4">
@@ -139,13 +163,19 @@
             </geometry>
             <origin xyz="0 -0.075 0" rpy="0 0 0" />
         </collision>
+        <!-- approximate inertial (mass ~0.7 kg) using main cylinder -->
+        <inertial>
+            <origin xyz="0 -0.075 0" rpy="0 0 0" />
+            <mass value="0.7"/>
+            <inertia ixx="0.001470" ixy="0.0" ixz="0.0" iyy="0.001470" iyz="0.0" izz="0.001260"/>
+        </inertial>
     </link>
     <joint name="arm_j4" type="revolute">
         <parent link="arm_l3" />
         <child link="arm_l4" />
         <origin xyz="0 -0.025 0.179" rpy="0 0 0" />
         <axis xyz="0 1 0" />
-        <limit lower="${-pi}" upper="${pi}" effort="10.0" velocity="0.5"/>
+        <limit lower="${-pi}" upper="${pi}" effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="arm_l5">
@@ -161,13 +191,19 @@
             </geometry>
             <origin xyz="0 0 0.03" rpy="0 0 0" />
         </collision>
+        <!-- approximate inertial (mass ~0.2 kg) small end link -->
+        <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0" />
+            <mass value="0.2"/>
+            <inertia ixx="0.000222" ixy="0.0" ixz="0.0" iyy="0.000222" iyz="0.0" izz="0.000360"/>
+        </inertial>
     </link>
     <joint name="arm_j5" type="continuous">
         <parent link="arm_l4" />
         <child link="arm_l5" />
         <origin xyz="0 -0.075 0.08" rpy="0 0 0" />
         <axis xyz="0 0 1" />
-        <limit effort="10.0" velocity="0.5"/>
+        <limit effort="40.0" velocity="0.5"/>
     </joint>
 
     <link name="end_effector">
@@ -184,6 +220,12 @@
             </geometry>
             <origin xyz="0 0 -0.05" rpy="0 0 0" />
         </collision>
+        <!-- approximate inertial (mass ~0.1 kg) for small end effector box -->
+        <inertial>
+            <origin xyz="0 0 -0.05" rpy="0 0 0" />
+            <mass value="0.1"/>
+            <inertia ixx="8.6667e-05" ixy="0.0" ixz="0.0" iyy="8.6667e-05" iyz="0.0" izz="6.6667e-06"/>
+        </inertial>
     </link>
     <joint name="end_effector_joint" type="fixed">
         <parent link="arm_l5" />

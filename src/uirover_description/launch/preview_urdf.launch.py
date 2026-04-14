@@ -35,6 +35,7 @@ def generate_launch_description():
     )
 
     return launch.LaunchDescription([
+        launch.actions.SetEnvironmentVariable("RMW_IMPLEMENTATION", ""),
         launch.actions.DeclareLaunchArgument(name='gui', default_value='True',
                                             description='Flag to enable joint_state_publisher_gui'),
         launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,

@@ -13,7 +13,7 @@ find_package(xacro REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY launch rviz xacro urdf dae config
+  DIRECTORY launch rviz xacro urdf dae
   DESTINATION share/${PROJECT_NAME}
 )
 

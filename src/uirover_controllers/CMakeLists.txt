@@ -56,6 +56,11 @@ install(
 )
 
 install(
+  DIRECTORY config
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(
   DIRECTORY include/
   DESTINATION include/${PROJECT_NAME}
 )

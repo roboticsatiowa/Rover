@@ -16,6 +16,7 @@ add_library(
   uirover_hardware
   SHARED
   src/uirover_hardware_interface.cpp
+  src/uirover_canbus_interface.cpp
 )
 target_include_directories(
   uirover_hardware
@@ -40,6 +41,11 @@ install(
   RUNTIME DESTINATION bin
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
+)
+
+install(
+  DIRECTORY xacro
+  DESTINATION share/${PROJECT_NAME}
 )
 
 install(
