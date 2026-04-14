@@ -23,7 +23,7 @@ from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import Command, FindExecutable
 from moveit_configs_utils import MoveItConfigsBuilder
 
-
+# ROS2 launch description function generator. Returns LaunchDescription object.
 def generate_launch_description():
     ld = LaunchDescription()
 
@@ -116,6 +116,7 @@ def generate_launch_description():
                             "host": "192.168.55.100",
                             # 'width': 1280,
                             # 'height': 720,
+                            # Frames per second
                             "framerate": 20.0,
                         }
                     ],

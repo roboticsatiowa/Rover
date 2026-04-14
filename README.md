@@ -68,7 +68,7 @@ Install additional dependencies
 Install udev rules. These create more descriptive device names in `/dev` for example `/dev/ttyACM0 -> /dev/ttyTEENSY` and are required for ROS2 nodes to properly recognize hardware. More info in the [man page](https://man7.org/linux/man-pages/man7/udev.7.html) (`$ man udev`)
 
 ```bash
-./tools/misc/symlink_udev.sh
+./tools/misc/setup_udev.sh
 ```
 
 ### Building
@@ -242,3 +242,4 @@ More information can be found in the [man page](https://man7.org/linux/man-pages
 
 - Ethan Holter [@ethanholter](https://github.com/ethanholter)
 - Charlie Killian [@charlie-killian](https://github.com/charlie-killian)
+
