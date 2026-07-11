@@ -25,22 +25,36 @@ def generate_launch_description():
         )
     )
     
-    for i in range(10):
-        launch_description_list.append(
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    PathJoinSubstitution([
-                        FindPackageShare("uirover_video"),
-                        "launch",
-                        "gstreamer_sink.launch.py"
-                    ])
-                ),
-                launch_arguments={
-                    "host": "192.168.55.1",
-                    "port": str(5000 + i),
-                }.items()
-            )
+    launch_description_list.append(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                PathJoinSubstitution([
+                    FindPackageShare("uirover_video"),
+                    "launch",
+                    "gstreamer_sink.launch.py"
+                ])
+            ),
+            launch_arguments={
+                "host": "192.168.55.1",
+                "port": str(5000),
+            }.items()
         )
+    )
+    launch_description_list.append(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                PathJoinSubstitution([
+                    FindPackageShare("uirover_video"),
+                    "launch",
+                    "gstreamer_sink.launch.py"
+                ])
+            ),
+            launch_arguments={
+                "host": "192.168.55.1",
+                "port": str(5001),
+            }.items()
+        )
+    )
     
     launch_description_list.append(
         IncludeLaunchDescription(
