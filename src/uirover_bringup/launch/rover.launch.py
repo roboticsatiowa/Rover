@@ -95,7 +95,7 @@ def generate_launch_description():
         Node(
             package="rmw_zenoh_cpp",
             executable="rmw_zenohd",
-            output="both",
+            output="log",
         )
     )
 

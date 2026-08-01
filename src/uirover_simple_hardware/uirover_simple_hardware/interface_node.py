@@ -1,15 +1,23 @@
 from re import T
 from socket import timeout
 from time import sleep
+import struct
+import can
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy, BatteryState
 import serial
 import rclpy.qos
 
-from button_maps.PS5 import *
+from button_maps.PS5_0 import *
 
 device_path = "/dev/ttyTEENSY"
+
+# Arm base motor, ODrive CAN Simple:
+# https://docs.odriverobotics.com/v/latest/manual/can-protocol.html
+can_interface = "can0"
+base_node_id = 0
+max_base_velocity = 20.0  # turns/s at full trigger pull
 
 class InterfaceNode(Node):
     prev_msg = None
@@ -34,6 +42,17 @@ class InterfaceNode(Node):
         self.timeout = self.get_parameter("timeout").get_parameter_value().integer_value
 
         try:
+            self.can_bus = can.interface.Bus(channel=can_interface, interface='socketcan')
+            self.get_logger().info(f"Successfully opened CAN interface {can_interface}")
+        except Exception as e:
+            self.get_logger().error(f"{e}\nFailed to open CAN interface {can_interface}.")
+            raise e
+
+        # put the base motor into closed loop velocity control
+        self.odrive_send(base_node_id, 0x0b, struct.pack('<II', 2, 2))  # Set_Controller_Mode: VELOCITY_CONTROL, VEL_RAMP
+        self.odrive_send(base_node_id, 0x07, struct.pack('<I', 8))      # Set_Axis_State: CLOSED_LOOP_CONTROL
+
+        try:
             self.serial_out = serial.Serial(device_path, 115200, timeout=1)
             self.get_logger().info(f"Successfully opened serial port {device_path}")
         except Exception as e:
@@ -46,6 +65,7 @@ class InterfaceNode(Node):
 
 
         self.control_mode = 0
+        self.hand_closed = 0
 
         self.joystick_subscription = self.create_subscription(
             Joy,
@@ -61,7 +81,20 @@ class InterfaceNode(Node):
         # self.create_timer(1, self.clock_1hz)
         self.create_timer(0.1, self.heartbeat_check)
 
-    # Move wheels
+    def odrive_send(self, node_id, cmd_id, data):
+        try:
+            self.can_bus.send(can.Message(
+                arbitration_id=(node_id << 5) | cmd_id,
+                data=data,
+                is_extended_id=False))
+        except Exception as e:
+            self.get_logger().error(f"Error writing to CAN bus: {e}")
+
+    # Set_Input_Vel, velocity in turns/s
+    def set_base_velocity(self, velocity):
+        self.odrive_send(base_node_id, 0x0d, struct.pack('<ff', velocity, 0.0))
+
+    # Move wheels (Uses Left and Right stick)
     def drive_mode(self, msg):
         try:
             if self.axis_changed(msg, L_JOY_Y):
@@ -70,7 +103,7 @@ class InterfaceNode(Node):
                 self.serial_out.write(bytes(f'l 1 {msg.axes[R_JOY_Y] * 255}\r', 'utf-8'))
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
-            
+
     # Move arm and other actuators
 
     # X o 0: Base Motor
@@ -87,40 +120,51 @@ class InterfaceNode(Node):
             if self.axis_changed(msg, L_JOY_X):
                 self.serial_out.write(bytes(f'o 3 {msg.axes[L_JOY_X] * -255}\r', 'utf-8'))
             
-            if not (msg.axes[L_TRIGGER] != 1 and msg.axes[R_TRIGGER] != 1):
+            # L and R trigger are opposite actions. Do nothing if both are pressed
+            if msg.axes[L_TRIGGER] > 0 and msg.axes[R_TRIGGER] > 0:
+                print("moving arm")
                 if self.axis_changed(msg, R_TRIGGER):
-                    self.serial_out.write(bytes(f'o 0 {((msg.axes[R_TRIGGER]-1)/2) * -255}\r', 'utf-8'))
+                    self.set_base_velocity(((msg.axes[R_TRIGGER]-1)/2) * max_base_velocity)
                 if self.axis_changed(msg, L_TRIGGER):
-                    self.serial_out.write(bytes(f'o 0 {((msg.axes[L_TRIGGER]-1)/2) * 255}\r', 'utf-8'))
+                    self.set_base_velocity(((msg.axes[L_TRIGGER]-1)/2) * -max_base_velocity)
 
-            if not (msg.buttons[CIRCLE_BUTTON] != 0 and msg.buttons[SQUARE_BUTTON] != 0):
+            # o and □ are opposite actions. Do nothing if both are pressed
+            if msg.buttons[CIRCLE_BUTTON] == 0 or msg.buttons[SQUARE_BUTTON] == 0:
+                
                 if self.button_pressed(msg, CIRCLE_BUTTON):
                     self.serial_out.write(b'o 2 255\r')
                 if self.button_pressed(msg, SQUARE_BUTTON):
                     self.serial_out.write(b'o 2 -255\r')
 
-            if self.button_released(msg, CIRCLE_BUTTON):
-                self.serial_out.write(b'o 2 0\r')
-            if self.button_released(msg, SQUARE_BUTTON):
-                self.serial_out.write(b'o 2 0\r')
-
-            if not (msg.buttons[TRIANGLE_BUTTON] != 0 and msg.buttons[X_BUTTON] != 0):
+            # △ and x are opposite actions. do nothing if both are pressed
+            if msg.buttons[TRIANGLE_BUTTON] == 0 or msg.buttons[X_BUTTON] == 0:
+                
                 if self.button_pressed(msg, TRIANGLE_BUTTON):
                     self.serial_out.write(b'h 1 255\r')
                 if self.button_pressed(msg, X_BUTTON):
                     self.serial_out.write(b'h 1 -255\r')
-            
-            if self.button_released(msg, TRIANGLE_BUTTON):
-                self.serial_out.write(b'h 1 0\r')
-            if self.button_released(msg, X_BUTTON):
-                self.serial_out.write(b'h 1 0\r')
 
-            if not (msg.buttons[DPAD_UP] != 0 and msg.buttons[DPAD_DOWN] != 0):
+            # dpad up and down opposite actions. do nothing if both are pressed
+            if msg.buttons[DPAD_UP] == 0 or msg.buttons[DPAD_DOWN] == 0:
                 if self.button_pressed(msg, DPAD_UP):
                     self.serial_out.write(b'h 0 -255\r')
                 if self.button_pressed(msg, DPAD_DOWN):
                     self.serial_out.write(b'h 0 255\r')
             
+            if self.button_pressed(msg, R_BUMPER):
+                self.hand_closed = not self.hand_closed
+                self.serial_out.write(bytes(f'a {int(self.hand_closed)}\r', 'utf-8'))
+                
+            
+            # buttons released
+            if self.button_released(msg, TRIANGLE_BUTTON):
+                self.serial_out.write(b'h 1 0\r')
+            if self.button_released(msg, X_BUTTON):
+                self.serial_out.write(b'h 1 0\r')
+            if self.button_released(msg, CIRCLE_BUTTON):
+                self.serial_out.write(b'o 2 0\r')
+            if self.button_released(msg, SQUARE_BUTTON):
+                self.serial_out.write(b'o 2 0\r')
             if self.button_released(msg, DPAD_UP):
                 self.serial_out.write(b'h 0 0\r')
             if self.button_released(msg, DPAD_DOWN):
@@ -187,6 +231,7 @@ class InterfaceNode(Node):
         
         if self.get_clock().now().to_msg().sec - self.prev_msg_time.to_msg().sec > self.timeout:
             self.serial_out.write(b'd\r')
+            self.set_base_velocity(0.0)
             self.prev_msg_time = None
 
 

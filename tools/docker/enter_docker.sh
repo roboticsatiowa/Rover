@@ -20,5 +20,3 @@ docker run \
     -v /dev:/dev \
     uirover:latest "$1"
 
-echo "Rover is running"
-

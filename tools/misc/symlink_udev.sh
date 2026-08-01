@@ -33,4 +33,11 @@ if [ ! -L /etc/udev/rules.d/99-realsense-libusb.rules ]; then
 fi
 udevadm control --reload-rules || exit 1
 
+# bring up the CAN bus (arm base ODrive) automatically at boot
+if [ ! -L /etc/systemd/system/can0.service ]; then
+  ln -s "$SCRIPT_DIR"/can0.service /etc/systemd/system/can0.service || exit 1
+fi
+systemctl daemon-reload || exit 1
+systemctl enable can0.service || exit 1
+
 echo "Success"

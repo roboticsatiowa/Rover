@@ -13,6 +13,7 @@
   <test_depend>python3-pytest</test_depend>
 
   <depend>python3-serial</depend>
+  <depend>python3-can</depend>
 
   <export>
     <build_type>ament_python</build_type>
