@@ -9,7 +9,7 @@ from sensor_msgs.msg import Joy, BatteryState
 import serial
 import rclpy.qos
 
-from button_maps.PS5_1 import *
+from button_maps.PS5_0 import *
 
 device_path = "/dev/ttyTEENSY"
 
@@ -151,10 +151,16 @@ class InterfaceNode(Node):
                     self.serial_out.write(b'h 0 255\r')
 
             # Should be used to open and close the hand. (Hopefully it works?)
-            if self.button_pressed(msg, R_BUMPER):
-                self.serial_out.write(b'v\r')
-                
+            if msg.buttons[R_BUMPER]:
+                self.serial_out.write(b'v 1\r')
+            if msg.buttons[L_BUMPER]:
+                self.serial_out.write(b'v -1\r')
+
             # buttons released
+            if self.button_released(msg, R_BUMPER):
+                self.serial_out.write(b'v 0\r')
+            if self.button_released(msg, L_BUMPER):
+                self.serial_out.write(b'v 0\r')
             if self.button_released(msg, DPAD_UP):
                 self.serial_out.write(b'h 0 0\r')
             if self.button_released(msg, DPAD_DOWN):
@@ -191,18 +197,18 @@ class InterfaceNode(Node):
             self.get_logger().info(f"Switching to control mode {self.control_mode}")
 
         # D-pad used to control the camera mount motor. D-pad left and right are opposite actions. Do nothing if both are pressed
-        if self.axis_changed(msg, DPAD_X):
-            if msg.axes[DPAD_X] > 0:
-                self.serial_out.write(b'c 1\r')
-            elif msg.axes[DPAD_X] < 0:
-                self.serial_out.write(b'c -1\r')
-            else:
-                self.serial_out.write(b'c 0\r')
+        # if self.axis_changed(msg, DPAD_X):
+        #     if msg.axes[DPAD_X] > 0:
+        #         self.serial_out.write(b'c 1\r')
+        #     elif msg.axes[DPAD_X] < 0:
+        #         self.serial_out.write(b'c -1\r')
+        #     else:
+        #         self.serial_out.write(b'c 0\r')
 
         # Headlight toggle
-        if self.button_pressed(msg, L_BUMPER):
-            self.serial_out.write(b'z\r')
-            self.get_logger().info("Toggling headlights")
+        # if self.button_pressed(msg, L_BUMPER):
+        #     self.serial_out.write(b'z\r')
+        #     self.get_logger().info("Toggling headlights")
 
 
         self.prev_msg = msg

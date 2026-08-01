@@ -1,0 +1,21 @@
+[Unit]
+# Brings up the CAN bus used by the arm base ODrive.
+# Bound to the device unit so it also works if the mttcan driver loads late,
+# or if can0 is a USB adapter that gets plugged in after boot.
+Description=Bring up can0 for the arm base ODrive
+BindsTo=sys-subsystem-net-devices-can0.device
+After=sys-subsystem-net-devices-can0.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# bitrate must match odrv.can.config.baud_rate on the ODrive
+# restart-ms auto-recovers the controller if the bus ever goes bus-off
+ExecStart=/usr/sbin/ip link set can0 type can bitrate 250000 restart-ms 100
+# default txqueuelen of 10 overflows (ENOBUFS) under bursts of setpoints
+ExecStart=/usr/sbin/ip link set can0 txqueuelen 1000
+ExecStart=/usr/sbin/ip link set can0 up
+ExecStop=/usr/sbin/ip link set can0 down
+
+[Install]
+WantedBy=sys-subsystem-net-devices-can0.device
