@@ -1,0 +1,29 @@
+# AXES
+L_JOY_X = 0
+L_JOY_Y = 1
+L_TRIGGER = 2
+R_JOY_X = 3
+R_JOY_Y = 4
+R_TRIGGER = 5
+
+# BUTTONS
+X_BUTTON = 0
+CIRCLE_BUTTON = 1
+TRIANGLE_BUTTON = 2
+SQUARE_BUTTON = 3
+L_BUMPER = 4
+R_BUMPER = 5
+CREATE_BUTTON = 8
+OPTIONS_BUTTON = 9
+PS_BUTTON = 10
+L_STICK_BUTTON = 11
+R_STICK_BUTTON = 12
+
+
+# These buttons are not used and arent connected to anything when doing the mapping with the joy node in terminal.
+#DPAD_UP = 11
+#DPAD_DOWN = 12
+#DPAD_LEFT = 13
+#DPAD_RIGHT = 14
+#TOUCHPAD_BUTTON = 15
+#MUTE_BUTTON = 16
