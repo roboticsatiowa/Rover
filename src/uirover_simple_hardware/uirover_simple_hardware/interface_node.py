@@ -9,7 +9,7 @@ from sensor_msgs.msg import Joy, BatteryState
 import serial
 import rclpy.qos
 
-from button_maps.PS5_0 import *
+from button_maps.PS5_1 import *
 
 device_path = "/dev/ttyTEENSY"
 
@@ -149,6 +149,8 @@ class InterfaceNode(Node):
                 self.serial_out.write(b'h 0 -255\r')
             elif msg.buttons[DPAD_Y] < 0:
                 self.serial_out.write(b'h 0 255\r')
+            else:
+                self.serial_out.write(b'h 0 0\r')
             
             if self.button_pressed(msg, R_BUMPER):
                 self.hand_closed = not self.hand_closed
