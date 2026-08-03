@@ -145,11 +145,10 @@ class InterfaceNode(Node):
                     self.serial_out.write(b'h 1 -255\r')
 
             # dpad up and down opposite actions. do nothing if both are pressed
-            if msg.buttons[DPAD_UP] == 0 or msg.buttons[DPAD_DOWN] == 0:
-                if self.button_pressed(msg, DPAD_UP):
-                    self.serial_out.write(b'h 0 -255\r')
-                if self.button_pressed(msg, DPAD_DOWN):
-                    self.serial_out.write(b'h 0 255\r')
+            if msg.buttons[DPAD_Y] > 0:
+                self.serial_out.write(b'h 0 -255\r')
+            elif msg.buttons[DPAD_Y] < 0:
+                self.serial_out.write(b'h 0 255\r')
             
             if self.button_pressed(msg, R_BUMPER):
                 self.hand_closed = not self.hand_closed
@@ -165,10 +164,6 @@ class InterfaceNode(Node):
                 self.serial_out.write(b'o 2 0\r')
             if self.button_released(msg, SQUARE_BUTTON):
                 self.serial_out.write(b'o 2 0\r')
-            if self.button_released(msg, DPAD_UP):
-                self.serial_out.write(b'h 0 0\r')
-            if self.button_released(msg, DPAD_DOWN):
-                self.serial_out.write(b'h 0 0\r')            
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
 
