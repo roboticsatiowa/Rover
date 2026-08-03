@@ -121,12 +121,11 @@ class InterfaceNode(Node):
                 self.serial_out.write(bytes(f'o 3 {msg.axes[L_JOY_X] * -255}\r', 'utf-8'))
             
             # L and R trigger are opposite actions. Do nothing if both are pressed
-            if msg.axes[L_TRIGGER] > 0 and msg.axes[R_TRIGGER] > 0:
-                print("moving arm")
+            if msg.axes[L_TRIGGER] < 1 and msg.axes[R_TRIGGER] < 1:
                 if self.axis_changed(msg, R_TRIGGER):
-                    self.set_base_velocity(((msg.axes[R_TRIGGER]-1)/2) * max_base_velocity)
+                    self.set_base_velocity(((msg.axes[R_TRIGGER]-1)/2) * -max_base_velocity)
                 if self.axis_changed(msg, L_TRIGGER):
-                    self.set_base_velocity(((msg.axes[L_TRIGGER]-1)/2) * -max_base_velocity)
+                    self.set_base_velocity(((msg.axes[L_TRIGGER]-1)/2) * max_base_velocity)
 
             # o and □ are opposite actions. Do nothing if both are pressed
             if msg.buttons[CIRCLE_BUTTON] == 0 or msg.buttons[SQUARE_BUTTON] == 0:
