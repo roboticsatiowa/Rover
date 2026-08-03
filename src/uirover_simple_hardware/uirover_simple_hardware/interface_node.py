@@ -145,12 +145,13 @@ class InterfaceNode(Node):
                     self.serial_out.write(b'h 1 -255\r')
 
             # dpad up and down opposite actions. do nothing if both are pressed
-            if msg.buttons[DPAD_Y] > 0:
-                self.serial_out.write(b'h 0 -255\r')
-            elif msg.buttons[DPAD_Y] < 0:
-                self.serial_out.write(b'h 0 255\r')
-            else:
-                self.serial_out.write(b'h 0 0\r')
+            if self.axis_changed(msg, DPAD_Y):
+                if msg.axes[DPAD_Y] > 0:
+                    self.serial_out.write(b'h 0 -255\r')
+                elif msg.axes[DPAD_Y] < 0:
+                    self.serial_out.write(b'h 0 255\r')
+                else:
+                    self.serial_out.write(b'h 0 0\r')
             
             if self.button_pressed(msg, R_BUMPER):
                 self.hand_closed = not self.hand_closed
