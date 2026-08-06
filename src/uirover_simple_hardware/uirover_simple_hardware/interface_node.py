@@ -101,6 +101,16 @@ class InterfaceNode(Node):
                 self.serial_out.write(bytes(f'l 0 {msg.axes[L_JOY_Y] * 255}\r', 'utf-8'))
             if self.axis_changed(msg, R_JOY_Y):
                 self.serial_out.write(bytes(f'l 1 {msg.axes[R_JOY_Y] * 255}\r', 'utf-8'))
+
+            # D-pad used to control the camera mount motor. D-pad left and right are opposite actions. Do nothing if both are pressed
+            if self.axis_changed(msg, DPAD_X):
+                if msg.axes[DPAD_X] > 0:
+                    self.serial_out.write(b'c 1\r')
+                elif msg.axes[DPAD_X] < 0:
+                    self.serial_out.write(b'c -1\r')
+                else:
+                    self.serial_out.write(b'c 0\r')
+
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
 
@@ -151,7 +161,17 @@ class InterfaceNode(Node):
                     self.serial_out.write(b'h 0 255\r')
                 else:
                     self.serial_out.write(b'h 0 0\r')
-            
+
+            # D-pad used to control the camera mount motor. D-pad left and right are opposite actions. Do nothing if both are pressed
+            if self.axis_changed(msg, DPAD_X):
+                if msg.axes[DPAD_X] > 0:
+                    self.serial_out.write(b'c 1\r')
+                elif msg.axes[DPAD_X] < 0:
+                    self.serial_out.write(b'c -1\r')
+                else:
+                    self.serial_out.write(b'c 0\r')
+
+            # Should be used to close the hand. (Hopefully it works?)
             if self.button_pressed(msg, R_BUMPER):
                 self.hand_closed = not self.hand_closed
                 self.serial_out.write(bytes(f'a {int(self.hand_closed)}\r', 'utf-8'))
