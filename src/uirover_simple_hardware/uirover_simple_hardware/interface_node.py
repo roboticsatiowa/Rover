@@ -102,15 +102,6 @@ class InterfaceNode(Node):
             if self.axis_changed(msg, R_JOY_Y):
                 self.serial_out.write(bytes(f'l 1 {msg.axes[R_JOY_Y] * 255}\r', 'utf-8'))
 
-            # D-pad used to control the camera mount motor. D-pad left and right are opposite actions. Do nothing if both are pressed
-            if self.axis_changed(msg, DPAD_X):
-                if msg.axes[DPAD_X] > 0:
-                    self.serial_out.write(b'c 1\r')
-                elif msg.axes[DPAD_X] < 0:
-                    self.serial_out.write(b'c -1\r')
-                else:
-                    self.serial_out.write(b'c 0\r')
-
         except Exception as e:
             self.get_logger().error(f"Error writing to serial port: {e}")
 
@@ -162,21 +153,10 @@ class InterfaceNode(Node):
                 else:
                     self.serial_out.write(b'h 0 0\r')
 
-            # D-pad used to control the camera mount motor. D-pad left and right are opposite actions. Do nothing if both are pressed
-            if self.axis_changed(msg, DPAD_X):
-                if msg.axes[DPAD_X] > 0:
-                    self.serial_out.write(b'c 1\r')
-                elif msg.axes[DPAD_X] < 0:
-                    self.serial_out.write(b'c -1\r')
-                else:
-                    self.serial_out.write(b'c 0\r')
-
-            # Should be used to close the hand. (Hopefully it works?)
+            # Should be used to open and close the hand. (Hopefully it works?)
             if self.button_pressed(msg, R_BUMPER):
-                self.hand_closed = not self.hand_closed
-                self.serial_out.write(bytes(f'a {int(self.hand_closed)}\r', 'utf-8'))
+                self.serial_out.write(b'v\r')
                 
-            
             # buttons released
             if self.button_released(msg, TRIANGLE_BUTTON):
                 self.serial_out.write(b'h 1 0\r')
@@ -209,8 +189,17 @@ class InterfaceNode(Node):
             self.control_mode = (self.control_mode + 1) % 2
             self.get_logger().info(f"Switching to control mode {self.control_mode}")
 
+        # D-pad used to control the camera mount motor. D-pad left and right are opposite actions. Do nothing if both are pressed
+        if self.axis_changed(msg, DPAD_X):
+            if msg.axes[DPAD_X] > 0:
+                self.serial_out.write(b'c 1\r')
+            elif msg.axes[DPAD_X] < 0:
+                self.serial_out.write(b'c -1\r')
+            else:
+                self.serial_out.write(b'c 0\r')
+
         # Headlight toggle
-        if self.button_pressed(msg, CREATE_BUTTON):
+        if self.button_pressed(msg, L_BUMPER):
             self.serial_out.write(b'z\r')
             self.get_logger().info("Toggling headlights")
 
