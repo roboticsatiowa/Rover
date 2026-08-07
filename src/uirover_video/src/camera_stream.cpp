@@ -2,6 +2,15 @@
 #include <chrono>
 #include <memory>
 #include <string>
+#include <vector>
+
+// process spawning (Option A: run morse_light_reader.py as a separate process)
+#include <unistd.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <cerrno>
+#include <cstring>
+#include <cstdio>
 
 // ros
 #include "rclcpp/rclcpp.hpp"
@@ -47,6 +56,13 @@ public:
         param_desc_dictionary.description = "aruco dictionary to use for marker detection.";
         param_desc_dictionary.additional_constraints = "Valid options are: DICT_4X4_50, DICT_4X4_100, DICT_4X4_250, DICT_4X4_1000, DICT_5X5_50, DICT_5X5_100, DICT_5X5_250, DICT_5X5_1000, DICT_6X6_50, DICT_6X6_100, DICT_6X6_250, DICT_6X6_1000, DICT_7X7_50, DICT_7X7_100, DICT_7X7_250, DICT_7X7_1000, DICT_ARUCO_ORIGINAL";
 
+        auto param_desc_morse_enabled = rcl_interfaces::msg::ParameterDescriptor{};
+        param_desc_morse_enabled.description = "Launch morse_light_reader.py as a separate process alongside the camera stream.";
+        auto param_desc_morse_script = rcl_interfaces::msg::ParameterDescriptor{};
+        param_desc_morse_script.description = "Absolute path to morse_light_reader.py.";
+        auto param_desc_morse_python = rcl_interfaces::msg::ParameterDescriptor{};
+        param_desc_morse_python.description = "Python executable used to run morse_light_reader.py.";
+
 
 
         this->declare_parameter("port", 5000, param_desc_port);
@@ -60,6 +76,10 @@ public:
         this->declare_parameter("publish_topic_name", "camera_stream", param_desc_publish_topic_name); // TODO unimplemented
         this->declare_parameter("dictionary", "DICT_4X4_100", param_desc_dictionary);
         this->declare_parameter("invert", false);
+
+        this->declare_parameter("morse_reader_enabled", false, param_desc_morse_enabled);
+        this->declare_parameter("morse_reader_script", "/path/to/Morse-Light-Translator-OpenCV/morse_light_reader.py", param_desc_morse_script);
+        this->declare_parameter("morse_reader_python", "python3", param_desc_morse_python);
 
         start_stream();
 
@@ -83,6 +103,9 @@ public:
         cb_handle_host = param_subscriber->add_parameter_callback("host", cb_restart_stream);
         cb_handle_device = param_subscriber->add_parameter_callback("device", cb_restart_stream);
         cb_invert = param_subscriber->add_parameter_callback("invert", cb_restart_stream);
+        cb_handle_morse_enabled = param_subscriber->add_parameter_callback("morse_reader_enabled", cb_restart_stream);
+        cb_handle_morse_script = param_subscriber->add_parameter_callback("morse_reader_script", cb_restart_stream);
+        cb_handle_morse_python = param_subscriber->add_parameter_callback("morse_reader_python", cb_restart_stream);
 
     }
 
@@ -136,12 +159,81 @@ public:
         timer = this->create_wall_timer(1ms, timer_callback);
 
         RCLCPP_INFO(this->get_logger(), "Camera stream started.");
+
+        if (this->get_parameter("morse_reader_enabled").as_bool()) {
+            start_morse_reader(
+                this->get_parameter("morse_reader_python").as_string(),
+                this->get_parameter("morse_reader_script").as_string()
+            );
+        }
     }
 
     void end_stream() {
         cap.release();
         writer.release();
+        stop_morse_reader();
         RCLCPP_INFO(this->get_logger(), "Camera stream ended.");
+    }
+
+    // Option A: launch morse_light_reader.py as its own OS process rather than
+    // calling its main() in-process. This avoids fighting our GStreamer pipeline
+    // for the camera device, and avoids blocking rclcpp::spin() on its infinite
+    // cv2.imshow()/waitKey() loop.
+    void start_morse_reader(const std::string& python_exe, const std::string& script_path) {
+        if (morse_reader_pid > 0) {
+            RCLCPP_WARN(this->get_logger(), "Morse reader already running (pid %d); not starting another.", morse_reader_pid);
+            return;
+        }
+
+        pid_t pid = fork();
+
+        if (pid < 0) {
+            RCLCPP_ERROR(this->get_logger(), "fork() failed launching morse reader: %s", std::strerror(errno));
+            return;
+        }
+
+        if (pid == 0) {
+            // child process: replace image with the python interpreter
+            execlp(python_exe.c_str(), python_exe.c_str(), script_path.c_str(), (char*)nullptr);
+            // execlp only returns on failure
+            std::fprintf(stderr, "execlp failed to launch %s %s: %s\n",
+                python_exe.c_str(), script_path.c_str(), std::strerror(errno));
+            _exit(127);
+        }
+
+        // parent process
+        morse_reader_pid = pid;
+        RCLCPP_INFO(this->get_logger(), "Launched morse reader '%s %s' as pid %d.",
+            python_exe.c_str(), script_path.c_str(), morse_reader_pid);
+    }
+
+    void stop_morse_reader() {
+        if (morse_reader_pid <= 0) {
+            return;
+        }
+
+        RCLCPP_INFO(this->get_logger(), "Stopping morse reader (pid %d).", morse_reader_pid);
+
+        if (kill(morse_reader_pid, SIGTERM) != 0 && errno != ESRCH) {
+            RCLCPP_WARN(this->get_logger(), "Failed to send SIGTERM to pid %d: %s", morse_reader_pid, std::strerror(errno));
+        }
+
+        int status = 0;
+        // give it a moment to exit cleanly, then reap it
+        for (int i = 0; i < 20; ++i) {
+            pid_t result = waitpid(morse_reader_pid, &status, WNOHANG);
+            if (result == morse_reader_pid) {
+                morse_reader_pid = -1;
+                return;
+            }
+            usleep(50000); // 50ms
+        }
+
+        // still alive after ~1s: force kill
+        RCLCPP_WARN(this->get_logger(), "Morse reader pid %d did not exit after SIGTERM; sending SIGKILL.", morse_reader_pid);
+        kill(morse_reader_pid, SIGKILL);
+        waitpid(morse_reader_pid, &status, 0);
+        morse_reader_pid = -1;
     }
 
     void process_frame() {
@@ -170,6 +262,8 @@ private:
     cv::VideoWriter writer;
     cv::Ptr<cv::aruco::Dictionary> aruco_dictionary;
 
+    pid_t morse_reader_pid = -1;
+
     std::shared_ptr<rclcpp::ParameterEventHandler> param_subscriber;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_dictionary;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_bitrate;
@@ -177,6 +271,9 @@ private:
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_host;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_device;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_invert;
+    std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_morse_enabled;
+    std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_morse_script;
+    std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_morse_python;
 
 
     rclcpp::TimerBase::SharedPtr timer;
