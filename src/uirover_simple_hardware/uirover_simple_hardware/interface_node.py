@@ -204,8 +204,8 @@ class InterfaceNode(Node):
             self.get_logger().info("Toggling headlights")
 
         # Morse Code
-        if self.button_pressed(msg, PLAYSTATION_LOGO):
-            self.serial_out.write(b'o 2 1\r')
+        #if self.button_pressed(msg, PLAYSTATION_LOGO):
+        #    self.serial_out.write(b'o 2 1\r')
 
 
         self.prev_msg = msg
