@@ -145,19 +145,20 @@ class InterfaceNode(Node):
                     self.serial_out.write(b'h 1 -255\r')
 
             # dpad up and down opposite actions. do nothing if both are pressed
-            if self.axis_changed(msg, DPAD_Y):
-                if msg.axes[DPAD_Y] > 0:
+            if self.button_pressed(msg, DPAD_UP):
                     self.serial_out.write(b'h 0 -255\r')
-                elif msg.axes[DPAD_Y] < 0:
+            if self.button_pressed(msg, DPAD_DOWN):
                     self.serial_out.write(b'h 0 255\r')
-                else:
-                    self.serial_out.write(b'h 0 0\r')
 
             # Should be used to open and close the hand. (Hopefully it works?)
             if self.button_pressed(msg, R_BUMPER):
                 self.serial_out.write(b'v\r')
                 
             # buttons released
+            if self.button_released(msg, DPAD_UP):
+                self.serial_out.write(b'h 0 0\r')
+            if self.button_released(msg, DPAD_DOWN):
+                self.serial_out.write(b'h 0 0\r')
             if self.button_released(msg, TRIANGLE_BUTTON):
                 self.serial_out.write(b'h 1 0\r')
             if self.button_released(msg, X_BUTTON):

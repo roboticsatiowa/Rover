@@ -74,7 +74,7 @@ def generate_launch_description():
             name="joy",
             
             package="joy",
-            executable="joy_node",
+            executable="game_controller_node",
 
         )
     )
