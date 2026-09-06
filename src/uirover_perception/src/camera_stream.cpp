@@ -23,7 +23,10 @@ public:
     GStreamerNode() : Node("gstreamer_stream_source") {
 
         // declare aruco topic
-        this->create_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
+        // this->create_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
+
+        // Added in this line:
+        aruco_publisher = this->create_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
 
         auto param_desc_port = rcl_interfaces::msg::ParameterDescriptor{};
         param_desc_port.description = "UDP port to stream video to.";
@@ -156,8 +159,24 @@ public:
         std::vector<int> ids;
         std::vector<std::vector<cv::Point2f> > corners;
         cv::aruco::detectMarkers(frame, aruco_dictionary, corners, ids);
+        
+        //if (ids.size() > 0) {
+        //    cv::aruco::drawDetectedMarkers(frame, corners, ids, cv::Scalar(255, 0, 0));
+        //}
+
+        // Newly added in code to fix ARUCO reading:
         if (ids.size() > 0) {
             cv::aruco::drawDetectedMarkers(frame, corners, ids, cv::Scalar(255, 0, 0));
+
+            // publish detected marker IDs
+            std_msgs::msg::String msg;
+            std::string ids_str;
+            for (size_t i = 0; i < ids.size(); ++i) {
+                ids_str += std::to_string(ids[i]);
+                if (i != ids.size() - 1) ids_str += ",";
+            }
+            msg.data = ids_str;
+            aruco_publisher->publish(msg);
         }
 
         writer << frame;
@@ -169,6 +188,9 @@ private:
     cv::VideoCapture cap;
     cv::VideoWriter writer;
     cv::Ptr<cv::aruco::Dictionary> aruco_dictionary;
+
+    // Added this line in:
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr aruco_publisher;
 
     std::shared_ptr<rclcpp::ParameterEventHandler> param_subscriber;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_dictionary;
