@@ -4,6 +4,14 @@ ublox_gps_node:
     frame_id: gps
     uart1:
       baudrate: 38400
-    config_on_startup: true
+    config_on_startup: false
     tmode3: 0
-    
+    gnss:
+      supported:
+        ublox: true
+        sbas: true
+        galileo: true
+        beidou: true
+        imes: false
+        qzss: true
+        glonass: true

@@ -28,32 +28,40 @@ def generate_launch_description():
 
     nodes = []
 
-    try:
-        i = 0
-        for camera in os.listdir('/dev/Arducam'):
-            if not camera.startswith('CAM'): 
-                continue
-            index = int(camera[3:])
-            nodes.append(
-                Node(
-                    package="uirover_video",
-                    executable="stream",
-                    name=f"arducam_{i}",
-                    output="both",
-                    parameters=[{
-                        'port': 5000 + index,
-                        'device': f"/dev/Arducam/{camera}",
-                        'host': '192.168.55.100',
-                        # 'width': 1280,
-                        # 'height': 720,
-                        'framerate': 20.0
-                    }]
-                )
-            )
-            i+= 1
-    except FileNotFoundError:
-        pass
+    
+    nodes.append(
+        Node(
+            package="uirover_video",
+            executable="stream",
+            name=f"camera_0",
+            output="both",
+            parameters=[{
+                'port': 5000,
+                'device': f"/dev/video0",
+                'host': '192.168.55.100',
+                'width': 1920,
+                'height': 1080,
+                'framerate': 20.0
+            }]
+        )
+    )
 
+    nodes.append(
+        Node(
+            package="uirover_video",
+            executable="stream",
+            name=f"camera_1",
+            output="both",
+            parameters=[{
+                'port': 5001,
+                'device': f"/dev/video1",
+                'host': '192.168.55.100',
+                'width': 1280,
+                'height': 720,
+                'framerate': 20.0
+            }]
+        )
+    )
     nodes.append(
         IncludeLaunchDescription(
             AnyLaunchDescriptionSource(
@@ -98,6 +106,16 @@ def generate_launch_description():
             output="log",
         )
     )
+
+    nodes.append(
+        Node(
+            name="rover_joy",
+            package="joy",
+            executable="game_controller_node",
+
+        )
+    )
+
 
     nodes.append(
         ExecuteProcess(
