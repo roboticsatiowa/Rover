@@ -58,9 +58,8 @@ def generate_launch_description():
     launch_description_list.append(
         Node(
             name="joy",
-            
             package="joy",
-            executable="joy_node",
+            executable="game_controller_node",
 
         )
     )

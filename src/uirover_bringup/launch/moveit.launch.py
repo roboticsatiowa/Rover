@@ -154,8 +154,8 @@ def generate_launch_description():
     # ld.add_action(
     #     Node(
     #         package="joy",
-    #         executable="joy_node",
-    #         name="joy_node",
+    #         executable="game_controller_node",
+    #         name="game_controller_node",
     #     )
     # )
 
