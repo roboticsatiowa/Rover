@@ -1,0 +1,13 @@
+[Unit]
+Description=Robotics at Iowa rover software
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/Rover
+ExecStart=/bin/bash -c 'source /opt/ros/jazzy/setup.bash && source /Rover/install/setup.bash && exec ros2 launch uirover_bringup rover.launch.py'
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
