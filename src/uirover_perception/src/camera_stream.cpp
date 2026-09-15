@@ -1,5 +1,6 @@
 // std lib
 #include <chrono>
+#include <cmath>
 #include <memory>
 #include <string>
 
@@ -23,10 +24,7 @@ public:
     GStreamerNode() : Node("gstreamer_stream_source") {
 
         // declare aruco topic
-        // this->create_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
-
-        // Added in this line:
-        aruco_publisher = this->create_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
+        this->create_publisher<std_msgs::msg::String>("aruco_marker", rclcpp::QoS(10));
 
         auto param_desc_port = rcl_interfaces::msg::ParameterDescriptor{};
         param_desc_port.description = "UDP port to stream video to.";
@@ -55,9 +53,9 @@ public:
         this->declare_parameter("port", 5000, param_desc_port);
         this->declare_parameter("host", "0.0.0.0", param_desc_host);
         this->declare_parameter("device", "/dev/video0", param_desc_device);
-        this->declare_parameter("framerate", 30.0, param_desc_framerate); // TODO unimplemented
-        this->declare_parameter("width", 1920, param_desc_width); // TODO unimplemented
-        this->declare_parameter("height", 1080, param_desc_height); // TODO unimplemented
+        this->declare_parameter("framerate", 30.0, param_desc_framerate);
+        this->declare_parameter("width", 1920, param_desc_width);
+        this->declare_parameter("height", 1080, param_desc_height);
         this->declare_parameter("bitrate", 2048, param_desc_bitrate);
         this->declare_parameter("publish_topic", false, param_desc_publish_topic); // TODO unimplemented
         this->declare_parameter("publish_topic_name", "camera_stream", param_desc_publish_topic_name); // TODO unimplemented
@@ -107,9 +105,19 @@ public:
 
         set_aruco_dict(dictionary);
 
+        // The resolution must be pinned here: without a caps filter v4l2src picks the
+        // camera's own preferred mode, which is not necessarily width x height.
+        // Framerate is deliberately left out of the v4l2src caps - cameras only offer
+        // a few discrete rates per mode (the See3CAM_CU27 only does 100fps MJPG), so
+        // asking for an arbitrary one fails negotiation. videorate throttles instead.
         std::string pipeline_video_capture = "v4l2src device="
             + device
-            + " ! jpegdec ! videoconvert ! appsink drop=1";
+            + " ! image/jpeg,width=" + std::to_string(width)
+            + ",height=" + std::to_string(height)
+            + " ! jpegdec ! videorate ! video/x-raw,framerate="
+            + std::to_string(std::lround(framerate)) + "/1"
+            + " ! queue max-size-buffers=1 leaky=downstream"
+            + " ! videoconvert ! video/x-raw,format=BGR ! appsink drop=1 max-buffers=1 sync=false";
 
         std::string pipeline_video_writer = "appsrc ! videoconvert ! x264enc tune=zerolatency key-int-max=15 insert-vui=1 speed-preset=veryfast bitrate="
             + std::to_string(bitrate)
@@ -118,17 +126,38 @@ public:
             + " port="
             + std::to_string(port);
 
-        cap = cv::VideoCapture(pipeline_video_capture);
+        cap = cv::VideoCapture(pipeline_video_capture, cv::CAP_GSTREAMER);
 
         if (!cap.isOpened()) {
-            RCLCPP_ERROR(this->get_logger(), "Failed to open camera.");
+            RCLCPP_ERROR(this->get_logger(), "Failed to open camera on %s.", device.c_str());
             return;
         }
 
-        writer = cv::VideoWriter(pipeline_video_writer, 0, framerate, cv::Size(width, height), true);
+        // Size the writer from a real frame rather than from the parameters. The appsrc
+        // caps must match the buffers actually pushed into it - if they disagree the
+        // pipeline still runs and reports no error, but streams a sheared image.
+        if (!cap.read(frame) || frame.empty()) {
+            RCLCPP_ERROR(this->get_logger(), "Failed to read an initial frame from %s.", device.c_str());
+            cap.release();
+            return;
+        }
+
+        cv::Size frame_size = frame.size();
+        stream_size = frame_size;
+
+        if (frame_size != cv::Size(width, height)) {
+            RCLCPP_WARN(
+                this->get_logger(),
+                "Camera negotiated %dx%d instead of the requested %dx%d.",
+                frame_size.width, frame_size.height, width, height
+            );
+        }
+
+        writer = cv::VideoWriter(pipeline_video_writer, cv::CAP_GSTREAMER, 0, framerate, frame_size, true);
 
         if (!writer.isOpened()) {
             RCLCPP_ERROR(this->get_logger(), "Failed to open writer.");
+            cap.release();
             return;
         }
 
@@ -154,29 +183,24 @@ public:
             return;
         }
 
+        // Pushing a frame whose size disagrees with the appsrc caps corrupts the stream
+        // silently, so drop it rather than send a sheared image downstream.
+        if (frame.size() != stream_size) {
+            RCLCPP_ERROR(
+                this->get_logger(),
+                "Frame size %dx%d does not match the stream size %dx%d, dropping frame.",
+                frame.cols, frame.rows, stream_size.width, stream_size.height
+            );
+            return;
+        }
+
         // detect and draw aruco markers. 6 lines of code - god bless opencv
         // https://docs.opencv.org/4.6.0/d5/dae/tutorial_aruco_detection.html
         std::vector<int> ids;
         std::vector<std::vector<cv::Point2f> > corners;
         cv::aruco::detectMarkers(frame, aruco_dictionary, corners, ids);
-        
-        //if (ids.size() > 0) {
-        //    cv::aruco::drawDetectedMarkers(frame, corners, ids, cv::Scalar(255, 0, 0));
-        //}
-
-        // Newly added in code to fix ARUCO reading:
         if (ids.size() > 0) {
             cv::aruco::drawDetectedMarkers(frame, corners, ids, cv::Scalar(255, 0, 0));
-
-            // publish detected marker IDs
-            std_msgs::msg::String msg;
-            std::string ids_str;
-            for (size_t i = 0; i < ids.size(); ++i) {
-                ids_str += std::to_string(ids[i]);
-                if (i != ids.size() - 1) ids_str += ",";
-            }
-            msg.data = ids_str;
-            aruco_publisher->publish(msg);
         }
 
         writer << frame;
@@ -185,12 +209,10 @@ public:
 
 private:
     cv::Mat frame;
+    cv::Size stream_size;
     cv::VideoCapture cap;
     cv::VideoWriter writer;
     cv::Ptr<cv::aruco::Dictionary> aruco_dictionary;
-
-    // Added this line in:
-    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr aruco_publisher;
 
     std::shared_ptr<rclcpp::ParameterEventHandler> param_subscriber;
     std::shared_ptr<rclcpp::ParameterCallbackHandle> cb_handle_dictionary;
